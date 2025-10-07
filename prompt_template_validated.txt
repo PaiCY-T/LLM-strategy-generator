@@ -1,0 +1,142 @@
+You are an expert quantitative trading strategy developer for Taiwan stock market.
+
+## CRITICAL: Use ONLY These Verified Dataset Keys
+
+### Price Data (0 datasets)
+
+### Monthly Revenue Data (8 datasets) - ⚠️ CORRECTED KEYS
+- monthly_revenue:上月比較增減(%) - 上月比較增減(%)_monthly_revenue (float)
+- monthly_revenue:上月營收 - 上月營收_monthly_revenue (int)
+- monthly_revenue:前期比較增減(%) - 前期比較增減(%)_monthly_revenue (float)
+- monthly_revenue:去年同月增減(%) - 去年同月增減(%)_monthly_revenue (float)
+- monthly_revenue:去年當月營收 - 去年當月營收_monthly_revenue (int)
+- monthly_revenue:去年累計營收 - 去年累計營收_monthly_revenue (int)
+- monthly_revenue:當月營收 - 當月營收_monthly_revenue (int)
+- monthly_revenue:當月累計營收 - 當月累計營收_monthly_revenue (int)
+
+### Fundamental Features (20 datasets)
+- fundamental_features:EBITDA - EBITDA (float)
+- fundamental_features:ROA稅後息前 - ROA稅後息前 (float)
+- fundamental_features:ROA綜合損益 - ROA綜合損益 (float)
+- fundamental_features:ROE稅後 - ROE稅後 (float)
+- fundamental_features:ROE綜合損益 - ROE綜合損益 (float)
+- fundamental_features:利息支出率 - 利息支出率 (float)
+- fundamental_features:取得不動產廠房及設備 - 取得不動產廠房及設備 (float)
+- fundamental_features:固定資產週轉次數 - 固定資產週轉次數 (float)
+- fundamental_features:存貨週轉率 - 存貨週轉率 (float)
+- fundamental_features:應收帳款週轉率 - 應收帳款週轉率 (float)
+- fundamental_features:折舊 - 折舊 (float)
+- fundamental_features:推銷費用率 - 推銷費用率 (float)
+- fundamental_features:業外收支營收率 - 業外收支營收率 (float)
+- fundamental_features:歸屬母公司淨利 - 歸屬母公司淨利 (float)
+- fundamental_features:每股營業利益 - 每股營業利益 (float)
+- fundamental_features:每股營業額 - 每股營業額 (float)
+- fundamental_features:每股現金流量 - 每股現金流量 (float)
+- fundamental_features:每股稅前淨利 - 每股稅前淨利 (float)
+- fundamental_features:每股稅後淨利 - 每股稅後淨利 (float)
+- fundamental_features:每股綜合損益 - 每股綜合損益 (float)
+
+### Institutional Investors (10 datasets)
+- institutional_investors_trading_summary:外資自營商買賣超股數 - 外資自營商買賣超股數 (int)
+- institutional_investors_trading_summary:外資自營商買進股數 - 外資自營商買進股數 (int)
+- institutional_investors_trading_summary:外資自營商賣出股數 - 外資自營商賣出股數 (int)
+- institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商) - 外陸資買賣超股數(不含外資自營商) (int)
+- institutional_investors_trading_summary:外陸資買進股數(不含外資自營商) - 外陸資買進股數(不含外資自營商) (int)
+- institutional_investors_trading_summary:外陸資賣出股數(不含外資自營商) - 外陸資賣出股數(不含外資自營商) (int)
+- institutional_investors_trading_summary:投信買賣超股數 - 投信買賣超股數 (int)
+- institutional_investors_trading_summary:投信買進股數 - 投信買進股數 (int)
+- institutional_investors_trading_summary:投信賣出股數 - 投信賣出股數 (int)
+- institutional_investors_trading_summary:自營商買賣超股數(自行買賣) - 自營商買賣超股數(自行買賣) (int)
+
+### Margin Trading (8 datasets)
+- margin_transactions:融券今日餘額 - 融券今日餘額 (int)
+- margin_transactions:融券使用率 - 融券使用率 (float)
+- margin_transactions:融券前日餘額 - 融券前日餘額 (int)
+- margin_transactions:融券現券償還 - 融券現券償還 (int)
+- margin_transactions:融券買進 - 融券買進 (int)
+- margin_transactions:融券賣出 - 融券賣出 (int)
+- margin_transactions:融券限額 - 融券限額 (int)
+- margin_transactions:融資今日餘額 - 融資今日餘額 (int)
+
+## Code Requirements
+
+Your generated code MUST follow these requirements:
+
+1. **Data Loading**: Use EXACT keys from the list above with `data.get('key')`
+2. **Factor Calculation**: Create factor signals using pandas operations
+3. **Position DataFrame**: Generate boolean DataFrame named `position`
+4. **Backtesting**: Call `report = sim(position, resample="Q", upload=False, stop_loss=0.08)`
+5. **No Imports**: Do NOT include any import statements
+6. **Shift Forward**: Use `.shift(1)` or higher to avoid look-ahead bias
+7. **Valid Syntax**: Must be syntactically correct Python/pandas code
+
+## Strategy Template with CORRECT Keys
+
+```python
+# 1. Load data using VERIFIED keys
+close = data.get('price:收盤價')
+volume = data.get('price:成交股數')
+trading_value = data.get('price:成交金額')
+
+# Monthly revenue with CORRECT key (NOT etl:monthly_revenue:revenue_yoy!)
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # ✅ CORRECT
+
+# Fundamental data
+roe = data.get('fundamental_features:ROE稅後')
+pe_ratio = data.get('fundamental_features:本益比')
+
+# 2. Calculate factors
+# Momentum factor
+momentum = close.pct_change(20).shift(1)
+
+# Revenue growth factor (align monthly to daily)
+revenue_growth = revenue_yoy.ffill().shift(1)
+
+# ROE factor (align quarterly to daily)
+roe_factor = roe.ffill().shift(1)
+
+# Value factor
+value_factor = (1 / pe_ratio).replace([float('inf'), -float('inf')], 0).shift(1)
+
+# 3. Combine factors
+combined_factor = (
+    momentum * 0.3 +
+    revenue_growth * 0.3 +
+    roe_factor * 0.2 +
+    value_factor * 0.2
+)
+
+# 4. Apply filters
+liquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000
+price_filter = close.shift(1) > 10
+final_filter = liquidity_filter & price_filter
+
+# 5. Select stocks
+position = combined_factor[final_filter].is_largest(10)
+
+# 6. Run backtest
+report = sim(position, resample="Q", upload=False, stop_loss=0.08)
+```
+
+## IMPORTANT: Common Dataset Key Errors to AVOID
+
+❌ WRONG: `data.get('etl:monthly_revenue:revenue_yoy')`
+✅ CORRECT: `data.get('monthly_revenue:去年同月增減(%)')`
+
+❌ WRONG: `data.get('monthly_revenue')`
+✅ CORRECT: `data.get('monthly_revenue:當月營收')`
+
+## Previous Iteration Feedback
+
+{history}
+
+## Your Task
+
+Generate a complete, executable Finlab trading strategy that:
+1. Uses ONLY dataset keys from the verified list above
+2. Combines 2-4 factors with clear logic
+3. Includes liquidity and price filtering
+4. Selects 8-12 stocks
+5. If previous iterations failed with "not exists" errors, use different datasets
+
+Return ONLY the Python code in ```python blocks. No explanations.
