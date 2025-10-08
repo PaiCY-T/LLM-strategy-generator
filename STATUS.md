@@ -2,15 +2,16 @@
 
 **Last Updated**: 2025-10-08
 **Current Phase**: Phase 2 Complete ✅ - Learning System Enhancement MVP
-**Overall Status**: 🟢 Production Ready
+**Overall Status**: 🔴 **NOT PRODUCTION READY** - Extended validation failed (0/4 criteria)
 
 ---
 
 ## Executive Summary
 
-The Finlab Backtesting Optimization System has successfully completed its **Learning System Enhancement MVP** (Phase 2). The system now features intelligent champion tracking, performance attribution, and evolutionary prompts that enable continuous strategy improvement through autonomous learning.
+The Finlab Backtesting Optimization System completed its **Learning System Enhancement MVP** (Phase 2), achieving 3/4 criteria in initial 10-iteration validation. However, **extended 30-iteration validation revealed critical system instability**, failing 0/4 criteria with only 3.3% success rate.
 
-**Key Achievement**: ✅ **3/4 MVP criteria passed** - System ready for production deployment
+**Critical Finding**: ❌ **Extended validation failed** - System suffers from dataset key hallucination causing 96.7% failure rate
+**Status**: 🔴 **NOT production-ready** - Dataset validation fix required before deployment
 
 ---
 
@@ -90,6 +91,40 @@ The Finlab Backtesting Optimization System has successfully completed its **Lear
 - **Fix**: Added logger import at start of `run_iteration()` method
 - **Impact**: All iterations executing without errors
 
+#### Extended Validation (30 Iterations) - 2025-10-08
+
+**Completion Date**: 2025-10-08 13:55-14:16 GMT+8
+**Model**: gemini-2.5-flash (via Google AI)
+**Duration**: ~20 minutes
+**Validation Status**: ❌ **CRITICAL FAILURE** (0/4 criteria passed)
+
+**Performance Metrics**:
+
+| Criterion | Target | Actual | Status | vs MVP |
+|-----------|--------|--------|--------|--------|
+| Best Sharpe >1.2 | 1.2 | 0.9929 | ❌ FAIL | -59.9% |
+| Success rate >60% | 60% | 3.3% | ❌ FAIL | -66.7 pp |
+| Avg Sharpe >0.5 | 0.5 | 0.0331 | ❌ FAIL | -97.2% |
+| No regression >10% | -10% | -100.0% | ❌ FAIL | Same |
+
+**Root Cause Analysis**:
+
+🔴 **PRIMARY ISSUE: Dataset Key Hallucination**
+- **Problem**: LLM generates code with non-existent Finlab dataset keys
+- **Impact**: 96.7% failure rate (29/30 iterations failed)
+- **Examples**:
+  - `fundamental_features:EPS` (should be `financial_statement:每股盈餘`)
+  - `foreign_main_force_buy_sell_summary` (should be `institutional_investors_trading_summary:...`)
+  - `indicator:RSI` (not available in Finlab API - must be computed)
+
+**System Component Performance**:
+- ✅ Preservation enforcement: 5/6 violations successfully retried
+- ✅ Champion tracking: Maintained champion from iteration 6
+- ✅ Gemini API: ~90% success rate (handled safety filters correctly)
+- ❌ Dataset validation: Missing, allowing hallucinated keys to execute
+
+**Detailed Analysis**: See `EXTENDED_VALIDATION_ANALYSIS.md`
+
 #### Files Modified
 
 **Core Implementation**:
@@ -98,18 +133,21 @@ The Finlab Backtesting Optimization System has successfully completed its **Lear
 - `performance_attributor.py` - Parameter extraction, attribution analysis
 - `failure_tracker.py` - Dynamic failure pattern learning
 - `constants.py` - Standardized metric keys and configuration
+- `poc_claude_test.py` - Added dual API support (OpenRouter + Google AI)
 
 **Testing & Validation**:
 - `tests/test_champion_tracking.py` - 10 unit tests (100% pass)
 - `tests/test_attribution_integration.py` - 8 unit tests (100% pass)
 - `tests/test_evolutionary_prompts.py` - 7 unit tests (100% pass)
 - `tests/test_integration_scenarios.py` - 5 integration tests (100% pass)
-- `run_10iteration_validation.py` - Final validation script
+- `run_10iteration_validation.py` - MVP validation script (3/4 criteria)
+- `run_extended_validation.py` - Extended validation script (0/4 criteria)
 
 **Documentation**:
 - `.claude/specs/learning-system-enhancement/tasks.md` - Complete task breakdown and results
 - `.claude/specs/learning-system-enhancement/design.md` - System design
 - `.claude/specs/learning-system-enhancement/requirements.md` - Requirements specification
+- `EXTENDED_VALIDATION_ANALYSIS.md` - **NEW** Detailed extended validation analysis
 
 ---
 
@@ -195,9 +233,11 @@ The Finlab Backtesting Optimization System has successfully completed its **Lear
 
 ### Immediate (Week 1-2)
 - [x] Complete MVP validation ✅ DONE (2025-10-08)
-- [x] Document final results ✅ DONE (2025-10-08)
-- [ ] Monitor system over 20+ iterations (stability validation)
-- [ ] Collect failure patterns for analysis
+- [x] Extended 30-iteration validation ✅ DONE (2025-10-08)
+- [x] Document extended validation results ✅ DONE (2025-10-08)
+- [ ] **URGENT P0**: Implement dataset key validation (2-4 hours)
+- [ ] Re-run 30-iteration validation after P0 fix
+- [ ] Verify success rate returns to >60% threshold
 
 ### Short-term (Month 1)
 - [ ] Optional: P2 fix - Execution error learning (1 hour)
@@ -252,14 +292,20 @@ The Finlab Backtesting Optimization System has successfully completed its **Lear
 - ⚠️ Long-term stability (needs 20+ iteration validation)
 
 ### High Risk 🔴
-- None identified
+- ❌ **Dataset key hallucination (P0 BLOCKER)** - LLM generates non-existent dataset keys causing 96.7% failure rate
+- ❌ **System instability** - Extended validation shows 97.2% degradation in average Sharpe vs MVP
 
 ---
 
 ## Technical Debt
 
 ### P0 - Critical (Blocking Production)
-- None ✅
+- ❌ **Dataset key validation** - Implement validation to prevent hallucinated dataset keys (URGENT)
+  - **Options**:
+    1. Add available datasets list to prompt template (2 hours)
+    2. Pre-execution validation against Finlab API (4 hours)
+    3. Enhanced auto-fix with semantic mapping (3 hours)
+  - **Impact**: Expected to reduce failure rate from 96.7% to <10%
 
 ### P1 - High Priority (Should Fix Soon)
 - None ✅
@@ -330,7 +376,9 @@ e567890 feat: Add evolutionary prompt builder
 
 ---
 
-**🎉 MVP COMPLETE - System Ready for Production Deployment**
+**⚠️ MVP COMPLETE - System NOT Production Ready (Extended Validation Failed)**
 
-*Last validation: 2025-10-08 12:38-12:40 GMT+8*
-*Next review: After 20+ iteration monitoring*
+*Last MVP validation: 2025-10-08 12:38-12:40 GMT+8 (3/4 criteria passed)*
+*Last extended validation: 2025-10-08 13:55-14:16 GMT+8 (0/4 criteria passed)*
+*Next action: Implement P0 dataset key validation fix*
+*Next review: After P0 fix and re-validation*

@@ -1,63 +1,62 @@
 # 1. Load data
 close = data.get('price:收盤價')
-volume = data.get('price:成交股數')
+trading_value = data.get('price:成交金額')
 revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
-roe = data.get('fundamental_features:ROE稅後')
-pe_ratio = data.get('price_earning_ratio:本益比')
+foreign_strength = data.get('etl:foreign_main_force_buy_sell_summary:strength')
 
 # 2. Calculate factors
-# Factor 1: Momentum (20-day return)
-momentum = close.pct_change(20).shift(1)
 
-# Factor 2: Volume Surge (current volume vs. 60-day average)
-avg_volume_60d = volume.rolling(60).mean()
-volume_surge = (volume / avg_volume_60d).shift(1)
+# Factor 1: Smoothed Monthly Revenue YoY Growth
+# Calculate 3-month rolling average of YoY growth, then shift to avoid look-ahead.
+# min_periods=1 ensures calculation even with fewer data points at the start.
+factor_revenue_growth = revenue_yoy.rolling(3, min_periods=1).mean().shift(1)
 
-# Factor 3: Revenue Growth (YoY)
-# Shift revenue_yoy by 1 to avoid look-ahead bias
-revenue_growth_factor = revenue_yoy.shift(1)
+# Factor 2: Foreign Investor Buying Strength
+# Use the strength indicator directly, shifted to avoid look-ahead.
+factor_foreign_strength = foreign_strength.shift(1)
 
-# Factor 4: ROE (Return on Equity)
-# Shift ROE by 1 to avoid look-ahead bias
-roe_factor = roe.shift(1)
+# Factor 3: Price Momentum (60-day returns)
+# Calculate 60-day percentage change in close price, then shift to avoid look-ahead.
+momentum = close.pct_change(60)
+factor_momentum = momentum.shift(1)
 
-# Factor 5: Inverse P/E Ratio (Value)
-# Handle potential division by zero or negative P/E
-inverse_pe = (1 / pe_ratio).replace([float('inf'), -float('inf')], 0).shift(1)
-
+# Rank factors to normalize them before combining.
+# Ranking ensures each factor contributes equally regardless of its scale.
+factor_revenue_growth_rank = factor_revenue_growth.rank(axis=1, pct=True)
+factor_foreign_strength_rank = factor_foreign_strength.rank(axis=1, pct=True)
+factor_momentum_rank = factor_momentum.rank(axis=1, pct=True)
 
 # 3. Combine factors
-# Normalize factors (optional, but good practice for combining)
-# For simplicity, we'll combine directly, assuming relative scales are somewhat compatible or we're looking for extremes.
-# A more robust approach would involve rank normalization or z-scoring.
-
-# Combine momentum and volume surge for short-term strength
-short_term_strength = momentum * volume_surge
-
-# Combine fundamental factors
-fundamental_strength = revenue_growth_factor + roe_factor + inverse_pe
-
-# Overall combined factor - giving more weight to fundamental strength
-combined_factor = (short_term_strength * 0.3) + (fundamental_strength * 0.7)
-
+# Simple average of the ranked factors.
+# We fill NaN values with 0 before combining, assuming missing data means no strong signal.
+combined_factor = (
+    factor_revenue_growth_rank.fillna(0) +
+    factor_foreign_strength_rank.fillna(0) +
+    factor_momentum_rank.fillna(0)
+) / 3
 
 # 4. Apply filters
-# Liquidity filter: Average daily trading value over 20 days > 50 million TWD
-trading_value = data.get('price:成交金額')
-liquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000
 
-# Price filter: Close price > 10 TWD to avoid penny stocks
+# Filter 1: Liquidity Filter - Average daily trading value over 20 days > 50 million TWD
+# Shifted to avoid look-ahead.
+avg_trading_value = trading_value.rolling(20, min_periods=1).mean().shift(1)
+liquidity_filter = avg_trading_value > 50_000_000
+
+# Filter 2: Price Filter - Close price must be above 10 TWD to avoid penny stocks.
+# Shifted to avoid look-ahead.
 price_filter = close.shift(1) > 10
 
-# Combine all filters
-final_filter = liquidity_filter & price_filter
+# Filter 3: Positive Revenue Growth - Only consider stocks with positive smoothed revenue growth.
+# This acts as a fundamental quality filter.
+positive_revenue_growth_filter = factor_revenue_growth > 0
+
+# Combine all filters using logical AND.
+all_filters = liquidity_filter & price_filter & positive_revenue_growth_filter
 
 # 5. Select stocks
-# Apply filters to the combined factor
-filtered_factor = combined_factor[final_filter]
-
-# Select the top 10 stocks based on the filtered combined factor
-position = filtered_factor.is_largest(10)
+# Apply all filters to the combined factor and select the top 10 stocks with the highest factor values.
+position = combined_factor[all_filters].is_largest(10)
 
 # 6. Run backtest
+# The backtest is run quarterly (resample="Q") with a stop-loss of 8%.
 report = sim(position, resample="Q", upload=False, stop_loss=0.08)

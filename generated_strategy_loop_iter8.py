@@ -1,55 +1,59 @@
 # 1. Load data
 close = data.get('price:收盤價')
-volume = data.get('price:成交股數')
-revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
-roe = data.get('fundamental_features:ROE稅後')
-pe_ratio = data.get('price_earning_ratio:本益比')
 trading_value = data.get('price:成交金額')
+roe = data.get('fundamental_features:ROE稅後')
+pb_ratio = data.get('price_earning_ratio:股價淨值比')
+three_forces = data.get('three_main_forces_buy_sell_summary')
+operating_margin = data.get('fundamental_features:營業利益率') # Added for new quality filter
 
 # 2. Calculate factors
-
-# Factor 1: Momentum (20-day returns)
+# Momentum factor: 20-day percentage change
 momentum = close.pct_change(20).shift(1)
+momentum_rank = momentum.rank(axis=1, pct=True)
 
-# Factor 2: Revenue YoY growth (shifted to align with trading decisions)
-# Monthly revenue data is usually released after the month ends, so shift by 2 to be safe
-# Assuming revenue_yoy is already aligned to the end of the month it refers to
-# We need to use the previous month's data for current month's decision
-revenue_growth_factor = revenue_yoy.shift(2)
+# Value factor: Inverse of Price-to-Book ratio
+# Higher inverse P/B means lower P/B, indicating better value
+value = (1 / pb_ratio).shift(1)
+value_rank = value.rank(axis=1, pct=True)
 
-# Factor 3: ROE (shifted to avoid look-ahead bias, assuming quarterly data)
-# Financial statements are usually released after the quarter ends.
-# A shift of 60 days (approx 2 months) might be reasonable for quarterly data.
-roe_factor = roe.shift(60)
+# Quality factor: Return on Equity (ROE)
+# Using ROE directly as a quality indicator (raw, window=1, as per preservation requirements)
+quality_roe = roe.shift(1)
+quality_roe_rank = quality_roe.rank(axis=1, pct=True)
 
-# Factor 4: Inverse of P/E ratio (lower P/E is better)
-# Add a small epsilon to avoid division by zero or very large numbers for P/E close to zero
-inverse_pe = (1 / (pe_ratio + 0.01)).shift(1)
+# Institutional Buying factor: 5-day average of three main forces net buy/sell
+institutional_flow = three_forces.rolling(5).mean().shift(1)
+institutional_flow_rank = institutional_flow.rank(axis=1, pct=True)
 
 # 3. Combine factors
-# Normalize factors to a 0-1 range (optional, but good practice for combining)
-# For simplicity, we'll combine them directly, assuming their scales are somewhat comparable
-# or that the 'is_largest' function will handle relative rankings.
-
-# We want high momentum, high revenue growth, high ROE, and low P/E (high inverse P/E)
-combined_factor = (momentum * 0.3) + (revenue_growth_factor * 0.3) + (roe_factor * 0.2) + (inverse_pe * 0.2)
+# Adjusting weights by ±5% maximum from an assumed equal weight of 0.25 for each factor
+# (e.g., 0.25 * 0.05 = 0.0125, so max change is +/- 0.0125)
+# Slightly increased momentum and quality, slightly decreased value and institutional flow
+combined_factor = (
+    momentum_rank * 0.26 +  # Weight adjusted by +0.01 from 0.25
+    value_rank * 0.24 +     # Weight adjusted by -0.01 from 0.25
+    quality_roe_rank * 0.26 + # Weight adjusted by +0.01 from 0.25
+    institutional_flow_rank * 0.24 # Weight adjusted by -0.01 from 0.25
+)
 
 # 4. Apply filters
-# Liquidity filter: Average daily trading value over the last 20 days must be > 50 million TWD
-liquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000
-
-# Price filter: Close price must be above 10 TWD to avoid penny stocks
+# Price filter: Preserve the critical requirement of price > 10 TWD
 price_filter = close.shift(1) > 10
 
-# Volume filter: Average daily volume over the last 20 days must be > 100,000 shares
-volume_filter = volume.rolling(20).mean().shift(1) > 100_000
+# Liquidity filter: Preserve the critical requirement for average trading value
+# Avoid increasing threshold as per previous iteration feedback
+liquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000
+
+# New Quality filter: Require operating margin to be positive (e.g., > 5%)
+# This is a complementary quality filter as per exploration suggestions
+operating_margin_filter = operating_margin.shift(1) > 0.05
 
 # Combine all filters
-all_filters = liquidity_filter & price_filter & volume_filter
+total_filter = price_filter & liquidity_filter & operating_margin_filter
 
 # 5. Select stocks
-# Apply filters to the combined factor and then select the top 10 stocks
-position = combined_factor[all_filters].is_largest(10)
+# Selecting 9 stocks, within the 6-12 range, slightly different from template's 8
+position = combined_factor[total_filter].is_largest(9)
 
 # 6. Run backtest
 report = sim(position, resample="Q", upload=False, stop_loss=0.08)

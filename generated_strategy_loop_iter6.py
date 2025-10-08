@@ -1,49 +1,43 @@
 # 1. Load data
 close = data.get('price:收盤價')
-volume = data.get('price:成交股數')
-revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
-roe = data.get('fundamental_features:ROE稅後')
 pe_ratio = data.get('price_earning_ratio:本益比')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_flow = data.get('foreign_main_force_buy_sell_summary')
+trading_value = data.get('price:成交金額')
 
 # 2. Calculate factors
-# Momentum factor (20-day return)
-returns_20d = close.pct_change(20).shift(1)
+# Momentum factor: 60-day percentage change in close price
+momentum = close.pct_change(60).shift(1)
 
-# Revenue growth factor (YoY)
-revenue_growth_factor = revenue_yoy.shift(1)
+# P/E Ratio factor: Inverse P/E, where lower P/E is generally better for value.
+# We use negative P/E and rank it, so lower P/E values get higher ranks.
+pe_factor = (-pe_ratio).shift(1)
 
-# ROE factor
-roe_factor = roe.shift(1)
+# Revenue Growth factor: Monthly Revenue YoY growth
+revenue_factor = revenue_yoy.shift(1)
 
-# Inverse P/E ratio factor (lower P/E is better)
-# Handle potential division by zero or negative P/E
-inverse_pe_factor = (1 / pe_ratio).replace([float('inf'), -float('inf')], 0).shift(1)
+# Foreign Investor Net Buy factor: Sum of net buy volume over the past 20 trading days
+foreign_flow_factor = foreign_flow.rolling(20).sum().shift(1)
 
-# 3. Combine factors
-# Normalize factors (simple min-max normalization for illustration, though Finlab often handles this implicitly)
-# For simplicity, we'll combine directly, assuming relative ranking is what matters.
-# Higher returns, higher revenue growth, higher ROE, lower PE are generally better.
-combined_factor = (
-    returns_20d * 0.3 +
-    revenue_growth_factor * 0.3 +
-    roe_factor * 0.2 +
-    inverse_pe_factor * 0.2
-)
+# 3. Apply filters (liquidity filter)
+# Calculate the average trading value over the past 20 days
+avg_trading_value_20d = trading_value.rolling(20).mean().shift(1)
+# Filter for stocks with average daily trading value greater than 10 million TWD
+liquidity_filter = avg_trading_value_20d > 10_000_000
 
-# 4. Apply filters
-# Liquidity filter: average daily trading value over 20 days > 50 million TWD
-trading_value = data.get('price:成交金額')
-liquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000
+# 4. Combine factors
+# Rank each factor across all stocks for each day to normalize them
+rank_momentum = momentum.rank(axis=1, pct=True)
+rank_pe = pe_factor.rank(axis=1, pct=True)
+rank_revenue = revenue_factor.rank(axis=1, pct=True)
+rank_foreign_flow = foreign_flow_factor.rank(axis=1, pct=True)
 
-# Price filter: stock price > 10 TWD
-price_filter = close.shift(1) > 10
-
-# Combine filters
-final_filter = liquidity_filter & price_filter
+# Combine the ranked factors into a single composite score. Higher score indicates a stronger buy signal.
+combined_score = rank_momentum + rank_pe + rank_revenue + rank_foreign_flow
 
 # 5. Select stocks
-# Apply filters and select the top 10 stocks based on the combined factor
-position = combined_factor[final_filter].is_largest(10)
+# Apply the liquidity filter and then select the top 10 stocks based on the combined score
+position = combined_score[liquidity_filter].is_largest(10)
 
 # 6. Run backtest
 report = sim(position, resample="Q", upload=False, stop_loss=0.08)

@@ -15,18 +15,30 @@ def load_prompt_template():
 
 def generate_strategy(iteration_num=0, history="", model="google/gemini-2.5-flash"):
     """
-    Generate a trading strategy using OpenRouter API
+    Generate a trading strategy using OpenRouter API or Google AI API
 
     Args:
         iteration_num: Current iteration number (0-indexed)
         history: Natural language summary of previous iterations
-        model: Model to use (default: anthropic/claude-sonnet-4)
-               Options: anthropic/claude-sonnet-4, anthropic/claude-opus-4.1,
-                       openai/o3, openai/o3-mini, google/gemini-2.5-pro, etc.
+        model: Model to use (default: google/gemini-2.5-flash)
+               OpenRouter models: google/gemini-2.5-flash, anthropic/claude-sonnet-4, openai/o3, etc.
+               Google AI models: gemini-2.5-flash, gemini-2.0-flash-thinking-exp, gemini-pro
 
     Returns:
         str: Generated Python code
     """
+    # Determine API based on model name format
+    # OpenRouter models have "/" in name (e.g., "google/gemini-2.5-flash")
+    # Google AI models don't have "/" (e.g., "gemini-2.5-flash")
+    use_google_ai = '/' not in model
+
+    if use_google_ai:
+        return _generate_with_google_ai(iteration_num, history, model)
+    else:
+        return _generate_with_openrouter(iteration_num, history, model)
+
+def _generate_with_openrouter(iteration_num, history, model):
+    """Generate strategy using OpenRouter API"""
     # Load API key from environment
     api_key = os.environ.get('OPENROUTER_API_KEY')
     if not api_key:
@@ -74,6 +86,71 @@ def generate_strategy(iteration_num=0, history="", model="google/gemini-2.5-flas
 
             # Extract generated text
             generated_text = result['choices'][0]['message']['content']
+
+            # Extract code from ```python blocks
+            code = extract_code_from_response(generated_text)
+
+            if code:
+                print(f"✅ Successfully generated strategy ({len(code)} chars)")
+                return code
+            else:
+                print(f"⚠️ No code block found in response, retrying...")
+
+        except Exception as e:
+            print(f"❌ API call failed: {e}")
+            if attempt < max_retries - 1:
+                import time
+                wait_time = 2 ** attempt  # Exponential backoff: 1s, 2s, 4s
+                print(f"Waiting {wait_time}s before retry...")
+                time.sleep(wait_time)
+            else:
+                raise
+
+    raise RuntimeError("Failed to generate strategy after all retries")
+
+def _generate_with_google_ai(iteration_num, history, model):
+    """Generate strategy using Google AI Gemini API"""
+    import google.generativeai as genai
+
+    # Load API key from environment
+    api_key = os.environ.get('GOOGLE_API_KEY')
+    if not api_key:
+        raise ValueError("GOOGLE_API_KEY environment variable not set")
+
+    # Configure Google AI
+    genai.configure(api_key=api_key)
+
+    # Load prompt template
+    template = load_prompt_template()
+
+    # Build full prompt
+    if iteration_num == 0:
+        # First iteration: no history
+        full_prompt = template.replace('{history}', 'None - this is the first iteration.')
+    else:
+        # Subsequent iterations: include history
+        full_prompt = template.replace('{history}', history)
+
+    # Call Google AI API with retry logic
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            print(f"Calling Google AI with {model} (attempt {attempt + 1}/{max_retries})...")
+
+            # Create model instance
+            gemini_model = genai.GenerativeModel(model)
+
+            # Generate response
+            response = gemini_model.generate_content(
+                full_prompt,
+                generation_config=genai.GenerationConfig(
+                    temperature=0.3,
+                    max_output_tokens=4096
+                )
+            )
+
+            # Extract generated text
+            generated_text = response.text
 
             # Extract code from ```python blocks
             code = extract_code_from_response(generated_text)
