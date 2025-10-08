@@ -4,7 +4,7 @@ Constructs prompts that incorporate feedback from previous iterations,
 enabling the AI to learn from past successes and failures.
 """
 
-from typing import Optional
+from typing import Optional, Dict, List, Any
 from pathlib import Path
 
 
@@ -36,42 +36,60 @@ class PromptBuilder:
     def build_prompt(
         self,
         iteration_num: int = 0,
-        feedback_history: Optional[str] = None
+        feedback_history: Optional[str] = None,
+        champion: Optional[Any] = None,
+        failure_patterns: Optional[List[str]] = None,
+        force_preservation: bool = False
     ) -> str:
-        """Build prompt with iteration feedback.
+        """Build prompt with iteration feedback and evolutionary constraints.
+
+        Routes to either basic prompt (early iterations) or evolutionary prompt
+        (iterations 3+ with champion) for intelligent exploration/exploitation balance.
 
         Args:
             iteration_num: Current iteration number
             feedback_history: Summary of previous iterations (optional)
+            champion: ChampionStrategy instance (None for early iterations)
+            failure_patterns: List of AVOID directives from FailureTracker (optional)
+            force_preservation: If True, use stronger preservation constraints (for retries)
 
         Returns:
             Complete prompt string ready for LLM
         """
         # Start with base template
-        prompt = self.base_template
+        base_template = self.base_template
 
-        # Add iteration context
+        # Build feedback summary
+        feedback_summary = ""
         if iteration_num == 0:
-            iteration_context = "\n\n## Current Iteration\n\n"
-            iteration_context += "This is the first iteration. Create an innovative trading strategy.\n"
+            feedback_summary = "\n\n## Current Iteration\n\n"
+            feedback_summary += "This is the first iteration. Create an innovative trading strategy.\n"
         else:
-            iteration_context = f"\n\n## Current Iteration: {iteration_num}\n\n"
-            iteration_context += "Based on feedback from previous iterations, create an improved strategy.\n"
+            feedback_summary = f"\n\n## Current Iteration: {iteration_num}\n\n"
+            feedback_summary += "Based on feedback from previous iterations, create an improved strategy.\n"
 
-        # Add feedback history if available
         if feedback_history:
-            iteration_context += "\n## Previous Iterations Feedback\n\n"
-            iteration_context += feedback_history + "\n"
-            iteration_context += "\n**Task**: Learn from the above feedback and create a DIFFERENT strategy.\n"
-            iteration_context += "- If validation errors occurred, avoid those patterns\n"
-            iteration_context += "- If execution succeeded, try different factor combinations\n"
-            iteration_context += "- Explore different datasets and filtering approaches\n"
-            iteration_context += "- Maintain code quality and avoid look-ahead bias\n"
+            feedback_summary += "\n## Previous Iterations Feedback\n\n"
+            feedback_summary += feedback_history + "\n"
+            feedback_summary += "\n**Task**: Learn from the above feedback and create a DIFFERENT strategy.\n"
+            feedback_summary += "- If validation errors occurred, avoid those patterns\n"
+            feedback_summary += "- If execution succeeded, try different factor combinations\n"
+            feedback_summary += "- Explore different datasets and filtering approaches\n"
+            feedback_summary += "- Maintain code quality and avoid look-ahead bias\n"
 
-        # Construct final prompt
-        final_prompt = prompt + iteration_context
+        # Use evolutionary prompts if champion exists (iterations 3+)
+        if champion is not None or iteration_num >= 3:
+            return self.build_evolutionary_prompt(
+                iteration_num=iteration_num,
+                champion=champion,
+                feedback_summary=feedback_summary,
+                base_prompt=base_template,
+                failure_patterns=failure_patterns,
+                force_preservation=force_preservation
+            )
 
-        return final_prompt
+        # Otherwise, use basic prompt (iterations 0-2)
+        return base_template + feedback_summary
 
     def build_validation_feedback(
         self,
@@ -186,6 +204,222 @@ class PromptBuilder:
             feedback += self.build_execution_feedback(execution_success, execution_error, metrics)
 
         return feedback
+
+    def build_attributed_feedback(
+        self,
+        attribution: Dict[str, Any],
+        iteration_num: int,
+        champion: Any,
+        failure_patterns: Optional[List[str]] = None
+    ) -> str:
+        """Build attributed feedback comparing current strategy to champion.
+
+        Generates comprehensive feedback using performance attribution to explain
+        what changed and how it affected performance relative to the champion.
+
+        Args:
+            attribution: Attribution dict from compare_strategies()
+            iteration_num: Current iteration number
+            champion: ChampionStrategy instance
+            failure_patterns: List of AVOID directives from FailureTracker
+
+        Returns:
+            Formatted attributed feedback string
+        """
+        from performance_attributor import generate_attribution_feedback
+        from src.constants import METRIC_SHARPE
+
+        # Generate attribution analysis
+        feedback = generate_attribution_feedback(
+            attribution,
+            iteration_num,
+            champion.iteration_num
+        )
+        feedback += "\n\n"
+
+        # Add champion context
+        feedback += "## CURRENT CHAMPION\n\n"
+        feedback += f"Iteration: {champion.iteration_num}\n"
+        champion_sharpe = champion.metrics.get(METRIC_SHARPE, 0)
+        feedback += f"Sharpe Ratio: {champion_sharpe:.4f}\n"
+        feedback += f"Established: {champion.timestamp}\n"
+
+        # Add success patterns if available
+        if champion.success_patterns:
+            feedback += "\nProven Success Patterns:\n"
+            for pattern in champion.success_patterns[:5]:  # Top 5 patterns
+                feedback += f"- {pattern}\n"
+
+        # Add failure patterns to avoid
+        if failure_patterns:
+            feedback += "\n## AVOID (Learned from Past Failures)\n\n"
+            for pattern in failure_patterns[:10]:  # Top 10 recent failures
+                feedback += f"- {pattern}\n"
+
+        return feedback
+
+    def build_simple_feedback(self, metrics: Optional[Dict[str, float]]) -> str:
+        """Build simple feedback when no champion exists for comparison.
+
+        Used in early iterations before a champion is established,
+        or when attribution comparison fails.
+
+        Args:
+            metrics: Performance metrics dict
+
+        Returns:
+            Simple formatted feedback string
+        """
+        from src.constants import METRIC_SHARPE
+
+        if not metrics:
+            return "No champion yet. Focus on creating a valid strategy with positive Sharpe ratio."
+
+        feedback = "## PERFORMANCE METRICS\n\n"
+
+        sharpe = metrics.get(METRIC_SHARPE, 0)
+        feedback += f"Sharpe Ratio: {sharpe:.4f}\n"
+
+        for key, value in metrics.items():
+            if key != METRIC_SHARPE:
+                if isinstance(value, float):
+                    feedback += f"{key}: {value:.4f}\n"
+                else:
+                    feedback += f"{key}: {value}\n"
+
+        feedback += "\n## NEXT STEPS\n\n"
+        if sharpe > 0.5:
+            feedback += "Good start! This strategy will become the champion.\n"
+            feedback += "Continue exploring different approaches to find improvements.\n"
+        else:
+            feedback += "Strategy shows weak performance. Try:\n"
+            feedback += "- Different factor combinations\n"
+            feedback += "- Alternative data sources\n"
+            feedback += "- Improved filtering or smoothing\n"
+
+        return feedback
+
+    def build_evolutionary_prompt(
+        self,
+        iteration_num: int,
+        champion: Optional[Any],
+        feedback_summary: str,
+        base_prompt: str,
+        failure_patterns: Optional[List[str]] = None,
+        force_preservation: bool = False
+    ) -> str:
+        """Build prompt with champion preservation constraints.
+
+        Creates evolutionary prompts that balance exploration and exploitation:
+        - Iterations 0-2: Pure exploration (no constraints)
+        - Iteration 3+: Exploitation with champion preservation
+        - Every 5th iteration: Forced exploration to avoid local optima
+        - force_preservation=True: Use MUCH stronger preservation constraints (for retries)
+
+        Args:
+            iteration_num: Current iteration number (0-indexed)
+            champion: ChampionStrategy instance or None
+            feedback_summary: Previous iteration feedback
+            base_prompt: Base strategy generation prompt
+            failure_patterns: List of AVOID directives from FailureTracker
+            force_preservation: If True, use stronger preservation constraints (for retries)
+
+        Returns:
+            Complete prompt string with evolutionary constraints
+        """
+        from src.constants import METRIC_SHARPE
+
+        # Exploration mode for early iterations or no champion
+        if iteration_num < 3 or champion is None:
+            return base_prompt + "\n\n" + feedback_summary
+
+        # Diversity forcing every 5th iteration
+        if self._should_force_exploration(iteration_num):
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.info(f"Forcing exploration mode (iteration {iteration_num})")
+            return base_prompt + "\n\n[EXPLORATION MODE: Try new approaches]\n\n" + feedback_summary
+
+        # Exploitation mode: Build evolutionary prompt
+        sections = []
+
+        # Section A: Champion Context
+        sections.append("=" * 60)
+        sections.append("LEARNING FROM SUCCESS")
+        sections.append("=" * 60)
+        sections.append(f"CURRENT CHAMPION: Iteration {champion.iteration_num}")
+        champion_sharpe = champion.metrics.get(METRIC_SHARPE, 0)
+        sections.append(f"Achieved Sharpe: {champion_sharpe:.4f}")
+        sections.append("")
+
+        # Section B: Mandatory Preservation (stronger constraints if force_preservation=True)
+        if force_preservation:
+            sections.append("⚠️  CRITICAL PRESERVATION REQUIREMENTS (RETRY MODE) ⚠️")
+            sections.append("")
+            sections.append("ABSOLUTE REQUIREMENTS - DO NOT DEVIATE:")
+            sections.append("1. EXACT PRESERVATION of these proven success factors:")
+            for i, pattern in enumerate(champion.success_patterns, 1):
+                sections.append(f"   {i}. {pattern}")
+                # Parse pattern to extract exact values for enforcement
+                if "liquidity_filter" in pattern.lower():
+                    sections.append(f"      → MUST use EXACT threshold from champion (NO reductions allowed)")
+                if "roe" in pattern.lower() and "rolling" in pattern.lower():
+                    sections.append(f"      → MUST preserve EXACT smoothing window from champion")
+            sections.append("")
+            sections.append("2. MINIMAL changes allowed:")
+            sections.append("   - Adjust weights ONLY by ±5% maximum")
+            sections.append("   - NO changes to critical filters (liquidity, price, volume)")
+            sections.append("   - Add ONLY complementary factors (keep ALL existing factors)")
+            sections.append("   - Explain EVERY change with inline comments")
+            sections.append("")
+            sections.append("⚠️  This is a retry after preservation violation - follow constraints exactly! ⚠️")
+            sections.append("")
+        else:
+            sections.append("MANDATORY REQUIREMENTS:")
+            sections.append("1. PRESERVE these proven success factors:")
+            for i, pattern in enumerate(champion.success_patterns, 1):
+                sections.append(f"   {i}. {pattern}")
+            sections.append("")
+            sections.append("2. Make ONLY INCREMENTAL improvements")
+            sections.append("   - Adjust weights/thresholds by ±10-20%")
+            sections.append("   - Add complementary factors WITHOUT removing proven ones")
+            sections.append("   - Explain changes with inline comments")
+            sections.append("")
+
+        # Section C: Failure Avoidance (DYNAMIC)
+        if failure_patterns:  # Use learned patterns
+            sections.append("AVOID (from actual regressions):")
+            for pattern in failure_patterns:
+                sections.append(f"   - {pattern}")
+        elif iteration_num > 3:  # Fallback to static list
+            sections.append("AVOID (general guidelines):")
+            sections.append("   - Removing data smoothing (increases noise)")
+            sections.append("   - Relaxing liquidity filters (reduces stability)")
+            sections.append("   - Over-complicated multi-factor combinations")
+        sections.append("")
+
+        # Section D: Improvement Focus
+        sections.append("EXPLORE these improvements (while preserving above):")
+        sections.append("   - Fine-tune factor weights (e.g., momentum vs value balance)")
+        sections.append("   - Add quality filters (debt ratio, profit margin stability)")
+        sections.append("   - Optimize threshold values (within ±20% of current)")
+        sections.append("=" * 60)
+        sections.append("")
+
+        # Combine: Evolutionary constraints + Base prompt + Feedback
+        evolutionary_prompt = "\n".join(sections)
+        return evolutionary_prompt + base_prompt + "\n\n" + feedback_summary
+
+    def _should_force_exploration(self, iteration_num: int) -> bool:
+        """Every 5th iteration: force exploration to prevent local optima.
+
+        Args:
+            iteration_num: Current iteration number (0-indexed)
+
+        Returns:
+            True if should force exploration, False otherwise
+        """
+        return iteration_num > 0 and iteration_num % 5 == 0
 
 
 def main():

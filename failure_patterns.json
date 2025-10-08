@@ -1,0 +1,72 @@
+[
+  {
+    "pattern_type": "parameter_change",
+    "description": "Changing ROE type from 'smoothed' to 'raw'",
+    "parameter": "roe_type",
+    "change_from": "smoothed",
+    "change_to": "raw",
+    "performance_impact": -0.05,
+    "iteration_discovered": 2,
+    "timestamp": "2025-10-08T05:51:49.836685"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Decreasing liquidity threshold from 100000000 to 30",
+    "parameter": "liquidity_threshold",
+    "change_from": 100000000,
+    "change_to": 30,
+    "performance_impact": -0.6637731003584538,
+    "iteration_discovered": 1,
+    "timestamp": "2025-10-08T09:14:54.427592"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Decreasing liquidity threshold from 100000000 to 50000000",
+    "parameter": "liquidity_threshold",
+    "change_from": 100000000,
+    "change_to": 50000000,
+    "performance_impact": -2.0484173679691606,
+    "iteration_discovered": 3,
+    "timestamp": "2025-10-08T09:15:16.819043"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Decreasing liquidity threshold from 100000000 to 50",
+    "parameter": "liquidity_threshold",
+    "change_from": 100000000,
+    "change_to": 50,
+    "performance_impact": -1.2581589357385488,
+    "iteration_discovered": 5,
+    "timestamp": "2025-10-08T09:15:33.222621"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Decreasing liquidity threshold from 100000000 to 10",
+    "parameter": "liquidity_threshold",
+    "change_from": 100000000,
+    "change_to": 10,
+    "performance_impact": -0.9710767202297479,
+    "iteration_discovered": 8,
+    "timestamp": "2025-10-08T09:15:53.750895"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Changing roe_smoothing from raw (window=1) to not_used (window=None)",
+    "parameter": "roe_smoothing",
+    "change_from": "raw (window=1)",
+    "change_to": "not_used (window=None)",
+    "performance_impact": -0.9710767202297479,
+    "iteration_discovered": 8,
+    "timestamp": "2025-10-08T09:15:53.750934"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Decreasing liquidity threshold from 100000000 to 100",
+    "parameter": "liquidity_threshold",
+    "change_from": 100000000,
+    "change_to": 100,
+    "performance_impact": -0.30173302375852673,
+    "iteration_discovered": 9,
+    "timestamp": "2025-10-08T09:16:35.077523"
+  }
+]
