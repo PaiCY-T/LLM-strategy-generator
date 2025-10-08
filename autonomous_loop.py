@@ -23,6 +23,7 @@ from validate_code import validate_code
 from sandbox_simple import execute_strategy_safe
 from poc_claude_test import generate_strategy
 from fix_dataset_keys import fix_dataset_keys
+from static_validator import validate_code as static_validate
 from src.failure_tracker import FailureTracker
 from src.constants import METRIC_SHARPE, CHAMPION_FILE
 
@@ -196,17 +197,48 @@ class AutonomousLoop:
         # Step 2.5: Auto-fix incorrect dataset keys
         print(f"\n[2.5/6] Auto-fixing dataset keys...")
         fixed_code, fixes = fix_dataset_keys(code)
+
+        # CRITICAL: Always use fixed_code, even if fixes list is empty
+        # The function may have made transformations not tracked in fixes list
+        code = fixed_code
+
+        # Hash logging for delivery verification (o3 Phase 1)
+        import hashlib
+        code_hash = hashlib.sha256(code.encode()).hexdigest()[:16]
+        print(f"   Code hash: {code_hash}")
+
         if fixes:
             print(f"✅ Applied {len(fixes)} fixes:")
             for fix in fixes:
                 print(f"   - {fix}")
-            code = fixed_code
         else:
             print("✅ No fixes needed")
 
-        # Step 3: Validate code
-        print(f"\n[3/6] Validating code...")
-        is_valid, validation_errors = validate_code(code)
+        # Step 2.7: Static validation (pre-execution check)
+        print(f"\n[2.7/6] Static validation...")
+        static_valid, static_issues = static_validate(code)
+
+        if not static_valid:
+            print(f"❌ Static validation failed ({len(static_issues)} issues)")
+            for issue in static_issues[:5]:  # Show first 5
+                print(f"   - {issue}")
+
+            # Add to validation errors for feedback
+            validation_errors.extend(static_issues)
+            is_valid = False
+
+            # Skip execution - mark as validation failure
+            print(f"\n[3/6] Skipping AST validation (static validation failed)")
+            print(f"\n[4/6] Skipping execution (validation failed)")
+            execution_success = False
+            execution_error = f"Static validation failed: {'; '.join(static_issues[:3])}"
+            metrics = None
+        else:
+            print(f"✅ Static validation passed")
+
+            # Step 3: Validate code
+            print(f"\n[3/6] Validating code...")
+            is_valid, validation_errors = validate_code(code)
 
         if is_valid:
             print("✅ Validation passed")
