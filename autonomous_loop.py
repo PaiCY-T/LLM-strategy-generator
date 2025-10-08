@@ -111,6 +111,9 @@ class AutonomousLoop:
         Returns:
             Tuple of (success, status_message)
         """
+        import logging
+        logger = logging.getLogger(__name__)
+
         print(f"\n{'='*60}")
         print(f"ITERATION {iteration_num}")
         print(f"{'='*60}\n")
