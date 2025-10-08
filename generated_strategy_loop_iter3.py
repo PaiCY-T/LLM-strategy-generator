@@ -1,60 +1,53 @@
 # 1. Load data
 close = data.get('price:收盤價')
 volume = data.get('price:成交股數')
-revenue_yoy = data.get('etl:monthly_revenue:revenue_yoy')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
 roe = data.get('fundamental_features:ROE稅後')
-pb_ratio = data.get('fundamental_features:股價淨值比')
-trading_value = data.get('price:成交金額')
+pe_ratio = data.get('price_earning_ratio:本益比')
+market_value = data.get('market_value')
 
 # 2. Calculate factors
-# Factor 1: Momentum (20-day returns)
+# Factor 1: Price Momentum (20-day return)
 momentum = close.pct_change(20).shift(1)
 
-# Factor 2: Volume strength (current volume vs. 60-day average)
-avg_volume_60d = volume.rolling(60).mean()
-volume_strength = (volume / avg_volume_60d).shift(1)
+# Factor 2: Revenue Growth (YoY)
+# Monthly revenue data is usually reported with a lag, so shift by 30 days (approx 1 month)
+# to ensure it's available before the trading decision.
+revenue_growth_factor = revenue_yoy.shift(30)
 
-# Factor 3: Revenue Growth (YoY)
-# Shift revenue_yoy by 1 to avoid look-ahead bias
-revenue_growth = revenue_yoy.shift(1)
+# Factor 3: ROE (Return on Equity)
+# Fundamental data is typically quarterly and reported with a lag. Shift by 90 days (approx 3 months).
+roe_factor = roe.shift(90)
 
-# Factor 4: ROE (Return on Equity)
-# Shift ROE by 1 to avoid look-ahead bias
-roe_shifted = roe.shift(1)
-
-# Factor 5: Value (P/B ratio) - lower is better
-pb_ratio_shifted = pb_ratio.shift(1)
+# Factor 4: Inverse P/E Ratio (Value)
+# Lower P/E is generally better for value. Shift by 90 days.
+inverse_pe_factor = (1 / pe_ratio).shift(90)
 
 # 3. Combine factors
-# Normalize factors (optional, but good practice for combining)
-# For simplicity, we'll combine directly, assuming relative scales are somewhat compatible or we want to emphasize certain factors.
-# Higher momentum, higher volume strength, higher revenue growth, higher ROE are good. Lower P/B is good.
-
-# We'll create a composite score where higher is better for momentum, volume, revenue, ROE, and lower is better for P/B.
-# To make P/B contribute positively to a "higher is better" score, we can take its inverse or subtract it from a large number.
-# Let's use -pb_ratio_shifted so that lower P/B results in a higher score.
-
-combined_factor = (
-    momentum * 0.3 +
-    volume_strength * 0.2 +
-    revenue_growth * 0.2 +
-    roe_shifted * 0.2 -
-    pb_ratio_shifted * 0.1 # Negative weight for P/B as lower is better
-)
+# Normalize factors to a 0-1 range (or similar) before combining,
+# though for simple multiplication/addition, raw values can sometimes work.
+# Here, we'll just combine them directly, assuming their scales are somewhat compatible
+# or that the selection method (is_largest) will handle relative rankings.
+# We'll give more weight to momentum and revenue growth.
+combined_factor = (momentum * 0.4) + (revenue_growth_factor * 0.3) + (roe_factor * 0.2) + (inverse_pe_factor * 0.1)
 
 # 4. Apply filters
-# Liquidity filter: Average daily trading value over the last 20 days must be greater than 50 million TWD
+# Filter 1: Liquidity filter (average daily trading value > 50 million TWD)
+trading_value = data.get('price:成交金額')
 liquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000
 
-# Price filter: Close price must be above 10 TWD to avoid penny stocks
+# Filter 2: Market Cap Filter (only consider stocks with market cap > 10 billion TWD)
+market_cap_filter = market_value.shift(1) > 10_000_000_000
+
+# Filter 3: Price filter (close price > 10 TWD to avoid penny stocks)
 price_filter = close.shift(1) > 10
 
 # Combine all filters
-final_filter = liquidity_filter & price_filter
+all_filters = liquidity_filter & market_cap_filter & price_filter
 
 # 5. Select stocks
-# Apply the filter to the combined factor and select the top 10 stocks
-position = combined_factor[final_filter].is_largest(10)
+# Apply filters and then select the top 10 stocks based on the combined factor
+position = combined_factor[all_filters].is_largest(10)
 
 # 6. Run backtest
 report = sim(position, resample="Q", upload=False, stop_loss=0.08)
