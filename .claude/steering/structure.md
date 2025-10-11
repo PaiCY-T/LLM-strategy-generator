@@ -1,439 +1,512 @@
-# Structure Steering Document
+# Project Structure Steering Document
 
-## Project Organization
+## Directory Organization
 
+### Root Structure
 ```
-finlab/
-├── .claude/                    # Claude Code workspace
-│   ├── specs/                 # Specification documents
-│   │   └── learning-system-enhancement/
-│   │       ├── requirements.md
-│   │       ├── design.md
-│   │       └── tasks.md
-│   └── steering/              # Steering documents (this directory)
-│       ├── product.md         # Product vision and features
-│       ├── tech.md           # Technology stack and decisions
-│       └── structure.md      # File organization (this file)
-│
-├── src/                       # Source code organized by domain
-│   ├── analysis/             # AI-powered strategy analysis
-│   │   ├── __init__.py
-│   │   ├── claude_client.py  # OpenRouter/Claude API client
-│   │   ├── engine.py         # Analysis orchestration
-│   │   ├── fallback.py       # Fallback logic when AI unavailable
-│   │   ├── generator.py      # Strategy code generation
-│   │   ├── learning.py       # Learning system integration
-│   │   ├── ranking.py        # Strategy ranking and selection
-│   │   └── visualizer.py     # Analysis visualization
-│   │
-│   ├── backtest/             # Backtesting engine
-│   │   ├── __init__.py
-│   │   ├── engine.py         # Finlab backtest integration
-│   │   ├── metrics.py        # Performance metrics calculation
-│   │   ├── sandbox.py        # Code execution sandbox
-│   │   ├── validation.py     # Look-ahead bias detection
-│   │   └── visualizer.py     # Backtest result visualization
-│   │
-│   ├── data/                 # Data management
-│   │   ├── __init__.py
-│   │   ├── cache.py          # Multi-layer caching
-│   │   ├── downloader.py     # Finlab API integration
-│   │   └── freshness.py      # Data staleness detection
-│   │
-│   ├── storage/              # Persistence layer
-│   │   ├── __init__.py
-│   │   ├── backup.py         # Data backup utilities
-│   │   └── manager.py        # DuckDB integration
-│   │
-│   ├── ui/                   # User interface (planned)
-│   │   └── __init__.py
-│   │
-│   ├── utils/                # Shared utilities
-│   │   ├── __init__.py
-│   │   ├── exceptions.py     # Custom exceptions
-│   │   ├── init_db.py        # Database initialization
-│   │   └── logger.py         # Logging configuration
-│   │
-│   ├── constants.py          # System-wide constants
-│   └── failure_tracker.py    # Failure pattern tracking
-│
-├── tests/                    # Test suite
-│   ├── analysis/             # Analysis module tests
-│   │   ├── test_claude_client.py
-│   │   ├── test_engine.py
-│   │   ├── test_fallback.py
-│   │   ├── test_generator.py
-│   │   ├── test_learning.py
-│   │   ├── test_ranking.py
-│   │   └── test_visualizer.py
-│   │
-│   ├── backtest/             # Backtest module tests
-│   │   └── test_engine.py
-│   │
-│   ├── storage/              # Storage module tests
-│   │   └── test_manager.py
-│   │
-│   ├── conftest.py           # Pytest fixtures
-│   ├── test_data.py          # Data module tests
-│   ├── test_evolutionary_prompts.py    # Prompt construction tests (7 tests)
-│   ├── test_feedback_generation.py     # Feedback generation tests (4 tests)
-│   ├── test_infrastructure.py          # Infrastructure tests
-│   ├── test_integration_scenarios.py   # End-to-end tests (5 scenarios)
-│   └── test_pattern_extraction.py      # Pattern extraction tests (20 tests)
-│
-├── config/                   # Configuration files
-│   └── settings.py           # System settings
-│
-├── autonomous_loop.py        # Main autonomous optimization loop
-├── performance_attributor.py # Performance attribution engine
-├── prompt_builder.py         # LLM prompt construction
-├── history.py               # Iteration history tracking
-├── sandbox.py               # Code execution sandbox
-├── validate_code.py         # Code validation utilities
-│
-├── README.md                # Project documentation (bilingual)
-├── requirements.txt         # Python dependencies
-└── .gitignore              # Git ignore rules
+/finlab/
+├── src/                          # Source code (layered architecture)
+├── .claude/                      # Claude Code configuration and specs
+├── tests/                        # Test suites (mirrors src/ structure)
+├── docs/                         # Documentation and guides
+├── .finlab_cache/                # L2 disk cache (Parquet files)
+├── *.json                        # Persistent data files
+├── generated_strategy_iter*.py   # Generated strategy artifacts
+├── README.md                     # Quick start and overview
+├── STATUS.md                     # Current status and metrics
+└── requirements.txt              # Python dependencies
 ```
 
-## File Organization Principles
+### Source Code Organization (`src/`)
 
-### 1. **Domain-Driven Structure**
-Organize by business domain (analysis, backtest, data) rather than technical layer (models, views, controllers)
+**Layered Architecture**: Domain-driven organization with clear separation of concerns
 
-**Rationale**:
-- Easier to understand "what the system does"
-- Natural boundaries for code changes
-- Aligns with product features (data infrastructure, backtest engine, learning system)
+```
+src/
+├── __init__.py                   # Package initialization
+├── constants.py                  # System-wide constants and configuration
+├── failure_tracker.py            # Failure pattern recognition across iterations
+├── liquidity_calculator.py       # Market liquidity analysis (1-4 week turnover)
+│
+├── data/                         # Data access layer (L2 disk cache)
+│   ├── __init__.py               # DataManager: unified data access interface
+│   ├── cache.py                  # Disk cache: persistent Parquet storage
+│   ├── downloader.py             # Finlab API downloader with freshness checks
+│   └── freshness.py              # FreshnessChecker: timestamp-based validation
+│
+├── validation/                   # Multi-stage validation system
+│   ├── data_validator.py         # Dataset key verification (50 curated datasets)
+│   ├── code_validator.py         # AST + Data + Backtest validation orchestrator
+│   ├── ast_validator.py          # AST-based syntax/semantic validation
+│   └── sensitivity_tester.py     # Optional parameter sensitivity testing (50-75 min)
+│
+├── repository/                   # Strategy and pattern storage
+│   ├── hall_of_fame.py           # Three-tier strategy repository (Champions/Contenders/Archive)
+│   ├── novelty_scorer.py         # Vector-based duplicate detection with caching
+│   └── genome.py                 # StrategyGenome data structure
+│
+├── feedback/                     # Learning and attribution system
+│   ├── performance_attributor.py # Parameter comparison and success pattern extraction
+│   ├── nl_summary.py             # Natural language performance explanations
+│   └── feedback_builder.py       # Structured feedback generation for LLM
+│
+├── templates/                    # Template system and memory cache
+│   ├── base_template.py          # BaseTemplate: strategy template abstraction
+│   ├── data_cache.py             # L1 memory cache: runtime performance optimization
+│   └── template_*.py             # Specific strategy templates (multi-factor, momentum, etc.)
+│
+├── analysis/                     # Performance analysis and reporting
+│   ├── performance_analyzer.py   # Backtest result analysis and metrics calculation
+│   └── report_generator.py       # Performance report generation
+│
+├── backtest/                     # Backtesting infrastructure
+│   ├── engine.py                 # Finlab backtesting engine wrapper
+│   └── metrics.py                # Performance metric calculations (Sharpe, drawdown)
+│
+├── storage/                      # Data persistence utilities
+│   ├── history.py                # IterationHistory: iteration results tracking
+│   └── serializer.py             # JSON serialization helpers
+│
+├── ui/                           # User interface (future)
+│   └── dashboard.py              # Web dashboard (planned)
+│
+└── utils/                        # Shared utilities
+    ├── logging.py                # Logging configuration
+    └── helpers.py                # Common helper functions
+```
 
-### 2. **Top-Level Workflow Files**
-Core workflow files (autonomous_loop.py, performance_attributor.py, prompt_builder.py) live at project root
+### Spec Organization (`.claude/specs/`)
 
-**Rationale**:
-- These are the "entry points" to the system
-- Frequently modified during development
-- Easy to find and run: `python autonomous_loop.py`
+**Spec-Driven Development**: Requirements → Design → Tasks → Implementation
 
-### 3. **Tests Mirror Source Structure**
-Test files organized to match src/ structure exactly
+```
+.claude/specs/
+├── learning-system-enhancement/  # Main learning system spec (MVP complete)
+│   ├── requirements.md            # User stories and acceptance criteria
+│   ├── design.md                  # Architecture and implementation design
+│   └── tasks.md                   # Task breakdown with POST-MVP section
+│
+├── autonomous-iteration-engine/   # Iteration loop optimization
+│   ├── requirements.md
+│   ├── design.md
+│   └── tasks.md
+│
+├── template-system-phase2/        # Template library and Hall of Fame integration
+│   ├── requirements.md
+│   ├── design.md
+│   └── tasks.md
+│
+├── liquidity-monitoring-enhancements/  # Market liquidity analysis
+│   └── tasks.md
+│
+└── system-fix-validation-enhancement/  # Validation system improvements
+    └── tasks.md
+```
 
-**Example**:
-- `src/analysis/engine.py` → `tests/analysis/test_engine.py`
-- `src/backtest/engine.py` → `tests/backtest/test_engine.py`
-- `autonomous_loop.py` → `tests/test_integration_scenarios.py`
+### Test Organization (`tests/`)
 
-### 4. **Specifications in .claude/specs/**
-Detailed spec documents (requirements, design, tasks) kept in Claude Code workspace
+**Mirror Structure**: Tests mirror `src/` directory organization
 
-**Rationale**:
-- Integration with Claude Code spec workflow
-- Version controlled with code
-- Easy to reference during implementation
+```
+tests/
+├── test_data.py                  # Data layer tests (cache, downloader, freshness)
+├── test_validation.py            # Validation system tests (AST, data, code)
+├── test_repository.py            # Repository tests (Hall of Fame, novelty scorer)
+├── test_feedback.py              # Feedback system tests (attribution, patterns)
+├── test_integration.py           # Integration tests (end-to-end workflows)
+└── feedback/                     # Feedback system test fixtures
+    └── test_*.py                 # Individual feedback component tests
+```
 
-## Naming Conventions
+## File Naming Conventions
 
 ### Python Files
-- **Modules**: lowercase_with_underscores.py
-- **Classes**: PascalCase (class ChampionStrategy)
-- **Functions**: lowercase_with_underscores (def extract_strategy_params)
-- **Constants**: UPPERCASE_WITH_UNDERSCORES (METRIC_SHARPE)
+- **Modules**: `snake_case.py` (e.g., `data_validator.py`, `novelty_scorer.py`)
+- **Classes**: `PascalCase` (e.g., `DataValidator`, `NoveltyScorer`, `HallOfFame`)
+- **Functions**: `snake_case()` (e.g., `extract_parameters()`, `calculate_novelty_score()`)
+- **Constants**: `UPPER_SNAKE_CASE` (e.g., `DUPLICATE_THRESHOLD`, `KNOWN_DATASETS`)
 
-### Test Files
-- **Pattern**: `test_<module_name>.py`
-- **Example**: `test_champion_tracking.py`, `test_evolutionary_prompts.py`
-- **Integration tests**: `test_integration_<feature>.py`
+### Data Files
+- **JSON Persistence**: `snake_case.json` (e.g., `champion_strategy.json`, `iteration_history.json`)
+- **Generated Strategies**: `generated_strategy_iter{N}.py` (e.g., `generated_strategy_iter0.py`)
+- **Grid Search Results**: `{strategy_name}_grid_search_{type}_{timestamp}.json`
+- **Backup Files**: `{original_name}_backup_{timestamp}.{ext}`
 
-### JSON Files
-- **Champion**: `champion_strategy.json`
-- **Failure patterns**: `failure_patterns.json`
-- **Iteration history**: `iteration_history.json`
+### Documentation
+- **Markdown**: `UPPER_SNAKE_CASE.md` for project-level, `PascalCase.md` for phase-level
+  - Project: `README.md`, `STATUS.md`, `CHANGELOG.md`
+  - Spec: `requirements.md`, `design.md`, `tasks.md`
+  - Summary: `{TOPIC}_SUMMARY.md`, `{PHASE}_COMPLETE.md`
 
-### Generated Strategy Files
-- **Pattern**: `generated_strategy_loop_iter<N>.py`
-- **Example**: `generated_strategy_loop_iter0.py`, `generated_strategy_loop_iter5.py`
+## Code Organization Patterns
 
-## Module Dependencies
-
-### Import Rules
-
-**✅ Allowed**:
+### Module Structure Pattern
 ```python
-# Absolute imports from src/
-from src.constants import METRIC_SHARPE
-from src.analysis.engine import AnalysisEngine
-from src.backtest.engine import BacktestEngine
+"""
+Module docstring: Purpose and key features
+==========================================
 
-# Absolute imports from root
-from autonomous_loop import AutonomousLoop
-from performance_attributor import extract_strategy_params
-```
+Detailed description of module functionality.
 
-**❌ Avoid**:
-```python
-# Relative imports (breaks clarity)
-from ..constants import METRIC_SHARPE
+Examples:
+    >>> from module import Class
+    >>> obj = Class()
+"""
 
-# Circular dependencies
-# autonomous_loop.py → prompt_builder.py → autonomous_loop.py
-```
-
-### Dependency Graph
-```
-┌─────────────────────────────────────────────────┐
-│ autonomous_loop.py (Main Orchestrator)          │
-│   ├─> prompt_builder.py (Prompt construction)  │
-│   ├─> performance_attributor.py (Attribution)  │
-│   ├─> history.py (Iteration tracking)          │
-│   └─> src/failure_tracker.py (Failure learning)│
-└─────────────────────────────────────────────────┘
-           │
-           ├─> src/analysis/ (Strategy generation)
-           │     └─> claude_client.py → OpenRouter API
-           │
-           ├─> src/backtest/ (Validation & execution)
-           │     ├─> sandbox.py → Code execution
-           │     ├─> validation.py → Safety checks
-           │     └─> engine.py → Finlab backtesting
-           │
-           └─> src/data/ (Data infrastructure)
-                 └─> downloader.py → Finlab API
-```
-
-## Code Patterns
-
-### 1. **Dataclass for Data Structures**
-```python
-from dataclasses import dataclass, asdict
-from typing import Dict, List, Any
-
-@dataclass
-class ChampionStrategy:
-    """Best-performing strategy across iterations."""
-    iteration_num: int
-    code: str
-    parameters: Dict[str, Any]
-    metrics: Dict[str, float]
-    success_patterns: List[str]
-    timestamp: str
-
-    def to_dict(self) -> Dict:
-        return asdict(self)
-```
-
-### 2. **Atomic Persistence Pattern**
-```python
-import tempfile
-import os
+# Standard library imports
 import json
+from typing import Dict, List, Optional
 
-def _save_champion(self):
-    """Save champion with atomic write."""
-    dir_path = os.path.dirname(CHAMPION_FILE)
+# Third-party imports
+import pandas as pd
+import numpy as np
 
-    # Write to temporary file
-    temp_fd, temp_path = tempfile.mkstemp(
-        dir=dir_path or '.',
-        prefix='.champion_',
-        suffix='.tmp'
-    )
+# Local imports
+from src.constants import THRESHOLD
+from src.utils.helpers import helper_function
 
-    try:
-        with os.fdopen(temp_fd, 'w') as f:
-            json.dump(self.champion.to_dict(), f, indent=2)
+# Constants
+MODULE_CONSTANT = "value"
 
-        # Atomic rename
-        os.replace(temp_path, CHAMPION_FILE)
-    except Exception as e:
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
-        raise RuntimeError(f"Save failed: {e}")
+# Classes
+class MainClass:
+    """Class docstring with usage examples."""
+
+    def __init__(self):
+        """Initialize with clear parameter documentation."""
+        pass
+
+    def public_method(self) -> ReturnType:
+        """Public method with type hints and docstring."""
+        pass
+
+    def _private_method(self) -> ReturnType:
+        """Private method for internal use only."""
+        pass
+
+# Module-level functions
+def utility_function() -> ReturnType:
+    """Utility function with clear purpose."""
+    pass
 ```
 
-### 3. **Logging Pattern**
+### Class Organization Pattern
 ```python
-import logging
+class ClassName:
+    """
+    Class purpose and usage.
 
-logger = logging.getLogger(__name__)
-
-def run_iteration(self, iteration_num: int, data):
-    logger.info(f"Starting iteration {iteration_num}")
-
-    try:
-        result = self._execute_strategy(data)
-        logger.info(f"Iteration {iteration_num} complete: Sharpe {result.sharpe:.4f}")
-    except Exception as e:
-        logger.error(f"Iteration {iteration_num} failed: {e}")
-        raise
-```
-
-### 4. **Test Fixtures Pattern**
-```python
-import pytest
-from unittest.mock import Mock
-from datetime import datetime
-
-@pytest.fixture
-def sample_champion() -> ChampionStrategy:
-    """Sample champion strategy for testing."""
-    return ChampionStrategy(
-        iteration_num=3,
-        code="# Champion code",
-        parameters={
-            'roe_type': 'smoothed',
-            'roe_smoothing_window': 4,
-            'liquidity_threshold': 150_000_000
-        },
-        metrics={'sharpe_ratio': 0.97, 'annual_return': 0.18},
-        success_patterns=[
-            "roe.rolling(window=4).mean() - 4-quarter smoothing",
-            "liquidity_filter > 150,000,000 TWD - Stable stocks"
-        ],
-        timestamp=datetime.now().isoformat()
-    )
-
-def test_champion_update_with_improvement(sample_champion):
-    """Test champion updates with 5% improvement."""
-    loop = AutonomousLoop(model='test-model')
-    loop.champion = sample_champion
-
-    # Test with 6% improvement (should update)
-    new_sharpe = 0.97 * 1.06
-    updated = loop._update_champion(5, "# New code", {'sharpe_ratio': new_sharpe})
-
-    assert updated is True
-    assert loop.champion.iteration_num == 5
-```
-
-## Configuration
-
-### Settings Pattern
-```python
-# config/settings.py
-
-import os
-from pathlib import Path
-
-# Project paths
-PROJECT_ROOT = Path(__file__).parent.parent
-DATA_DIR = PROJECT_ROOT / "data"
-LOGS_DIR = PROJECT_ROOT / "logs"
-
-# API configuration
-FINLAB_API_TOKEN = os.getenv("FINLAB_API_TOKEN")
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-
-# System settings
-MAX_ITERATIONS = 10
-DEFAULT_MODEL = "google/gemini-2.5-flash"
-BACKTEST_TIMEOUT = 120  # seconds
-
-# Performance thresholds
-MIN_SHARPE_FOR_CHAMPION = 0.5
-CHAMPION_UPDATE_THRESHOLD = 1.05  # 5% improvement
-PROBATION_THRESHOLD = 1.10  # 10% for new champions
-```
-
-### Constants Pattern
-```python
-# src/constants.py
-
-# Metric keys (standardized)
-METRIC_SHARPE = "sharpe_ratio"
-METRIC_RETURN = "total_return"
-METRIC_DRAWDOWN = "max_drawdown"
-METRIC_WIN_RATE = "win_rate"
-
-# File paths
-CHAMPION_FILE = "champion_strategy.json"
-FAILURE_PATTERNS_FILE = "failure_patterns.json"
-HISTORY_FILE = "iteration_history.json"
-
-# Parameter criticality levels
-CRITICAL_PARAMS = ['roe_type', 'roe_smoothing_window', 'liquidity_threshold']
-MODERATE_PARAMS = ['revenue_handling', 'value_factor']
-LOW_PARAMS = ['price_filter', 'volume_threshold']
-```
-
-## Documentation Standards
-
-### Module Docstrings (Bilingual)
-```python
-"""
-Failure Tracker Module
-
-Tracks failed parameter configurations and generates learning directives
-to avoid repeating unsuccessful changes.
-
-This module implements dynamic failure pattern tracking that replaces static
-AVOID lists in optimization prompts, enabling the system to learn from past
-mistakes and accumulate optimization knowledge over time.
-
-失敗追蹤模組
-
-追蹤失敗的參數配置並生成學習指令，避免重複不成功的變更。
-此模組實現動態失敗模式追蹤，替代優化提示中的靜態避免清單。
-"""
-```
-
-### Function Docstrings
-```python
-def extract_strategy_params(code: str) -> Dict[str, Any]:
-    """Extract strategy parameters from generated code using regex.
-
-    Extracts 8 key parameters: ROE smoothing, liquidity threshold,
-    revenue handling, value factor, price filter, volume threshold,
-    portfolio size, and rebalance frequency.
-
-    Args:
-        code: Generated Python strategy code to analyze
-
-    Returns:
-        Dictionary mapping parameter names to extracted values.
-        Uses None for missing parameters and fallback defaults.
+    Attributes:
+        attr1: Description of attribute
+        attr2: Description of attribute
 
     Example:
-        >>> code = "roe_smoothed = roe.rolling(window=4).mean()"
-        >>> params = extract_strategy_params(code)
-        >>> params['roe_type']
-        'smoothed'
-        >>> params['roe_smoothing_window']
-        4
+        >>> obj = ClassName()
+        >>> obj.method()
     """
+
+    # Class-level constants
+    CLASS_CONSTANT = "value"
+
+    def __init__(self, param: Type):
+        """Initialize instance."""
+        # Public attributes
+        self.public_attr = param
+
+        # Private attributes
+        self._private_attr = self._initialize()
+
+    # Public methods (alphabetical order)
+    def public_method(self) -> ReturnType:
+        """Public interface method."""
+        pass
+
+    # Private methods (alphabetical order)
+    def _private_method(self) -> ReturnType:
+        """Internal helper method."""
+        pass
+
+    # Static methods
+    @staticmethod
+    def static_helper() -> ReturnType:
+        """Utility method without instance access."""
+        pass
+
+    # Class methods
+    @classmethod
+    def from_dict(cls, data: Dict) -> 'ClassName':
+        """Alternative constructor."""
+        pass
 ```
 
-### README Structure
-```markdown
-# Finlab Autonomous Trading Strategy Optimizer
+### Function Organization Pattern
+```python
+def function_name(
+    param1: Type,
+    param2: Type,
+    optional_param: Optional[Type] = None
+) -> ReturnType:
+    """
+    Function purpose and behavior.
 
-> 台灣股市自主交易策略優化系統 | Taiwan Stock Market Autonomous Strategy Optimization
+    Args:
+        param1: Description of param1
+        param2: Description of param2
+        optional_param: Description of optional parameter
 
-[English] | [中文]
+    Returns:
+        Description of return value
 
-## Features (功能)
-- 自主策略生成 (Autonomous strategy generation)
-- 智能回測驗證 (Intelligent backtest validation)
-- 學習系統增強 (Learning system enhancement)
+    Raises:
+        ValueError: When and why this is raised
+        TypeError: When and why this is raised
 
-## Quick Start (快速開始)
-...
+    Example:
+        >>> result = function_name("value1", "value2")
+        >>> print(result)
+    """
+    # Input validation
+    if not param1:
+        raise ValueError("param1 cannot be empty")
+
+    # Main logic
+    result = process(param1, param2)
+
+    # Optional parameter handling
+    if optional_param:
+        result = enhance(result, optional_param)
+
+    return result
 ```
 
-## Migration Guidelines
+## Architecture Patterns
 
-### Adding New Modules
-1. Create directory in `src/<domain>/`
-2. Add `__init__.py` for package
-3. Create test directory `tests/<domain>/`
-4. Update this structure.md
+### 1. Two-Tier Cache Pattern (L1/L2)
+```python
+# L1: Memory cache for runtime performance
+from src.templates.data_cache import DataCache
+cache = DataCache.get_instance()
+data = cache.get('price:收盤價')  # Lazy loading with statistics
 
-### Deprecating Old Code
-1. Mark as deprecated in docstring
-2. Add migration guide in comments
-3. Update tests to new pattern
-4. Remove after 2 releases
+# L2: Disk cache for persistence
+from src.data import DataManager
+manager = DataManager()
+data = manager.get_data('price:收盤價')  # Load from disk or download
+```
 
-### Refactoring Guidelines
-1. Keep file names stable (breaks imports)
-2. Use `@deprecated` decorator for functions
-3. Run full test suite after refactor
-4. Update steering docs if architecture changes
+### 2. Repository Pattern (Hall of Fame)
+```python
+# Three-tier strategy storage
+from src.repository.hall_of_fame import HallOfFame
+
+hall = HallOfFame()
+hall.add_strategy(genome, metrics)  # Automatic tier assignment
+champions = hall.get_champions()    # Sharpe > 1.5
+contenders = hall.get_contenders()  # 1.0 < Sharpe < 1.5
+```
+
+### 3. Validation Pipeline Pattern
+```python
+# Multi-stage validation with early exit
+from src.validation.code_validator import CodeValidator
+
+validator = CodeValidator()
+result = validator.validate(code)  # AST → Data → Backtest
+
+if not result.is_valid:
+    print(result.error_message)
+    # Early exit without executing code
+```
+
+### 4. Attribution Pattern (Performance Analysis)
+```python
+# Compare strategies and extract insights
+from src.feedback.performance_attributor import PerformanceAttributor
+
+attributor = PerformanceAttributor()
+changes = attributor.compare_strategies(champion_code, new_code)
+patterns = attributor.extract_success_patterns(champion_params)
+feedback = attributor.generate_attribution_feedback(changes, metrics)
+```
+
+### 5. Novelty Detection Pattern (Duplicate Prevention)
+```python
+# Vector-based similarity with caching
+from src.repository.novelty_scorer import NoveltyScorer
+
+scorer = NoveltyScorer()
+# Pre-compute vectors once
+existing_vectors = scorer.extract_vectors_batch(existing_codes)
+# Fast comparison with cached vectors
+novelty_score, info = scorer.calculate_novelty_score_with_cache(
+    new_code, existing_vectors
+)
+if scorer.is_duplicate(novelty_score):
+    print(f"Duplicate detected: {info}")
+```
+
+## Import Conventions
+
+### Import Order (PEP 8)
+```python
+# 1. Standard library imports
+import json
+import re
+from datetime import datetime
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
+# 2. Third-party imports (alphabetical)
+import numpy as np
+import pandas as pd
+from finlab import data
+
+# 3. Local imports (absolute, organized by layer)
+from src.constants import THRESHOLD
+from src.data import DataManager
+from src.repository.hall_of_fame import HallOfFame
+from src.validation.code_validator import CodeValidator
+```
+
+### Import Styles
+- **Absolute imports**: Always use `from src.module import Class`
+- **No star imports**: Avoid `from module import *`
+- **Explicit imports**: Prefer `from module import Class` over `import module`
+- **Type hints**: Import types from `typing` module
+
+## Configuration Management
+
+### Environment Variables
+```bash
+# OpenRouter API key
+export OPENROUTER_API_KEY='sk-or-v1-...'
+
+# Finlab API token
+export FINLAB_API_TOKEN='...'
+
+# Google API key (for Gemini)
+export GOOGLE_API_KEY='AIzaSy...'
+```
+
+### Constants (`src/constants.py`)
+```python
+# System-wide constants
+DEFAULT_LIQUIDITY_THRESHOLD = 100_000_000  # TWD
+CHAMPION_UPDATE_THRESHOLD = 1.05           # 5% improvement required
+NOVELTY_DUPLICATE_THRESHOLD = 0.2          # Similarity threshold
+
+# File paths
+CACHE_DIR = Path('.finlab_cache')
+CHAMPION_FILE = Path('champion_strategy.json')
+HISTORY_FILE = Path('iteration_history.json')
+```
+
+## Error Handling Conventions
+
+### Exception Hierarchy
+```python
+# Custom exceptions for domain errors
+class FinlabError(Exception):
+    """Base exception for all finlab errors."""
+    pass
+
+class ValidationError(FinlabError):
+    """Raised when validation fails."""
+    pass
+
+class DataError(FinlabError):
+    """Raised when data access fails."""
+    pass
+
+class RepositoryError(FinlabError):
+    """Raised when repository operation fails."""
+    pass
+```
+
+### Error Handling Pattern
+```python
+def validate_strategy(code: str) -> ValidationResult:
+    """
+    Validate strategy code with comprehensive error handling.
+
+    Returns:
+        ValidationResult with success flag and error details
+
+    Note:
+        Never raises exceptions - always returns ValidationResult
+    """
+    try:
+        # Validation logic
+        ast_result = validate_ast(code)
+        if not ast_result.is_valid:
+            return ValidationResult(False, ast_result.error)
+
+        data_result = validate_data(code)
+        if not data_result.is_valid:
+            return ValidationResult(False, data_result.error)
+
+        return ValidationResult(True, None)
+
+    except Exception as e:
+        # Graceful degradation
+        logger.error(f"Unexpected validation error: {e}")
+        return ValidationResult(False, f"Internal error: {str(e)}")
+```
+
+## Testing Conventions
+
+### Test File Structure
+```python
+"""
+Test module for {module_name}
+================================
+
+Test coverage for {module_name} functionality.
+"""
+
+import pytest
+from src.module import Class
+
+# Fixtures
+@pytest.fixture
+def sample_data():
+    """Provide sample data for tests."""
+    return {"key": "value"}
+
+# Test classes (one per class being tested)
+class TestClassName:
+    """Test suite for ClassName."""
+
+    def test_basic_functionality(self):
+        """Test basic operation."""
+        obj = Class()
+        result = obj.method()
+        assert result == expected
+
+    def test_edge_case(self):
+        """Test edge case handling."""
+        obj = Class()
+        with pytest.raises(ValueError):
+            obj.method(invalid_input)
+
+    def test_integration(self):
+        """Test integration with other components."""
+        pass
+
+# Module-level tests
+def test_utility_function():
+    """Test module-level utility function."""
+    pass
+```
+
+### Test Naming
+- **Test files**: `test_{module_name}.py`
+- **Test classes**: `Test{ClassName}`
+- **Test methods**: `test_{functionality}__{scenario}` or `test_{functionality}`
+
+---
+
+**Document Version**: 1.0
+**Last Updated**: 2025-10-11
+**Structure Review**: Post-Zen Debug Optimization
+**Next Review**: Post-AST Migration (Phase 5)
