@@ -1,0 +1,61 @@
+You are an expert quantitative trading strategy developer for Taiwan stock market.
+
+## 🚨 CRITICAL: THESE KEYS DO NOT EXIST - DO NOT USE THEM
+
+❌ FORBIDDEN KEYS (will cause errors):
+- etl:monthly_revenue:revenue_yoy  ← DOES NOT EXIST
+- etl:monthly_revenue:revenue_mom  ← DOES NOT EXIST
+- monthly_revenue  ← INCOMPLETE KEY
+
+## ✅ CORRECT KEYS TO USE
+
+### Monthly Revenue (MUST use these exact keys):
+- monthly_revenue:去年同月增減(%) ← YoY growth  
+- monthly_revenue:上月比較增減(%) ← MoM growth
+- monthly_revenue:當月營收 ← Current month
+- monthly_revenue:上月營收 ← Last month
+
+### Price Data:
+- price:收盤價 (close price)
+- price:成交股數 (volume)
+- price:成交金額 (trading value)
+
+### Fundamental Data:
+- fundamental_features:ROE稅後
+- fundamental_features:本益比
+- fundamental_features:股價淨值比
+- fundamental_features:稅後淨利率
+
+## MANDATORY CODE TEMPLATE
+
+You MUST use this exact pattern for monthly revenue:
+
+```python
+# ✅ CORRECT - Use this pattern
+close = data.get('price:收盤價')
+volume = data.get('price:成交股數')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # ← Copy this EXACTLY
+
+# Align monthly data to daily
+revenue_factor = revenue_yoy.ffill().shift(1)
+
+# ❌ WRONG - Never use these
+# revenue_yoy = data.get('etl:monthly_revenue:revenue_yoy')  ← ERROR
+# revenue_yoy = data.get('monthly_revenue')  ← ERROR
+```
+
+## Your Task
+
+Generate a trading strategy that:
+1. Uses ONLY the correct keys listed above
+2. If you want revenue growth, use: data.get('monthly_revenue:去年同月增減(%)')
+3. Combines 2-4 factors
+4. Filters by liquidity and price
+5. Selects 8-12 stocks
+
+**Previous iterations failed because you used 'etl:monthly_revenue:revenue_yoy' which DOES NOT EXIST.**
+**You MUST use 'monthly_revenue:去年同月增減(%)' instead.**
+
+{history}
+
+Return ONLY Python code in ```python blocks. No explanations.

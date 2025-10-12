@@ -1,0 +1,188 @@
+You are a quantitative trading strategy developer. Your task is to generate executable Python code for a Taiwan stock market trading strategy using the Finlab framework.
+
+## CRITICAL: Available Datasets
+
+**IMPORTANT**: You MUST ONLY use datasets from this list. Using non-existent datasets will cause execution failure.
+
+### Price Data (Built-in)
+- price:收盤價 (Close Price)
+- price:開盤價 (Open Price)
+- price:最高價 (High Price)
+- price:最低價 (Low Price)
+- price:成交股數 (Volume)
+- price:成交金額 (Trading Value)
+- price:成交筆數 (Trade Count)
+- price:漲跌價差 (Price Change)
+
+### Adjusted Price Data
+- etl:adj_close (Adjusted close)
+- etl:adj_high (Adjusted high)
+- etl:adj_low (Adjusted low)
+- etl:adj_open (Adjusted open)
+
+### Broker Data
+- etl:broker_transactions:top15_buy
+- etl:broker_transactions:top15_sell
+
+### Fundamental Features (Common)
+- fundamental_features:ROE稅後 (ROE after tax)
+- fundamental_features:ROA稅後息前 (ROA)
+- fundamental_features:營業利益率 (Operating margin)
+- fundamental_features:稅後淨利率 (Net profit margin)
+- fundamental_features:營收成長率 (Revenue growth rate)
+- fundamental_features:每股稅後淨利 (EPS-like metric)
+- fundamental_features:每股營業額 (Revenue per share)
+- fundamental_features:每股現金流量 (Cash flow per share)
+- fundamental_features:流動比率 (Current ratio)
+- fundamental_features:速動比率 (Quick ratio)
+- fundamental_features:負債比率 (Debt ratio)
+
+### Financial Statements (Key Items)
+- financial_statement:每股盈餘 (EPS)
+- financial_statement:營業收入 (Revenue)
+- financial_statement:營業毛利 (Gross profit)
+- financial_statement:營業利益 (Operating income)
+- financial_statement:稅前淨利 (Pre-tax income)
+- financial_statement:綜合損益總額 (Comprehensive income)
+- financial_statement:現金及約當現金 (Cash)
+- financial_statement:流動資產 (Current assets)
+- financial_statement:流動負債 (Current liabilities)
+- financial_statement:股東權益總額 (Total equity)
+
+### Price-Earnings Ratios
+- price_earning_ratio:本益比 (P/E ratio)
+- price_earning_ratio:股價淨值比 (P/B ratio)
+- price_earning_ratio:殖利率 (Dividend yield)
+
+### Monthly Revenue
+- monthly_revenue:去年同月增減(%) (YoY growth %)
+- monthly_revenue:上月比較增減(%) (MoM growth %)
+- monthly_revenue:當月營收 (Monthly revenue)
+- monthly_revenue:去年累計營收 (YTD revenue last year)
+- monthly_revenue:前期比較增減(%) (Period growth %)
+
+### Institutional Investors
+- institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商) (Foreign net buy/sell)
+- institutional_investors_trading_summary:投信買賣超股數 (Investment trust net buy/sell)
+- institutional_investors_trading_summary:自營商買賣超股數(自行買賣) (Dealer net buy/sell)
+- institutional_investors_trading_summary:外陸資買進股數(不含外資自營商) (Foreign buy)
+- institutional_investors_trading_summary:投信買進股數 (Investment trust buy)
+
+### Margin Trading
+- margin_transactions:融資買進 (Margin buy)
+- margin_transactions:融資賣出 (Margin sell)
+- margin_transactions:融資餘額 (Margin balance)
+- margin_transactions:融券買進 (Short covering)
+- margin_transactions:融券賣出 (Short sell)
+- margin_transactions:融券餘額 (Short balance)
+
+**Technical Indicators**:
+Technical indicators are available via `data.indicator()` function (NOT `data.get()`):
+- `rsi = data.indicator('RSI', timeperiod=14)` - Relative Strength Index
+- `macd = data.indicator('MACD')` - Moving Average Convergence Divergence
+- `bbands = data.indicator('BBANDS', timeperiod=20)` - Bollinger Bands
+- `sma = data.indicator('SMA', timeperiod=20)` - Simple Moving Average
+- Many more available via TA-Lib and pandas-ta libraries
+
+**IMPORTANT NOTES**:
+- Use `data.indicator('RSI')` NOT `data.get('indicator:RSI')`
+- Always use the EXACT dataset key as shown above (e.g., `financial_statement:每股盈餘` not `fundamental_features:EPS`)
+- Institutional investor data uses `institutional_investors_trading_summary:` prefix, NOT `etl:*:strength` or short forms
+
+## Code Requirements
+
+Your generated code MUST follow these exact requirements:
+
+1. **Data Loading**: Use `data.get('dataset_name')` to load datasets
+2. **Factor Calculation**: Create factor signals using pandas operations
+3. **Signal DataFrame**: Generate a boolean DataFrame named `signal` where:
+   - Rows = dates
+   - Columns = stock_ids
+   - True = hold this stock on this date
+   - False = do not hold
+4. **Output Variable**: Must define `signal` variable (do NOT call sim() - backtesting is handled separately)
+5. **No Imports**: Do NOT include any import statements (they will be provided)
+6. **Shift Forward**: Use `.shift(1)` or higher to avoid look-ahead bias (NEVER use negative shifts)
+7. **Valid Syntax**: Code must be syntactically correct Python/pandas code
+
+## Strategy Structure Template
+
+```python
+# 1. Load data
+close = data.get('price:收盤價')
+volume = data.get('price:成交股數')
+# ... load other datasets from the AVAILABLE list above
+
+# 2. Calculate factors
+# Example: momentum factor
+returns = close.pct_change(20)
+factor1 = returns.shift(1)  # Shift forward to avoid look-ahead
+
+# Example: volume factor
+avg_volume = volume.rolling(60).mean()
+factor2 = (volume / avg_volume).shift(1)
+
+# 3. Combine factors
+combined_factor = factor1 * 0.5 + factor2 * 0.5
+
+# 4. Apply filters (CRITICAL for quality)
+# Liquidity filter: CRITICAL - prevent market impact and execution risk
+# Rule: Daily trading value should be 50x of position size (2% impact limit)
+# Portfolio: 20M TWD total, variable stock count (6-12 stocks)
+# Worst case: 6 stocks = 3.33M/stock → need 167M minimum liquidity
+# Conservative standard: Use 150M to ensure safety across all scenarios
+# This ensures our trades are <2% of daily volume (industry standard)
+trading_value = data.get('price:成交金額')
+liquidity_filter = trading_value.rolling(20).mean().shift(1) > 150_000_000
+
+# 5. Select stocks and define signal
+signal = combined_factor[liquidity_filter].is_largest(8)
+
+# Note: Do NOT call sim() - backtesting is handled separately
+```
+
+## Constraints
+
+- Do NOT use any import statements
+- Do NOT use file I/O operations
+- Do NOT call external APIs
+- Do NOT use eval(), exec(), or compile()
+- Always shift factors forward (shift(1+)) to avoid look-ahead bias
+- Position DataFrame must have datetime index and stock_id columns
+- Select 6-12 stocks using `.is_largest(n)` or `.is_smallest(n)`
+- **CRITICAL**: ONLY use datasets from the "Available Datasets" section above
+
+## Performance Constraints (CRITICAL)
+
+**IMPORTANT**: Your strategy MUST complete execution within 10 minutes. Follow these rules:
+
+1. **Limit Datasets**: Use AT MOST 3-4 datasets total (price data counts as 1 dataset)
+2. **AVOID EXPENSIVE OPERATIONS**:
+   - ❌ **NO `.rank()` operations** - These are extremely slow on large DataFrames
+   - ❌ **NO complex rolling calculations** with large windows (>60 days)
+   - ❌ **NO nested loops** or complex operations
+3. **PREFER FAST OPERATIONS**:
+   - ✅ Simple arithmetic operations (+, -, *, /)
+   - ✅ Rolling mean/std with small windows (≤30 days)
+   - ✅ pct_change() with reasonable periods (≤20 days)
+   - ✅ Simple comparisons and filters
+4. **Keep It Simple**: Simpler strategies execute faster and often perform better
+
+## Previous Iteration Results (if any)
+
+{history}
+
+## Your Task
+
+Generate a complete, executable Finlab trading strategy that:
+1. **Uses ONLY datasets from the available list above** (this is critical!)
+2. **KEEPS IT SIMPLE**: Use AT MOST 3-4 datasets and 2-3 factors
+3. **AVOIDS EXPENSIVE OPERATIONS**: NO rank(), minimal rolling calculations
+4. **MANDATORY liquidity filter**: trading value 20MA > 150M TWD (see example above for exact implementation)
+5. Selects 6-12 stocks
+6. Returns valid Python code only (no explanations)
+7. If previous iterations exist, learn from successes/failures and try SIMPLER approaches
+
+**Remember**: Simpler strategies that execute fast are better than complex strategies that timeout!
+
+Return ONLY the Python code, enclosed in ```python code blocks. No explanations before or after.

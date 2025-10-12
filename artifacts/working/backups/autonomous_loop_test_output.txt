@@ -1,0 +1,131 @@
+Testing autonomous loop...
+
+Note: Running without real finlab data - execution will fail
+      This tests the loop mechanism, not actual strategy performance
+
+
+============================================================
+AUTONOMOUS LEARNING LOOP - START
+============================================================
+Model: google/gemini-2.5-flash
+Max iterations: 3
+
+
+============================================================
+ITERATION 0
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7937 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2469 chars)
+✅ Strategy generated (2469 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 7b15a9adc74a8af5
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter0.py
+
+============================================================
+ITERATION 1
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (8341 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2543 chars)
+✅ Strategy generated (2543 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: cd5c1162af9aa913
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter1.py
+
+============================================================
+ITERATION 2
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (8341 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2592 chars)
+✅ Strategy generated (2592 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: f944e76f3eefe212
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter2.py
+
+============================================================
+AUTONOMOUS LEARNING LOOP - COMPLETE
+============================================================
+Total time: 14.3s
+Total iterations: 3
+✅ Successful: 0
+❌ Failed: 3
+   - Validation failures: 0
+   - Execution failures: 3
+
+Success rate: 0.0%
+
+============================================================
+TEST RESULTS
+============================================================
+Loop completed: 3 iterations
+Time per iteration: 4.8s
+
+✅ Autonomous loop mechanism verified
