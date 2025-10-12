@@ -19,13 +19,14 @@ import time
 
 from history import IterationHistory
 from prompt_builder import PromptBuilder
-from validate_code import validate_code
+from scripts.validate_code import validate_code
 from sandbox_simple import execute_strategy_safe
 from poc_claude_test import generate_strategy
 from fix_dataset_keys import fix_dataset_keys
 from static_validator import validate_code as static_validate
 from src.failure_tracker import FailureTracker
 from src.constants import METRIC_SHARPE, CHAMPION_FILE
+from src.repository.hall_of_fame import HallOfFameRepository
 
 
 @dataclass
@@ -95,6 +96,8 @@ class AutonomousLoop:
         self.prompt_builder = PromptBuilder()
 
         # Champion tracking and failure learning
+        # C1 Fix: Use Hall of Fame repository for unified champion persistence
+        self.hall_of_fame = HallOfFameRepository()
         self.champion: Optional[ChampionStrategy] = self._load_champion()
         self.failure_tracker = FailureTracker()
 
@@ -341,25 +344,56 @@ class AutonomousLoop:
         return (is_valid and execution_success), status
 
     def _load_champion(self) -> Optional[ChampionStrategy]:
-        """Load champion strategy from disk if it exists.
+        """Load champion strategy from Hall of Fame.
+
+        C1 Fix: Uses unified Hall of Fame API instead of direct JSON file access.
+        Falls back to legacy champion_strategy.json if Hall of Fame is empty
+        (for backward compatibility during migration).
 
         Returns:
-            ChampionStrategy if file exists and is valid, None otherwise
+            ChampionStrategy if champion exists, None otherwise
         """
         import json
         import os
 
-        if not os.path.exists(CHAMPION_FILE):
-            return None
+        # Try Hall of Fame first (unified persistence)
+        genome = self.hall_of_fame.get_current_champion()
+        if genome:
+            # Convert StrategyGenome → ChampionStrategy
+            # Extract iteration_num from parameters (stored during save)
+            iteration_num = genome.parameters.get('__iteration_num__', 0)
 
-        try:
-            with open(CHAMPION_FILE, 'r') as f:
-                data = json.load(f)
-            return ChampionStrategy.from_dict(data)
-        except (json.JSONDecodeError, TypeError, KeyError, ValueError) as e:
-            print(f"Warning: Could not load champion strategy: {e}")
-            print("Starting without champion")
-            return None
+            # Remove metadata from parameters
+            clean_params = {k: v for k, v in genome.parameters.items() if not k.startswith('__')}
+
+            return ChampionStrategy(
+                iteration_num=iteration_num,
+                code=genome.strategy_code,
+                parameters=clean_params,
+                metrics=genome.metrics,
+                success_patterns=genome.success_patterns,
+                timestamp=genome.created_at
+            )
+
+        # Fallback: Legacy champion_strategy.json (migration support)
+        if os.path.exists(CHAMPION_FILE):
+            try:
+                with open(CHAMPION_FILE, 'r') as f:
+                    data = json.load(f)
+                champion = ChampionStrategy.from_dict(data)
+
+                # Migrate to Hall of Fame automatically
+                print(f"Migrating legacy champion from {CHAMPION_FILE} to Hall of Fame...")
+                self._save_champion_to_hall_of_fame(champion)
+                print("✅ Migration complete")
+
+                return champion
+            except (json.JSONDecodeError, TypeError, KeyError, ValueError) as e:
+                print(f"Warning: Could not load legacy champion: {e}")
+                print("Starting without champion")
+                return None
+
+        return None
 
     def _update_champion(
         self,
@@ -451,42 +485,38 @@ class AutonomousLoop:
         logger.info(f"New champion: Iteration {iteration_num}, Sharpe {metrics.get(METRIC_SHARPE, 0):.4f}")
 
     def _save_champion(self) -> None:
-        """Save champion strategy to JSON file with atomic write.
+        """Save champion strategy to Hall of Fame.
 
-        Uses tempfile + atomic rename to prevent corruption from concurrent access.
-        Creates parent directory if needed and writes champion data
-        in human-readable format with proper indentation.
+        C1 Fix: Uses unified Hall of Fame API instead of direct JSON file access.
+        Automatically classifies strategy into appropriate tier based on Sharpe ratio.
         """
-        import json
-        import os
-        import tempfile
+        if not self.champion:
+            return
 
-        # Ensure directory exists if path includes directory
-        dir_path = os.path.dirname(CHAMPION_FILE)
-        if dir_path:
-            os.makedirs(dir_path, exist_ok=True)
+        self._save_champion_to_hall_of_fame(self.champion)
 
-        # Write to temporary file first
-        # Use same directory as target to ensure atomic rename works (same filesystem)
-        temp_fd, temp_path = tempfile.mkstemp(
-            dir=dir_path or '.',
-            prefix='.champion_',
-            suffix='.tmp'
+    def _save_champion_to_hall_of_fame(self, champion: ChampionStrategy) -> None:
+        """Save champion to Hall of Fame repository.
+
+        Helper method to convert ChampionStrategy format and persist to Hall of Fame.
+        Used both for new champions and legacy migrations.
+
+        Args:
+            champion: ChampionStrategy to save
+        """
+        # Add iteration_num to parameters for later retrieval
+        # Use __iteration_num__ prefix to distinguish from strategy parameters
+        params_with_metadata = champion.parameters.copy()
+        params_with_metadata['__iteration_num__'] = champion.iteration_num
+
+        # Save to Hall of Fame (automatic tier classification)
+        self.hall_of_fame.add_strategy(
+            template_name='autonomous_generated',  # Autonomous loop strategies
+            parameters=params_with_metadata,
+            metrics=champion.metrics,
+            strategy_code=champion.code,
+            success_patterns=champion.success_patterns
         )
-
-        try:
-            # Write champion data to temp file
-            with os.fdopen(temp_fd, 'w') as f:
-                json.dump(self.champion.to_dict(), f, indent=2)
-
-            # Atomic rename - POSIX guarantees atomicity
-            os.replace(temp_path, CHAMPION_FILE)
-
-        except Exception as e:
-            # Clean up temp file on error
-            if os.path.exists(temp_path):
-                os.remove(temp_path)
-            raise RuntimeError(f"Failed to save champion: {e}")
 
     def _compare_with_champion(
         self,

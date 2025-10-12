@@ -75,3 +75,13 @@ dmypy.json
 
 # Documentation
 docs/_build/
+
+# Artifacts (generated files from reorganization)
+artifacts/strategies/generated_strategy_iter*.py
+artifacts/strategies/generated_strategy_loop_iter*.py
+artifacts/logs/*.log
+artifacts/reports/*.json
+
+# Backup directories
+.backup_pre_reorg_*/
+.claude.backup-*/

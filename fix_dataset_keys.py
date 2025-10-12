@@ -26,9 +26,30 @@ KEY_FIXES = {
     # ROE alternatives (use fundamental_features version if available)
     "fundamental_features:ROE": "fundamental_features:ROE稅後",
 
-    # Note: etl:investment_trust_buy_sell_summary:strength does NOT exist
-    # Use institutional_investors_trading_summary:投信買賣超股數 instead
+    # Institutional investor fixes - these etl:*:strength keys do NOT exist
     "etl:investment_trust_buy_sell_summary:strength": "institutional_investors_trading_summary:投信買賣超股數",
+    "etl:foreign_main_force_buy_sell_summary:strength": "institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)",
+    "etl:dealer_buy_sell_summary:strength": "institutional_investors_trading_summary:自營商買賣超股數(自行買賣)",
+
+    # Common non-existent aggregated keys - map to proper institutional investors data
+    "foreign_main_force_buy_sell_summary": "institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)",
+    "investment_trust_buy_sell_summary": "institutional_investors_trading_summary:投信買賣超股數",
+    "dealer_buy_sell_summary": "institutional_investors_trading_summary:自營商買賣超股數(自行買賣)",
+    "three_main_forces_buy_sell_summary": "institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)",
+
+    # Financial statement fixes (wrong category - use financial_statement not fundamental_features)
+    "fundamental_features:EPS": "financial_statement:每股盈餘",
+    "fundamental_features:每股盈餘": "financial_statement:每股盈餘",
+    "fundamental_features:營業收入": "financial_statement:營業收入",
+
+    # NOTE: Technical indicators are available via data.indicator() function, NOT data.get()
+    # The LLM should use: data.indicator('RSI', timeperiod=14)
+    # NOT: data.get('indicator:RSI')
+    # We cannot auto-fix this as it requires changing the function call, not just the key
+
+    # Market value variations
+    "market_value": "etl:market_value",
+    "etl:stock_market_value": "etl:market_value",
 }
 
 
@@ -44,15 +65,36 @@ def fix_dataset_keys(code: str) -> Tuple[str, List[str]]:
     fixes_applied = []
     fixed_code = code
 
-    # Find all data.get() calls
+    # STEP 1: Fix indicator calls (data.get('indicator:XXX') → data.indicator('XXX'))
+    indicator_pattern = r"data\.get\(['\"]indicator:([^'\"]+)['\"]\)"
+    indicator_matches = list(re.finditer(indicator_pattern, code))
+
+    for match in indicator_matches:
+        indicator_name = match.group(1)
+        old_call = match.group(0)
+        new_call = f"data.indicator('{indicator_name}')"
+
+        fixed_code = fixed_code.replace(old_call, new_call)
+        fix_msg = f"Fixed: data.get('indicator:{indicator_name}') → data.indicator('{indicator_name}')"
+        fixes_applied.append(fix_msg)
+
+    # STEP 2: Fix incorrect dataset keys
     pattern = r"data\.get\(['\"]([^'\"]+)['\"]\)"
 
-    for match in re.finditer(pattern, code):
+    for match in re.finditer(pattern, fixed_code):
         original_key = match.group(1)
+
+        # Skip if already an indicator call
+        if original_key.startswith('indicator:'):
+            continue
 
         # Check if key needs fixing
         if original_key in KEY_FIXES:
             correct_key = KEY_FIXES[original_key]
+
+            # Check if key is unfixable (mapped to None)
+            if correct_key is None:
+                continue
 
             # Replace in code
             old_call = f"data.get('{original_key}')"

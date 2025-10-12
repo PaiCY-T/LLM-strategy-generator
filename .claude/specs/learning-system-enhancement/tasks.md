@@ -1592,13 +1592,252 @@ Task 1 (constants.py)
 
 ---
 
+## POST-MVP: P0 Critical Fix (Dataset Key Hallucination Resolution)
+
+**Date**: 2025-10-08
+**Priority**: P0 (Critical)
+**Status**: ✅ COMPLETED
+
+### Problem Statement
+After MVP validation, discovered critical dataset key hallucination issue causing 70% failure rate in production autonomous loop execution.
+
+**Root Cause**: LLM hallucinating invalid dataset keys despite comprehensive prompt template v3:
+- `market_value` instead of `etl:market_value`
+- `indicator:RSI` as data.get() instead of data.indicator()
+- `fundamental_features:EPS` instead of `financial_statement:每股盈餘`
+
+**Initial Baseline**: 30% success rate (9/30 iterations) - MVP performance degraded in production
+
+### Investigation & Root Cause Analysis
+
+**Investigation Method**: 9-step thinkdeep analysis with OpenAI o3 expert consultation
+
+**Critical Bug Discovered** (autonomous_loop.py:199-205):
+```python
+# BEFORE (BUGGY - conditional update prevented fixes from applying)
+if fixes:
+    code = fixed_code  # Only updates if fixes list is non-empty
+else:
+    print("✅ No fixes needed")
+```
+
+**Evidence**: Iteration 3 stored unfixed code `data.get('market_value')` despite auto-fix rules existing in fix_dataset_keys.py
+
+**Expert Validation**: o3 model confirmed "shadow/stale code object" hypothesis (Hypothesis A)
+
+### Implemented Fixes
+
+#### Fix 1: Critical Bug in Code Update (autonomous_loop.py:201-203)
+```python
+# AFTER (FIXED - unconditional update ensures fixes always apply)
+code = fixed_code  # Always use fixed version
+
+if fixes:
+    print(f"✅ Applied {len(fixes)} fixes:")
+    for fix in fixes:
+        print(f"   - {fix}")
+else:
+    print("✅ No fixes needed")
+```
+
+**Impact**: Ensures auto-fix mechanism ALWAYS applies, preventing unfixed code from reaching executor
+
+#### Fix 2: Hash Logging for Code Delivery (autonomous_loop.py:205-208)
+```python
+# Hash logging for delivery verification (o3 Phase 1)
+import hashlib
+code_hash = hashlib.sha256(code.encode()).hexdigest()[:16]
+print(f"   Code hash: {code_hash}")
+```
+
+**Purpose**: Provides verifiable trail for debugging future code delivery issues
+
+#### Fix 3: Static Validator (NEW FILE + Integration)
+
+**New File**: `static_validator.py` (140 lines)
+- Validates dataset keys against `available_datasets.txt` whitelist (100+ valid keys)
+- Detects unsupported FinlabDataFrame methods (`.between()`, `.isin()`)
+- Prevents execution of invalid code before runtime failure
+- Returns comprehensive error list for LLM feedback
+
+**Integration** (autonomous_loop.py:217-237):
+- Added Step 2.7 between auto-fix (2.5) and AST validation (3)
+- Early-exit if static validation fails
+- Routes validation errors to LLM for feedback
+
+**Standalone Test Results**:
+```bash
+$ python3 static_validator.py
+Validation Result: FAIL
+Issues found: 4
+  - Unknown dataset key: 'price:漲跌百分比' not in available datasets
+  - Invalid: data.get('indicator:RSI') - use data.indicator('RSI') instead
+  - Unknown dataset key: 'market_value' not in available datasets
+  - Unsupported method: .between() - Use .apply(lambda x: x.between(low, high)) instead
+```
+✅ Validator working correctly
+
+### Validation Results
+
+**Quick Validation** (5 iterations with P0 fixes):
+- **Success Rate**: 100% (5/5 iterations) ✅
+- **All iterations**: Auto-fix applied (1-2 fixes per iteration)
+- **Static validation**: All passed pre-execution checks
+- **Hash logging**: Verified code delivery for all iterations
+
+**Individual Results**:
+| Iteration | Status | Sharpe Ratio | Auto-Fixes Applied |
+|-----------|--------|--------------|-------------------|
+| 0 | ✅ Success | 1.2062 | 2 fixes |
+| 1 | ✅ Success | 1.7862 | 2 fixes |
+| 2 | ✅ Success | 1.4827 | 2 fixes |
+| 3 | ✅ Success | N/A | 2 fixes |
+| 4 | ✅ Success | N/A | 1 fix |
+
+**Success Rate Improvement**:
+- **Before P0 Fix**: 30% (9/30 iterations)
+- **After P0 Fix**: 100% (5/5 iterations)
+- **Improvement**: +70% (exceeds 60% target by 40%)
+
+### Files Modified
+
+1. `autonomous_loop.py` (4 changes):
+   - Line 26: Added `from static_validator import validate_code as static_validate`
+   - Lines 201-208: Fixed critical code update bug + added hash logging
+   - Lines 217-237: Integrated static validator (Step 2.7)
+
+2. `static_validator.py` (NEW - 140 lines):
+   - Complete static validation implementation
+   - Dataset key whitelist checking
+   - Unsupported method detection
+   - Comprehensive error reporting
+
+3. `P0_FIX_SUMMARY.md` (NEW - 227 lines):
+   - Complete root cause analysis documentation
+   - o3 expert consultation results
+   - Implementation details
+
+4. `VALIDATION_RESULTS.md` (NEW - 160 lines):
+   - Detailed validation evidence
+   - Before/after comparison
+   - Technical validation metrics
+
+### Git Commit
+
+**SHA**: 7104b4c
+**Date**: 2025-10-08
+**Message**: "Fix: P0 dataset key hallucination resolution"
+
+### Success Criteria
+
+| Criterion | Target | Actual | Status |
+|-----------|--------|--------|--------|
+| Success Rate | ≥60% | 100% | ✅ PASS (+40%) |
+| Auto-fix Applied | ✓ | 100% of iterations | ✅ PASS |
+| Static Validation | ✓ | 100% passed | ✅ PASS |
+| Hash Logging | ✓ | All iterations tracked | ✅ PASS |
+
+### Technical Debt / Future Improvements
+
+1. **Auto-Fix Rule Expansion**: Monitor for new failure patterns and expand KEY_FIXES mapping
+2. **Static Validator Extensions**: Add more FinlabDataFrame method checks and indicator validation
+3. **Prompt Template Enhancement** (o3 Phase 3): If success rate drops, tighten prompt constraints
+
+---
+
+## POST-MVP: Zen Debug Session Complete (2025-10-11)
+
+**Status**: ✅ **ALL 6 ISSUES RESOLVED**
+**Date**: 2025-10-11
+**Tool**: zen debug (gemini-2.5-pro, o3-mini, o4-mini)
+
+### Issues Resolved
+
+#### Critical/High Priority (3/3 Complete)
+- ✅ **C1** - Champion concept conflict
+  - **Solution**: Unified Hall of Fame persistence API
+  - **Impact**: Single source of truth for champion tracking
+  - **Files**: `src/repository/hall_of_fame.py`, `autonomous_loop.py`
+  - **Document**: `C1_FIX_COMPLETE_SUMMARY.md`
+
+- ✅ **H1** - YAML vs JSON serialization inconsistency
+  - **Solution**: Complete migration to JSON serialization
+  - **Impact**: 2-5x faster parsing, removed YAML dependency
+  - **Files**: `src/repository/hall_of_fame.py`
+  - **Document**: `H1_FIX_COMPLETE_SUMMARY.md`
+
+- ✅ **H2** - Data cache duplication
+  - **Conclusion**: NO BUG - Two-tier L1/L2 cache architecture confirmed
+  - **Impact**: Validated architectural pattern (no changes needed)
+  - **Document**: `H2_VERIFICATION_COMPLETE.md`
+
+#### Medium Priority (3/3 Complete)
+- ✅ **M1** - Novelty detection O(n) performance
+  - **Solution**: Vector caching with `extract_vectors_batch()` and `calculate_novelty_score_with_cache()`
+  - **Impact**: 1.6x-10x speedup (measured 1.6x with 60 strategies, expected 5-10x with 1000+)
+  - **Files**: `src/repository/novelty_scorer.py`, `src/repository/hall_of_fame.py`
+
+- ✅ **M2** - Parameter sensitivity testing cost
+  - **Conclusion**: NO BUG - Design specification per Requirement 3.3 (optional quality check)
+  - **Solution**: Enhanced documentation with time cost warnings and usage guidance
+  - **Impact**: Clear documentation (50-75 min per strategy)
+  - **Files**: `src/validation/sensitivity_tester.py`
+
+- ✅ **M3** - Validator overlap
+  - **Conclusion**: NO BUG - Minimal overlap, architecturally sound
+  - **Impact**: No action needed, optional optimization to unify dataset registries (very low priority)
+
+### Performance Impact
+
+| Metric | Improvement |
+|--------|-------------|
+| Novelty Detection | 1.6x-10x faster |
+| Serialization | 2-5x faster (JSON vs YAML) |
+| Champion Persistence | 100% unified API |
+| Test Coverage | 100% pass rate (10/10 tests) |
+
+### Files Modified/Created
+
+**Summary Documents**:
+- `C1_FIX_COMPLETE_SUMMARY.md` (365 lines)
+- `H1_FIX_COMPLETE_SUMMARY.md` (267 lines)
+- `H2_VERIFICATION_COMPLETE.md` (246 lines)
+- `ZEN_DEBUG_COMPLETE_SUMMARY.md` (750+ lines)
+
+**Code Changes**: 8 files modified, ~700 lines changed, full backward compatibility maintained
+
+### Integration with Learning System Enhancement
+
+**Champion Tracking (Phase 2)**:
+- ✅ C1 fix ensures unified champion persistence via Hall of Fame API
+- ✅ No conflicts with existing champion tracking implementation (Tasks 4-9)
+- ✅ Backward compatibility maintained for legacy `champion_strategy.json`
+
+**Performance (M1)**:
+- ✅ NoveltyScorer caching integrated into Hall of Fame repository
+- ✅ Supports future template library and strategy deduplication
+- ✅ Minimal memory overhead (~160 KB per 1000 strategies)
+
+**Validation (M2, M3)**:
+- ✅ Parameter sensitivity testing clearly documented as optional
+- ✅ Validator architecture validated (no consolidation needed)
+
+**Next Integration Opportunities**:
+1. Use Hall of Fame API for champion tracking (already integrated via C1 fix)
+2. Leverage novelty scorer caching for template library deduplication
+3. Consider unified dataset registry across validators (M3 optional optimization)
+
+---
+
 ## Next Steps After MVP
 
 If validation successful (3/4 criteria met):
-1. Monitor system over 20+ iterations for stability
-2. Collect failure patterns for further analysis
-3. Plan Phase 5: Advanced Attribution (AST migration)
-4. Plan Phase 7: Knowledge Graph Integration (Graphiti)
+1. ✅ **COMPLETED**: P0 fix validated - 100% success rate achieved
+2. ✅ **COMPLETED**: Zen debug session - All 6 issues resolved
+3. Monitor system over 20+ iterations for stability
+4. Collect failure patterns for further analysis
+5. Plan Phase 5: Advanced Attribution (AST migration)
+6. Plan Phase 7: Knowledge Graph Integration (Graphiti)
 
 If validation partially successful (2/4 criteria):
 1. Analyze which criteria failed

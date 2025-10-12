@@ -131,7 +131,16 @@ combined_factor = (
 
 # 4. Apply filters (CRITICAL for quality)
 trading_value = data.get('price:成交金額')
-liquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000
+
+# Liquidity filter: CRITICAL - prevent market impact and execution risk
+# Rule: Daily trading value should be 50x of position size (2% impact limit)
+# Portfolio: 20M TWD total, variable stock count (6-12 stocks)
+# Worst case: 6 stocks = 3.33M/stock → need 167M minimum liquidity
+# Conservative standard: Use 150M to ensure safety across all scenarios
+# This ensures our trades are <2% of daily volume (industry standard)
+liquidity_filter = trading_value.rolling(20).mean().shift(1) > 150_000_000
+
+# Price filter: Avoid penny stocks
 price_filter = close.shift(1) > 10
 
 all_filters = liquidity_filter & price_filter
@@ -169,7 +178,12 @@ FinlabDataFrame extends pandas with:
 ## Critical Rules
 
 1. **No Look-Ahead Bias**: ALWAYS use `.shift(1)` or higher on factors
-2. **Liquidity Filter**: Use trading value filter (recommended: >50M TWD)
+2. **Liquidity Filter**: MANDATORY minimum 150M TWD daily trading value
+   - Portfolio: 20M TWD total capital, 6-12 stocks (variable)
+   - Worst case: 6 stocks = 3.33M per position → need 167M (50x safety)
+   - Conservative standard: 150M ensures <2% market impact for all scenarios
+   - This prevents slippage and ensures reliable entry/exit at fair prices
+   - Use: `trading_value.rolling(20).mean().shift(1) > 150_000_000`
 3. **Position Size**: Select 6-12 stocks for diversification
 4. **No Imports**: Do NOT include import statements
 5. **Valid Syntax**: Code must be executable Python

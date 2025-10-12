@@ -11,7 +11,7 @@ from pathlib import Path
 class PromptBuilder:
     """Builds prompts with iteration feedback for continuous improvement."""
 
-    def __init__(self, template_file: str = "prompt_template_v1.txt"):
+    def __init__(self, template_file: str = "prompt_template_v3_comprehensive.txt"):
         """Initialize prompt builder.
 
         Args:

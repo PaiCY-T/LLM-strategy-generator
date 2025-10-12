@@ -42,13 +42,13 @@ Standardized file paths for data persistence and historical tracking.
 All paths are relative to the project root directory.
 """
 
-CHAMPION_FILE = 'champion_strategy.json'
+CHAMPION_FILE = 'artifacts/data/champion_strategy.json'
 """str: Path to champion strategy persistence file - stores best-performing strategy"""
 
-FAILURE_PATTERNS_FILE = 'failure_patterns.json'
+FAILURE_PATTERNS_FILE = 'artifacts/data/failure_patterns.json'
 """str: Path to failure patterns file - stores anti-patterns and failed configurations"""
 
-HISTORY_FILE = 'mvp_final_clean_history.json'
+HISTORY_FILE = 'artifacts/data/mvp_final_clean_history.json'
 """str: Path to historical strategy file - stores all evaluated strategies"""
 
 
