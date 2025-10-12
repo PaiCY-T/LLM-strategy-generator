@@ -1,0 +1,250 @@
+{
+  "checks": [
+    {
+      "iteration": 0,
+      "threshold_found": 100000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.054636",
+      "strategy_file": "generated_strategy_loop_iter0.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 1,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.071429",
+      "strategy_file": "generated_strategy_loop_iter1.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 2,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.131541",
+      "strategy_file": "generated_strategy_loop_iter2.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 3,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.177118",
+      "strategy_file": "generated_strategy_loop_iter3.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 4,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.233093",
+      "strategy_file": "generated_strategy_loop_iter4.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 5,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.279647",
+      "strategy_file": "generated_strategy_loop_iter5.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 6,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.319741",
+      "strategy_file": "generated_strategy_loop_iter6.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 7,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.354550",
+      "strategy_file": "generated_strategy_loop_iter7.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 8,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.388571",
+      "strategy_file": "generated_strategy_loop_iter8.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 9,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.444070",
+      "strategy_file": "generated_strategy_loop_iter9.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 10,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.776211",
+      "strategy_file": "generated_strategy_loop_iter10.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 11,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.832171",
+      "strategy_file": "generated_strategy_loop_iter11.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 12,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.876796",
+      "strategy_file": "generated_strategy_loop_iter12.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 13,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:45.930534",
+      "strategy_file": "generated_strategy_loop_iter13.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 14,
+      "threshold_found": 20000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.001865",
+      "strategy_file": "generated_strategy_loop_iter14.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 15,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.049800",
+      "strategy_file": "generated_strategy_loop_iter15.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 16,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.082670",
+      "strategy_file": "generated_strategy_loop_iter16.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 17,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.124996",
+      "strategy_file": "generated_strategy_loop_iter17.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 18,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.165141",
+      "strategy_file": "generated_strategy_loop_iter18.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 19,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.201109",
+      "strategy_file": "generated_strategy_loop_iter19.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 20,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.254750",
+      "strategy_file": "generated_strategy_loop_iter20.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 21,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:46.305468",
+      "strategy_file": "generated_strategy_loop_iter21.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 22,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:48.835844",
+      "strategy_file": "generated_strategy_loop_iter22.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 23,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:48.953283",
+      "strategy_file": "generated_strategy_loop_iter23.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 24,
+      "threshold_found": 30000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:49.064159",
+      "strategy_file": "generated_strategy_loop_iter24.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 25,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:49.145287",
+      "strategy_file": "generated_strategy_loop_iter25.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 26,
+      "threshold_found": 50000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:49.224701",
+      "strategy_file": "generated_strategy_loop_iter26.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 27,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:49.319114",
+      "strategy_file": "generated_strategy_loop_iter27.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 28,
+      "threshold_found": null,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:49.416009",
+      "strategy_file": "generated_strategy_loop_iter28.py",
+      "min_threshold": 150000000
+    },
+    {
+      "iteration": 29,
+      "threshold_found": 10000000,
+      "compliant": false,
+      "timestamp": "2025-10-10T08:14:49.497557",
+      "strategy_file": "generated_strategy_loop_iter29.py",
+      "min_threshold": 150000000
+    }
+  ],
+  "summary": {
+    "total_checks": 30,
+    "compliant_count": 0,
+    "compliance_rate": 0.0,
+    "last_updated": "2025-10-10T11:04:21.548752"
+  }
+}

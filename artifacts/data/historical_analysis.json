@@ -1,0 +1,62 @@
+{
+  "total_iterations": 125,
+  "code_generation_rate": 1.0,
+  "validation_rate": 1.0,
+  "execution_rate": 0.36,
+  "metrics_rate": 0.36,
+  "overall_success_rate": 0.36,
+  "recent_success_rate": 1.0,
+  "recent_count": 10,
+  "metrics_stats": {
+    "sharpe_ratio": {
+      "min": -0.4329523550801153,
+      "max": 2.4849967333712644,
+      "avg": 1.2381549545562882,
+      "median": 1.2959296796780824
+    },
+    "total_return": {
+      "min": -28.540508603404678,
+      "max": 74.45750946007665,
+      "avg": 26.935218830360533,
+      "median": 29.438825830720077
+    },
+    "max_drawdown": {
+      "min": -49.78149282031987,
+      "max": -5.1747675461778995,
+      "avg": -28.797368978679742,
+      "median": -32.48976756106473
+    }
+  },
+  "error_types": {
+    "Dataset key error": 79,
+    "Other runtime error": 1
+  },
+  "timeline": [
+    {
+      "range": "0-24",
+      "success_rate": 0.32,
+      "count": 25
+    },
+    {
+      "range": "25-49",
+      "success_rate": 0.0,
+      "count": 25
+    },
+    {
+      "range": "50-74",
+      "success_rate": 0.08,
+      "count": 25
+    },
+    {
+      "range": "75-99",
+      "success_rate": 0.48,
+      "count": 25
+    },
+    {
+      "range": "100-124",
+      "success_rate": 0.92,
+      "count": 25
+    }
+  ],
+  "go_no_go": "GO"
+}
