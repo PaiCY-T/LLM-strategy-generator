@@ -315,9 +315,18 @@ class LearningConfig:
 
         # LLM generation settings
         generation = llm.get('generation', {})
-        config['llm_timeout'] = generation.get('timeout', raw.get('llm_timeout', 60))
-        config['llm_temperature'] = generation.get('temperature', raw.get('llm_temperature', 0.7))
-        config['llm_max_tokens'] = generation.get('max_tokens', raw.get('llm_max_tokens', 4000))
+        config['llm_timeout'] = resolve(
+            generation.get('timeout', raw.get('llm_timeout', 60)),
+            60, int
+        )
+        config['llm_temperature'] = resolve(
+            generation.get('temperature', raw.get('llm_temperature', 0.7)),
+            0.7, float
+        )
+        config['llm_max_tokens'] = resolve(
+            generation.get('max_tokens', raw.get('llm_max_tokens', 4000)),
+            4000, int
+        )
 
         # === Innovation Mode ===
         config['innovation_mode'] = llm.get('enabled', raw.get('innovation_mode', True))
@@ -340,23 +349,41 @@ class LearningConfig:
                 config['innovation_rate'] = 100  # Default
 
         llm_retry = learning_loop.get('llm', {})
-        config['llm_retry_count'] = llm_retry.get('retry_count', raw.get('llm_retry_count', 3))
+        config['llm_retry_count'] = resolve(
+            llm_retry.get('retry_count', raw.get('llm_retry_count', 3)),
+            3, int
+        )
 
         # === Backtest Configuration ===
         backtest = raw.get('backtest', {})
-        config['timeout_seconds'] = learning_loop.get('backtest', {}).get('timeout_seconds', raw.get('timeout_seconds', 420))
+        config['timeout_seconds'] = resolve(
+            learning_loop.get('backtest', {}).get('timeout_seconds', raw.get('timeout_seconds', 420)),
+            420, int
+        )
         config['start_date'] = backtest.get('default_start_date', raw.get('start_date', '2018-01-01'))
         config['end_date'] = backtest.get('default_end_date', raw.get('end_date', '2024-12-31'))
 
         transaction_costs = backtest.get('transaction_costs', {})
-        config['fee_ratio'] = transaction_costs.get('default_fee_ratio', raw.get('fee_ratio', 0.001425))
-        config['tax_ratio'] = transaction_costs.get('default_tax_ratio', raw.get('tax_ratio', 0.003))
-        config['resample'] = learning_loop.get('backtest', {}).get('resample', raw.get('resample', 'M'))
+        config['fee_ratio'] = resolve(
+            transaction_costs.get('default_fee_ratio', raw.get('fee_ratio', 0.001425)),
+            0.001425, float
+        )
+        config['tax_ratio'] = resolve(
+            transaction_costs.get('default_tax_ratio', raw.get('tax_ratio', 0.003)),
+            0.003, float
+        )
+        config['resample'] = resolve(
+            learning_loop.get('backtest', {}).get('resample', raw.get('resample', 'M')),
+            'M', str
+        )
 
         # === History & Files ===
         history = learning_loop.get('history', {})
         config['history_file'] = history.get('file', raw.get('history_file', 'artifacts/data/innovations.jsonl'))
-        config['history_window'] = history.get('window', raw.get('history_window', 5))
+        config['history_window'] = resolve(
+            history.get('window', raw.get('history_window', 5)),
+            5, int
+        )
 
         champion = learning_loop.get('champion', {})
         config['champion_file'] = champion.get('file', raw.get('champion_file', 'artifacts/data/champion.json'))
@@ -365,9 +392,18 @@ class LearningConfig:
         config['log_dir'] = logging_cfg.get('log_dir', raw.get('log_dir', 'logs'))
 
         # === Logging ===
-        config['log_level'] = logging_cfg.get('log_level', raw.get('log_level', 'INFO'))
-        config['log_to_file'] = logging_cfg.get('log_to_file', raw.get('log_to_file', True))
-        config['log_to_console'] = logging_cfg.get('log_to_console', raw.get('log_to_console', True))
+        config['log_level'] = resolve(
+            logging_cfg.get('log_level', raw.get('log_level', 'INFO')),
+            'INFO', str
+        )
+        config['log_to_file'] = resolve(
+            logging_cfg.get('log_to_file', raw.get('log_to_file', True)),
+            True, bool
+        )
+        config['log_to_console'] = resolve(
+            logging_cfg.get('log_to_console', raw.get('log_to_console', True)),
+            True, bool
+        )
 
         return config
 
