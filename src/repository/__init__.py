@@ -35,10 +35,16 @@ Usage:
 
 from .hall_of_fame import HallOfFameRepository, StrategyGenome
 from .novelty_scorer import NoveltyScorer, DUPLICATE_THRESHOLD
+from .index_manager import IndexManager
+from .maintenance import MaintenanceManager
+from .pattern_search import PatternSearch
 
 __all__ = [
     'HallOfFameRepository',
     'StrategyGenome',
     'NoveltyScorer',
-    'DUPLICATE_THRESHOLD'
+    'DUPLICATE_THRESHOLD',
+    'IndexManager',
+    'MaintenanceManager',
+    'PatternSearch'
 ]
