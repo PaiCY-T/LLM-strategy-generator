@@ -141,6 +141,7 @@ class LearningLoop:
                 logger.info(f"\n⚠️  Interrupted at iteration {iteration_num}")
                 break
 
+            record = None
             try:
                 # Execute iteration (delegates to IterationExecutor)
                 logger.info(f"\n{'='*60}")
@@ -149,17 +150,11 @@ class LearningLoop:
 
                 record = self.iteration_executor.execute_iteration(iteration_num)
 
-                # Save record (atomic write)
-                self.history.save_record(record)
-                logger.debug(f"Saved iteration {iteration_num} to history")
-
-                # Show progress
-                self._show_progress(iteration_num, record)
-
             except KeyboardInterrupt:
-                logger.info("\n⚠️  KeyboardInterrupt received, finishing current iteration...")
+                logger.info("\n⚠️  KeyboardInterrupt received during iteration execution...")
                 self.interrupted = True
-                break
+                # Note: record will be None, so save will be skipped
+                # This is intentional - partially executed iteration not saved
 
             except Exception as e:
                 logger.error(f"❌ Iteration {iteration_num} failed: {e}", exc_info=True)
@@ -169,6 +164,26 @@ class LearningLoop:
                     raise
 
                 logger.warning("Continuing to next iteration (continue_on_error=True)")
+
+            finally:
+                # Always try to save record if it was completed
+                # Protects against race condition: if SIGINT arrives between
+                # execute_iteration() and save_record(), we still save
+                if record is not None:
+                    try:
+                        self.history.save_record(record)
+                        logger.debug(f"Saved iteration {iteration_num} to history")
+
+                        # Show progress
+                        self._show_progress(iteration_num, record)
+
+                    except Exception as e:
+                        logger.error(f"Failed to save iteration {iteration_num}: {e}")
+
+                # Break after save if interrupted
+                if self.interrupted:
+                    logger.info("Exiting loop due to interruption")
+                    break
 
         # Generate summary
         self._generate_summary(start_iteration)

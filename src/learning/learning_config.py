@@ -133,16 +133,22 @@ class LearningConfig:
         if self.llm_max_tokens < 100:
             raise ValueError(f"llm_max_tokens must be >= 100, got {self.llm_max_tokens}")
 
-        # 6. Date format
+        # 6. Date format and range validation
         try:
-            datetime.strptime(self.start_date, "%Y-%m-%d")
+            start_dt = datetime.strptime(self.start_date, "%Y-%m-%d")
         except ValueError as e:
             raise ValueError(f"start_date invalid format (use YYYY-MM-DD): {self.start_date}")
 
         try:
-            datetime.strptime(self.end_date, "%Y-%m-%d")
+            end_dt = datetime.strptime(self.end_date, "%Y-%m-%d")
         except ValueError as e:
             raise ValueError(f"end_date invalid format (use YYYY-MM-DD): {self.end_date}")
+
+        # Validate date range: start must be before end
+        if start_dt >= end_dt:
+            raise ValueError(
+                f"start_date must be before end_date (got {self.start_date} >= {self.end_date})"
+            )
 
         # 7. Resample frequency
         if self.resample not in ("D", "W", "M"):

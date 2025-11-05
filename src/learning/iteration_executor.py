@@ -110,10 +110,13 @@ class IterationExecutor:
         10. Return record
 
         Args:
-            iteration_num: Current iteration number (0-indexed)
+            iteration_num: Current iteration number (0-indexed, must be >= 0)
 
         Returns:
             IterationRecord with execution results
+
+        Raises:
+            ValueError: If iteration_num is negative
 
         Example:
             >>> executor = IterationExecutor(...)
@@ -121,6 +124,10 @@ class IterationExecutor:
             >>> print(record.classification_level)  # "LEVEL_3"
             >>> print(record.metrics["sharpe_ratio"])  # 1.85
         """
+        # Validate input
+        if iteration_num < 0:
+            raise ValueError(f"iteration_num must be >= 0, got {iteration_num}")
+
         start_time = datetime.now()
         logger.info(f"=== Starting iteration {iteration_num} ===")
 
