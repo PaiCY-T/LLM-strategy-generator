@@ -1,0 +1,22 @@
+{
+  "filePath": ".claude/specs/llm-integration-activation/tasks.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-25T12:40:11.951Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761396011817_qoq0gu5lt",
+      "approvalTitle": "Review tasks.md for llm-integration-activation (14 tasks, 2-3 days)"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-25T14:15:51.081Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761396011817_qoq0gu5lt",
+      "approvalTitle": "Review tasks.md for llm-integration-activation (14 tasks, 2-3 days)"
+    }
+  ]
+}

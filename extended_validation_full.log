@@ -1,0 +1,1315 @@
+2025-10-08 13:55:24,613 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 13:55:24,614 - run_10iteration_validation - INFO - EXTENDED VALIDATION - 30 ITERATIONS
+2025-10-08 13:55:24,615 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 13:55:24,615 - run_10iteration_validation - INFO - Model: gemini-2.5-flash (via Google AI)
+2025-10-08 13:55:24,616 - run_10iteration_validation - INFO - Purpose: Long-term stability monitoring + failure pattern collection
+2025-10-08 13:55:24,616 - run_10iteration_validation - INFO - Expected duration: ~6 minutes (30 iterations × ~12 seconds)
+2025-10-08 13:55:24,617 - run_10iteration_validation - INFO - 
+2025-10-08 13:55:24,617 - __main__ - INFO - ============================================================
+2025-10-08 13:55:24,618 - __main__ - INFO - STARTING EXTENDED VALIDATION - 30 ITERATIONS
+2025-10-08 13:55:24,619 - __main__ - INFO - ============================================================
+2025-10-08 13:55:24,619 - __main__ - INFO - Model: gemini-2.5-flash
+2025-10-08 13:55:24,620 - __main__ - INFO - 
+輸入成功!
+2025-10-08 13:55:28,420 - run_10iteration_validation - INFO - ✅ Finlab data loaded successfully
+2025-10-08 13:55:28,472 - __main__ - INFO - 
+2025-10-08 13:55:28,473 - __main__ - INFO - ============================================================
+2025-10-08 13:55:28,475 - __main__ - INFO - ITERATION 0/29
+2025-10-08 13:55:28,475 - __main__ - INFO - ============================================================
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1759902931.556234   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 0
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (5610 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1871 chars)
+✅ Strategy generated (1871 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: indicator:RSI not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (133 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter0.py
+2025-10-08 13:55:56,144 - __main__ - ERROR - ❌ Iteration 0 FAILED: FAILED
+2025-10-08 13:55:56,145 - __main__ - INFO - 
+2025-10-08 13:55:56,146 - __main__ - INFO - ============================================================
+2025-10-08 13:55:56,146 - __main__ - INFO - ITERATION 1/29
+2025-10-08 13:55:56,147 - __main__ - INFO - ============================================================
+E0000 00:00:1759902956.158840   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 1
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (6107 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2619 chars)
+✅ Strategy generated (2619 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: etl:foreign_main_force_buy_sell_summary:strength not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (168 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter1.py
+2025-10-08 13:56:15,777 - __main__ - ERROR - ❌ Iteration 1 FAILED: FAILED
+2025-10-08 13:56:15,778 - __main__ - INFO - 
+2025-10-08 13:56:15,779 - __main__ - INFO - ============================================================
+2025-10-08 13:56:15,780 - __main__ - INFO - ITERATION 2/29
+2025-10-08 13:56:15,780 - __main__ - INFO - ============================================================
+E0000 00:00:1759902975.786451   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 2
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (6107 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1779 chars)
+✅ Strategy generated (1779 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: indicator:RSI not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (133 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter2.py
+2025-10-08 13:56:35,941 - __main__ - ERROR - ❌ Iteration 2 FAILED: FAILED
+2025-10-08 13:56:35,942 - __main__ - INFO - 
+2025-10-08 13:56:35,942 - __main__ - INFO - ============================================================
+2025-10-08 13:56:35,943 - __main__ - INFO - ITERATION 3/29
+2025-10-08 13:56:35,943 - __main__ - INFO - ============================================================
+E0000 00:00:1759902995.950256   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 3
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7300 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2458 chars)
+✅ Strategy generated (2458 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: etl:foreign_main_force_buy_sell_summary:strength not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (168 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter3.py
+2025-10-08 13:57:01,196 - __main__ - ERROR - ❌ Iteration 3 FAILED: FAILED
+2025-10-08 13:57:01,197 - __main__ - INFO - 
+2025-10-08 13:57:01,198 - __main__ - INFO - ============================================================
+2025-10-08 13:57:01,199 - __main__ - INFO - ITERATION 4/29
+2025-10-08 13:57:01,199 - __main__ - INFO - ============================================================
+E0000 00:00:1759903021.220975   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 4
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7300 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1981 chars)
+✅ Strategy generated (1981 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: fundamental_features:EPS not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (144 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter4.py
+2025-10-08 13:57:22,330 - __main__ - ERROR - ❌ Iteration 4 FAILED: FAILED
+2025-10-08 13:57:22,331 - __main__ - INFO - 
+2025-10-08 13:57:22,331 - __main__ - INFO - ============================================================
+2025-10-08 13:57:22,332 - __main__ - INFO - ITERATION 5/29
+2025-10-08 13:57:22,332 - __main__ - INFO - ============================================================
+
+============================================================
+ITERATION 5
+============================================================
+
+[1/6] Building prompt...
+2025-10-08 13:57:22,333 - prompt_builder - INFO - Forcing exploration mode (iteration 5)
+E0000 00:00:1759903042.343130   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+✅ Prompt ready (6147 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1850 chars)
+✅ Strategy generated (1850 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: indicator:RSI not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (133 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter5.py
+2025-10-08 13:57:42,977 - __main__ - ERROR - ❌ Iteration 5 FAILED: FAILED
+2025-10-08 13:57:42,978 - __main__ - INFO - 
+2025-10-08 13:57:42,978 - __main__ - INFO - ============================================================
+2025-10-08 13:57:42,979 - __main__ - INFO - ITERATION 6/29
+2025-10-08 13:57:42,979 - __main__ - INFO - ============================================================
+E0000 00:00:1759903062.985681   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 6
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7300 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1840 chars)
+✅ Strategy generated (1840 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 2 fixes:
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter6.py
+2025-10-08 13:58:07,143 - __main__ - ERROR - ❌ Iteration 6 FAILED: FAILED
+2025-10-08 13:58:07,144 - __main__ - INFO - 
+2025-10-08 13:58:07,145 - __main__ - INFO - ============================================================
+2025-10-08 13:58:07,145 - __main__ - INFO - ITERATION 7/29
+2025-10-08 13:58:07,146 - __main__ - INFO - ============================================================
+E0000 00:00:1759903087.152927   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 7
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7300 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2924 chars)
+✅ Strategy generated (2924 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter7.py
+2025-10-08 13:58:33,148 - __main__ - ERROR - ❌ Iteration 7 FAILED: FAILED
+2025-10-08 13:58:33,149 - __main__ - INFO - 
+2025-10-08 13:58:33,150 - __main__ - INFO - ============================================================
+2025-10-08 13:58:33,150 - __main__ - INFO - ITERATION 8/29
+2025-10-08 13:58:33,151 - __main__ - INFO - ============================================================
+E0000 00:00:1759903113.158706   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 8
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7300 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2275 chars)
+✅ Strategy generated (2275 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-08 13:58:49,362 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 70.0% (from 50 to 15)
+⚠️  Preservation violation detected - regenerating with stronger constraints...
+2025-10-08 13:58:49,364 - autonomous_loop - WARNING - Iteration 8: Preservation validation failed, retrying generation
+E0000 00:00:1759903129.454533   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 1/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+⚠️ No code block found in response, retrying...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+⚠️ No code block found in response, retrying...
+Calling Google AI with gemini-2.5-flash (attempt 3/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+2025-10-08 14:00:11,603 - autonomous_loop - ERROR - Iteration 8: Retry 1 generation failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+E0000 00:00:1759903211.613069   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 2/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 1s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+✅ Successfully generated strategy (2536 chars)
+✅ Preservation validated after retry 2
+2025-10-08 14:00:59,311 - autonomous_loop - INFO - Iteration 8: Preservation validated on retry 2
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: three_main_forces_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (154 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter8.py
+2025-10-08 14:01:05,077 - __main__ - ERROR - ❌ Iteration 8 FAILED: FAILED
+2025-10-08 14:01:05,091 - __main__ - INFO - 
+2025-10-08 14:01:05,092 - __main__ - INFO - ============================================================
+2025-10-08 14:01:05,093 - __main__ - INFO - ITERATION 9/29
+2025-10-08 14:01:05,094 - __main__ - INFO - ============================================================
+E0000 00:00:1759903265.122593   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 9
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7300 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1857 chars)
+✅ Strategy generated (1857 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter9.py
+2025-10-08 14:01:21,630 - __main__ - ERROR - ❌ Iteration 9 FAILED: FAILED
+2025-10-08 14:01:21,631 - __main__ - INFO - 
+2025-10-08 14:01:21,632 - __main__ - INFO - ============================================================
+2025-10-08 14:01:21,633 - __main__ - INFO - ITERATION 10/29
+2025-10-08 14:01:21,634 - __main__ - INFO - ============================================================
+
+============================================================
+ITERATION 10
+============================================================
+
+[1/6] Building prompt...
+2025-10-08 14:01:21,634 - prompt_builder - INFO - Forcing exploration mode (iteration 10)
+E0000 00:00:1759903281.643748   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+✅ Prompt ready (6148 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1582 chars)
+✅ Strategy generated (1582 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-08 14:01:39,547 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 80.0% (from 50 to 10)
+⚠️  Preservation violation detected - regenerating with stronger constraints...
+2025-10-08 14:01:39,549 - autonomous_loop - WARNING - Iteration 10: Preservation validation failed, retrying generation
+   Retry attempt 1/2...
+2025-10-08 14:01:39,550 - prompt_builder - INFO - Forcing exploration mode (iteration 10)
+E0000 00:00:1759903299.565942   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2153 chars)
+✅ Preservation validated after retry 1
+2025-10-08 14:01:53,294 - autonomous_loop - INFO - Iteration 10: Preservation validated on retry 1
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: investment_trust_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (153 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter10.py
+2025-10-08 14:01:54,979 - __main__ - ERROR - ❌ Iteration 10 FAILED: FAILED
+2025-10-08 14:01:54,980 - __main__ - INFO - 
+2025-10-08 14:01:54,981 - __main__ - INFO - ============================================================
+2025-10-08 14:01:54,982 - __main__ - INFO - ITERATION 11/29
+2025-10-08 14:01:54,982 - __main__ - INFO - ============================================================
+E0000 00:00:1759903314.988648   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 11
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1808 chars)
+✅ Strategy generated (1808 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: etl:foreign_main_force_buy_sell_summary:strength not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (168 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter11.py
+2025-10-08 14:02:13,874 - __main__ - ERROR - ❌ Iteration 11 FAILED: FAILED
+2025-10-08 14:02:13,875 - __main__ - INFO - 
+2025-10-08 14:02:13,876 - __main__ - INFO - ============================================================
+2025-10-08 14:02:13,877 - __main__ - INFO - ITERATION 12/29
+2025-10-08 14:02:13,878 - __main__ - INFO - ============================================================
+E0000 00:00:1759903333.885416   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 12
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2786 chars)
+✅ Strategy generated (2786 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: fundamental_features:EPS not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (144 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter12.py
+2025-10-08 14:02:34,548 - __main__ - ERROR - ❌ Iteration 12 FAILED: FAILED
+2025-10-08 14:02:34,548 - __main__ - INFO - 
+2025-10-08 14:02:34,549 - __main__ - INFO - ============================================================
+2025-10-08 14:02:34,550 - __main__ - INFO - ITERATION 13/29
+2025-10-08 14:02:34,551 - __main__ - INFO - ============================================================
+E0000 00:00:1759903354.559379   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 13
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2520 chars)
+✅ Strategy generated (2520 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-08 14:03:01,184 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 80.0% (from 50 to 10)
+⚠️  Preservation violation detected - regenerating with stronger constraints...
+2025-10-08 14:03:01,185 - autonomous_loop - WARNING - Iteration 13: Preservation validation failed, retrying generation
+E0000 00:00:1759903381.193283   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 1/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 1s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+⚠️ No code block found in response, retrying...
+Calling Google AI with gemini-2.5-flash (attempt 3/3)...
+⚠️ No code block found in response, retrying...
+2025-10-08 14:04:21,684 - autonomous_loop - ERROR - Iteration 13: Retry 1 generation failed: Failed to generate strategy after all retries
+E0000 00:00:1759903461.697391   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 2/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2331 chars)
+✅ Preservation validated after retry 2
+2025-10-08 14:04:46,863 - autonomous_loop - INFO - Iteration 13: Preservation validated on retry 2
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: three_main_forces_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (154 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter13.py
+2025-10-08 14:04:48,779 - __main__ - ERROR - ❌ Iteration 13 FAILED: FAILED
+2025-10-08 14:04:48,780 - __main__ - INFO - 
+2025-10-08 14:04:48,781 - __main__ - INFO - ============================================================
+2025-10-08 14:04:48,781 - __main__ - INFO - ITERATION 14/29
+2025-10-08 14:04:48,782 - __main__ - INFO - ============================================================
+E0000 00:00:1759903488.789396   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 14
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2255 chars)
+✅ Strategy generated (2255 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: fundamental_features:EPS not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (144 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter14.py
+2025-10-08 14:05:12,295 - __main__ - ERROR - ❌ Iteration 14 FAILED: FAILED
+2025-10-08 14:05:12,296 - __main__ - INFO - 
+2025-10-08 14:05:12,297 - __main__ - INFO - ============================================================
+2025-10-08 14:05:12,297 - __main__ - INFO - ITERATION 15/29
+2025-10-08 14:05:12,298 - __main__ - INFO - ============================================================
+
+============================================================
+ITERATION 15
+============================================================
+
+[1/6] Building prompt...
+2025-10-08 14:05:12,299 - prompt_builder - INFO - Forcing exploration mode (iteration 15)
+E0000 00:00:1759903512.306354   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+✅ Prompt ready (6148 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2746 chars)
+✅ Strategy generated (2746 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: etl:foreign_main_force_buy_sell_summary:strength not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (168 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter15.py
+2025-10-08 14:05:33,709 - __main__ - ERROR - ❌ Iteration 15 FAILED: FAILED
+2025-10-08 14:05:33,711 - __main__ - INFO - 
+2025-10-08 14:05:33,712 - __main__ - INFO - ============================================================
+2025-10-08 14:05:33,713 - __main__ - INFO - ITERATION 16/29
+2025-10-08 14:05:33,714 - __main__ - INFO - ============================================================
+E0000 00:00:1759903533.721207   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 16
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1848 chars)
+✅ Strategy generated (1848 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-08 14:05:51,011 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 70.0% (from 50 to 15)
+⚠️  Preservation violation detected - regenerating with stronger constraints...
+2025-10-08 14:05:51,012 - autonomous_loop - WARNING - Iteration 16: Preservation validation failed, retrying generation
+E0000 00:00:1759903551.021046   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 1/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 1s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 2s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 3/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+2025-10-08 14:07:19,820 - autonomous_loop - ERROR - Iteration 16: Retry 1 generation failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+E0000 00:00:1759903639.829946   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 2/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2316 chars)
+✅ Preservation validated after retry 2
+2025-10-08 14:07:32,014 - autonomous_loop - INFO - Iteration 16: Preservation validated on retry 2
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: etl:foreign_main_force_buy_sell_summary:strength not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (168 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter16.py
+2025-10-08 14:07:35,685 - __main__ - ERROR - ❌ Iteration 16 FAILED: FAILED
+2025-10-08 14:07:35,687 - __main__ - INFO - 
+2025-10-08 14:07:35,688 - __main__ - INFO - ============================================================
+2025-10-08 14:07:35,691 - __main__ - INFO - ITERATION 17/29
+2025-10-08 14:07:35,696 - __main__ - INFO - ============================================================
+E0000 00:00:1759903655.745405   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 17
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2054 chars)
+✅ Strategy generated (2054 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 2 fixes:
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter17.py
+2025-10-08 14:08:01,812 - __main__ - ERROR - ❌ Iteration 17 FAILED: FAILED
+2025-10-08 14:08:01,814 - __main__ - INFO - 
+2025-10-08 14:08:01,815 - __main__ - INFO - ============================================================
+2025-10-08 14:08:01,817 - __main__ - INFO - ITERATION 18/29
+2025-10-08 14:08:01,818 - __main__ - INFO - ============================================================
+E0000 00:00:1759903681.826492   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 18
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1759 chars)
+✅ Strategy generated (1759 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: fundamental_features:EPS not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (144 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter18.py
+2025-10-08 14:08:20,054 - __main__ - ERROR - ❌ Iteration 18 FAILED: FAILED
+2025-10-08 14:08:20,055 - __main__ - INFO - 
+2025-10-08 14:08:20,056 - __main__ - INFO - ============================================================
+2025-10-08 14:08:20,057 - __main__ - INFO - ITERATION 19/29
+2025-10-08 14:08:20,058 - __main__ - INFO - ============================================================
+E0000 00:00:1759903700.066150   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 19
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1960 chars)
+✅ Strategy generated (1960 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: investment_trust_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (153 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter19.py
+2025-10-08 14:08:39,689 - __main__ - ERROR - ❌ Iteration 19 FAILED: FAILED
+2025-10-08 14:08:39,690 - __main__ - INFO - 
+2025-10-08 14:08:39,691 - __main__ - INFO - ============================================================
+2025-10-08 14:08:39,692 - __main__ - INFO - ITERATION 20/29
+2025-10-08 14:08:39,693 - __main__ - INFO - ============================================================
+
+============================================================
+ITERATION 20
+============================================================
+
+[1/6] Building prompt...
+2025-10-08 14:08:39,694 - prompt_builder - INFO - Forcing exploration mode (iteration 20)
+E0000 00:00:1759903719.699000   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+✅ Prompt ready (6148 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1778 chars)
+✅ Strategy generated (1778 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: fundamental_features:EPS not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (144 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter20.py
+2025-10-08 14:08:53,894 - __main__ - ERROR - ❌ Iteration 20 FAILED: FAILED
+2025-10-08 14:08:53,896 - __main__ - INFO - 
+2025-10-08 14:08:53,896 - __main__ - INFO - ============================================================
+2025-10-08 14:08:53,897 - __main__ - INFO - ITERATION 21/29
+2025-10-08 14:08:53,899 - __main__ - INFO - ============================================================
+E0000 00:00:1759903733.904044   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 21
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2122 chars)
+✅ Strategy generated (2122 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter21.py
+2025-10-08 14:09:11,852 - __main__ - ERROR - ❌ Iteration 21 FAILED: FAILED
+2025-10-08 14:09:11,853 - __main__ - INFO - 
+2025-10-08 14:09:11,855 - __main__ - INFO - ============================================================
+2025-10-08 14:09:11,856 - __main__ - INFO - ITERATION 22/29
+2025-10-08 14:09:11,857 - __main__ - INFO - ============================================================
+E0000 00:00:1759903751.866605   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 22
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 1s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+✅ Successfully generated strategy (1342 chars)
+✅ Strategy generated (1342 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-08 14:09:58,139 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 60.0% (from 50 to 20)
+⚠️  Preservation violation detected - regenerating with stronger constraints...
+2025-10-08 14:09:58,142 - autonomous_loop - WARNING - Iteration 22: Preservation validation failed, retrying generation
+E0000 00:00:1759903798.150694   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 1/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 1s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 2s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 3/3)...
+⚠️ No code block found in response, retrying...
+2025-10-08 14:11:23,369 - autonomous_loop - ERROR - Iteration 22: Retry 1 generation failed: Failed to generate strategy after all retries
+E0000 00:00:1759903883.377517   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 2/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+⚠️ No code block found in response, retrying...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+⚠️ No code block found in response, retrying...
+Calling Google AI with gemini-2.5-flash (attempt 3/3)...
+⚠️ No code block found in response, retrying...
+2025-10-08 14:12:44,167 - autonomous_loop - ERROR - Iteration 22: Retry 2 generation failed: Failed to generate strategy after all retries
+2025-10-08 14:12:44,168 - autonomous_loop - WARNING - Iteration 22: Failed preservation after 2 retries, proceeding with warning
+⚠️  Preservation enforcement failed after retries - executing with monitoring
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 2 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: three_main_forces_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (154 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter22.py
+2025-10-08 14:12:45,307 - __main__ - ERROR - ❌ Iteration 22 FAILED: FAILED
+2025-10-08 14:12:45,307 - __main__ - INFO - 
+2025-10-08 14:12:45,308 - __main__ - INFO - ============================================================
+2025-10-08 14:12:45,309 - __main__ - INFO - ITERATION 23/29
+2025-10-08 14:12:45,310 - __main__ - INFO - ============================================================
+E0000 00:00:1759903965.316479   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 23
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2158 chars)
+✅ Strategy generated (2158 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 2 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter23.py
+2025-10-08 14:13:03,589 - __main__ - ERROR - ❌ Iteration 23 FAILED: FAILED
+2025-10-08 14:13:03,590 - __main__ - INFO - 
+2025-10-08 14:13:03,591 - __main__ - INFO - ============================================================
+2025-10-08 14:13:03,592 - __main__ - INFO - ITERATION 24/29
+2025-10-08 14:13:03,592 - __main__ - INFO - ============================================================
+E0000 00:00:1759903983.604360   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 24
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2464 chars)
+✅ Strategy generated (2464 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 2 fixes:
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter24.py
+2025-10-08 14:13:30,142 - __main__ - ERROR - ❌ Iteration 24 FAILED: FAILED
+2025-10-08 14:13:30,144 - __main__ - INFO - 
+2025-10-08 14:13:30,145 - __main__ - INFO - ============================================================
+2025-10-08 14:13:30,146 - __main__ - INFO - ITERATION 25/29
+2025-10-08 14:13:30,147 - __main__ - INFO - ============================================================
+
+============================================================
+ITERATION 25
+============================================================
+
+[1/6] Building prompt...
+2025-10-08 14:13:30,148 - prompt_builder - INFO - Forcing exploration mode (iteration 25)
+E0000 00:00:1759904010.171275   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+✅ Prompt ready (6148 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1866 chars)
+✅ Strategy generated (1866 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: fundamental_features:EPS not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (144 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter25.py
+2025-10-08 14:13:50,898 - __main__ - ERROR - ❌ Iteration 25 FAILED: FAILED
+2025-10-08 14:13:50,898 - __main__ - INFO - 
+2025-10-08 14:13:50,899 - __main__ - INFO - ============================================================
+2025-10-08 14:13:50,900 - __main__ - INFO - ITERATION 26/29
+2025-10-08 14:13:50,902 - __main__ - INFO - ============================================================
+E0000 00:00:1759904030.907427   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 26
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2073 chars)
+✅ Strategy generated (2073 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: indicator:RSI not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (133 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter26.py
+2025-10-08 14:14:10,068 - __main__ - ERROR - ❌ Iteration 26 FAILED: FAILED
+2025-10-08 14:14:10,071 - __main__ - INFO - 
+2025-10-08 14:14:10,073 - __main__ - INFO - ============================================================
+2025-10-08 14:14:10,075 - __main__ - INFO - ITERATION 27/29
+2025-10-08 14:14:10,076 - __main__ - INFO - ============================================================
+E0000 00:00:1759904050.089867   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 27
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2642 chars)
+✅ Strategy generated (2642 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 2 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+   - Fixed: fundamental_features:本益比 → price_earning_ratio:本益比
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter27.py
+2025-10-08 14:14:32,143 - __main__ - ERROR - ❌ Iteration 27 FAILED: FAILED
+2025-10-08 14:14:32,145 - __main__ - INFO - 
+2025-10-08 14:14:32,147 - __main__ - INFO - ============================================================
+2025-10-08 14:14:32,148 - __main__ - INFO - ITERATION 28/29
+2025-10-08 14:14:32,150 - __main__ - INFO - ============================================================
+E0000 00:00:1759904072.158648   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 28
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2279 chars)
+✅ Strategy generated (2279 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-08 14:14:50,256 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 80.0% (from 50 to 10)
+⚠️  Preservation violation detected - regenerating with stronger constraints...
+2025-10-08 14:14:50,257 - autonomous_loop - WARNING - Iteration 28: Preservation validation failed, retrying generation
+E0000 00:00:1759904090.266265   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+   Retry attempt 1/2...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2025 chars)
+✅ Preservation validated after retry 1
+2025-10-08 14:15:10,932 - autonomous_loop - INFO - Iteration 28: Preservation validated on retry 1
+<string>:9: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[5/6] Building feedback...
+✅ Feedback generated (1319 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter28.py
+2025-10-08 14:15:32,198 - __main__ - INFO - ✅ Iteration 28 SUCCESS
+2025-10-08 14:15:32,200 - __main__ - INFO -    Sharpe: 0.9929
+2025-10-08 14:15:32,203 - __main__ - INFO -    Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-08 14:15:32,206 - __main__ - INFO - 
+2025-10-08 14:15:32,207 - __main__ - INFO - ============================================================
+2025-10-08 14:15:32,208 - __main__ - INFO - ITERATION 29/29
+2025-10-08 14:15:32,209 - __main__ - INFO - ============================================================
+E0000 00:00:1759904132.217960   11796 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+============================================================
+ITERATION 29
+============================================================
+
+[1/6] Building prompt...
+✅ Prompt ready (7301 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2091 chars)
+✅ Strategy generated (2091 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+✅ Applied 1 fixes:
+   - Fixed: etl:monthly_revenue:revenue_yoy → monthly_revenue:去年同月增減(%)
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: Exception: **Error: foreign_main_force_buy_sell_summary not exists...
+
+[5/6] Building feedback...
+✅ Feedback generated (155 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter29.py
+2025-10-08 14:15:55,810 - __main__ - ERROR - ❌ Iteration 29 FAILED: FAILED
+2025-10-08 14:15:55,819 - __main__ - INFO - 
+2025-10-08 14:15:55,820 - __main__ - INFO - ============================================================
+2025-10-08 14:15:55,822 - __main__ - INFO - EXTENDED VALIDATION RESULTS
+2025-10-08 14:15:55,823 - __main__ - INFO - ============================================================
+2025-10-08 14:15:55,832 - __main__ - INFO - Iterations completed: 30
+2025-10-08 14:15:55,834 - __main__ - INFO - Successful iterations: 1 (3.3%)
+2025-10-08 14:15:55,835 - __main__ - INFO - Best Sharpe: 0.9929
+2025-10-08 14:15:55,836 - __main__ - INFO - Avg Sharpe: 0.0331
+2025-10-08 14:15:55,836 - __main__ - INFO - Worst regression: -100.0%
+2025-10-08 14:15:55,837 - __main__ - INFO - ❌ Best Sharpe >1.2: FAIL (0.9929)
+2025-10-08 14:15:55,838 - __main__ - INFO - ❌ Success rate >60%: FAIL (3.3%)
+2025-10-08 14:15:55,839 - __main__ - INFO - ❌ Avg Sharpe >0.5: FAIL (0.0331)
+2025-10-08 14:15:55,840 - __main__ - INFO - ❌ No regression >10%: FAIL (-100.0%)
+2025-10-08 14:15:55,843 - __main__ - INFO - 
+2025-10-08 14:15:55,844 - __main__ - INFO - CRITERIA PASSED: 0/4
+2025-10-08 14:15:55,848 - run_10iteration_validation - INFO - 
+2025-10-08 14:15:55,849 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 14:15:55,850 - run_10iteration_validation - INFO - EXTENDED VALIDATION ANALYSIS
+2025-10-08 14:15:55,851 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 14:15:55,859 - run_10iteration_validation - INFO - Total failure patterns collected: 4
+2025-10-08 14:15:55,862 - run_10iteration_validation - INFO - 
+2025-10-08 14:15:55,863 - run_10iteration_validation - INFO - Pattern breakdown:
+2025-10-08 14:15:55,865 - run_10iteration_validation - INFO -   liquidity_threshold: 2 patterns
+2025-10-08 14:15:55,865 - run_10iteration_validation - INFO -   roe_smoothing: 2 patterns

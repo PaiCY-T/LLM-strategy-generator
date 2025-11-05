@@ -32,6 +32,17 @@ class IterationRecord:
     # Feedback for next iteration
     feedback: str
 
+    # Data provenance tracking
+    data_checksum: Optional[str] = None
+    data_version: Optional[Dict[str, str]] = None
+
+    # Experiment configuration tracking
+    config_snapshot: Optional[Dict[str, Any]] = None
+
+    # Template mode tracking (Phase 0: Task 2.4)
+    mode: Optional[str] = None  # 'template' or 'freeform' (None for backward compatibility)
+    parameters: Optional[Dict[str, Any]] = None  # Template parameters if mode='template'
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         return asdict(self)
@@ -68,7 +79,12 @@ class IterationHistory:
         execution_success: bool,
         execution_error: Optional[str],
         metrics: Optional[Dict[str, Any]],
-        feedback: str
+        feedback: str,
+        data_checksum: Optional[str] = None,
+        data_version: Optional[Dict[str, str]] = None,
+        config_snapshot: Optional[Dict[str, Any]] = None,
+        mode: Optional[str] = None,
+        parameters: Optional[Dict[str, Any]] = None
     ) -> IterationRecord:
         """Add a new iteration record.
 
@@ -82,6 +98,11 @@ class IterationHistory:
             execution_error: Execution error message if failed
             metrics: Extracted backtest metrics if successful
             feedback: Feedback summary for next iteration
+            data_checksum: Dataset checksum for data provenance tracking
+            data_version: Data version metadata (finlab_version, timestamp, row_counts)
+            config_snapshot: Experiment configuration snapshot (ExperimentConfig.to_dict())
+            mode: Execution mode ('template' or 'freeform', None for backward compatibility)
+            parameters: Template parameters if mode='template'
 
         Returns:
             Created IterationRecord
@@ -96,7 +117,12 @@ class IterationHistory:
             execution_success=execution_success,
             execution_error=execution_error,
             metrics=metrics,
-            feedback=feedback
+            feedback=feedback,
+            data_checksum=data_checksum,
+            data_version=data_version,
+            config_snapshot=config_snapshot,
+            mode=mode,
+            parameters=parameters
         )
 
         self.records.append(record)

@@ -1,0 +1,33 @@
+# Phase 2: Flash Lite Low Innovation Rate Test Configuration
+# Inherits from learning_system.yaml with LLM-specific overrides
+
+# ============================================================================
+# LLM Configuration
+# ============================================================================
+llm:
+  enabled: true                      # ✅ Enable LLM innovation
+  provider: gemini                   # Use Google Gemini
+  innovation_rate: 0.05              # 5% innovation rate (1/20 iterations)
+
+  # Model name (Gemini-specific)
+  model: gemini-2.5-flash-lite      # Free model
+
+  fallback:
+    enabled: true                    # Auto-fallback to Factor Graph
+    max_retries: 3
+    retry_delay: 2
+
+  generation:
+    max_tokens: 2000
+    temperature: 0.7
+    timeout: 60
+
+  # Gemini provider configuration
+  gemini:
+    api_key: ${GOOGLE_API_KEY}
+    model: gemini-2.5-flash-lite
+
+# ============================================================================
+# Autonomous Loop Configuration
+# ============================================================================
+# All other settings inherited from config/learning_system.yaml

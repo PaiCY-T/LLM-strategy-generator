@@ -1,0 +1,239 @@
+# Earnings Momentum Strategy
+# ===========================
+# Post-earnings announcement momentum with surprise factor
+#
+# Strategy Logic:
+# - Identify stocks with positive earnings surprises
+# - Combine earnings growth with price momentum post-announcement
+# - Equal weight position sizing for event-driven opportunities
+# - Designed for earnings season momentum
+#
+# Expected Performance: Sharpe 1.3-1.9, Annual Return 18-28%, Turnover: High
+# Market Conditions: Best during earnings seasons (quarterly)
+# Risk Level: Medium-High (event-driven volatility)
+
+metadata:
+  name: "Earnings Surprise Momentum"
+  description: "Event-driven strategy capturing post-earnings announcement momentum, combining earnings growth with price response, equal-weighted for quarterly earnings seasons"
+  strategy_type: "momentum"
+  rebalancing_frequency: "W-MON"  # Weekly Monday (frequent for event-driven)
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - earnings
+    - momentum
+    - event-driven
+    - fundamental
+    - seasonal
+    - equal-weight
+  risk_level: "medium"
+
+indicators:
+  # Fundamental factors (earnings focus)
+  fundamental_factors:
+    # Earnings metrics
+    - name: "earnings_growth"
+      field: "earnings_growth"
+      source: "data.get('earnings_growth')"
+      transformation: "winsorize"
+
+    - name: "revenue_growth"
+      field: "revenue_growth"
+      source: "data.get('revenue_growth')"
+
+    # Profitability
+    - name: "operating_margin"
+      field: "operating_margin"
+      source: "data.get('operating_margin')"
+
+    - name: "net_margin"
+      field: "net_margin"
+      source: "data.get('net_margin')"
+
+    # Quality context
+    - name: "roe"
+      field: "ROE"
+      source: "data.get('ROE')"
+
+  # Technical indicators (post-announcement momentum)
+  technical_indicators:
+    # Short-term momentum indicators
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # Moving averages
+    - name: "ma_5"
+      type: "SMA"
+      period: 5
+      source: "data.get('MA_5')"
+
+    - name: "ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('MA_20')"
+
+    # Volume
+    - name: "volume_ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('volume_20d_avg')"
+
+    # Volatility
+    - name: "atr_14"
+      type: "ATR"
+      period: 14
+      source: "data.get('ATR_14')"
+
+  # Custom calculations
+  custom_calculations:
+    # Earnings momentum score
+    - name: "earnings_momentum"
+      expression: "earnings_growth * (1 + revenue_growth)"
+      description: "Earnings Growth × (1 + Revenue Growth)"
+
+    # Short-term price momentum (5-day)
+    - name: "price_momentum_5d"
+      expression: "(close - close.shift(5)) / close.shift(5)"
+      description: "5-day price momentum (post-announcement move)"
+
+    # Volume surge (post-announcement interest)
+    - name: "volume_surge"
+      expression: "volume / volume_ma_20"
+      description: "Volume relative to 20-day average"
+
+    # Earnings surprise proxy (earnings × price reaction)
+    - name: "earnings_surprise"
+      expression: "earnings_momentum * (1 + price_momentum_5d) * 10"
+      description: "Earnings momentum × Price reaction (surprise proxy)"
+
+    # Quality-adjusted earnings surprise
+    - name: "quality_adjusted_surprise"
+      expression: "earnings_surprise * (1 + roe)"
+      description: "Earnings surprise adjusted for quality (ROE)"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # Strong earnings growth
+    - condition: "earnings_growth > 0.15"
+      description: "Strong earnings growth (>15%)"
+
+    # Revenue growth confirmation
+    - condition: "revenue_growth > 0.10"
+      description: "Revenue growth >10% (quality growth)"
+
+    # Positive short-term momentum (post-announcement pop)
+    - condition: "price_momentum_5d > 0.03"
+      description: "5-day price momentum >3% (post-announcement pop)"
+
+    # RSI strength
+    - condition: "rsi_14 > 55"
+      description: "RSI showing strength (>55)"
+
+    - condition: "rsi_14 < 80"
+      description: "RSI not overbought (<80)"
+
+    # Price above short-term MA
+    - condition: "close > ma_5"
+      description: "Price above 5-day MA (immediate strength)"
+
+    - condition: "close > ma_20"
+      description: "Price above 20-day MA (established trend)"
+
+    # Volume confirmation (strong interest)
+    - condition: "volume_surge > 1.5"
+      description: "Volume >1.5x average (strong interest)"
+
+    # Profitability filters
+    - condition: "operating_margin > 0.08"
+      description: "Operating margin >8% (profitable)"
+
+    - condition: "net_margin > 0.04"
+      description: "Net margin >4% (bottom-line profitable)"
+
+    # Quality filter
+    - condition: "roe > 0.12"
+      description: "ROE >12% (quality company)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # High liquidity for event-driven
+  min_liquidity:
+    average_volume_20d: 150000000  # 150M minimum
+    dollar_volume: 10000000        # 10M daily dollar volume
+
+exit_conditions:
+  # Moderate stop loss
+  stop_loss_pct: 0.10  # 10% stop loss
+
+  # Take profit target
+  take_profit_pct: 0.20  # 20% take profit
+
+  # Trailing stop
+  trailing_stop:
+    trail_percent: 0.10      # Trail 10% below peak
+    activation_profit: 0.06  # Activate after 6% profit
+
+  # Conditional exits
+  conditional_exits:
+    # Exit if momentum fades
+    - condition: "rsi_14 < 45"
+      description: "RSI momentum faded (<45)"
+
+    # Exit if price falls below 5-day MA
+    - condition: "close < ma_5"
+      description: "Price below 5-day MA (short-term weakness)"
+
+    # Exit if volume dries up
+    - condition: "volume_surge < 0.8"
+      description: "Volume dried up (<80% of average)"
+
+    # Exit if earnings momentum deteriorates
+    - condition: "earnings_growth < 0.08"
+      description: "Earnings growth slowed below 8%"
+
+    # Exit if profitability weakens
+    - condition: "operating_margin < 0.06"
+      description: "Operating margin weakened (<6%)"
+
+  # Short holding period for event-driven
+  holding_period_days: 30
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Equal weight allocation
+  method: "equal_weight"
+
+  # Maximum 22 positions (diversified event-driven)
+  max_positions: 22
+
+  # Maximum 9% per position
+  max_position_pct: 0.09
+
+  # Minimum 2.5% per position
+  min_position_pct: 0.025
+
+risk_management:
+  # Sector concentration
+  max_sector_exposure: 0.30
+
+  # Rebalance threshold (frequent for event-driven)
+  rebalance_threshold: 0.12
+
+  # Drawdown limit
+  max_drawdown_limit: 0.20
+
+  # Cash reserve for opportunities
+  cash_reserve_pct: 0.08
+
+backtest_config:
+  start_date: "2021-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.0015  # Higher slippage for event-driven

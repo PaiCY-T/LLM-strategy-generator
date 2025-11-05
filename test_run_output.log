@@ -1,0 +1,119 @@
+2025-10-09 18:41:46,346 - __main__ - INFO - Pre-loading Finlab modules to avoid repeated imports in sandbox...
+2025-10-09 18:41:46,615 - __main__ - INFO - Finlab modules pre-loaded successfully
+2025-10-09 18:41:46,615 - __main__ - INFO - Generating strategy for iteration 0
+2025-10-09 18:41:46,727 - claude_api_client - INFO - Initialized Claude API client: model=anthropic/claude-sonnet-4, temp=0.7
+2025-10-09 18:41:46,727 - __main__ - INFO - Initialized Claude API client: model=anthropic/claude-sonnet-4
+2025-10-09 18:41:46,727 - __main__ - INFO - API call attempt 1/3
+2025-10-09 18:41:46,727 - claude_api_client - INFO - Generating strategy for iteration 0
+2025-10-09 18:41:46,736 - claude_api_client - INFO - API call attempt 1/3
+2025-10-09 18:41:49,860 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-09 18:41:55,647 - claude_api_client - INFO - API call successful: 1016 chars
+2025-10-09 18:41:55,647 - claude_api_client - INFO - Successfully generated strategy code (1002 chars)
+2025-10-09 18:41:55,647 - __main__ - INFO - Strategy generation successful: 1002 chars
+2025-10-09 18:41:55,647 - __main__ - WARNING - Generated code missing 'position' variable
+2025-10-09 18:41:55,647 - __main__ - WARNING - Generated code missing 'sim()' call
+2025-10-09 18:41:55,656 - __main__ - INFO - [Iteration 0] Validating generated code with AST...
+2025-10-09 18:41:55,657 - __main__ - INFO - [Iteration 0] ✅ Code validation passed
+2025-10-09 18:41:55,657 - __main__ - INFO - [Iteration 0] Executing strategy in sandbox...
+======================================================================
+🚀 Autonomous Iteration Engine - Starting
+======================================================================
+Configuration:
+  - Total Iterations: 3
+  - Start Iteration: 0
+  - History File: iteration_history.jsonl
+  - Best Strategy File: best_strategy.py
+======================================================================
+
+⏳ Pre-loading Finlab modules (this may take 10+ minutes)...
+✅ Finlab modules loaded successfully
+
+
+==========================================
+Iteration 1/3
+==========================================
+Generating strategy...
+  ✓ Strategy saved to generated_strategy_iter0.py
+Validating code...
+<string>:7: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+<string>:14: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2025-10-09 18:52:12,373 - __main__ - ERROR - [Iteration 0] Sandbox execution failed: Execution timeout exceeded (600s)
+2025-10-09 18:52:12,465 - __main__ - INFO - Saved iteration 0 to iteration_history.jsonl [ERROR: Execution timeout exceeded (600s)]
+2025-10-09 18:52:12,468 - __main__ - INFO - Generating strategy for iteration 1
+2025-10-09 18:52:12,695 - claude_api_client - INFO - Initialized Claude API client: model=anthropic/claude-sonnet-4, temp=0.7
+2025-10-09 18:52:12,696 - __main__ - INFO - Initialized Claude API client: model=anthropic/claude-sonnet-4
+2025-10-09 18:52:12,696 - __main__ - INFO - API call attempt 1/3
+2025-10-09 18:52:12,697 - claude_api_client - INFO - Generating strategy for iteration 1
+2025-10-09 18:52:12,798 - claude_api_client - INFO - API call attempt 1/3
+2025-10-09 18:52:15,908 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-09 18:52:18,380 - claude_api_client - INFO - API call successful: 655 chars
+2025-10-09 18:52:18,383 - claude_api_client - INFO - Successfully generated strategy code (641 chars)
+2025-10-09 18:52:18,383 - __main__ - INFO - Strategy generation successful: 641 chars
+2025-10-09 18:52:18,384 - __main__ - WARNING - Generated code missing 'position' variable
+2025-10-09 18:52:18,384 - __main__ - WARNING - Generated code missing 'sim()' call
+2025-10-09 18:52:18,392 - __main__ - INFO - [Iteration 1] Validating generated code with AST...
+2025-10-09 18:52:18,405 - __main__ - INFO - [Iteration 1] ✅ Code validation passed
+2025-10-09 18:52:18,407 - __main__ - INFO - [Iteration 1] Executing strategy in sandbox...
+  ✓ Validation passed
+Executing backtest...
+  ✗ Backtest failed: Execution timeout exceeded (600s)
+
+==========================================
+Iteration 2/3
+==========================================
+📊 Fallback Status: 0/1 total (0.0%), 0/10 recent
+
+Generating strategy...
+  ✓ Strategy saved to generated_strategy_iter1.py
+Validating code...
+<string>:7: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2025-10-09 19:02:40,420 - __main__ - ERROR - [Iteration 1] Sandbox execution failed: Execution timeout exceeded (600s)
+2025-10-09 19:02:40,493 - __main__ - INFO - Saved iteration 1 to iteration_history.jsonl [ERROR: Execution timeout exceeded (600s)]
+2025-10-09 19:02:40,495 - __main__ - INFO - Generating strategy for iteration 2
+2025-10-09 19:02:40,659 - claude_api_client - INFO - Initialized Claude API client: model=anthropic/claude-sonnet-4, temp=0.7
+2025-10-09 19:02:40,660 - __main__ - INFO - Initialized Claude API client: model=anthropic/claude-sonnet-4
+2025-10-09 19:02:40,660 - __main__ - INFO - API call attempt 1/3
+2025-10-09 19:02:40,660 - claude_api_client - INFO - Generating strategy for iteration 2
+2025-10-09 19:02:40,714 - claude_api_client - INFO - API call attempt 1/3
+2025-10-09 19:02:44,450 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-09 19:02:47,022 - claude_api_client - INFO - API call successful: 524 chars
+2025-10-09 19:02:47,023 - claude_api_client - INFO - Successfully generated strategy code (510 chars)
+2025-10-09 19:02:47,023 - __main__ - INFO - Strategy generation successful: 510 chars
+2025-10-09 19:02:47,023 - __main__ - WARNING - Generated code missing 'position' variable
+2025-10-09 19:02:47,024 - __main__ - WARNING - Generated code missing 'sim()' call
+2025-10-09 19:02:47,031 - __main__ - INFO - [Iteration 2] Validating generated code with AST...
+2025-10-09 19:02:47,036 - __main__ - INFO - [Iteration 2] ✅ Code validation passed
+2025-10-09 19:02:47,036 - __main__ - INFO - [Iteration 2] Executing strategy in sandbox...
+  ✓ Validation passed
+Executing backtest...
+  ✗ Backtest failed: Execution timeout exceeded (600s)
+
+==========================================
+Iteration 3/3
+==========================================
+📊 Fallback Status: 0/2 total (0.0%), 0/10 recent
+
+Generating strategy...
+  ✓ Strategy saved to generated_strategy_iter2.py
+Validating code...
+<string>:6: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2025-10-09 19:13:07,639 - __main__ - ERROR - [Iteration 2] Sandbox execution failed: Execution timeout exceeded (600s)
+2025-10-09 19:13:07,667 - __main__ - INFO - Saved iteration 2 to iteration_history.jsonl [ERROR: Execution timeout exceeded (600s)]
+  ✓ Validation passed
+Executing backtest...
+  ✗ Backtest failed: Execution timeout exceeded (600s)
+
+
+======================================================================
+🏁 Iteration Engine Complete
+======================================================================
+
+⚠️  No successful iterations
+
+📊 Fallback Statistics:
+  - Total Fallbacks: 0/3 (0.0%)
+  - Threshold: 30.0%
+  - Template: Iteration 6 (Sharpe: 2.4751)
+
+📊 Full history available in: iteration_history.jsonl
+

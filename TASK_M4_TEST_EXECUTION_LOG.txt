@@ -1,0 +1,141 @@
+2025-10-26 09:38:44,986 - __main__ - INFO - 
+############################################################
+2025-10-26 09:38:44,986 - __main__ - INFO - ALERT SYSTEM VALIDATION - TASK M4
+2025-10-26 09:38:44,986 - __main__ - INFO - ############################################################
+2025-10-26 09:38:44,986 - __main__ - INFO - 
+============================================================
+2025-10-26 09:38:44,986 - __main__ - INFO - TEST 1: Memory Alert (>80% threshold)
+2025-10-26 09:38:44,986 - __main__ - INFO - ============================================================
+2025-10-26 09:38:44,986 - src.monitoring.metrics_collector - INFO - MetricsCollector initialized with history_window=100
+2025-10-26 09:38:44,987 - src.monitoring.alert_manager - INFO - AlertManager initialized with evaluation_interval=10s, suppression_duration=5s
+2025-10-26 09:38:44,987 - src.monitoring.alert_manager - WARNING - Alert: high_memory - High memory usage detected: 85.0% (threshold: 80.0%)
+2025-10-26 09:38:44,987 - src.monitoring.alert_manager - WARNING - ALERT TRIGGERED: high_memory - High memory usage detected: 85.0% (threshold: 80.0%)
+2025-10-26 09:38:44,987 - __main__ - INFO - Result: PASS
+2025-10-26 09:38:44,987 - __main__ - INFO - Active alerts: {'high_memory'}
+2025-10-26 09:38:45,487 - __main__ - INFO - 
+============================================================
+2025-10-26 09:38:45,487 - __main__ - INFO - TEST 2: Diversity Collapse Alert (<0.1 for 5 iterations)
+2025-10-26 09:38:45,487 - __main__ - INFO - ============================================================
+2025-10-26 09:38:45,487 - src.monitoring.metrics_collector - INFO - MetricsCollector initialized with history_window=100
+2025-10-26 09:38:45,487 - src.monitoring.diversity_monitor - INFO - DiversityMonitor initialized: collapse_threshold=0.1, collapse_window=5
+2025-10-26 09:38:45,487 - src.monitoring.diversity_monitor - WARNING - DIVERSITY COLLAPSE DETECTED! Diversity < 0.1 for 5 consecutive iterations. Recent diversity: ['0.0500', '0.0500', '0.0500', '0.0500', '0.0500']
+2025-10-26 09:38:45,487 - __main__ - INFO - Result: PASS
+2025-10-26 09:38:45,487 - __main__ - INFO - Collapse detected: True
+2025-10-26 09:38:45,487 - __main__ - INFO - Diversity values: [0.05, 0.05, 0.05, 0.05, 0.05]
+2025-10-26 09:38:45,987 - __main__ - INFO - 
+============================================================
+2025-10-26 09:38:45,988 - __main__ - INFO - TEST 3: Champion Staleness Alert (>20 iterations)
+2025-10-26 09:38:45,988 - __main__ - INFO - ============================================================
+2025-10-26 09:38:45,988 - src.monitoring.metrics_collector - INFO - MetricsCollector initialized with history_window=100
+2025-10-26 09:38:45,988 - src.monitoring.diversity_monitor - INFO - DiversityMonitor initialized: collapse_threshold=0.1, collapse_window=5
+2025-10-26 09:38:45,988 - src.monitoring.alert_manager - INFO - AlertManager initialized with evaluation_interval=10s, suppression_duration=5s
+2025-10-26 09:38:45,988 - src.monitoring.metrics_collector - INFO - Recorded champion update: 1.0000 -> 1.5000 (+50.0%)
+2025-10-26 09:38:45,988 - src.monitoring.diversity_monitor - INFO - Champion updated at iteration 0: 1.0000 -> 1.5000 (+50.0%)
+2025-10-26 09:38:45,988 - src.monitoring.alert_manager - WARNING - Alert: champion_staleness - Champion staleness detected: 25 iterations (threshold: 20)
+2025-10-26 09:38:45,988 - src.monitoring.alert_manager - WARNING - ALERT TRIGGERED: champion_staleness - Champion staleness detected: 25 iterations (threshold: 20)
+2025-10-26 09:38:45,988 - __main__ - INFO - Result: PASS
+2025-10-26 09:38:45,988 - __main__ - INFO - Champion staleness: 25 iterations
+2025-10-26 09:38:45,988 - __main__ - INFO - Active alerts: {'champion_staleness'}
+2025-10-26 09:38:46,489 - __main__ - INFO - 
+============================================================
+2025-10-26 09:38:46,489 - __main__ - INFO - TEST 4: Success Rate Alert (<20%)
+2025-10-26 09:38:46,489 - __main__ - INFO - ============================================================
+2025-10-26 09:38:46,489 - src.monitoring.metrics_collector - INFO - MetricsCollector initialized with history_window=100
+2025-10-26 09:38:46,489 - src.monitoring.alert_manager - INFO - AlertManager initialized with evaluation_interval=10s, suppression_duration=5s
+2025-10-26 09:38:46,489 - src.monitoring.alert_manager - WARNING - Alert: low_success_rate - Low success rate detected: 10.0% (threshold: 20.0%)
+2025-10-26 09:38:46,489 - src.monitoring.alert_manager - WARNING - ALERT TRIGGERED: low_success_rate - Low success rate detected: 10.0% (threshold: 20.0%)
+2025-10-26 09:38:46,489 - __main__ - INFO - Result: PASS
+2025-10-26 09:38:46,489 - __main__ - INFO - Success rate: 10.0%
+2025-10-26 09:38:46,489 - __main__ - INFO - Active alerts: {'low_success_rate'}
+2025-10-26 09:38:46,990 - __main__ - INFO - 
+============================================================
+2025-10-26 09:38:46,990 - __main__ - INFO - TEST 5: Orphaned Container Alert (>3 containers)
+2025-10-26 09:38:46,990 - __main__ - INFO - ============================================================
+2025-10-26 09:38:46,990 - src.monitoring.metrics_collector - INFO - MetricsCollector initialized with history_window=100
+2025-10-26 09:38:46,990 - src.monitoring.alert_manager - INFO - AlertManager initialized with evaluation_interval=10s, suppression_duration=5s
+2025-10-26 09:38:46,990 - src.monitoring.alert_manager - WARNING - Alert: orphaned_containers - Container cleanup failures detected: 5 orphaned containers (threshold: 3)
+2025-10-26 09:38:46,990 - src.monitoring.alert_manager - WARNING - ALERT TRIGGERED: orphaned_containers - Container cleanup failures detected: 5 orphaned containers (threshold: 3)
+2025-10-26 09:38:46,990 - __main__ - INFO - Result: PASS
+2025-10-26 09:38:46,990 - __main__ - INFO - Orphaned containers: 5
+2025-10-26 09:38:46,990 - __main__ - INFO - Active alerts: {'orphaned_containers'}
+2025-10-26 09:38:47,491 - __main__ - INFO - 
+============================================================
+2025-10-26 09:38:47,491 - __main__ - INFO - TEST 6: Alert Suppression (no duplicates)
+2025-10-26 09:38:47,491 - __main__ - INFO - ============================================================
+2025-10-26 09:38:47,491 - src.monitoring.metrics_collector - INFO - MetricsCollector initialized with history_window=100
+2025-10-26 09:38:47,491 - src.monitoring.alert_manager - INFO - AlertManager initialized with evaluation_interval=10s, suppression_duration=5s
+2025-10-26 09:38:47,491 - src.monitoring.alert_manager - WARNING - Alert: high_memory - High memory usage detected: 85.0% (threshold: 80.0%)
+2025-10-26 09:38:47,491 - src.monitoring.alert_manager - WARNING - ALERT TRIGGERED: high_memory - High memory usage detected: 85.0% (threshold: 80.0%)
+2025-10-26 09:38:47,491 - __main__ - INFO - Waiting 6s for suppression to expire...
+2025-10-26 09:38:53,498 - src.monitoring.alert_manager - WARNING - Alert: high_memory - High memory usage detected: 85.0% (threshold: 80.0%)
+2025-10-26 09:38:53,498 - src.monitoring.alert_manager - WARNING - ALERT TRIGGERED: high_memory - High memory usage detected: 85.0% (threshold: 80.0%)
+2025-10-26 09:38:53,498 - __main__ - INFO - Result: PASS
+2025-10-26 09:38:53,498 - __main__ - INFO - First evaluation: {'high_memory'}
+2025-10-26 09:38:53,498 - __main__ - INFO - Second evaluation (suppressed): {'high_memory'}
+2025-10-26 09:38:53,498 - __main__ - INFO - Third evaluation (re-triggered): {'high_memory'}
+2025-10-26 09:38:53,999 - __main__ - INFO - 
+============================================================
+2025-10-26 09:38:53,999 - __main__ - INFO - VALIDATION SUMMARY
+2025-10-26 09:38:53,999 - __main__ - INFO - ============================================================
+2025-10-26 09:38:53,999 - __main__ - INFO -   PASS - memory_alert
+2025-10-26 09:38:53,999 - __main__ - INFO -   PASS - diversity_collapse_alert
+2025-10-26 09:38:53,999 - __main__ - INFO -   PASS - champion_staleness_alert
+2025-10-26 09:38:53,999 - __main__ - INFO -   PASS - success_rate_alert
+2025-10-26 09:38:53,999 - __main__ - INFO -   PASS - orphaned_container_alert
+2025-10-26 09:38:53,999 - __main__ - INFO -   PASS - alert_suppression
+2025-10-26 09:38:53,999 - __main__ - INFO - 
+Passed: 6/6
+
+============================================================
+ALERT SYSTEM VALIDATION REPORT - TASK M4
+============================================================
+
+Total Tests: 6
+Passed: 6
+Failed: 0
+Success Rate: 100.0%
+
+------------------------------------------------------------
+DETAILED RESULTS
+------------------------------------------------------------
+
+MEMORY_ALERT
+  Status: PASS
+  Expected: high_memory
+  Details: Triggered with 85.0% (threshold: 80.0%)
+  Active Alerts: ['high_memory']
+
+DIVERSITY_COLLAPSE_ALERT
+  Status: PASS
+  Expected: Collapse detected after 5 iterations <0.1
+  Details: Recorded 5 iterations with diversity=0.0500
+
+CHAMPION_STALENESS_ALERT
+  Status: PASS
+  Expected: champion_staleness
+  Details: Staleness: 25 iterations (threshold: 20)
+  Active Alerts: ['champion_staleness']
+  Staleness: 25 iterations
+
+SUCCESS_RATE_ALERT
+  Status: PASS
+  Expected: low_success_rate
+  Details: Success rate: 10.0% (threshold: 20%)
+  Active Alerts: ['low_success_rate']
+  Success Rate: 10.0%
+
+ORPHANED_CONTAINER_ALERT
+  Status: PASS
+  Expected: orphaned_containers
+  Details: Orphaned containers: 5 (threshold: 3)
+  Active Alerts: ['orphaned_containers']
+  Orphaned Containers: 5
+
+ALERT_SUPPRESSION
+  Status: PASS
+  Expected: Alert triggered, suppressed, then re-triggered
+  Details: Alert should be suppressed on second evaluation, re-triggered after window
+
+============================================================
+OVERALL: ALL TESTS PASSED
+============================================================

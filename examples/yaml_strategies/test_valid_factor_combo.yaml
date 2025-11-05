@@ -1,0 +1,118 @@
+# Valid Factor Combination Strategy - Test Specification
+# ========================================================
+# Multi-factor strategy combining quality, growth, and value factors
+# Used for testing schema validation (should PASS)
+
+metadata:
+  name: "Quality Growth Value Combo"
+  description: "Factor combination strategy selecting stocks with high ROE, strong revenue growth, and reasonable P/E ratios"
+  strategy_type: "factor_combination"
+  rebalancing_frequency: "M"
+  version: "2.0.0"
+  author: "FinLab Test Suite"
+  tags:
+    - factor
+    - quality
+    - growth
+    - value
+    - test
+  risk_level: low
+
+indicators:
+  fundamental_factors:
+    - name: "roe"
+      field: "ROE"
+      source: "data.get('ROE')"
+      transformation: "winsorize"
+
+    - name: "revenue_growth"
+      field: "revenue_growth"
+      source: "data.get('revenue_growth')"
+
+    - name: "pe_ratio"
+      field: "PE_ratio"
+      source: "data.get('PE_ratio')"
+
+    - name: "debt_ratio"
+      field: "debt_ratio"
+      source: "data.get('debt_ratio')"
+
+  technical_indicators:
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+  custom_calculations:
+    - name: "quality_score"
+      expression: "roe * (1 - debt_ratio)"
+      description: "Quality score: high ROE with low leverage"
+
+    - name: "growth_value_score"
+      expression: "(1 + revenue_growth) / pe_ratio"
+      description: "Growth-adjusted value: revenue growth per unit of P/E"
+
+    - name: "composite_factor"
+      expression: "quality_score * growth_value_score * 100"
+      description: "Final composite factor combining quality, growth, and value"
+
+entry_conditions:
+  ranking_rules:
+    - field: "composite_factor"
+      method: "top_percent"
+      value: 20
+      ascending: false
+
+  threshold_rules:
+    - condition: "roe > 0.15"
+      description: "ROE above 15%"
+
+    - condition: "debt_ratio < 0.60"
+      description: "Debt ratio below 60%"
+
+    - condition: "revenue_growth > 0.05"
+      description: "Revenue growth above 5%"
+
+    - condition: "rsi_14 > 30"
+      description: "Not oversold"
+
+  logical_operator: "AND"
+
+  min_liquidity:
+    average_volume_20d: 50000000
+    dollar_volume: 5000000
+
+exit_conditions:
+  stop_loss_pct: 0.15
+  take_profit_pct: 0.40
+
+  conditional_exits:
+    - condition: "roe < 0.10"
+      description: "Exit if ROE deteriorates below 10%"
+
+    - condition: "debt_ratio > 0.75"
+      description: "Exit if leverage increases above 75%"
+
+  holding_period_days: 90
+  exit_operator: "OR"
+
+position_sizing:
+  method: "factor_weighted"
+  max_positions: 30
+  max_position_pct: 0.08
+  min_position_pct: 0.02
+  weighting_field: "composite_factor"
+
+risk_management:
+  max_sector_exposure: 0.25
+  max_correlation: 0.70
+  rebalance_threshold: 0.12
+  max_drawdown_limit: 0.20
+  cash_reserve_pct: 0.05
+
+backtest_config:
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 10000000
+  transaction_cost: 0.001425
+  slippage: 0.001

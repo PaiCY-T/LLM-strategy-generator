@@ -1,0 +1,192 @@
+2025-10-08 13:33:17,691 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 13:33:17,692 - run_10iteration_validation - INFO - EXTENDED VALIDATION - 30 ITERATIONS
+2025-10-08 13:33:17,692 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 13:33:17,693 - run_10iteration_validation - INFO - Model: gemini-2.0-flash-thinking-exp (via Google AI)
+2025-10-08 13:33:17,693 - run_10iteration_validation - INFO - Purpose: Long-term stability monitoring + failure pattern collection
+2025-10-08 13:33:17,693 - run_10iteration_validation - INFO - Expected duration: ~6 minutes (30 iterations × ~12 seconds)
+2025-10-08 13:33:17,694 - run_10iteration_validation - INFO - 
+2025-10-08 13:33:17,694 - __main__ - INFO - ============================================================
+2025-10-08 13:33:17,695 - __main__ - INFO - STARTING EXTENDED VALIDATION - 30 ITERATIONS
+2025-10-08 13:33:17,695 - __main__ - INFO - ============================================================
+2025-10-08 13:33:17,695 - __main__ - INFO - Model: gemini-2.0-flash-thinking-exp
+2025-10-08 13:33:17,696 - __main__ - INFO - 
+2025-10-08 13:33:19,799 - run_10iteration_validation - INFO - ✅ Finlab data loaded successfully
+2025-10-08 13:33:19,910 - __main__ - INFO - 
+2025-10-08 13:33:19,912 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,912 - __main__ - INFO - ITERATION 0/29
+2025-10-08 13:33:19,912 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,913 - __main__ - ERROR - ❌ Iteration 0 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,913 - __main__ - INFO - 
+2025-10-08 13:33:19,913 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,914 - __main__ - INFO - ITERATION 1/29
+2025-10-08 13:33:19,914 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,914 - __main__ - ERROR - ❌ Iteration 1 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,915 - __main__ - INFO - 
+2025-10-08 13:33:19,915 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,916 - __main__ - INFO - ITERATION 2/29
+2025-10-08 13:33:19,916 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,917 - __main__ - ERROR - ❌ Iteration 2 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,917 - __main__ - INFO - 
+2025-10-08 13:33:19,917 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,917 - __main__ - INFO - ITERATION 3/29
+2025-10-08 13:33:19,918 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,918 - __main__ - ERROR - ❌ Iteration 3 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,918 - __main__ - INFO - 
+2025-10-08 13:33:19,919 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,919 - __main__ - INFO - ITERATION 4/29
+2025-10-08 13:33:19,920 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,920 - __main__ - ERROR - ❌ Iteration 4 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,921 - __main__ - INFO - 
+2025-10-08 13:33:19,921 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,922 - __main__ - INFO - ITERATION 5/29
+2025-10-08 13:33:19,922 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,923 - prompt_builder - INFO - Forcing exploration mode (iteration 5)
+2025-10-08 13:33:19,923 - __main__ - ERROR - ❌ Iteration 5 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,926 - __main__ - INFO - 
+2025-10-08 13:33:19,927 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,928 - __main__ - INFO - ITERATION 6/29
+2025-10-08 13:33:19,928 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,929 - __main__ - ERROR - ❌ Iteration 6 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,933 - __main__ - INFO - 
+2025-10-08 13:33:19,933 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,934 - __main__ - INFO - ITERATION 7/29
+2025-10-08 13:33:19,935 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,936 - __main__ - ERROR - ❌ Iteration 7 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,936 - __main__ - INFO - 
+2025-10-08 13:33:19,937 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,937 - __main__ - INFO - ITERATION 8/29
+2025-10-08 13:33:19,937 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,939 - __main__ - ERROR - ❌ Iteration 8 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,939 - __main__ - INFO - 
+2025-10-08 13:33:19,940 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,942 - __main__ - INFO - ITERATION 9/29
+2025-10-08 13:33:19,942 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,943 - __main__ - ERROR - ❌ Iteration 9 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,943 - __main__ - INFO - 
+2025-10-08 13:33:19,944 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,944 - __main__ - INFO - ITERATION 10/29
+2025-10-08 13:33:19,944 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,949 - prompt_builder - INFO - Forcing exploration mode (iteration 10)
+2025-10-08 13:33:19,950 - __main__ - ERROR - ❌ Iteration 10 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,951 - __main__ - INFO - 
+2025-10-08 13:33:19,952 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,952 - __main__ - INFO - ITERATION 11/29
+2025-10-08 13:33:19,952 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,953 - __main__ - ERROR - ❌ Iteration 11 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,953 - __main__ - INFO - 
+2025-10-08 13:33:19,953 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,954 - __main__ - INFO - ITERATION 12/29
+2025-10-08 13:33:19,954 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,954 - __main__ - ERROR - ❌ Iteration 12 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,955 - __main__ - INFO - 
+2025-10-08 13:33:19,955 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,955 - __main__ - INFO - ITERATION 13/29
+2025-10-08 13:33:19,955 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,956 - __main__ - ERROR - ❌ Iteration 13 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,956 - __main__ - INFO - 
+2025-10-08 13:33:19,956 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,957 - __main__ - INFO - ITERATION 14/29
+2025-10-08 13:33:19,957 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,957 - __main__ - ERROR - ❌ Iteration 14 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,957 - __main__ - INFO - 
+2025-10-08 13:33:19,958 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,958 - __main__ - INFO - ITERATION 15/29
+2025-10-08 13:33:19,958 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,959 - prompt_builder - INFO - Forcing exploration mode (iteration 15)
+2025-10-08 13:33:19,960 - __main__ - ERROR - ❌ Iteration 15 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,960 - __main__ - INFO - 
+2025-10-08 13:33:19,960 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,960 - __main__ - INFO - ITERATION 16/29
+2025-10-08 13:33:19,961 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,961 - __main__ - ERROR - ❌ Iteration 16 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,961 - __main__ - INFO - 
+2025-10-08 13:33:19,962 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,962 - __main__ - INFO - ITERATION 17/29
+2025-10-08 13:33:19,962 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,963 - __main__ - ERROR - ❌ Iteration 17 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,963 - __main__ - INFO - 
+2025-10-08 13:33:19,963 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,964 - __main__ - INFO - ITERATION 18/29
+2025-10-08 13:33:19,964 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,964 - __main__ - ERROR - ❌ Iteration 18 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,964 - __main__ - INFO - 
+2025-10-08 13:33:19,965 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,965 - __main__ - INFO - ITERATION 19/29
+2025-10-08 13:33:19,965 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,965 - __main__ - ERROR - ❌ Iteration 19 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,966 - __main__ - INFO - 
+2025-10-08 13:33:19,966 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,966 - __main__ - INFO - ITERATION 20/29
+2025-10-08 13:33:19,966 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,967 - prompt_builder - INFO - Forcing exploration mode (iteration 20)
+2025-10-08 13:33:19,967 - __main__ - ERROR - ❌ Iteration 20 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,967 - __main__ - INFO - 
+2025-10-08 13:33:19,967 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,968 - __main__ - INFO - ITERATION 21/29
+2025-10-08 13:33:19,968 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,968 - __main__ - ERROR - ❌ Iteration 21 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,968 - __main__ - INFO - 
+2025-10-08 13:33:19,969 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,969 - __main__ - INFO - ITERATION 22/29
+2025-10-08 13:33:19,969 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,970 - __main__ - ERROR - ❌ Iteration 22 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,970 - __main__ - INFO - 
+2025-10-08 13:33:19,970 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,971 - __main__ - INFO - ITERATION 23/29
+2025-10-08 13:33:19,971 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,971 - __main__ - ERROR - ❌ Iteration 23 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,972 - __main__ - INFO - 
+2025-10-08 13:33:19,972 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,972 - __main__ - INFO - ITERATION 24/29
+2025-10-08 13:33:19,972 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,973 - __main__ - ERROR - ❌ Iteration 24 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,973 - __main__ - INFO - 
+2025-10-08 13:33:19,974 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,974 - __main__ - INFO - ITERATION 25/29
+2025-10-08 13:33:19,975 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,976 - prompt_builder - INFO - Forcing exploration mode (iteration 25)
+2025-10-08 13:33:19,977 - __main__ - ERROR - ❌ Iteration 25 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,977 - __main__ - INFO - 
+2025-10-08 13:33:19,977 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,978 - __main__ - INFO - ITERATION 26/29
+2025-10-08 13:33:19,978 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,978 - __main__ - ERROR - ❌ Iteration 26 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,979 - __main__ - INFO - 
+2025-10-08 13:33:19,979 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,979 - __main__ - INFO - ITERATION 27/29
+2025-10-08 13:33:19,980 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,980 - __main__ - ERROR - ❌ Iteration 27 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,980 - __main__ - INFO - 
+2025-10-08 13:33:19,980 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,981 - __main__ - INFO - ITERATION 28/29
+2025-10-08 13:33:19,981 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,981 - __main__ - ERROR - ❌ Iteration 28 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,982 - __main__ - INFO - 
+2025-10-08 13:33:19,982 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,982 - __main__ - INFO - ITERATION 29/29
+2025-10-08 13:33:19,982 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,983 - __main__ - ERROR - ❌ Iteration 29 FAILED: ❌ Generation failed: OPENROUTER_API_KEY environment variable not set
+2025-10-08 13:33:19,983 - __main__ - INFO - 
+2025-10-08 13:33:19,983 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,984 - __main__ - INFO - EXTENDED VALIDATION RESULTS
+2025-10-08 13:33:19,984 - __main__ - INFO - ============================================================
+2025-10-08 13:33:19,984 - __main__ - INFO - Iterations completed: 30
+2025-10-08 13:33:19,984 - __main__ - INFO - Successful iterations: 0 (0.0%)
+2025-10-08 13:33:19,985 - __main__ - INFO - Best Sharpe: 0.0000
+2025-10-08 13:33:19,985 - __main__ - INFO - Avg Sharpe: 0.0000
+2025-10-08 13:33:19,985 - __main__ - INFO - Worst regression: -100.0%
+2025-10-08 13:33:19,985 - __main__ - INFO - ❌ Best Sharpe >1.2: FAIL (0.0000)
+2025-10-08 13:33:19,986 - __main__ - INFO - ❌ Success rate >60%: FAIL (0.0%)
+2025-10-08 13:33:19,986 - __main__ - INFO - ❌ Avg Sharpe >0.5: FAIL (0.0000)
+2025-10-08 13:33:19,986 - __main__ - INFO - ❌ No regression >10%: FAIL (-100.0%)
+2025-10-08 13:33:19,987 - __main__ - INFO - 
+2025-10-08 13:33:19,987 - __main__ - INFO - CRITERIA PASSED: 0/4
+2025-10-08 13:33:19,987 - run_10iteration_validation - INFO - 
+2025-10-08 13:33:19,987 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 13:33:19,988 - run_10iteration_validation - INFO - EXTENDED VALIDATION ANALYSIS
+2025-10-08 13:33:19,988 - run_10iteration_validation - INFO - ============================================================
+2025-10-08 13:33:19,991 - run_10iteration_validation - INFO - Total failure patterns collected: 4
+2025-10-08 13:33:19,992 - run_10iteration_validation - INFO - 
+2025-10-08 13:33:19,992 - run_10iteration_validation - INFO - Pattern breakdown:
+2025-10-08 13:33:19,992 - run_10iteration_validation - INFO -   liquidity_threshold: 2 patterns
+2025-10-08 13:33:19,993 - run_10iteration_validation - INFO -   roe_smoothing: 2 patterns

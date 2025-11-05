@@ -1,0 +1,120 @@
+{
+  "test_metadata": {
+    "test_name": "Monitoring Overhead Measurement",
+    "task": "M3",
+    "iterations": 20,
+    "timestamp": "2025-10-26T09:33:01.218113"
+  },
+  "baseline": {
+    "test_type": "baseline",
+    "iterations": 20,
+    "total_time_seconds": 0.03461289405822754,
+    "avg_iteration_time_seconds": 0.0010364294052124024,
+    "iteration_times": [
+      0.0059375762939453125,
+      0.005647897720336914,
+      0.006990671157836914,
+      3.814697265625e-06,
+      2.384185791015625e-07,
+      4.76837158203125e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      4.76837158203125e-07,
+      4.76837158203125e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      0.0012199878692626953,
+      2.1457672119140625e-06,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      4.76837158203125e-07,
+      2.384185791015625e-07,
+      0.0009207725524902344,
+      1.9073486328125e-06
+    ],
+    "resources": {
+      "before": {
+        "cpu_percent": 0.0,
+        "memory_mb": 170.8828125,
+        "system_cpu": 0.0,
+        "system_memory": 29.1
+      },
+      "after": {
+        "cpu_percent": 0.0,
+        "memory_mb": 171.19921875,
+        "system_cpu": 0.2,
+        "system_memory": 29.1
+      },
+      "delta": {
+        "cpu_percent": 0.0,
+        "memory_mb": 0.31640625,
+        "system_cpu": 0.2,
+        "system_memory": 0.0
+      }
+    },
+    "timestamp": "2025-10-26T09:32:52.193883"
+  },
+  "monitoring": {
+    "test_type": "monitoring",
+    "iterations": 20,
+    "total_time_seconds": 0.017731189727783203,
+    "avg_iteration_time_seconds": 0.0005518794059753418,
+    "iteration_times": [
+      3.0994415283203125e-06,
+      4.76837158203125e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      0.005482196807861328,
+      4.291534423828125e-06,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      0.0,
+      0.005537748336791992,
+      5.9604644775390625e-06,
+      4.76837158203125e-07,
+      4.76837158203125e-07,
+      4.76837158203125e-07
+    ],
+    "resources": {
+      "before": {
+        "cpu_percent": 0.0,
+        "memory_mb": 171.19921875,
+        "system_cpu": 0.0,
+        "system_memory": 29.4
+      },
+      "after": {
+        "cpu_percent": 0.0,
+        "memory_mb": 171.19921875,
+        "system_cpu": 0.1,
+        "system_memory": 29.4
+      },
+      "delta": {
+        "cpu_percent": 0.0,
+        "memory_mb": 0.0,
+        "system_cpu": 0.1,
+        "system_memory": 0.0
+      }
+    },
+    "timestamp": "2025-10-26T09:33:01.218066"
+  },
+  "overhead_analysis": {
+    "baseline_total_time_seconds": 0.03461289405822754,
+    "monitoring_total_time_seconds": 0.017731189727783203,
+    "time_difference_seconds": -0.016881704330444336,
+    "time_overhead_percent": -48.77287724639578,
+    "baseline_avg_iteration_time_seconds": 0.0010364294052124024,
+    "monitoring_avg_iteration_time_seconds": 0.0005518794059753418,
+    "iteration_time_difference_seconds": -0.00048454999923706063,
+    "iteration_overhead_percent": -46.751857560212564,
+    "memory_overhead_mb": -0.31640625,
+    "target_overhead_ideal_percent": 1.0,
+    "target_overhead_acceptable_percent": 5.0,
+    "status": "PASS (IDEAL)"
+  }
+}

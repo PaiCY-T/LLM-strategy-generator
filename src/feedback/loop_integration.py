@@ -160,19 +160,42 @@ class FeedbackLoopIntegrator:
         # Step 2: Get template recommendation (if template_integrator available)
         template_recommendation = None
         if self.template_integrator:
-            template_recommendation = self.template_integrator.recommend_template(
-                current_metrics=performance_metrics,
-                iteration=iteration,
-                validation_result=validation_result,
-                strategy_code=strategy_code,
-                current_params=current_params,
-                risk_profile=risk_profile
-            )
+            try:
+                template_recommendation = self.template_integrator.recommend_template(
+                    current_metrics=performance_metrics,
+                    iteration=iteration,
+                    validation_result=validation_result,
+                    strategy_code=strategy_code,
+                    current_params=current_params,
+                    risk_profile=risk_profile
+                )
 
-            self.logger.info(
-                f"Template recommendation: {template_recommendation.template_name} "
-                f"(score={template_recommendation.match_score:.2f})"
-            )
+                self.logger.info(
+                    f"Template recommendation: {template_recommendation.template_name} "
+                    f"(score={template_recommendation.match_score:.2f})"
+                )
+
+            except (ValueError, KeyError) as e:
+                # Handle parameter validation errors
+                self.logger.error(
+                    f"Template recommendation failed due to invalid parameters: {e}"
+                )
+                template_recommendation = None
+
+            except AttributeError as e:
+                # Handle missing attributes or methods
+                self.logger.error(
+                    f"Template recommendation failed due to missing attribute: {e}"
+                )
+                template_recommendation = None
+
+            except Exception as e:
+                # Handle unexpected errors with fallback
+                self.logger.error(
+                    f"Template recommendation failed unexpectedly: {e}",
+                    exc_info=True
+                )
+                template_recommendation = None
 
         # Step 3: Extract validation summary
         validation_summary = self._extract_validation_summary(validation_result)

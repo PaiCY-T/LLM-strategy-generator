@@ -1,0 +1,928 @@
+Alert evaluation took 81.0ms (target: <50ms)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1762015248.721689   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 96.5ms (target: <50ms)
+Alert evaluation took 57.0ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015273.316054   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 60.4ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015290.027120   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 58.3ms (target: <50ms)
+Alert evaluation took 64.4ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+================================================================================
+DIVERSITY OPTIMIZATION PILOT TEST
+================================================================================
+Start time: 2025-11-02 00:40:42
+
+Configuration:
+  - LLM Innovation Rate: 30% (up from 5%)
+  - Diversity-aware prompting: ENABLED
+  - Population-aware generation: ENABLED
+  - Target iterations: 30
+  - Expected diversity: ≥40 (baseline was 19.17)
+================================================================================
+
+📋 Initializing autonomous loop...
+✅ Autonomous loop initialized successfully
+   LLM enabled: True
+   Innovation rate: 0.3
+   Model: gemini-2.5-flash
+
+================================================================================
+STARTING PILOT TEST - 30 ITERATIONS
+================================================================================
+
+============================================================
+AUTONOMOUS LEARNING LOOP - START
+============================================================
+Model: gemini-2.5-flash
+Max iterations: 30
+Sandbox mode: ENABLED
+
+
+============================================================
+ITERATION 0
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (8814 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+⚠️  LLM innovation failed, falling back to Factor Graph
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+rsi = data.indicator('RSI') # Technical indicator
+
+# 2. Calculate factors
+# Factor 1: Price Momentum (60-day returns)
+momentum ...
+   ✓ Detected raw Python code (Strategy 3): 42/45 lines are Python
+✅ Successfully generated strategy (2308 chars)
+✅ Strategy generated (2308 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 5878293348a1b341
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter0.py
+
+============================================================
+ITERATION 1
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9222 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+⚠️  LLM innovation failed, falling back to Factor Graph
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+market_value = data.get('etl:market_value') # Market capitalization for size filter
+roe = data.get('fundamental_features:ROE稅後') # Return on Equity for quality
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)') # Monthly Revenue YoY for growth
+foreign_net_buy = data.get('institutional_investors_trading_summary...
+   ✓ Detected raw Python code (Strategy 3): 42/45 lines are Python
+✅ Successfully generated strategy (2588 chars)
+✅ Strategy generated (2588 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 62056ea7aa32c46e
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter1.py
+
+============================================================
+ITERATION 2
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9222 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+pe_ratio = data.get('price_earning_ratio:本益比')
+
+# 2. Calculate factors
+# Factor 1: Price Momentum (60-day returns)
+momentum_factor = close.pct_change(60).shift(1)
+
+# Factor 2: Qua...
+   ✓ Detected raw Python code (Strategy 3): 39/42 lines are Python
+✅ Successfully generated strategy (2258 chars)
+✅ Strategy generated (2258 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: c7fcd63418fe48e5
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter2.py
+
+============================================================
+ITERATION 3
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+E0000 00:00:1762015313.182872   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 60.7ms (target: <50ms)
+Alert evaluation took 52.6ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015332.876140   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 61.0ms (target: <50ms)
+Alert evaluation took 54.3ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015355.656326   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 59.9ms (target: <50ms)
+Alert evaluation took 54.8ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Alert evaluation took 61.2ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015380.948577   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 88.7ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+rsi = data.indicator('RSI')
+
+# 2. Calculate factors
+# Factor 1: Price Momentum (60-day returns)
+momentum = close.pct_change(60).shift(1)
+
+# Factor 2: Quality (ROE wi...
+   ✓ Detected raw Python code (Strategy 3): 40/43 lines are Python
+✅ Successfully generated strategy (2005 chars)
+✅ Strategy generated (2005 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 21490c05271ad429
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter3.py
+
+============================================================
+ITERATION 4
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+market_value = data.get('etl:market_value') # Market capitalization for size filter
+roe = data.get('fundamental_features:ROE稅後') # Quarterly fundamental
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)') # Monthly fundamental
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Daily institutional flow
+rsi = da...
+   ✓ Detected raw Python code (Strategy 3): 46/50 lines are Python
+✅ Successfully generated strategy (2586 chars)
+✅ Strategy generated (2586 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 2f465789aa4600ff
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter4.py
+
+============================================================
+ITERATION 5
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9262 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+⚠️  LLM innovation failed, falling back to Factor Graph
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+pe_ratio = data.get('price_earning_ratio:本益比')
+
+# 2. Calculate factors
+# Factor 1: Medium-term Price Momentum (60-day returns)
+...
+   ✓ Detected raw Python code (Strategy 3): 45/49 lines are Python
+✅ Successfully generated strategy (2535 chars)
+✅ Strategy generated (2535 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: d729abc80b8d8523
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter5.py
+
+============================================================
+ITERATION 6
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')  # Return on Equity
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # Monthly Revenue YoY
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')  # Foreign Net Buy
+pe_ratio = data.get('price_earning_ratio:本益比')  # Price-to-Earnings Ratio
+market_value = data.get('etl:...
+   ✓ Detected raw Python code (Strategy 3): 48/51 lines are Python
+✅ Successfully generated strategy (2796 chars)
+✅ Strategy generated (2796 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 3f4a49a298db0dee
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter6.py
+
+============================================================
+ITERATION 7
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+Alert evaluation took 57.6ms (target: <50ms)
+E0000 00:00:1762015415.567437   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 86.1ms (target: <50ms)
+Alert evaluation took 103.5ms (target: <50ms)
+Alert evaluation took 92.9ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015448.315482   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 735.2ms (target: <50ms)
+Alert evaluation took 64.4ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015472.138489   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 60.6ms (target: <50ms)
+Alert evaluation took 57.9ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015494.063348   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert: low_success_rate - Low success rate detected: 0.0% (threshold: 20.0%)
+ALERT TRIGGERED: low_success_rate - Low success rate detected: 0.0% (threshold: 20.0%)
+Alert evaluation took 60.3ms (target: <50ms)
+Alert evaluation took 57.5ms (target: <50ms)
+Alert evaluation took 56.3ms (target: <50ms)
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+⚠️  LLM innovation failed, falling back to Factor Graph
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後') # Quality factor (quarterly)
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)') # Growth factor (monthly)
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Institutional flow (daily)
+rsi = data.indicator('RSI') # Technical indicator (daily)
+market_value = data.get...
+   ✓ Detected raw Python code (Strategy 3): 47/50 lines are Python
+✅ Successfully generated strategy (2765 chars)
+✅ Strategy generated (2765 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: a13158a2816f9565
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter7.py
+
+============================================================
+ITERATION 8
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+market_value = data.get('etl:market_value') # Market capitalization for size filter
+roe = data.get('fundamental_features:ROE稅後') # Return on Equity for quality
+monthly_revenue_yoy = data.get('monthly_revenue:去年同月增減(%)') # Monthly Revenue YoY for growth
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Foreign...
+   ✓ Detected raw Python code (Strategy 3): 49/52 lines are Python
+✅ Successfully generated strategy (2932 chars)
+✅ Strategy generated (2932 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 2895677beda151b6
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter8.py
+
+============================================================
+ITERATION 9
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+rsi = data.indicator('RSI')
+
+# 2. Calculate factors
+# Factor 1: Mid-term Price Momentum (60-day returns)
+momentum_60d = close.pct_change(60).shift(1)
+
+# Factor 2: Qu...
+   ✓ Detected raw Python code (Strategy 3): 45/49 lines are Python
+✅ Successfully generated strategy (2618 chars)
+✅ Strategy generated (2618 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 72312f25e1befa5d
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter9.py
+
+============================================================
+ITERATION 10
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9263 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+⚠️  LLM innovation failed, falling back to Factor Graph
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後') # Return on Equity (quarterly)
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)') # Monthly Revenue YoY
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Foreign Investor Net Buy
+rsi = data.indicator('RSI') # Relative Strength Index (technical indicator)
+
+# 2. Cal...
+   ✓ Detected raw Python code (Strategy 3): 53/56 lines are Python
+✅ Successfully generated strategy (3299 chars)
+✅ Strategy generated (3299 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015521.747211   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 67.8ms (target: <50ms)
+Alert evaluation took 63.1ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015541.788714   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 70.2ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Alert evaluation took 75.0ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015559.631708   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 73.5ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015575.987042   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 62.7ms (target: <50ms)
+Alert evaluation took 124.1ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+   Code hash: 8d41d549d068b67d
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter10.py
+
+============================================================
+ITERATION 11
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11316 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+market_cap = data.get('etl:market_value') # Market capitalization for size filter
+roe = data.get('fundamental_features:ROE稅後') # Return on Equity
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)') # Monthly Revenue YoY growth
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Foreign investor net buy
+rsi = da...
+   ✓ Detected raw Python code (Strategy 3): 44/48 lines are Python
+✅ Successfully generated strategy (2647 chars)
+✅ Strategy generated (2647 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 98dda2e57e94b0b4
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter11.py
+
+============================================================
+ITERATION 12
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11316 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+market_value = data.get('etl:market_value') # Market Cap for an optional filter
+
+# 2. Calculate factors
+# Factor 1: Price Momen...
+   ✓ Detected raw Python code (Strategy 3): 40/43 lines are Python
+✅ Successfully generated strategy (2323 chars)
+✅ Strategy generated (2323 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 7fce08211088f405
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter12.py
+
+============================================================
+ITERATION 13
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11316 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')  # Return on Equity
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # Monthly Revenue YoY
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Foreign Investor Net Buy
+rsi = data.indicator('RSI') # Relative Strength Index
+
+# ...
+   ✓ Detected raw Python code (Strategy 3): 45/48 lines are Python
+✅ Successfully generated strategy (2434 chars)
+✅ Strategy generated (2434 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 28d5fa18d08d52ac
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter13.py
+
+============================================================
+ITERATION 14
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11320 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+pb_ratio = data.get('fundamental_features:股價淨值比')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+market_value = data.get('etl:market_value') # Market capitalization for size ...
+   ✓ Detected raw Python code (Strategy 3): 48/51 lines are Python
+✅ Successfully generated strategy (2681 chars)
+✅ Strategy generated (2681 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 40fd9872a373eb0a
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: AttributeError: 'NoneType' object has no attribute 'get'...
+
+[5/6] Building feedback...
+✅ Feedback generated (259 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter14.py
+
+============================================================
+ITERATION 15
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9267 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+E0000 00:00:1762015594.875484   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 80.9ms (target: <50ms)
+Alert evaluation took 72.4ms (target: <50ms)
+Sandbox execution failed: NameError: name 'i' is not defined, falling back to direct execution
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762015622.134305   72640 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 62.7ms (target: <50ms)

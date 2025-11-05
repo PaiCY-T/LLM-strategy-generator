@@ -1,0 +1,2303 @@
+{
+  "metadata": {
+    "source": "sandbox_week_test.log",
+    "recovered_at": "2025-10-19T18:11:16.299316",
+    "total_generations": 110,
+    "start_generation": 0,
+    "end_generation": 109,
+    "status": "INCOMPLETE - Test stopped at Gen 109/1000"
+  },
+  "generation_metrics": [
+    {
+      "generation": 0,
+      "avg_fitness": 0.9307,
+      "best_fitness": 1.5294,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 1,
+      "avg_fitness": 1.147,
+      "best_fitness": 1.6314,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 2,
+      "avg_fitness": 1.1865,
+      "best_fitness": 1.8655,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 3,
+      "avg_fitness": 1.2869,
+      "best_fitness": 1.8891,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 4,
+      "avg_fitness": 1.391,
+      "best_fitness": 1.929,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 5,
+      "avg_fitness": 1.4771,
+      "best_fitness": 1.9356,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 6,
+      "avg_fitness": 1.4973,
+      "best_fitness": 1.9356,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 7,
+      "avg_fitness": 1.6005,
+      "best_fitness": 1.9356,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 8,
+      "avg_fitness": 1.5815,
+      "best_fitness": 1.9665,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 9,
+      "avg_fitness": 1.6779,
+      "best_fitness": 1.9879,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 10,
+      "avg_fitness": 1.7309,
+      "best_fitness": 2.0614,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 11,
+      "avg_fitness": 1.8004,
+      "best_fitness": 2.0614,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 12,
+      "avg_fitness": 1.8261,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 13,
+      "avg_fitness": 1.8942,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 14,
+      "avg_fitness": 1.9279,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 15,
+      "avg_fitness": 1.8896,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 16,
+      "avg_fitness": 1.9039,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 17,
+      "avg_fitness": 1.9537,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 18,
+      "avg_fitness": 1.8756,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 19,
+      "avg_fitness": 1.8783,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 20,
+      "avg_fitness": 1.8959,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 21,
+      "avg_fitness": 1.904,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 22,
+      "avg_fitness": 1.8869,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 23,
+      "avg_fitness": 1.8698,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 24,
+      "avg_fitness": 1.908,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 25,
+      "avg_fitness": 1.8629,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 26,
+      "avg_fitness": 1.8652,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 27,
+      "avg_fitness": 1.8969,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 28,
+      "avg_fitness": 1.884,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 29,
+      "avg_fitness": 1.9575,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 30,
+      "avg_fitness": 1.8966,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 31,
+      "avg_fitness": 1.8974,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 32,
+      "avg_fitness": 1.8705,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 33,
+      "avg_fitness": 1.8655,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 34,
+      "avg_fitness": 1.8751,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 35,
+      "avg_fitness": 1.9115,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 36,
+      "avg_fitness": 1.8551,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 37,
+      "avg_fitness": 1.8793,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 38,
+      "avg_fitness": 1.8654,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 39,
+      "avg_fitness": 1.9239,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 40,
+      "avg_fitness": 1.8868,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 41,
+      "avg_fitness": 1.8758,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 42,
+      "avg_fitness": 1.9483,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 43,
+      "avg_fitness": 1.8586,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 44,
+      "avg_fitness": 1.8732,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 45,
+      "avg_fitness": 1.9325,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 46,
+      "avg_fitness": 1.9185,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 47,
+      "avg_fitness": 1.864,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 48,
+      "avg_fitness": 1.8838,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 49,
+      "avg_fitness": 1.8848,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 50,
+      "avg_fitness": 1.9094,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 51,
+      "avg_fitness": 1.89,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 52,
+      "avg_fitness": 1.9119,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 53,
+      "avg_fitness": 1.8986,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 54,
+      "avg_fitness": 1.9019,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 55,
+      "avg_fitness": 1.8999,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 56,
+      "avg_fitness": 1.7936,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 57,
+      "avg_fitness": 1.9171,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 58,
+      "avg_fitness": 1.8474,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 59,
+      "avg_fitness": 1.8175,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 60,
+      "avg_fitness": 1.8389,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 61,
+      "avg_fitness": 1.9083,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 62,
+      "avg_fitness": 1.8305,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 63,
+      "avg_fitness": 1.8729,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 64,
+      "avg_fitness": 1.8818,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 65,
+      "avg_fitness": 1.8431,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 66,
+      "avg_fitness": 1.8856,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 67,
+      "avg_fitness": 1.892,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 68,
+      "avg_fitness": 1.8811,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 69,
+      "avg_fitness": 1.8841,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 70,
+      "avg_fitness": 1.8758,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 71,
+      "avg_fitness": 1.8281,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 72,
+      "avg_fitness": 1.8922,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 73,
+      "avg_fitness": 1.9032,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 74,
+      "avg_fitness": 1.8623,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 75,
+      "avg_fitness": 1.8489,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 76,
+      "avg_fitness": 1.8538,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 77,
+      "avg_fitness": 1.8252,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 78,
+      "avg_fitness": 1.8419,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 79,
+      "avg_fitness": 1.9009,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 80,
+      "avg_fitness": 1.8815,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 81,
+      "avg_fitness": 1.8759,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 82,
+      "avg_fitness": 1.8394,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 83,
+      "avg_fitness": 1.8463,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 84,
+      "avg_fitness": 1.8754,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 85,
+      "avg_fitness": 1.8626,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 86,
+      "avg_fitness": 1.8068,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 87,
+      "avg_fitness": 1.8717,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 88,
+      "avg_fitness": 1.8825,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 89,
+      "avg_fitness": 1.8152,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 90,
+      "avg_fitness": 1.8794,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 91,
+      "avg_fitness": 1.8726,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 92,
+      "avg_fitness": 1.8435,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 93,
+      "avg_fitness": 1.8753,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 94,
+      "avg_fitness": 1.8885,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 95,
+      "avg_fitness": 1.9287,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 96,
+      "avg_fitness": 1.8126,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 97,
+      "avg_fitness": 1.8519,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 98,
+      "avg_fitness": 1.8876,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 99,
+      "avg_fitness": 1.8572,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 100,
+      "avg_fitness": 1.8477,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 101,
+      "avg_fitness": 1.7717,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 102,
+      "avg_fitness": 1.8549,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 103,
+      "avg_fitness": 1.884,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 104,
+      "avg_fitness": 1.9149,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 105,
+      "avg_fitness": 1.8887,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 106,
+      "avg_fitness": 1.8888,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 107,
+      "avg_fitness": 1.8798,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 108,
+      "avg_fitness": 1.8813,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    {
+      "generation": 109,
+      "avg_fitness": 1.9005,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    }
+  ],
+  "alerts": {
+    "HIGH": [
+      {
+        "generation": 0,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 1,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 2,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 3,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 4,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 5,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 6,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 7,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 8,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 9,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 10,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 11,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 12,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 13,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 14,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 15,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 16,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 17,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 18,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 19,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 20,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 21,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 22,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 23,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 24,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 25,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 26,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 27,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 28,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 29,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 30,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 31,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 32,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 33,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 34,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 35,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 36,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 37,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 38,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 39,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 40,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 41,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 42,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 43,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 44,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 45,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 46,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 47,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 48,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 49,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 50,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 51,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 52,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 53,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 54,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 55,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 56,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 57,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 58,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 59,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 60,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 61,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 62,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 63,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 64,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 65,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 66,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 67,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 68,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 69,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 70,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 71,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 72,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 73,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 74,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 75,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 76,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 77,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 78,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 79,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 80,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 81,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 82,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 83,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 84,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 85,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 86,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 87,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 88,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 89,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 90,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 91,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 92,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 93,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 94,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 95,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 96,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 97,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 98,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 99,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 100,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 101,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 102,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 103,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 104,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 105,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 106,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 107,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 108,
+        "message": "Diversity collapsed to 0.0000"
+      },
+      {
+        "generation": 109,
+        "message": "Diversity collapsed to 0.0000"
+      }
+    ],
+    "MEDIUM": [
+      {
+        "generation": 5,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 6,
+        "message": "Template 'Turtle' dominates at 95.0%"
+      },
+      {
+        "generation": 7,
+        "message": "Template 'Turtle' dominates at 100.0%"
+      },
+      {
+        "generation": 8,
+        "message": "Template 'Turtle' dominates at 94.0%"
+      },
+      {
+        "generation": 9,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 10,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 11,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 12,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 13,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 14,
+        "message": "Template 'Turtle' dominates at 100.0%"
+      },
+      {
+        "generation": 15,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 16,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 17,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 18,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 19,
+        "message": "Template 'Turtle' dominates at 95.0%"
+      },
+      {
+        "generation": 20,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 21,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 22,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 23,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 24,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 25,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 26,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 27,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 28,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 29,
+        "message": "Template 'Turtle' dominates at 100.0%"
+      },
+      {
+        "generation": 30,
+        "message": "Template 'Turtle' dominates at 100.0%"
+      },
+      {
+        "generation": 31,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 32,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 33,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 34,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 35,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 36,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 37,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 38,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 39,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 40,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 41,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 42,
+        "message": "Template 'Turtle' dominates at 100.0%"
+      },
+      {
+        "generation": 43,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 44,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 45,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 46,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 47,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 48,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 49,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 50,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 51,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 52,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 53,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 54,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 55,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 56,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 57,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 58,
+        "message": "Template 'Turtle' dominates at 94.0%"
+      },
+      {
+        "generation": 59,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 60,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 61,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 62,
+        "message": "Template 'Turtle' dominates at 95.0%"
+      },
+      {
+        "generation": 63,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 64,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 65,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 66,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 67,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 68,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 69,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 70,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 71,
+        "message": "Template 'Turtle' dominates at 91.0%"
+      },
+      {
+        "generation": 72,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 73,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 74,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 75,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 76,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 77,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 78,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 79,
+        "message": "Template 'Turtle' dominates at 100.0%"
+      },
+      {
+        "generation": 80,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 81,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 82,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 83,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 84,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 85,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 86,
+        "message": "Template 'Turtle' dominates at 95.0%"
+      },
+      {
+        "generation": 87,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 88,
+        "message": "Template 'Turtle' dominates at 100.0%"
+      },
+      {
+        "generation": 89,
+        "message": "Template 'Turtle' dominates at 94.0%"
+      },
+      {
+        "generation": 90,
+        "message": "Template 'Turtle' dominates at 95.0%"
+      },
+      {
+        "generation": 91,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 92,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 93,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 94,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 95,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 96,
+        "message": "Template 'Turtle' dominates at 95.0%"
+      },
+      {
+        "generation": 97,
+        "message": "Template 'Turtle' dominates at 94.0%"
+      },
+      {
+        "generation": 98,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 99,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 100,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 101,
+        "message": "Template 'Turtle' dominates at 96.0%"
+      },
+      {
+        "generation": 102,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 103,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 104,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 105,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 106,
+        "message": "Template 'Turtle' dominates at 97.0%"
+      },
+      {
+        "generation": 107,
+        "message": "Template 'Turtle' dominates at 99.0%"
+      },
+      {
+        "generation": 108,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      },
+      {
+        "generation": 109,
+        "message": "Template 'Turtle' dominates at 98.0%"
+      }
+    ],
+    "LOW": [
+      {
+        "generation": 32,
+        "message": "No champion update in 20 generations"
+      },
+      {
+        "generation": 33,
+        "message": "No champion update in 21 generations"
+      },
+      {
+        "generation": 34,
+        "message": "No champion update in 22 generations"
+      },
+      {
+        "generation": 35,
+        "message": "No champion update in 23 generations"
+      },
+      {
+        "generation": 36,
+        "message": "No champion update in 24 generations"
+      },
+      {
+        "generation": 37,
+        "message": "No champion update in 25 generations"
+      },
+      {
+        "generation": 38,
+        "message": "No champion update in 26 generations"
+      },
+      {
+        "generation": 39,
+        "message": "No champion update in 27 generations"
+      },
+      {
+        "generation": 40,
+        "message": "No champion update in 28 generations"
+      },
+      {
+        "generation": 41,
+        "message": "No champion update in 29 generations"
+      },
+      {
+        "generation": 42,
+        "message": "No champion update in 30 generations"
+      },
+      {
+        "generation": 43,
+        "message": "No champion update in 31 generations"
+      },
+      {
+        "generation": 44,
+        "message": "No champion update in 32 generations"
+      },
+      {
+        "generation": 45,
+        "message": "No champion update in 33 generations"
+      },
+      {
+        "generation": 46,
+        "message": "No champion update in 34 generations"
+      },
+      {
+        "generation": 47,
+        "message": "No champion update in 35 generations"
+      },
+      {
+        "generation": 48,
+        "message": "No champion update in 36 generations"
+      },
+      {
+        "generation": 49,
+        "message": "No champion update in 37 generations"
+      },
+      {
+        "generation": 50,
+        "message": "No champion update in 38 generations"
+      },
+      {
+        "generation": 51,
+        "message": "No champion update in 39 generations"
+      },
+      {
+        "generation": 52,
+        "message": "No champion update in 40 generations"
+      },
+      {
+        "generation": 53,
+        "message": "No champion update in 41 generations"
+      },
+      {
+        "generation": 54,
+        "message": "No champion update in 42 generations"
+      },
+      {
+        "generation": 55,
+        "message": "No champion update in 43 generations"
+      },
+      {
+        "generation": 56,
+        "message": "No champion update in 44 generations"
+      },
+      {
+        "generation": 57,
+        "message": "No champion update in 45 generations"
+      },
+      {
+        "generation": 58,
+        "message": "No champion update in 46 generations"
+      },
+      {
+        "generation": 59,
+        "message": "No champion update in 47 generations"
+      },
+      {
+        "generation": 60,
+        "message": "No champion update in 48 generations"
+      },
+      {
+        "generation": 61,
+        "message": "No champion update in 49 generations"
+      },
+      {
+        "generation": 62,
+        "message": "No champion update in 50 generations"
+      },
+      {
+        "generation": 63,
+        "message": "No champion update in 51 generations"
+      },
+      {
+        "generation": 64,
+        "message": "No champion update in 52 generations"
+      },
+      {
+        "generation": 65,
+        "message": "No champion update in 53 generations"
+      },
+      {
+        "generation": 66,
+        "message": "No champion update in 54 generations"
+      },
+      {
+        "generation": 67,
+        "message": "No champion update in 55 generations"
+      },
+      {
+        "generation": 68,
+        "message": "No champion update in 56 generations"
+      },
+      {
+        "generation": 69,
+        "message": "No champion update in 57 generations"
+      },
+      {
+        "generation": 70,
+        "message": "No champion update in 58 generations"
+      },
+      {
+        "generation": 71,
+        "message": "No champion update in 59 generations"
+      },
+      {
+        "generation": 72,
+        "message": "No champion update in 60 generations"
+      },
+      {
+        "generation": 73,
+        "message": "No champion update in 61 generations"
+      },
+      {
+        "generation": 74,
+        "message": "No champion update in 62 generations"
+      },
+      {
+        "generation": 75,
+        "message": "No champion update in 63 generations"
+      },
+      {
+        "generation": 76,
+        "message": "No champion update in 64 generations"
+      },
+      {
+        "generation": 77,
+        "message": "No champion update in 65 generations"
+      },
+      {
+        "generation": 78,
+        "message": "No champion update in 66 generations"
+      },
+      {
+        "generation": 79,
+        "message": "No champion update in 67 generations"
+      },
+      {
+        "generation": 80,
+        "message": "No champion update in 68 generations"
+      },
+      {
+        "generation": 81,
+        "message": "No champion update in 69 generations"
+      },
+      {
+        "generation": 82,
+        "message": "No champion update in 70 generations"
+      },
+      {
+        "generation": 83,
+        "message": "No champion update in 71 generations"
+      },
+      {
+        "generation": 84,
+        "message": "No champion update in 72 generations"
+      },
+      {
+        "generation": 85,
+        "message": "No champion update in 73 generations"
+      },
+      {
+        "generation": 86,
+        "message": "No champion update in 74 generations"
+      },
+      {
+        "generation": 87,
+        "message": "No champion update in 75 generations"
+      },
+      {
+        "generation": 88,
+        "message": "No champion update in 76 generations"
+      },
+      {
+        "generation": 89,
+        "message": "No champion update in 77 generations"
+      },
+      {
+        "generation": 90,
+        "message": "No champion update in 78 generations"
+      },
+      {
+        "generation": 91,
+        "message": "No champion update in 79 generations"
+      },
+      {
+        "generation": 92,
+        "message": "No champion update in 80 generations"
+      },
+      {
+        "generation": 93,
+        "message": "No champion update in 81 generations"
+      },
+      {
+        "generation": 94,
+        "message": "No champion update in 82 generations"
+      },
+      {
+        "generation": 95,
+        "message": "No champion update in 83 generations"
+      },
+      {
+        "generation": 96,
+        "message": "No champion update in 84 generations"
+      },
+      {
+        "generation": 97,
+        "message": "No champion update in 85 generations"
+      },
+      {
+        "generation": 98,
+        "message": "No champion update in 86 generations"
+      },
+      {
+        "generation": 99,
+        "message": "No champion update in 87 generations"
+      },
+      {
+        "generation": 100,
+        "message": "No champion update in 88 generations"
+      },
+      {
+        "generation": 101,
+        "message": "No champion update in 89 generations"
+      },
+      {
+        "generation": 102,
+        "message": "No champion update in 90 generations"
+      },
+      {
+        "generation": 103,
+        "message": "No champion update in 91 generations"
+      },
+      {
+        "generation": 104,
+        "message": "No champion update in 92 generations"
+      },
+      {
+        "generation": 105,
+        "message": "No champion update in 93 generations"
+      },
+      {
+        "generation": 106,
+        "message": "No champion update in 94 generations"
+      },
+      {
+        "generation": 107,
+        "message": "No champion update in 95 generations"
+      },
+      {
+        "generation": 108,
+        "message": "No champion update in 96 generations"
+      },
+      {
+        "generation": 109,
+        "message": "No champion update in 97 generations"
+      }
+    ]
+  },
+  "template_evolution": {
+    "5": {
+      "Turtle": 96.0
+    },
+    "6": {
+      "Turtle": 95.0
+    },
+    "7": {
+      "Turtle": 100.0
+    },
+    "8": {
+      "Turtle": 94.0
+    },
+    "9": {
+      "Turtle": 98.0
+    },
+    "10": {
+      "Turtle": 99.0
+    },
+    "11": {
+      "Turtle": 99.0
+    },
+    "12": {
+      "Turtle": 98.0
+    },
+    "13": {
+      "Turtle": 99.0
+    },
+    "14": {
+      "Turtle": 100.0
+    },
+    "15": {
+      "Turtle": 99.0
+    },
+    "16": {
+      "Turtle": 97.0
+    },
+    "17": {
+      "Turtle": 99.0
+    },
+    "18": {
+      "Turtle": 97.0
+    },
+    "19": {
+      "Turtle": 95.0
+    },
+    "20": {
+      "Turtle": 98.0
+    },
+    "21": {
+      "Turtle": 98.0
+    },
+    "22": {
+      "Turtle": 98.0
+    },
+    "23": {
+      "Turtle": 98.0
+    },
+    "24": {
+      "Turtle": 98.0
+    },
+    "25": {
+      "Turtle": 97.0
+    },
+    "26": {
+      "Turtle": 98.0
+    },
+    "27": {
+      "Turtle": 99.0
+    },
+    "28": {
+      "Turtle": 98.0
+    },
+    "29": {
+      "Turtle": 100.0
+    },
+    "30": {
+      "Turtle": 100.0
+    },
+    "31": {
+      "Turtle": 98.0
+    },
+    "32": {
+      "Turtle": 98.0
+    },
+    "33": {
+      "Turtle": 98.0
+    },
+    "34": {
+      "Turtle": 97.0
+    },
+    "35": {
+      "Turtle": 99.0
+    },
+    "36": {
+      "Turtle": 96.0
+    },
+    "37": {
+      "Turtle": 98.0
+    },
+    "38": {
+      "Turtle": 97.0
+    },
+    "39": {
+      "Turtle": 99.0
+    },
+    "40": {
+      "Turtle": 97.0
+    },
+    "41": {
+      "Turtle": 99.0
+    },
+    "42": {
+      "Turtle": 100.0
+    },
+    "43": {
+      "Turtle": 97.0
+    },
+    "44": {
+      "Turtle": 98.0
+    },
+    "45": {
+      "Turtle": 98.0
+    },
+    "46": {
+      "Turtle": 97.0
+    },
+    "47": {
+      "Turtle": 97.0
+    },
+    "48": {
+      "Turtle": 97.0
+    },
+    "49": {
+      "Turtle": 96.0
+    },
+    "50": {
+      "Turtle": 98.0
+    },
+    "51": {
+      "Turtle": 98.0
+    },
+    "52": {
+      "Turtle": 98.0
+    },
+    "53": {
+      "Turtle": 98.0
+    },
+    "54": {
+      "Turtle": 98.0
+    },
+    "55": {
+      "Turtle": 98.0
+    },
+    "56": {
+      "Turtle": 96.0
+    },
+    "57": {
+      "Turtle": 99.0
+    },
+    "58": {
+      "Turtle": 94.0
+    },
+    "59": {
+      "Turtle": 96.0
+    },
+    "60": {
+      "Turtle": 97.0
+    },
+    "61": {
+      "Turtle": 99.0
+    },
+    "62": {
+      "Turtle": 95.0
+    },
+    "63": {
+      "Turtle": 96.0
+    },
+    "64": {
+      "Turtle": 98.0
+    },
+    "65": {
+      "Turtle": 97.0
+    },
+    "66": {
+      "Turtle": 98.0
+    },
+    "67": {
+      "Turtle": 97.0
+    },
+    "68": {
+      "Turtle": 99.0
+    },
+    "69": {
+      "Turtle": 97.0
+    },
+    "70": {
+      "Turtle": 96.0
+    },
+    "71": {
+      "Turtle": 91.0
+    },
+    "72": {
+      "Turtle": 97.0
+    },
+    "73": {
+      "Turtle": 99.0
+    },
+    "74": {
+      "Turtle": 96.0
+    },
+    "75": {
+      "Turtle": 96.0
+    },
+    "76": {
+      "Turtle": 96.0
+    },
+    "77": {
+      "Turtle": 97.0
+    },
+    "78": {
+      "Turtle": 99.0
+    },
+    "79": {
+      "Turtle": 100.0
+    },
+    "80": {
+      "Turtle": 97.0
+    },
+    "81": {
+      "Turtle": 98.0
+    },
+    "82": {
+      "Turtle": 97.0
+    },
+    "83": {
+      "Turtle": 96.0
+    },
+    "84": {
+      "Turtle": 99.0
+    },
+    "85": {
+      "Turtle": 97.0
+    },
+    "86": {
+      "Turtle": 95.0
+    },
+    "87": {
+      "Turtle": 97.0
+    },
+    "88": {
+      "Turtle": 100.0
+    },
+    "89": {
+      "Turtle": 94.0
+    },
+    "90": {
+      "Turtle": 95.0
+    },
+    "91": {
+      "Turtle": 98.0
+    },
+    "92": {
+      "Turtle": 97.0
+    },
+    "93": {
+      "Turtle": 98.0
+    },
+    "94": {
+      "Turtle": 99.0
+    },
+    "95": {
+      "Turtle": 99.0
+    },
+    "96": {
+      "Turtle": 95.0
+    },
+    "97": {
+      "Turtle": 94.0
+    },
+    "98": {
+      "Turtle": 97.0
+    },
+    "99": {
+      "Turtle": 96.0
+    },
+    "100": {
+      "Turtle": 97.0
+    },
+    "101": {
+      "Turtle": 96.0
+    },
+    "102": {
+      "Turtle": 97.0
+    },
+    "103": {
+      "Turtle": 97.0
+    },
+    "104": {
+      "Turtle": 99.0
+    },
+    "105": {
+      "Turtle": 97.0
+    },
+    "106": {
+      "Turtle": 97.0
+    },
+    "107": {
+      "Turtle": 99.0
+    },
+    "108": {
+      "Turtle": 98.0
+    },
+    "109": {
+      "Turtle": 98.0
+    }
+  },
+  "summary": {
+    "final_generation": {
+      "generation": 109,
+      "avg_fitness": 1.9005,
+      "best_fitness": 2.0737,
+      "diversity": 0.0,
+      "champion_template": "Turtle"
+    },
+    "max_fitness": {
+      "value": 2.0737,
+      "generation": 12
+    },
+    "diversity_collapse": {
+      "first_zero": 0
+    },
+    "alert_counts": {
+      "HIGH": 110,
+      "MEDIUM": 105,
+      "LOW": 78
+    },
+    "template_dominance": {
+      "Turtle": 105
+    }
+  }
+}

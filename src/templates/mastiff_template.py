@@ -479,6 +479,7 @@ class MastiffTemplate(BaseTemplate):
                 take_profit=params['take_profit'],
                 position_limit=params['position_limit'],
                 trade_at_price='open',  # Trade at opening price (from example)
+                upload=False,  # Disable upload for sandbox testing
                 name=strategy_name
             )
 

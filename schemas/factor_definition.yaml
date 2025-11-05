@@ -1,0 +1,239 @@
+# Factor Definition YAML Schema
+# Task 2.0: Structured Innovation MVP
+# Purpose: Define schema for LLM-generated factor definitions
+
+# Schema Definition
+schema:
+  type: object
+  required:
+    - factor
+  properties:
+    factor:
+      type: object
+      required:
+        - name
+        - description
+        - type
+        - components
+        - constraints
+        - metadata
+      properties:
+        name:
+          type: string
+          description: "Descriptive name for the factor (e.g., 'ROE_Revenue_Growth_Ratio')"
+          pattern: "^[A-Za-z_][A-Za-z0-9_]*$"
+          minLength: 3
+          maxLength: 100
+
+        description:
+          type: string
+          description: "Human-readable description of what this factor measures"
+          minLength: 10
+          maxLength: 500
+
+        type:
+          type: string
+          description: "Type of factor composition"
+          enum:
+            - composite    # Combination of multiple fields with operations
+            - derived      # Derived from single field transformation
+            - ratio        # Ratio of two fields
+            - aggregate    # Aggregation across time/entities
+          default: composite
+
+        components:
+          type: array
+          description: "List of components and operations to build the factor"
+          minItems: 1
+          maxItems: 10
+          items:
+            type: object
+            required:
+              - field
+            properties:
+              field:
+                type: string
+                description: "Field name from Finlab data schema"
+                minLength: 1
+
+              operation:
+                type: string
+                description: "Operation to apply with previous component"
+                enum:
+                  - multiply
+                  - divide
+                  - add
+                  - subtract
+                  - power
+                  - log
+                  - abs
+                default: multiply
+
+              coefficient:
+                type: number
+                description: "Optional multiplier coefficient (default: 1.0)"
+                default: 1.0
+
+        constraints:
+          type: object
+          description: "Constraints on factor values"
+          properties:
+            min_value:
+              type: number
+              description: "Minimum allowed value (clipping lower bound)"
+
+            max_value:
+              type: number
+              description: "Maximum allowed value (clipping upper bound)"
+
+            null_handling:
+              type: string
+              description: "How to handle null/NaN values"
+              enum:
+                - drop           # Drop rows with NaN
+                - fill_zero      # Replace NaN with 0
+                - forward_fill   # Forward fill from previous value
+                - backward_fill  # Backward fill from next value
+                - mean          # Replace with mean
+              default: drop
+
+            outlier_handling:
+              type: string
+              description: "How to handle outliers"
+              enum:
+                - none          # No outlier handling
+                - clip          # Clip to min/max percentiles
+                - winsorize     # Winsorize at percentiles
+                - remove        # Remove outliers
+              default: none
+
+            percentile_bounds:
+              type: object
+              description: "Percentile bounds for outlier handling"
+              properties:
+                lower:
+                  type: number
+                  minimum: 0
+                  maximum: 50
+                  default: 1
+                upper:
+                  type: number
+                  minimum: 50
+                  maximum: 100
+                  default: 99
+
+        metadata:
+          type: object
+          description: "Additional metadata about the factor"
+          required:
+            - rationale
+            - expected_direction
+          properties:
+            rationale:
+              type: string
+              description: "Why this factor is valuable for strategy selection"
+              minLength: 20
+              maxLength: 1000
+
+            expected_direction:
+              type: string
+              description: "Expected relationship with returns"
+              enum:
+                - higher_is_better  # Higher factor values → higher returns
+                - lower_is_better   # Lower factor values → higher returns
+                - neutral           # No clear directional expectation
+
+            category:
+              type: string
+              description: "Factor category"
+              enum:
+                - value
+                - quality
+                - growth
+                - momentum
+                - size
+                - volatility
+                - liquidity
+                - mixed
+              default: mixed
+
+            creator:
+              type: string
+              description: "Who/what created this factor"
+              default: "llm_innovation"
+
+            creation_timestamp:
+              type: string
+              format: date-time
+              description: "When this factor was created"
+
+# Example 1: Quality-Growth-Value Composite
+---
+factor:
+  name: "Quality_Growth_Value_Composite"
+  description: "ROE × Revenue Growth / P/E ratio - combines profitability, growth momentum, and value"
+  type: "composite"
+  components:
+    - field: "roe"
+      operation: "multiply"
+    - field: "revenue_growth"
+      operation: "divide"
+    - field: "pe_ratio"
+  constraints:
+    min_value: 0
+    max_value: 100
+    null_handling: "drop"
+    outlier_handling: "winsorize"
+    percentile_bounds:
+      lower: 1
+      upper: 99
+  metadata:
+    rationale: "Combines three fundamental factors: ROE measures profitability and capital efficiency, Revenue Growth captures growth momentum, and P/E provides valuation context. High values indicate quality companies with strong growth at reasonable valuations."
+    expected_direction: "higher_is_better"
+    category: "mixed"
+    creator: "llm_innovation"
+
+# Example 2: Profitability-to-Leverage Ratio
+---
+factor:
+  name: "Profitability_Leverage_Ratio"
+  description: "Operating Margin / Debt-to-Equity ratio - quality companies with low leverage"
+  type: "ratio"
+  components:
+    - field: "operating_margin"
+      operation: "divide"
+    - field: "debt_to_equity"
+  constraints:
+    min_value: -10
+    max_value: 100
+    null_handling: "drop"
+    outlier_handling: "clip"
+    percentile_bounds:
+      lower: 2
+      upper: 98
+  metadata:
+    rationale: "Identifies high-quality companies with strong operating margins relative to their leverage. High values suggest companies that generate strong profits without relying on excessive debt."
+    expected_direction: "higher_is_better"
+    category: "quality"
+    creator: "llm_innovation"
+
+# Example 3: Cash Flow Quality Indicator
+---
+factor:
+  name: "Cash_Flow_Quality"
+  description: "Operating Cash Flow / Net Income - measures earnings quality"
+  type: "ratio"
+  components:
+    - field: "operating_cash_flow"
+      operation: "divide"
+    - field: "net_income"
+  constraints:
+    min_value: 0
+    max_value: 10
+    null_handling: "drop"
+    outlier_handling: "winsorize"
+  metadata:
+    rationale: "Cash flow quality ratio above 1 indicates that net income is backed by actual cash generation, suggesting higher earnings quality and lower accounting manipulation risk."
+    expected_direction: "higher_is_better"
+    category: "quality"
+    creator: "llm_innovation"

@@ -10,6 +10,7 @@ Exception Hierarchy:
     ├── DataError
     ├── BacktestError
     ├── ValidationError
+    ├── NormalizationError
     ├── AnalysisError
     └── StorageError
 
@@ -121,6 +122,34 @@ class ValidationError(FinlabSystemError):
 
         >>> # Required field
         >>> raise ValidationError("Stock symbol is required")
+    """
+
+    pass
+
+
+class NormalizationError(FinlabSystemError):
+    """
+    Exception raised for YAML normalization errors.
+
+    Raised when:
+        - YAML contains Jinja templates that cannot be normalized
+        - Required fields are missing and cannot be inferred
+        - Data structure is fundamentally incompatible with schema
+        - Transformation would result in data loss or ambiguity
+
+    Examples:
+        >>> # Jinja template detected
+        >>> raise NormalizationError(
+        >>>     "Cannot normalize YAML with Jinja templates: {{ parameters.period }}"
+        >>> )
+
+        >>> # Missing required field
+        >>> raise NormalizationError("Missing required field: 'indicators'")
+
+        >>> # Ambiguous structure
+        >>> raise NormalizationError(
+        >>>     "Cannot determine indicator type from provided fields"
+        >>> )
     """
 
     pass

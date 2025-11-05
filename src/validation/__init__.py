@@ -58,9 +58,22 @@ from .data_validator import DataValidator
 from .backtest_validator import BacktestValidator
 from .turtle_validator import TurtleTemplateValidator
 from .mastiff_validator import MastiffTemplateValidator
+from .strategy_validator import StrategyValidator
 from .fix_suggestor import FixSuggestor
 from .sensitivity_tester import SensitivityTester, SensitivityResult
 from .validation_logger import ValidationLogger, ValidationLog
+from .integration import (
+    ValidationIntegrator,
+    BaselineIntegrator,
+    BootstrapIntegrator,
+    BonferroniIntegrator
+)
+from .validation_report import ValidationReportGenerator
+from .stationary_bootstrap import (
+    stationary_bootstrap,
+    stationary_bootstrap_detailed
+)
+from .dynamic_threshold import DynamicThresholdCalculator
 
 __all__ = [
     'TemplateValidator',
@@ -69,6 +82,7 @@ __all__ = [
     'BacktestValidator',
     'TurtleTemplateValidator',
     'MastiffTemplateValidator',
+    'StrategyValidator',
     'FixSuggestor',
     'SensitivityTester',
     'SensitivityResult',
@@ -77,5 +91,16 @@ __all__ = [
     'ValidationError',
     'ValidationResult',
     'Severity',
-    'Category'
+    'Category',
+    # Phase 2 Validation Framework Integration (Tasks 3-8, v1.1)
+    'ValidationIntegrator',
+    'BaselineIntegrator',
+    'BootstrapIntegrator',
+    'BonferroniIntegrator',
+    'ValidationReportGenerator',
+    # v1.1 Stationary Bootstrap (Task 1.1.2)
+    'stationary_bootstrap',
+    'stationary_bootstrap_detailed',
+    # v1.1 Dynamic Threshold (Task 1.1.3)
+    'DynamicThresholdCalculator'
 ]

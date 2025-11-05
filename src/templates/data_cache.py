@@ -61,12 +61,14 @@ class DataCache:
 
     # Common datasets that should be preloaded for performance
     COMMON_DATASETS = [
-        'price:收盤價',                              # Close price
-        'price:成交股數',                            # Volume
+        'etl:adj_close',                             # ✅ Adjusted close price (dividends/splits)
+        'etl:adj_high',                              # ✅ Adjusted high price
+        'etl:adj_low',                               # ✅ Adjusted low price
+        'etl:adj_open',                              # ✅ Adjusted open price
+        'price:成交金額',                            # Trading value (OK for liquidity filters)
         'monthly_revenue:當月營收',                  # Monthly revenue
         'fundamental_features:營業利益率',           # Operating margin
         'price_earning_ratio:殖利率(%)',             # Dividend yield
-        'internal_equity_changes:董監持有股數占比',  # Director shareholding
         'monthly_revenue:去年同月增減(%)',           # Revenue YoY growth
     ]
 

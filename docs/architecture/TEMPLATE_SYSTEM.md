@@ -31,10 +31,12 @@ All templates implement:
    - Factor normalization
    - Percentile-based signals
 
-4. **MomentumTemplate** - Momentum-based strategy
-   - Multiple momentum indicators
-   - Signal strength calculation
-   - Trend confirmation
+4. **MomentumTemplate** - Momentum + Revenue Catalyst strategy
+   - Momentum calculation (rolling mean of returns)
+   - Revenue catalyst filter (revenue growth acceleration)
+   - Multi-timeframe MA filters
+   - Key parameters: `momentum_period`, `ma_periods`, `catalyst_type`, `catalyst_lookback`
+   - **API Change (2025-10-16)**: Parameter `momentum_window` renamed to `momentum_period` for consistency
 
 ### Hall of Fame Repository
 

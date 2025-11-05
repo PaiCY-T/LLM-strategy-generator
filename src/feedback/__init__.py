@@ -50,6 +50,7 @@ from .template_feedback import TemplateFeedbackIntegrator, TemplateRecommendatio
 from .rationale_generator import RationaleGenerator
 from .loop_integration import FeedbackLoopIntegrator, IterationFeedback
 from .template_analytics import TemplateAnalytics, TemplateUsageRecord
+from .template_feedback_integrator import TemplateStatsTracker, TemplateStats
 
 __all__ = [
     'TemplateFeedbackIntegrator',
@@ -58,5 +59,7 @@ __all__ = [
     'FeedbackLoopIntegrator',
     'IterationFeedback',
     'TemplateAnalytics',
-    'TemplateUsageRecord'
+    'TemplateUsageRecord',
+    'TemplateStatsTracker',
+    'TemplateStats'
 ]

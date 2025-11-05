@@ -1,0 +1,251 @@
+2025-10-17 16:22:09,132 - __main__ - INFO - Logging initialized: logs/phase0_smoke_test_20251017_162209.log
+2025-10-17 16:22:09,132 - __main__ - INFO - ======================================================================
+2025-10-17 16:22:09,132 - __main__ - INFO - PHASE 0: 5-ITERATION TEMPLATE MODE SMOKE TEST
+2025-10-17 16:22:09,132 - __main__ - INFO - ======================================================================
+2025-10-17 16:22:09,133 - __main__ - INFO - Timestamp: 2025-10-17T16:22:09.133033
+2025-10-17 16:22:09,133 - __main__ - INFO - Model: gemini-2.5-flash
+2025-10-17 16:22:09,133 - __main__ - INFO - Target iterations: 5
+2025-10-17 16:22:09,133 - __main__ - INFO - Mode: Template mode (Momentum)
+2025-10-17 16:22:09,133 - __main__ - INFO - Log file: logs/phase0_smoke_test_20251017_162209.log
+2025-10-17 16:22:09,133 - __main__ - INFO - 
+2025-10-17 16:22:09,133 - __main__ - INFO - ======================================================================
+2025-10-17 16:22:09,134 - __main__ - INFO - VALIDATING PHASE 0 COMPONENTS
+2025-10-17 16:22:09,134 - __main__ - INFO - ======================================================================
+2025-10-17 16:22:09,253 - __main__ - INFO -   ✅ MomentumTemplate available
+2025-10-17 16:22:09,290 - __main__ - INFO -   ✅ TemplateParameterGenerator available
+2025-10-17 16:22:09,290 - __main__ - INFO -   ✅ StrategyValidator available
+2025-10-17 16:22:09,290 - __main__ - INFO - 
+2025-10-17 16:22:09,291 - __main__ - INFO - ✅ All Phase 0 components available
+2025-10-17 16:22:09,291 - __main__ - INFO - ======================================================================
+2025-10-17 16:22:09,291 - __main__ - INFO - 
+2025-10-17 16:22:09,446 - __main__ - INFO - ✅ Finlab data loaded successfully
+2025-10-17 16:22:09,447 - __main__ - INFO - Initializing Phase0TestHarness for smoke test...
+2025-10-17 16:22:09,557 - phase0_test_harness - INFO - Logging initialized: logs/phase0_test_smoke_test_20251017_162209.log
+2025-10-17 16:22:09,558 - phase0_test_harness - INFO - Phase0TestHarness initialized:
+2025-10-17 16:22:09,558 - phase0_test_harness - INFO -   Test name: smoke_test
+2025-10-17 16:22:09,558 - phase0_test_harness - INFO -   Model: gemini-2.5-flash
+2025-10-17 16:22:09,558 - phase0_test_harness - INFO -   Max iterations: 5
+2025-10-17 16:22:09,558 - phase0_test_harness - INFO -   Checkpoint interval: 5
+2025-10-17 16:22:09,559 - phase0_test_harness - INFO -   Checkpoint dir: checkpoints
+2025-10-17 16:22:09,559 - phase0_test_harness - INFO -   Template mode: ENABLED (Momentum)
+2025-10-17 16:22:09,559 - __main__ - INFO - Starting 5-iteration template mode test...
+2025-10-17 16:22:09,559 - __main__ - INFO - 
+2025-10-17 16:22:09,559 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:09,559 - phase0_test_harness - INFO - STARTING PHASE 0 TEMPLATE MODE TEST
+2025-10-17 16:22:09,559 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:09,560 - phase0_test_harness - INFO - Configuration:
+2025-10-17 16:22:09,560 - phase0_test_harness - INFO -   Test name: smoke_test
+2025-10-17 16:22:09,560 - phase0_test_harness - INFO -   Model: gemini-2.5-flash
+2025-10-17 16:22:09,560 - phase0_test_harness - INFO -   Template: Momentum
+2025-10-17 16:22:09,560 - phase0_test_harness - INFO -   Max iterations: 5
+2025-10-17 16:22:09,561 - phase0_test_harness - INFO -   Start iteration: 0
+2025-10-17 16:22:09,561 - phase0_test_harness - INFO -   Checkpoint interval: 5
+2025-10-17 16:22:09,561 - phase0_test_harness - INFO - 
+2025-10-17 16:22:09,561 - phase0_test_harness - INFO - 
+2025-10-17 16:22:09,561 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:09,562 - phase0_test_harness - INFO - ITERATION 0/4
+2025-10-17 16:22:09,562 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:09,562 - phase0_test_harness - INFO - Attempt 1/3
+2025-10-17 16:22:09,562 - autonomous_loop - INFO - Context created with champion (Sharpe: 2.4751)
+2025-10-17 16:22:09,562 - src.generators.template_parameter_generator - INFO - Starting parameter generation for iteration 0
+2025-10-17 16:22:09,563 - src.generators.template_parameter_generator - INFO - Calling LLM for parameters (iteration=0, exploration=False, temperature=0.7)
+2025-10-17 16:22:11,921 - src.generators.template_parameter_generator - INFO - Successfully generated parameters: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:11,921 - autonomous_loop - INFO - Parameters generated: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:11,921 - autonomous_loop - INFO - Parameter validation passed with no warnings
+2025-10-17 16:22:22,951 - autonomous_loop - INFO - Strategy generated successfully
+2025-10-17 16:22:22,952 - autonomous_loop - INFO - Metrics: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:22,958 - phase0_test_harness - INFO - Iteration 0 - success: True, status: SUCCESS, record exists: True
+2025-10-17 16:22:22,959 - phase0_test_harness - INFO -   record has metrics attr: True
+2025-10-17 16:22:22,959 - phase0_test_harness - INFO -   record.metrics value: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:22,959 - phase0_test_harness - INFO -   record has parameters attr: True
+2025-10-17 16:22:22,960 - phase0_test_harness - INFO -   record.parameters value: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:22,960 - phase0_test_harness - INFO - ✅ Iteration 0 SUCCESS (duration: 13.4s)
+2025-10-17 16:22:22,960 - phase0_test_harness - INFO -    Sharpe: 0.1549
+2025-10-17 16:22:22,960 - phase0_test_harness - INFO - 
+2025-10-17 16:22:22,960 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:22,960 - phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-17 16:22:22,961 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:22,961 - phase0_test_harness - INFO - Iteration: 1/5 (20.0%)
+2025-10-17 16:22:22,961 - phase0_test_harness - INFO - Champion updates: 0 (0.0%)
+2025-10-17 16:22:22,961 - phase0_test_harness - INFO - Current champion: Iteration 6 (Sharpe: 2.4751)
+2025-10-17 16:22:22,961 - phase0_test_harness - INFO - Parameter diversity: 1 unique combinations (100.0%)
+2025-10-17 16:22:22,961 - phase0_test_harness - INFO - Avg iteration time: 13.4s
+2025-10-17 16:22:22,962 - phase0_test_harness - INFO - ETA: 0.9 minutes (54s)
+2025-10-17 16:22:22,962 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:22,962 - phase0_test_harness - INFO - 
+2025-10-17 16:22:22,962 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:22,962 - phase0_test_harness - INFO - ITERATION 1/4
+2025-10-17 16:22:22,962 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:22,963 - phase0_test_harness - INFO - Attempt 1/3
+2025-10-17 16:22:22,963 - autonomous_loop - INFO - Context created with champion (Sharpe: 2.4751)
+2025-10-17 16:22:22,963 - src.generators.template_parameter_generator - INFO - Starting parameter generation for iteration 1
+2025-10-17 16:22:22,963 - src.generators.template_parameter_generator - INFO - Calling LLM for parameters (iteration=1, exploration=False, temperature=0.7)
+2025-10-17 16:22:24,512 - src.generators.template_parameter_generator - INFO - Successfully generated parameters: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:24,513 - autonomous_loop - INFO - Parameters generated: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:24,513 - autonomous_loop - INFO - Parameter validation passed with no warnings
+2025-10-17 16:22:34,068 - autonomous_loop - INFO - Strategy generated successfully
+2025-10-17 16:22:34,069 - autonomous_loop - INFO - Metrics: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:34,077 - phase0_test_harness - INFO - Iteration 1 - success: True, status: SUCCESS, record exists: True
+2025-10-17 16:22:34,078 - phase0_test_harness - INFO -   record has metrics attr: True
+2025-10-17 16:22:34,078 - phase0_test_harness - INFO -   record.metrics value: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:34,079 - phase0_test_harness - INFO -   record has parameters attr: True
+2025-10-17 16:22:34,079 - phase0_test_harness - INFO -   record.parameters value: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:34,080 - phase0_test_harness - INFO - ✅ Iteration 1 SUCCESS (duration: 11.1s)
+2025-10-17 16:22:34,080 - phase0_test_harness - INFO -    Sharpe: 0.1549
+2025-10-17 16:22:34,080 - phase0_test_harness - INFO - 
+2025-10-17 16:22:34,081 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:34,081 - phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-17 16:22:34,081 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:34,081 - phase0_test_harness - INFO - Iteration: 2/5 (40.0%)
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - Champion updates: 0 (0.0%)
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - Current champion: Iteration 6 (Sharpe: 2.4751)
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - Parameter diversity: 1 unique combinations (50.0%)
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - Avg iteration time: 12.3s
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - ETA: 0.6 minutes (37s)
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - 
+2025-10-17 16:22:34,082 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:34,083 - phase0_test_harness - INFO - ITERATION 2/4
+2025-10-17 16:22:34,083 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:34,083 - phase0_test_harness - INFO - Attempt 1/3
+2025-10-17 16:22:34,083 - autonomous_loop - INFO - Context created with champion (Sharpe: 2.4751)
+2025-10-17 16:22:34,083 - src.generators.template_parameter_generator - INFO - Starting parameter generation for iteration 2
+2025-10-17 16:22:34,083 - src.generators.template_parameter_generator - INFO - Calling LLM for parameters (iteration=2, exploration=False, temperature=0.7)
+2025-10-17 16:22:37,298 - src.generators.template_parameter_generator - INFO - Successfully generated parameters: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:37,299 - autonomous_loop - INFO - Parameters generated: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:37,300 - autonomous_loop - INFO - Parameter validation passed with no warnings
+2025-10-17 16:22:47,232 - autonomous_loop - INFO - Strategy generated successfully
+2025-10-17 16:22:47,233 - autonomous_loop - INFO - Metrics: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:47,238 - phase0_test_harness - INFO - Iteration 2 - success: True, status: SUCCESS, record exists: True
+2025-10-17 16:22:47,239 - phase0_test_harness - INFO -   record has metrics attr: True
+2025-10-17 16:22:47,239 - phase0_test_harness - INFO -   record.metrics value: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:47,239 - phase0_test_harness - INFO -   record has parameters attr: True
+2025-10-17 16:22:47,240 - phase0_test_harness - INFO -   record.parameters value: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:47,240 - phase0_test_harness - INFO - ✅ Iteration 2 SUCCESS (duration: 13.2s)
+2025-10-17 16:22:47,240 - phase0_test_harness - INFO -    Sharpe: 0.1549
+2025-10-17 16:22:47,240 - phase0_test_harness - INFO - 
+2025-10-17 16:22:47,240 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:47,241 - phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-17 16:22:47,241 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:47,241 - phase0_test_harness - INFO - Iteration: 3/5 (60.0%)
+2025-10-17 16:22:47,241 - phase0_test_harness - INFO - Champion updates: 0 (0.0%)
+2025-10-17 16:22:47,241 - phase0_test_harness - INFO - Current champion: Iteration 6 (Sharpe: 2.4751)
+2025-10-17 16:22:47,242 - phase0_test_harness - INFO - Parameter diversity: 1 unique combinations (33.3%)
+2025-10-17 16:22:47,242 - phase0_test_harness - INFO - Avg iteration time: 12.6s
+2025-10-17 16:22:47,242 - phase0_test_harness - INFO - ETA: 0.4 minutes (25s)
+2025-10-17 16:22:47,242 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:47,242 - phase0_test_harness - INFO - 
+2025-10-17 16:22:47,242 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:47,243 - phase0_test_harness - INFO - ITERATION 3/4
+2025-10-17 16:22:47,243 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:47,243 - phase0_test_harness - INFO - Attempt 1/3
+2025-10-17 16:22:47,243 - autonomous_loop - INFO - Context created with champion (Sharpe: 2.4751)
+2025-10-17 16:22:47,243 - src.generators.template_parameter_generator - INFO - Starting parameter generation for iteration 3
+2025-10-17 16:22:47,244 - src.generators.template_parameter_generator - INFO - Calling LLM for parameters (iteration=3, exploration=False, temperature=0.7)
+2025-10-17 16:22:48,683 - src.generators.template_parameter_generator - INFO - Successfully generated parameters: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:48,683 - autonomous_loop - INFO - Parameters generated: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:48,684 - autonomous_loop - INFO - Parameter validation passed with no warnings
+2025-10-17 16:22:58,348 - autonomous_loop - INFO - Strategy generated successfully
+2025-10-17 16:22:58,349 - autonomous_loop - INFO - Metrics: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:58,357 - phase0_test_harness - INFO - Iteration 3 - success: True, status: SUCCESS, record exists: True
+2025-10-17 16:22:58,357 - phase0_test_harness - INFO -   record has metrics attr: True
+2025-10-17 16:22:58,358 - phase0_test_harness - INFO -   record.metrics value: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:22:58,358 - phase0_test_harness - INFO -   record has parameters attr: True
+2025-10-17 16:22:58,358 - phase0_test_harness - INFO -   record.parameters value: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:58,359 - phase0_test_harness - INFO - ✅ Iteration 3 SUCCESS (duration: 11.1s)
+2025-10-17 16:22:58,359 - phase0_test_harness - INFO -    Sharpe: 0.1549
+2025-10-17 16:22:58,359 - phase0_test_harness - INFO - 
+2025-10-17 16:22:58,359 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:58,360 - phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-17 16:22:58,360 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:58,360 - phase0_test_harness - INFO - Iteration: 4/5 (80.0%)
+2025-10-17 16:22:58,360 - phase0_test_harness - INFO - Champion updates: 0 (0.0%)
+2025-10-17 16:22:58,360 - phase0_test_harness - INFO - Current champion: Iteration 6 (Sharpe: 2.4751)
+2025-10-17 16:22:58,360 - phase0_test_harness - INFO - Parameter diversity: 1 unique combinations (25.0%)
+2025-10-17 16:22:58,360 - phase0_test_harness - INFO - Avg iteration time: 12.2s
+2025-10-17 16:22:58,361 - phase0_test_harness - INFO - ETA: 0.2 minutes (12s)
+2025-10-17 16:22:58,361 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:22:58,361 - phase0_test_harness - INFO - 
+2025-10-17 16:22:58,361 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:58,361 - phase0_test_harness - INFO - ITERATION 4/4
+2025-10-17 16:22:58,361 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:22:58,361 - phase0_test_harness - INFO - Attempt 1/3
+2025-10-17 16:22:58,362 - autonomous_loop - INFO - Context created with champion (Sharpe: 2.4751)
+2025-10-17 16:22:58,362 - src.generators.template_parameter_generator - INFO - Starting parameter generation for iteration 4
+2025-10-17 16:22:58,362 - src.generators.template_parameter_generator - INFO - Calling LLM for parameters (iteration=4, exploration=False, temperature=0.7)
+2025-10-17 16:22:59,500 - src.generators.template_parameter_generator - INFO - Successfully generated parameters: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:59,500 - autonomous_loop - INFO - Parameters generated: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:22:59,501 - autonomous_loop - INFO - Parameter validation passed with no warnings
+2025-10-17 16:23:11,284 - autonomous_loop - INFO - Strategy generated successfully
+2025-10-17 16:23:11,285 - autonomous_loop - INFO - Metrics: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:23:11,292 - phase0_test_harness - INFO - Iteration 4 - success: True, status: SUCCESS, record exists: True
+2025-10-17 16:23:11,292 - phase0_test_harness - INFO -   record has metrics attr: True
+2025-10-17 16:23:11,292 - phase0_test_harness - INFO -   record.metrics value: {'annual_return': 0.02597056268787279, 'sharpe_ratio': 0.154883782589097, 'max_drawdown': -0.6660509379439311, 'success': False}
+2025-10-17 16:23:11,293 - phase0_test_harness - INFO -   record has parameters attr: True
+2025-10-17 16:23:11,293 - phase0_test_harness - INFO -   record.parameters value: {'momentum_period': 10, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+2025-10-17 16:23:11,293 - phase0_test_harness - INFO - ✅ Iteration 4 SUCCESS (duration: 12.9s)
+2025-10-17 16:23:11,293 - phase0_test_harness - INFO -    Sharpe: 0.1549
+2025-10-17 16:23:11,294 - phase0_test_harness - INFO - 
+2025-10-17 16:23:11,294 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:23:11,294 - phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-17 16:23:11,294 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:23:11,295 - phase0_test_harness - INFO - Iteration: 5/5 (100.0%)
+2025-10-17 16:23:11,295 - phase0_test_harness - INFO - Champion updates: 0 (0.0%)
+2025-10-17 16:23:11,295 - phase0_test_harness - INFO - Current champion: Iteration 6 (Sharpe: 2.4751)
+2025-10-17 16:23:11,296 - phase0_test_harness - INFO - Parameter diversity: 1 unique combinations (20.0%)
+2025-10-17 16:23:11,296 - phase0_test_harness - INFO - Avg iteration time: 12.3s
+2025-10-17 16:23:11,297 - phase0_test_harness - INFO - ETA: 0.0 minutes (0s)
+2025-10-17 16:23:11,297 - phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 16:23:11,297 - phase0_test_harness - INFO - 
+📁 Saving checkpoint at iteration 4...
+2025-10-17 16:23:11,305 - phase0_test_harness - INFO - Checkpoint saved: checkpoints/checkpoint_smoke_test_iter_4.json
+2025-10-17 16:23:11,305 - phase0_test_harness - INFO -   Iteration: 4
+2025-10-17 16:23:11,306 - phase0_test_harness - INFO -   Metrics: 5 Sharpe ratios, 1 param combinations
+2025-10-17 16:23:11,306 - phase0_test_harness - INFO - ✅ Checkpoint saved: checkpoints/checkpoint_smoke_test_iter_4.json
+2025-10-17 16:23:11,306 - phase0_test_harness - INFO - 
+2025-10-17 16:23:11,307 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:23:11,307 - phase0_test_harness - INFO - PHASE 0 TEMPLATE MODE TEST - COMPLETE
+2025-10-17 16:23:11,307 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:23:11,308 - phase0_test_harness - INFO - Total duration: 61.7s (1.0m)
+2025-10-17 16:23:11,308 - phase0_test_harness - INFO - Total iterations: 5
+2025-10-17 16:23:11,308 - phase0_test_harness - INFO - ✅ Successful: 5
+2025-10-17 16:23:11,308 - phase0_test_harness - INFO - ❌ Failed: 0
+2025-10-17 16:23:11,308 - phase0_test_harness - INFO - Success rate: 100.0%
+2025-10-17 16:23:11,309 - phase0_test_harness - INFO - 
+2025-10-17 16:23:11,309 - phase0_test_harness - INFO - 📁 Saving final checkpoint...
+2025-10-17 16:23:11,321 - phase0_test_harness - INFO - Checkpoint saved: checkpoints/checkpoint_smoke_test_iter_4.json
+2025-10-17 16:23:11,321 - phase0_test_harness - INFO -   Iteration: 4
+2025-10-17 16:23:11,322 - phase0_test_harness - INFO -   Metrics: 5 Sharpe ratios, 1 param combinations
+2025-10-17 16:23:11,322 - phase0_test_harness - INFO - ✅ Final checkpoint saved: checkpoints/checkpoint_smoke_test_iter_4.json
+2025-10-17 16:23:11,322 - phase0_test_harness - INFO - 
+2025-10-17 16:23:11,323 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:23:11,323 - phase0_test_harness - INFO - RESULTS SUMMARY
+2025-10-17 16:23:11,323 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:23:11,323 - phase0_test_harness - INFO - Total iterations: 5
+2025-10-17 16:23:11,324 - phase0_test_harness - INFO - Champion updates: 0 (0.0%)
+2025-10-17 16:23:11,324 - phase0_test_harness - INFO - Best Sharpe: 0.1549
+2025-10-17 16:23:11,324 - phase0_test_harness - INFO - Avg Sharpe: 0.1549
+2025-10-17 16:23:11,324 - phase0_test_harness - INFO - Sharpe variance: 0.0000
+2025-10-17 16:23:11,324 - phase0_test_harness - INFO - Parameter diversity: 1 (20.0%)
+2025-10-17 16:23:11,324 - phase0_test_harness - INFO - Validation pass rate: 100.0%
+2025-10-17 16:23:11,325 - phase0_test_harness - INFO - Success rate: 100.0%
+2025-10-17 16:23:11,325 - phase0_test_harness - INFO - 
+2025-10-17 16:23:11,325 - phase0_test_harness - INFO - 🏆 FINAL CHAMPION:
+2025-10-17 16:23:11,325 - phase0_test_harness - INFO -    Iteration: 6
+2025-10-17 16:23:11,326 - phase0_test_harness - INFO -    Sharpe: 2.4751
+2025-10-17 16:23:11,326 - phase0_test_harness - INFO - ======================================================================
+2025-10-17 16:23:11,326 - __main__ - INFO - 
+2025-10-17 16:23:11,326 - __main__ - INFO - ======================================================================
+2025-10-17 16:23:11,327 - __main__ - INFO - PHASE 0 SMOKE TEST - COMPLETE
+2025-10-17 16:23:11,327 - __main__ - INFO - ======================================================================
+2025-10-17 16:23:11,327 - __main__ - INFO - Test completed: True
+2025-10-17 16:23:11,328 - __main__ - INFO - Total iterations: 5
+2025-10-17 16:23:11,328 - __main__ - INFO - Success rate: 100.0%
+2025-10-17 16:23:11,328 - __main__ - INFO - Champion updates: 0 (0.0%)
+2025-10-17 16:23:11,329 - __main__ - INFO - Best Sharpe: 0.1549
+2025-10-17 16:23:11,329 - __main__ - INFO - Avg Sharpe: 0.1549
+2025-10-17 16:23:11,329 - __main__ - INFO - Parameter diversity: 1 unique (20.0%)
+2025-10-17 16:23:11,329 - __main__ - INFO - Validation pass rate: 100.0%
+2025-10-17 16:23:11,329 - __main__ - INFO - 
+2025-10-17 16:23:11,329 - __main__ - INFO - Log file: logs/phase0_smoke_test_20251017_162209.log
+2025-10-17 16:23:11,330 - __main__ - INFO - ======================================================================

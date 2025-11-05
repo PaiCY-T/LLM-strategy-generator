@@ -77,7 +77,7 @@ class MastiffTemplateValidator(ParameterValidator):
         - stop_loss < take_profit (risk management consistency)
         - n_stocks ≤ 10 (concentrated positioning constraint)
         - position_limit ≥ 0.15 (high concentration requirement)
-        - stop_loss ≥ 0.10 (higher risk tolerance for mean reversion)
+        - stop_loss ≥ 0.06 (6% minimum for strict risk management - Req 3.3)
 
     Example:
         >>> validator = MastiffTemplateValidator()
@@ -108,7 +108,7 @@ class MastiffTemplateValidator(ParameterValidator):
     # Concentrated positioning constraints (KEY DIFFERENCE from TurtleTemplate)
     MAX_N_STOCKS = 10  # Maximum portfolio size for concentrated contrarian strategy
     MIN_POSITION_LIMIT = 0.15  # Minimum 15% per stock for high-conviction positions
-    MIN_STOP_LOSS = 0.10  # Minimum 10% stop-loss for mean reversion risk tolerance
+    MIN_STOP_LOSS = 0.06  # Minimum 6% stop-loss for strict risk management (Requirement 3.3)
 
     def __init__(self, sensitivity_data: Optional[Dict[str, Any]] = None):
         """
@@ -194,7 +194,7 @@ class MastiffTemplateValidator(ParameterValidator):
             - stop_loss < take_profit: Risk management requires loss < profit
             - n_stocks ≤ 10: Concentrated positioning constraint
             - position_limit ≥ 0.15: High-conviction position sizing
-            - stop_loss ≥ 0.10: Higher risk tolerance for mean reversion
+            - stop_loss ≥ 0.06: Strict 6% minimum for risk management (Req 3.3)
 
         Args:
             parameters: Parameter dictionary to validate
@@ -255,21 +255,22 @@ class MastiffTemplateValidator(ParameterValidator):
                     }
                 )
 
-        # Check 4: Mean reversion risk tolerance - stop_loss ≥ 0.10
+        # Check 4: Strict risk management - stop_loss ≥ 6% (CRITICAL requirement per Req 3.3)
         if 'stop_loss' in parameters:
             stop_loss = parameters['stop_loss']
 
             if stop_loss < self.MIN_STOP_LOSS:
                 self._add_error(
                     category=Category.PARAMETER,
-                    error_type='suboptimal_range',
-                    message=f"stop_loss ({stop_loss:.1%}) below minimum for mean reversion strategy ({self.MIN_STOP_LOSS:.1%})",
-                    suggestion=f"Set stop_loss to ≥{self.MIN_STOP_LOSS:.1%} (10-20%) for adequate mean reversion tolerance",
+                    error_type='invalid_range',  # Changed to CRITICAL severity
+                    message=f"CRITICAL: stop_loss ({stop_loss:.1%}) below minimum threshold ({self.MIN_STOP_LOSS:.1%})",
+                    suggestion=f"Set stop_loss to ≥{self.MIN_STOP_LOSS:.1%} for strict risk management (recommended: 10-20%)",
                     context={
                         'stop_loss': stop_loss,
-                        'min_recommended': self.MIN_STOP_LOSS,
-                        'optimal_range': (0.10, 0.20),
-                        'strategy_type': 'contrarian_reversal'
+                        'min_threshold': self.MIN_STOP_LOSS,
+                        'recommended_range': (0.10, 0.20),
+                        'strategy_type': 'contrarian_reversal',
+                        'requirement': '3.3'
                     }
                 )
 
@@ -469,7 +470,7 @@ class MastiffTemplateValidator(ParameterValidator):
         The MastiffTemplate is a high-conviction contrarian strategy requiring:
         - Small portfolio: n_stocks ≤ 10 (concentrated positions)
         - High position sizing: position_limit ≥ 15% (high conviction)
-        - Adequate risk tolerance: stop_loss ≥ 10% (mean reversion allowance)
+        - Strict risk management: stop_loss ≥ 6% (minimum threshold - Req 3.3)
 
         This validation ensures the concentrated contrarian positioning is
         properly configured for asymmetric upside opportunities.
@@ -506,16 +507,16 @@ class MastiffTemplateValidator(ParameterValidator):
             else:
                 concentration_issues.append(f"position_limit ({position_limit:.1%}) below minimum")
 
-        # Check 3: Risk tolerance (stop_loss ≥ 10%)
+        # Check 3: Strict risk management (stop_loss ≥ 6%)
         if 'stop_loss' in parameters:
             stop_loss = parameters['stop_loss']
 
             if stop_loss >= 0.15:
-                concentration_score += 1  # High risk tolerance
+                concentration_score += 1  # High risk tolerance (15%+)
             elif stop_loss >= self.MIN_STOP_LOSS:
-                concentration_score += 0  # Acceptable
+                concentration_score += 0  # Acceptable (6%+)
             else:
-                concentration_issues.append(f"stop_loss ({stop_loss:.1%}) below minimum")
+                concentration_issues.append(f"stop_loss ({stop_loss:.1%}) below 6% minimum")
 
         # Assess overall concentration
         if concentration_issues:

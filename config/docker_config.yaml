@@ -1,0 +1,55 @@
+# Docker Sandbox Security Configuration
+# Controls resource limits, security profiles, and monitoring for isolated strategy execution
+
+docker:
+  # Enable Docker sandbox execution (set false to disable)
+  enabled: true
+
+  # Docker image for strategy execution (must have Python 3.10+ with FinLab dependencies)
+  # Production image with full dependencies (pandas, TA-Lib, networkx, scikit-learn, LLM SDKs)
+  image: finlab-sandbox:latest
+
+  # Memory limit (format: <number><unit> where unit is k/m/g)
+  memory_limit: 2g
+
+  # Memory + swap limit (should equal memory_limit to disable swap)
+  memory_swap_limit: 2g
+
+  # CPU cores limit (fractional values allowed, e.g., 0.5 = half a core)
+  cpu_limit: 0.5
+
+  # Maximum execution time before container is killed (seconds, max 3600)
+  timeout_seconds: 600
+
+  # Network mode: "none" (isolated), "bridge", or "host"
+  # NOTE: Changed to "bridge" to allow finlab API access
+  # User requirement: Docker is REQUIRED and must access finlab data
+  network_mode: bridge
+
+  # Mount root filesystem as read-only
+  read_only: true
+
+  # Temporary filesystem (tmpfs) mount for writable scratch space
+  tmpfs:
+    path: /tmp
+    size: 1g
+    options: rw,noexec,nosuid
+
+  # Seccomp security profile (syscall filtering)
+  seccomp_profile: config/seccomp_profile.json
+
+  # Output directory for strategy results
+  output_dir: sandbox_output
+
+  # Remove container after execution completes
+  cleanup_on_exit: true
+
+monitoring:
+  # Export container resource usage to Prometheus
+  export_container_stats: true
+
+  # Alert threshold for orphaned containers
+  alert_on_orphaned_containers: 3
+
+  # Prometheus metrics export port (1024-65535)
+  prometheus_port: 8000

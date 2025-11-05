@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/docker-sandbox-integration-testing/requirements.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-28T14:09:29.489Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761660569219_qybgp2m5f",
+      "approvalTitle": "Docker Sandbox Integration Testing - Requirements"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-28T14:11:52.961Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761660569219_qybgp2m5f",
+      "approvalTitle": "Docker Sandbox Integration Testing - Requirements"
+    }
+  ]
+}

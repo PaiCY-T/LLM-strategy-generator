@@ -1,0 +1,519 @@
+{
+  "generation": 12,
+  "population": [
+    {
+      "id": "gen2_offspring_20",
+      "generation": 2,
+      "parent_ids": [
+        "gen1_offspring_20",
+        "init_12"
+      ],
+      "code": "# Offspring from gen1_off + init_12",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": {
+        "sharpe_ratio": 6.04306688421253,
+        "calmar_ratio": 264.1240398615594,
+        "max_drawdown": -0.04249589806164025,
+        "total_return": 0.9896238568701472,
+        "win_rate": 0.0,
+        "annual_return": 11.224188273585435,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 1,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T23:30:20.555175",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "init_6",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 6 using Quality template\n# Template type: Quality\n# Strategy index: 6\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 6\nroe = data.get('price:\u6536\u76e4\u50f9')  # Strategy 6\nquality = roe.rolling(16).mean()",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": {
+        "sharpe_ratio": 4.883862358165627,
+        "calmar_ratio": 99.57948456798569,
+        "max_drawdown": -0.06985459689023271,
+        "total_return": 0.735450926689766,
+        "win_rate": 0.0,
+        "annual_return": 6.95608475303379,
+        "success": true
+      },
+      "novelty_score": 1.0,
+      "pareto_rank": 2,
+      "crowding_distance": 2.6615290953349637,
+      "timestamp": "2025-10-19T23:30:20.323991",
+      "template_type": "Quality",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "init_6",
+        "gen11_offspring_20"
+      ],
+      "code": "# Offspring from init_6 + gen11_of",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.007978",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008007",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008022",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008659",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "init_6"
+      ],
+      "code": "# Offspring from gen11_of + init_6",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008749",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008778",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "init_6"
+      ],
+      "code": "# Offspring from gen11_of + init_6",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008860",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008875",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008883",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "init_6"
+      ],
+      "code": "# Offspring from gen11_of + init_6",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008892",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008899",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "init_6",
+        "gen11_offspring_20"
+      ],
+      "code": "# Offspring from init_6 + gen11_of",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008906",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008914",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen2_offspring_20",
+        "gen11_offspring_20"
+      ],
+      "code": "# Offspring from gen2_off + gen11_of",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008942",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "init_6"
+      ],
+      "code": "# Offspring from gen11_of + init_6",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008949",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "init_6"
+      ],
+      "code": "# Offspring from gen11_of + init_6",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008957",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "init_6"
+      ],
+      "code": "# Offspring from gen11_of + init_6",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008964",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen11_offspring_20",
+        "gen2_offspring_20"
+      ],
+      "code": "# Offspring from gen11_of + gen2_off",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T23:30:22.008971",
+      "template_type": "Momentum",
+      "metadata": {}
+    }
+  ],
+  "generation_history": [
+    {
+      "generation": 1,
+      "diversity_score": 0.18947368421052632,
+      "total_time": 0.009471893310546875,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 2,
+      "diversity_score": 0.1,
+      "total_time": 0.1015024185180664,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 3,
+      "diversity_score": 0.1,
+      "total_time": 0.1823716163635254,
+      "pareto_front_size": 0
+    },
+    {
+      "generation": 4,
+      "diversity_score": 0.1,
+      "total_time": 0.12220931053161621,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 5,
+      "diversity_score": 0.1,
+      "total_time": 0.11314821243286133,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 6,
+      "diversity_score": 0.1,
+      "total_time": 0.10755252838134766,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 7,
+      "diversity_score": 0.1,
+      "total_time": 0.14850974082946777,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 8,
+      "diversity_score": 0.1,
+      "total_time": 0.09476399421691895,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 9,
+      "diversity_score": 0.1,
+      "total_time": 0.08649158477783203,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 10,
+      "diversity_score": 0.1,
+      "total_time": 0.14948701858520508,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 11,
+      "diversity_score": 0.1,
+      "total_time": 0.18590211868286133,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 12,
+      "diversity_score": 0.1,
+      "total_time": 0.12674713134765625,
+      "pareto_front_size": 1
+    }
+  ],
+  "config": {
+    "population_size": 20,
+    "elite_count": 2,
+    "tournament_size": 3,
+    "mutation_rate": 0.5
+  },
+  "timestamp": "2025-10-19T23:30:22.017132"
+}

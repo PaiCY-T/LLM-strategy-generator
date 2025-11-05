@@ -1,0 +1,76 @@
+Traceback (most recent call last):
+  File "/home/john/.local/lib/python3.10/site-packages/pandas/core/internals/blocks.py", line 1495, in setitem
+    values[indexer] = casted
+ValueError: could not broadcast input array from shape (2142,) into shape (2653,)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_phase0_exit_validation.py", line 371, in <module>
+    analysis = main()
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_phase0_exit_validation.py", line 345, in main
+    enhanced_report, enhanced_metrics = test_enhanced_momentum_with_exits(test_params)
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_phase0_exit_validation.py", line 108, in test_enhanced_momentum_with_exits
+    report, metrics = momentum_exit_template.generate_strategy(enhanced_params)
+  File "/mnt/c/Users/jnpi/Documents/finlab/src/templates/momentum_exit_template.py", line 392, in generate_strategy
+    positions = self._apply_exit_strategies(positions, data_dict, params)
+  File "/mnt/c/Users/jnpi/Documents/finlab/src/templates/momentum_exit_template.py", line 272, in _apply_exit_strategies
+    holding_days.iloc[i] = positions.iloc[i].astype(int)
+  File "/home/john/.local/lib/python3.10/site-packages/pandas/core/indexing.py", line 911, in __setitem__
+    iloc._setitem_with_indexer(indexer, value, self.name)
+  File "/home/john/.local/lib/python3.10/site-packages/pandas/core/indexing.py", line 1944, in _setitem_with_indexer
+    self._setitem_single_block(indexer, value, name)
+  File "/home/john/.local/lib/python3.10/site-packages/pandas/core/indexing.py", line 2218, in _setitem_single_block
+    self.obj._mgr = self.obj._mgr.setitem(indexer=indexer, value=value)
+  File "/home/john/.local/lib/python3.10/site-packages/pandas/core/internals/managers.py", line 415, in setitem
+    return self.apply("setitem", indexer=indexer, value=value)
+  File "/home/john/.local/lib/python3.10/site-packages/pandas/core/internals/managers.py", line 363, in apply
+    applied = getattr(b, f)(**kwargs)
+  File "/home/john/.local/lib/python3.10/site-packages/pandas/core/internals/blocks.py", line 1498, in setitem
+    raise ValueError(
+ValueError: setting an array element with a sequence.
+================================================================================
+PHASE 0: EXIT STRATEGY HYPOTHESIS VALIDATION
+================================================================================
+
+Task 0.2: Backtest Comparison (Baseline vs. Enhanced)
+Test Date: 2025-10-20 14:41:32
+
+Test Configuration:
+  Momentum Period:     20 days
+  MA Period:           60 days
+  Catalyst Type:       revenue
+  Catalyst Lookback:   3 months
+  Portfolio Size:      10 stocks
+  Rebalancing:         M (Monthly)
+
+================================================================================
+BASELINE: Momentum Template (No Exit Strategies)
+================================================================================
+
+Parameters: {'momentum_period': 20, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0}
+
+Running backtest...
+
+✅ Backtest completed in 10.8s
+
+Baseline Metrics:
+  Sharpe Ratio:   -0.1215
+  Annual Return:  -4.22%
+  Max Drawdown:   -72.25%
+
+================================================================================
+ENHANCED: Momentum + Exit Strategies
+================================================================================
+
+Parameters: {'momentum_period': 20, 'ma_periods': 60, 'catalyst_type': 'revenue', 'catalyst_lookback': 3, 'n_stocks': 10, 'stop_loss': 0.1, 'resample': 'M', 'resample_offset': 0, 'use_exits': True, 'atr_period': 14, 'stop_atr_mult': 2.0, 'profit_atr_mult': 3.0, 'max_hold_days': 30}
+
+Exit Strategies:
+  1. ATR Trailing Stop-Loss: 2.0× ATR
+  2. Fixed Profit Target:    3.0× ATR
+  3. Time-Based Exit:        30 days max
+  4. ATR Period:             14 days
+
+Running backtest...
+
+❌ Validation test failed: setting an array element with a sequence.

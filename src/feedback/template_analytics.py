@@ -40,6 +40,8 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime
 import json
 import logging
+import os
+import tempfile
 from pathlib import Path
 
 
@@ -116,18 +118,21 @@ class TemplateAnalytics:
 
     def __init__(
         self,
-        storage_path: str = 'template_analytics.json',
+        storage_path: str = 'artifacts/data/template_analytics.json',
         logger: Optional[logging.Logger] = None
     ):
         """
         Initialize template analytics.
 
         Args:
-            storage_path: Path to JSON storage file
+            storage_path: Path to JSON storage file (default: artifacts/data/template_analytics.json)
             logger: Optional logger
         """
         self.storage_path = Path(storage_path)
         self.logger = logger or logging.getLogger(__name__)
+
+        # Ensure parent directory exists
+        self.storage_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Load existing records
         self.usage_records: List[TemplateUsageRecord] = []
@@ -189,6 +194,116 @@ class TemplateAnalytics:
 
         # Save to storage
         self._save_to_storage()
+
+    def track_template_usage(
+        self,
+        template_name: str,
+        iteration_num: int,
+        sharpe_ratio: float,
+        validation_passed: bool = False,
+        exploration_mode: bool = False,
+        champion_based: bool = False,
+        match_score: float = 0.0
+    ) -> None:
+        """
+        Track template usage (alias for record_template_usage with task-specific signature).
+
+        Args:
+            template_name: Template used
+            iteration_num: Iteration number
+            sharpe_ratio: Resulting Sharpe ratio
+            validation_passed: True if validation passed
+            exploration_mode: True if exploration mode
+            champion_based: True if champion-based parameters
+            match_score: Template match score
+
+        Example:
+            >>> analytics.track_template_usage(
+            ...     template_name='TurtleTemplate',
+            ...     iteration_num=10,
+            ...     sharpe_ratio=1.5
+            ... )
+        """
+        self.record_template_usage(
+            iteration=iteration_num,
+            template_name=template_name,
+            sharpe_ratio=sharpe_ratio,
+            validation_passed=validation_passed,
+            exploration_mode=exploration_mode,
+            champion_based=champion_based,
+            match_score=match_score
+        )
+
+    def calculate_template_success_rate(
+        self,
+        template_name: str,
+        min_sharpe: float = 1.5
+    ) -> Dict[str, Any]:
+        """
+        Calculate success rate for a specific template.
+
+        Success is defined as strategies that pass validation AND meet minimum Sharpe threshold.
+
+        Args:
+            template_name: Template name to analyze
+            min_sharpe: Minimum Sharpe ratio for success (default: 1.5)
+
+        Returns:
+            Dictionary with:
+                - total_usage: Total times template was used
+                - successful_strategies: Count of successful strategies
+                - success_rate: Percentage (0.0-1.0)
+                - avg_sharpe: Average Sharpe ratio
+                - avg_sharpe_successful: Average Sharpe of successful strategies only
+
+        Example:
+            >>> result = analytics.calculate_template_success_rate('TurtleTemplate', min_sharpe=1.5)
+            >>> print(f"Success rate: {result['success_rate']:.1%}")
+            Success rate: 80.0%
+        """
+        # Filter records for this template
+        template_records = [
+            r for r in self.usage_records
+            if r.template_name == template_name
+        ]
+
+        total_usage = len(template_records)
+
+        if total_usage == 0:
+            return {
+                'template_name': template_name,
+                'total_usage': 0,
+                'successful_strategies': 0,
+                'success_rate': 0.0,
+                'avg_sharpe': 0.0,
+                'avg_sharpe_successful': 0.0,
+                'min_sharpe_threshold': min_sharpe
+            }
+
+        # Success: validation passed AND Sharpe >= threshold
+        successful_records = [
+            r for r in template_records
+            if r.validation_passed and r.sharpe_ratio >= min_sharpe
+        ]
+        successful_strategies = len(successful_records)
+        success_rate = successful_strategies / total_usage if total_usage > 0 else 0.0
+
+        # Calculate average Sharpe ratios
+        all_sharpe = [r.sharpe_ratio for r in template_records]
+        avg_sharpe = sum(all_sharpe) / len(all_sharpe) if all_sharpe else 0.0
+
+        successful_sharpe = [r.sharpe_ratio for r in successful_records]
+        avg_sharpe_successful = sum(successful_sharpe) / len(successful_sharpe) if successful_sharpe else 0.0
+
+        return {
+            'template_name': template_name,
+            'total_usage': total_usage,
+            'successful_strategies': successful_strategies,
+            'success_rate': round(success_rate, 3),
+            'avg_sharpe': round(avg_sharpe, 3),
+            'avg_sharpe_successful': round(avg_sharpe_successful, 3),
+            'min_sharpe_threshold': min_sharpe
+        }
 
     def get_template_statistics(
         self,
@@ -412,16 +527,44 @@ class TemplateAnalytics:
             self.usage_records = []
 
     def _save_to_storage(self) -> None:
-        """Save usage records to JSON storage."""
+        """
+        Save usage records to JSON storage using atomic file operations.
+
+        Uses temp file + rename pattern to ensure data integrity:
+        1. Write to temporary file
+        2. Atomic rename to actual storage path
+
+        This prevents corruption from partial writes or crashes during save.
+        """
         try:
             # Convert records to dictionaries
             data = [r.to_dict() for r in self.usage_records]
 
-            # Write to file
-            with self.storage_path.open('w', encoding='utf-8') as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
+            # Write to temporary file first (atomic operation)
+            temp_fd, temp_path = tempfile.mkstemp(
+                dir=self.storage_path.parent,
+                prefix='.tmp_analytics_',
+                suffix='.json',
+                text=True
+            )
 
-            self.logger.debug(f"Saved {len(self.usage_records)} records to storage")
+            try:
+                with os.fdopen(temp_fd, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+
+                # Atomic rename to final location
+                # On POSIX systems, this is atomic even if target exists
+                os.replace(temp_path, str(self.storage_path))
+
+                self.logger.debug(f"Saved {len(self.usage_records)} records to storage (atomic)")
+
+            except Exception as e:
+                # Clean up temp file on error
+                try:
+                    os.unlink(temp_path)
+                except:
+                    pass
+                raise
 
         except Exception as e:
             self.logger.error(f"Failed to save to storage: {e}")

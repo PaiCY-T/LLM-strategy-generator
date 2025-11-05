@@ -39,8 +39,8 @@ class TestMomentumTemplate:
 
         # Check all 8 required parameters are present
         required_params = [
-            'momentum_period', 'ma_short', 'ma_medium', 'ma_long',
-            'revenue_short', 'revenue_long', 'n_stocks', 'stop_loss'
+            'momentum_period', 'ma_periods', 'catalyst_type', 'catalyst_lookback',
+            'n_stocks', 'stop_loss', 'resample', 'resample_offset'
         ]
 
         for param in required_params:
@@ -65,7 +65,8 @@ class TestMomentumTemplate:
 
         # Check all required parameters are present
         assert 'momentum_period' in defaults
-        assert 'ma_short' in defaults
+        assert 'ma_periods' in defaults
+        assert 'catalyst_type' in defaults
         assert 'n_stocks' in defaults
 
         # Check defaults are from PARAM_GRID

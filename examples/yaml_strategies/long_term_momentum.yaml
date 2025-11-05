@@ -1,0 +1,202 @@
+# Long-Term Momentum Strategy
+# ============================
+# Position trading momentum strategy using moving average crossovers
+#
+# Strategy Logic:
+# - Identify long-term trends using 50/200 day MA crossover (Golden Cross)
+# - Enter when price is in strong uptrend with both MAs aligned
+# - Use volatility-weighted position sizing to manage risk
+# - Wide 20% stop loss to avoid whipsaws in monthly timeframe
+# - Designed for capturing major trend moves
+#
+# Expected Performance: Sharpe 1.5-2.0, Annual Return 18-28%, Turnover: Low
+# Market Conditions: Best in strong trending bull markets
+# Risk Level: Medium (wide stops, low turnover)
+
+metadata:
+  name: "Long-Term Trend Following"
+  description: "Position trading strategy using 50/200 day MA golden cross with volatility-weighted sizing, designed to capture major trend moves with low turnover"
+  strategy_type: "momentum"
+  rebalancing_frequency: "M"  # Monthly rebalancing
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - long-term
+    - momentum
+    - trend-following
+    - moving-average
+    - golden-cross
+    - position-trading
+  risk_level: "medium"
+
+indicators:
+  # Technical indicators for long-term trend
+  technical_indicators:
+    # Long-term moving averages
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+    - name: "ma_200"
+      type: "SMA"
+      period: 200
+      source: "data.get('MA_200')"
+
+    # Intermediate MA for filtering
+    - name: "ma_100"
+      type: "SMA"
+      period: 100
+      source: "data.get('MA_100')"
+
+    # RSI for overbought filter
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # ATR for volatility measurement
+    - name: "atr_20"
+      type: "ATR"
+      period: 20
+      source: "data.get('ATR_20')"
+
+    # ADX for trend strength
+    - name: "adx_14"
+      type: "ADX"
+      period: 14
+      source: "data.get('ADX_14')"
+
+  # Volume indicators
+  volume_filters:
+    - name: "avg_volume_50"
+      metric: "average_volume"
+      period: 50
+      threshold: 80000000  # 80M minimum
+
+  # Custom calculations
+  custom_calculations:
+    # Normalized volatility (for position sizing)
+    - name: "normalized_volatility"
+      expression: "atr_20 / close"
+      description: "ATR as percentage of price"
+
+    # Long-term momentum (50-day percentage change)
+    - name: "momentum_50d"
+      expression: "(close - close.shift(50)) / close.shift(50)"
+      description: "50-day price momentum"
+
+    # MA trend score (distance from 200-day MA)
+    - name: "ma_trend_score"
+      expression: "(close - ma_200) / ma_200"
+      description: "Distance from 200-day MA as percentage"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # Golden Cross: 50-day MA above 200-day MA
+    - condition: "ma_50 > ma_200"
+      description: "Golden Cross (50-day MA > 200-day MA)"
+
+    # Price above both MAs
+    - condition: "close > ma_50"
+      description: "Price above 50-day MA"
+
+    - condition: "close > ma_200"
+      description: "Price above 200-day MA"
+
+    # MA alignment (100-day between 50 and 200)
+    - condition: "ma_100 > ma_200"
+      description: "100-day MA above 200-day MA (trend alignment)"
+
+    # Strong trend (ADX above 25)
+    - condition: "adx_14 > 25"
+      description: "Strong trend (ADX >25)"
+
+    # Positive long-term momentum
+    - condition: "momentum_50d > 0.15"
+      description: "Price up >15% over 50 days (strong momentum)"
+
+    # RSI not overbought
+    - condition: "rsi_14 < 75"
+      description: "RSI below 75 (room to run)"
+
+    # Price at least 10% above 200-day MA
+    - condition: "ma_trend_score > 0.10"
+      description: "Price >10% above 200-day MA (strong uptrend)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # Liquidity requirements
+  min_liquidity:
+    average_volume_20d: 100000000  # 100M minimum
+
+exit_conditions:
+  # Wide stop loss for long-term trend
+  stop_loss_pct: 0.20  # 20% stop loss
+
+  # Large take profit target
+  take_profit_pct: 0.50  # 50% take profit
+
+  # Trailing stop for trend following
+  trailing_stop:
+    trail_percent: 0.15      # Trail 15% below peak
+    activation_profit: 0.10  # Activate after 10% profit
+
+  # Conditional exits (trend reversal signals)
+  conditional_exits:
+    # Exit if 50-day MA crosses below 200-day MA (Death Cross)
+    - condition: "ma_50 < ma_200"
+      description: "Death Cross (50-day MA below 200-day MA)"
+
+    # Exit if price falls below 50-day MA
+    - condition: "close < ma_50"
+      description: "Price below 50-day MA (trend weakening)"
+
+    # Exit if ADX weakens significantly
+    - condition: "adx_14 < 20"
+      description: "Trend strength weakened (ADX <20)"
+
+    # Exit if price falls below 100-day MA
+    - condition: "close < ma_100"
+      description: "Price below 100-day MA (intermediate support broken)"
+
+  # Long holding period for trend following
+  holding_period_days: 180  # Up to 6 months
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Volatility-weighted allocation (inverse volatility)
+  method: "volatility_weighted"
+
+  # Maximum 15 positions (concentrated for long-term)
+  max_positions: 15
+
+  # Maximum 12% per position
+  max_position_pct: 0.12
+
+  # Minimum 4% per position
+  min_position_pct: 0.04
+
+risk_management:
+  # Sector concentration limit
+  max_sector_exposure: 0.35
+
+  # Rebalance only on significant drift
+  rebalance_threshold: 0.20
+
+  # Wider drawdown tolerance
+  max_drawdown_limit: 0.25
+
+  # Minimal cash reserve (trend following stays invested)
+  cash_reserve_pct: 0.02
+
+backtest_config:
+  start_date: "2019-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.001

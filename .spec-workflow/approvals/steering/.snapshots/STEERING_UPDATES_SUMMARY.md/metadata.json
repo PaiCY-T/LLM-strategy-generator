@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/steering/STEERING_UPDATES_SUMMARY.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-28T07:08:07.423Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761635287194_zg0kja1l3",
+      "approvalTitle": "Steering Updates Summary - Changelog and Impact"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-28T14:11:48.553Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761635287194_zg0kja1l3",
+      "approvalTitle": "Steering Updates Summary - Changelog and Impact"
+    }
+  ]
+}

@@ -119,11 +119,25 @@ Step 6: Track template usage
 - Validation: Error-based parameter adjustment
 - Risk profile: User preference alignment
 
+**Performance Tiers** (by Sharpe ratio):
+- Champion tier: ≥2.0 (elite performance)
+- Contender tier: 1.5-2.0 (strong performance)
+- Solid performance: 1.0-1.5 (acceptable)
+- Archive tier: 0.5-1.0 (needs improvement)
+- Poor performance: <0.5 (rapid iteration needed)
+
+**Template Descriptions:**
+- **TurtleTemplate**: 6-layer AND filtering, revenue growth weighting, expected Sharpe 1.5-2.5, stable risk
+- **MastiffTemplate**: 6 contrarian conditions, concentrated positions, expected Sharpe 1.2-2.0, concentrated risk
+- **FactorTemplate**: Single-factor ranking, simple robust strategy, expected Sharpe 0.8-1.3, stable risk
+- **MomentumTemplate**: Momentum + catalyst combo, fast iteration cycles, expected Sharpe 0.6-1.2, fast risk
+
 **Example Output:**
 ```
-Sharpe 0.80 in target range 0.5-1.0 (Archive tier): TurtleTemplate proven 80% success rate.
-6-layer AND filtering with revenue growth + price strength.
-Robust multi-factor strategy. Expected Sharpe range: 1.5-2.5. Success rate: 80%.
+**TurtleTemplate** selected based on performance tier:
+- Performance: Archive tier (Sharpe 0.80)
+- Success rate: 75%
+- 🎯 Target performance range - proven template with 80% historical success
 ```
 
 ### 3. TemplateAnalytics
@@ -306,6 +320,196 @@ def calculate_template_match_score(
 - Selection method (30%): .is_largest(), .is_smallest(), .rank()
 - Parameter similarity (20%): Alignment with template param grid
 - Performance alignment (10%): Sharpe within expected range
+
+### RationaleGenerator
+
+#### `generate_performance_rationale()`
+
+Generate performance-based template recommendation rationale.
+
+**Signature:**
+```python
+def generate_performance_rationale(
+    self,
+    template_name: str,
+    sharpe: float,
+    success_rate: float,
+    drawdown: Optional[float] = None,
+    iteration: Optional[int] = None
+) -> str
+```
+
+**Parameters:**
+- `template_name`: Template being recommended (e.g., 'TurtleTemplate')
+- `sharpe`: Current Sharpe ratio performance metric
+- `success_rate`: Template historical success rate (0.0-1.0)
+- `drawdown`: Optional maximum drawdown metric
+- `iteration`: Optional current iteration number
+
+**Returns:** Formatted markdown string with performance analysis
+
+**Example:**
+```python
+rationale = generator.generate_performance_rationale(
+    template_name='TurtleTemplate',
+    sharpe=0.8,
+    success_rate=0.75,
+    drawdown=-0.15
+)
+# Returns:
+# **TurtleTemplate** selected based on performance tier:
+# - Performance: Archive tier (Sharpe 0.80)
+# - Success rate: 75%
+# - Max drawdown: -15.0%
+# - 🎯 Target performance range - proven template with 80% historical success
+```
+
+#### `generate_exploration_rationale()`
+
+Generate exploration mode recommendation rationale.
+
+**Signature:**
+```python
+def generate_exploration_rationale(
+    self,
+    template_name: str,
+    iteration: int,
+    recent_templates: list,
+    success_rate: float
+) -> str
+```
+
+**Parameters:**
+- `template_name`: Template selected for exploration
+- `iteration`: Current iteration number
+- `recent_templates`: List of recently used template names
+- `success_rate`: Template historical success rate
+
+**Returns:** Formatted markdown string with exploration justification
+
+**Example:**
+```python
+rationale = generator.generate_exploration_rationale(
+    template_name='MastiffTemplate',
+    iteration=5,
+    recent_templates=['Turtle', 'Turtle', 'Factor'],
+    success_rate=0.65
+)
+# Returns:
+# **⚡ EXPLORATION MODE** - Iteration 5
+# Selected: MastiffTemplate
+# Success rate: 65%
+#
+# Avoiding recently used templates:
+# - Turtle (used 2x recently)
+# - Factor (used 1x recently)
+```
+
+#### `generate_champion_rationale()`
+
+Generate champion-based recommendation rationale.
+
+**Signature:**
+```python
+def generate_champion_rationale(
+    self,
+    template_name: str,
+    champion_sharpe: float,
+    champion_params: Dict[str, Any]
+) -> str
+```
+
+**Parameters:**
+- `template_name`: Template from champion strategy
+- `champion_sharpe`: Champion's Sharpe ratio
+- `champion_params`: Champion's parameter configuration
+
+**Returns:** Formatted markdown string with champion reference
+
+**Example:**
+```python
+rationale = generator.generate_champion_rationale(
+    template_name='TurtleTemplate',
+    champion_sharpe=2.3,
+    champion_params={'n_stocks': 10, 'ma_short': 20}
+)
+# Returns:
+# **🏆 Champion-based recommendation**
+# Template: TurtleTemplate
+# Champion Sharpe: 2.30
+# Proven parameter configuration with elite performance
+```
+
+#### `generate_validation_rationale()`
+
+Generate validation-aware recommendation rationale.
+
+**Signature:**
+```python
+def generate_validation_rationale(
+    self,
+    template_name: str,
+    errors: list,
+    suggested_fixes: Dict[str, Any]
+) -> str
+```
+
+**Parameters:**
+- `template_name`: Template being recommended
+- `errors`: List of validation errors from previous iteration
+- `suggested_fixes`: Dictionary of parameter adjustments
+
+**Returns:** Formatted markdown string with validation feedback
+
+**Example:**
+```python
+rationale = generator.generate_validation_rationale(
+    template_name='MomentumTemplate',
+    errors=['n_stocks out of range', 'stop_loss too low'],
+    suggested_fixes={'n_stocks': 15, 'stop_loss': 0.08}
+)
+# Returns:
+# **Validation-aware recommendation**
+# Template: MomentumTemplate
+# Addressing 2 validation issues:
+# - Adjusted n_stocks → 15
+# - Adjusted stop_loss → 0.08
+```
+
+#### `generate_risk_profile_rationale()`
+
+Generate risk profile-based recommendation rationale.
+
+**Signature:**
+```python
+def generate_risk_profile_rationale(
+    self,
+    template_name: str,
+    risk_profile: str,
+    user_preference: str
+) -> str
+```
+
+**Parameters:**
+- `template_name`: Template matching risk profile
+- `risk_profile`: Template's risk characteristics ('concentrated', 'stable', 'fast')
+- `user_preference`: User's risk preference
+
+**Returns:** Formatted markdown string with risk alignment justification
+
+**Example:**
+```python
+rationale = generator.generate_risk_profile_rationale(
+    template_name='FactorTemplate',
+    risk_profile='stable',
+    user_preference='stable'
+)
+# Returns:
+# **Risk-aligned recommendation**
+# Template: FactorTemplate
+# Risk profile: Stable, low-volatility returns
+# Matches user preference: stable
+```
 
 ### FeedbackLoopIntegrator
 
@@ -690,14 +894,25 @@ A: Weighted average: 40% filter count + 30% selection method + 20% parameter sim
 
 ## Changelog
 
-### Version 1.0.0 (Current)
+### Version 1.1.0 (2025-10-16) - Phase 6 Enhancements
+- ✅ **RationaleGenerator API Completion** (Task 51)
+  - Added 5 public methods: `generate_performance_rationale()`, `generate_exploration_rationale()`, `generate_champion_rationale()`, `generate_validation_rationale()`, `generate_risk_profile_rationale()`
+  - Added 1 private helper: `_get_performance_tier()`
+  - Added 2 class attributes: `PERFORMANCE_TIERS`, `TEMPLATE_DESCRIPTIONS`
+  - Fixed 22 failing tests → 100% test pass rate
+- ✅ **API Documentation Updates** (Task 54)
+  - Complete API reference for all RationaleGenerator methods
+  - Updated component descriptions with performance tiers
+  - Created comprehensive API changelog (`docs/API_CHANGELOG.md`)
+
+### Version 1.0.0 (2025-10-15)
 - ✅ Performance-based template recommendation
 - ✅ Champion parameter integration
 - ✅ Forced exploration mode
 - ✅ Validation-aware feedback
 - ✅ Template match scoring
 - ✅ Analytics and persistence
-- ✅ Natural language rationales
+- ✅ Natural language rationales (basic implementation)
 - ✅ Comprehensive test suite (65 tests)
 
 ---

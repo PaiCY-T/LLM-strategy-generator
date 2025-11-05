@@ -322,10 +322,14 @@ def analyze_iteration_history():
             print(f"\n📈 Recent 5 Iterations:")
             for entry in recent:
                 iter_num = entry.get('iteration_num', 'N/A')
-                m = entry['metrics']
-                sharpe = m['sharpe_ratio']
-                cagr = m['annual_return']
-                max_dd = m['max_drawdown']
+                m = entry.get('metrics')
+                if m is None or not isinstance(m, dict):
+                    continue
+                sharpe = m.get('sharpe_ratio')
+                cagr = m.get('annual_return')
+                max_dd = m.get('max_drawdown')
+                if sharpe is None or cagr is None or max_dd is None:
+                    continue
                 valid = entry.get('validation_passed', False)
                 status = "✅" if valid else "❌"
                 print(f"  {status} Iter {iter_num:2d}: Sharpe={sharpe:7.4f}, CAGR={cagr:7.2%}, MaxDD={max_dd:7.2%}")

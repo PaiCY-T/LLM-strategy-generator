@@ -1,0 +1,22 @@
+======================================================================
+COMBINATIONTEMPLATE 10-GENERATION SMOKE TEST
+======================================================================
+
+Configuration:
+  Population Size: 10
+  Generations:     10
+  Elite Count:     2
+  Template:        CombinationTemplate
+  Output Report:   COMBINATION_SMOKE_TEST_PHASE15.md
+
+2025-10-20 06:28:17,264 - __main__ - INFO - Initializing PopulationManager...
+2025-10-20 06:28:17,265 - src.evolution.selection - INFO - Initialized SelectionManager: tournament_size=3, selection_pressure=0.8, elite_count=2, diversity_weight=0.3
+2025-10-20 06:28:17,265 - src.evolution.population_manager - INFO - PopulationManager initialized: population_size=10, elite_count=2, tournament_size=3
+Initializing population with CombinationTemplate...
+2025-10-20 06:28:17,483 - __main__ - ERROR - Failed to initialize population: 'TemplateRegistry' object has no attribute 'sample_parameters'
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_combination_smoke_test.py", line 403, in main
+    params = registry.sample_parameters('Combination')
+AttributeError: 'TemplateRegistry' object has no attribute 'sample_parameters'
+
+❌ Population initialization failed: 'TemplateRegistry' object has no attribute 'sample_parameters'

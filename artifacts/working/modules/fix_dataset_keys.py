@@ -22,6 +22,8 @@ KEY_FIXES = {
     # Price-earnings ratio fixes (wrong category)
     "fundamental_features:本益比": "price_earning_ratio:本益比",
     "fundamental_features:股價淨值比": "price_earning_ratio:股價淨值比",
+    "price:本益比": "price_earning_ratio:本益比",  # Common LLM mistake
+    "price:股價淨值比": "price_earning_ratio:股價淨值比",  # Common LLM mistake
 
     # ROE alternatives (use fundamental_features version if available)
     "fundamental_features:ROE": "fundamental_features:ROE稅後",
@@ -50,6 +52,11 @@ KEY_FIXES = {
     # Market value variations
     "market_value": "etl:market_value",
     "etl:stock_market_value": "etl:market_value",
+
+    # Common price key mistakes (LLM uses Chinese names with wrong prefix)
+    "price:收盤價": "etl:adj_close",  # LLM mistake: should use adjusted close
+    "price:開盤價": "etl:adj_open",   # LLM mistake: should use adjusted open
+    "price:成交股數": "price:成交金額",  # LLM mistake: volume doesn't exist, use trading value
 }
 
 

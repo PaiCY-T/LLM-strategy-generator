@@ -1,0 +1,767 @@
+Alert evaluation took 60.2ms (target: <50ms)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1762014409.260940   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 86.2ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014432.972089   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 69.8ms (target: <50ms)
+Alert evaluation took 88.0ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014451.248974   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 65.1ms (target: <50ms)
+Alert evaluation took 52.8ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014474.600661   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 184.8ms (target: <50ms)
+================================================================================
+DIVERSITY OPTIMIZATION PILOT TEST
+================================================================================
+Start time: 2025-11-02 00:26:47
+
+Configuration:
+  - LLM Innovation Rate: 30% (up from 5%)
+  - Diversity-aware prompting: ENABLED
+  - Population-aware generation: ENABLED
+  - Target iterations: 30
+  - Expected diversity: ≥40 (baseline was 19.17)
+================================================================================
+
+📋 Initializing autonomous loop...
+✅ Autonomous loop initialized successfully
+   LLM enabled: True
+   Innovation rate: 0.3
+   Model: gemini-2.5-flash
+
+================================================================================
+STARTING PILOT TEST - 30 ITERATIONS
+================================================================================
+
+============================================================
+AUTONOMOUS LEARNING LOOP - START
+============================================================
+Model: gemini-2.5-flash
+Max iterations: 30
+Sandbox mode: ENABLED
+
+
+============================================================
+ITERATION 0
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (8814 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')  # Return on Equity
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # Monthly Revenue YoY growth
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')  # Foreign investor net buy
+pb_ratio = data.get('fundamental_features:股價淨值比')...
+   ✓ Detected raw Python code (Strategy 3): 44/48 lines are Python
+✅ Successfully generated strategy (2611 chars)
+✅ Strategy generated (2611 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: e6874e8f9cfc44a5
+✅ Applied 1 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter0.py
+
+============================================================
+ITERATION 1
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9222 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+rsi = data.indicator('RSI') # Technical indicator for filtering
+
+# 2. Calculate factors
+# Factor 1: Long-term Price Momentum (6...
+   ✓ Detected raw Python code (Strategy 3): 40/43 lines are Python
+✅ Successfully generated strategy (2236 chars)
+✅ Strategy generated (2236 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: e1569c48c32a4264
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter1.py
+
+============================================================
+ITERATION 2
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9222 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')  # Return on Equity (quarterly)
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # Monthly Revenue YoY
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')  # Foreign Investor Net Buy
+rsi = data.indicator('RSI')  # Relative Strength Index
+
+# 2. Calculate factors
+# F...
+   ✓ Detected raw Python code (Strategy 3): 47/50 lines are Python
+✅ Successfully generated strategy (2618 chars)
+✅ Strategy generated (2618 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 6be9a7a19ea3370a
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (888 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter2.py
+
+============================================================
+ITERATION 3
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+rsi = data.indicator('RSI') # Technical indicator
+
+# 2. Calculate factors
+# Factor 1: Long-term Price Momentum (60-day returns)...
+   ✓ Detected raw Python code (Strategy 3): 39/42 lines are Python
+✅ Successfully generated strategy (2208 chars)
+✅ Strategy generated (2208 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: d99d748c20d4ef12
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014494.239819   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 54.2ms (target: <50ms)
+Alert evaluation took 56.2ms (target: <50ms)
+Alert evaluation took 76.7ms (target: <50ms)
+Failed to check container fba2ac12a0d3fea891031f6151d99def5d04064c35529e50f8d6f90007fb105d: Expecting value: line 1 column 1 (char 0)
+Traceback (most recent call last):
+  File "/home/john/.local/lib/python3.10/site-packages/requests/models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/runtime_monitor.py", line 294, in _check_all_containers
+    self._check_container(container_id)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/runtime_monitor.py", line 311, in _check_container
+    stats = self.container_monitor.get_container_stats(container_id)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/container_monitor.py", line 171, in get_container_stats
+    return self._collect_stats(container)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/container_monitor.py", line 233, in _collect_stats
+    stats_data = container.stats(stream=False)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/models/containers.py", line 438, in stats
+    return self.client.api.stats(self.id, **kwargs)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
+    return f(self, resource_id, *args, **kwargs)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/api/container.py", line 1184, in stats
+    return self._result(self._get(url, params=params), json=True)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/api/client.py", line 284, in _result
+    return response.json()
+  File "/home/john/.local/lib/python3.10/site-packages/requests/models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014530.473434   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 57.0ms (target: <50ms)
+Alert evaluation took 81.4ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014551.026837   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 75.8ms (target: <50ms)
+Alert evaluation took 70.7ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014570.822686   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 65.1ms (target: <50ms)
+Alert evaluation took 128.2ms (target: <50ms)
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter3.py
+
+============================================================
+ITERATION 4
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+rsi = data.indicator('RSI')
+
+# 2. Calculate factors
+# Factor 1: Medium-term Price Momentum (60-day returns)
+momentum = close.pc...
+   ✓ Detected raw Python code (Strategy 3): 44/47 lines are Python
+✅ Successfully generated strategy (2534 chars)
+✅ Strategy generated (2534 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 0e0bdb6f03946c73
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter4.py
+
+============================================================
+ITERATION 5
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9262 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+⚠️  LLM innovation failed, falling back to Factor Graph
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')  # Quality factor
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # Growth factor
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')  # Institutional flow
+rsi = data.indicator('RSI') # Technical indicator for filtering
+
+# 2. ...
+   ✓ Detected raw Python code (Strategy 3): 42/45 lines are Python
+✅ Successfully generated strategy (2424 chars)
+✅ Strategy generated (2424 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: e9fffa2cb5067089
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter5.py
+
+============================================================
+ITERATION 6
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+⚠️  LLM innovation failed, falling back to Factor Graph
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+rsi = data.indicator('RSI')
+
+# 2. Calculate factors
+# Factor 1: Long-term Price Momentum (60-day returns)
+momentum_60d = close.pct_change(60).shift(1)
+
+# Factor 2: Q...
+   ✓ Detected raw Python code (Strategy 3): 44/47 lines are Python
+✅ Successfully generated strategy (2414 chars)
+✅ Strategy generated (2414 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 63c95ad7e3ff46ea
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (888 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter6.py
+
+============================================================
+ITERATION 7
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014596.671481   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 54.5ms (target: <50ms)
+Failed to check container e399324c1ea9324cd06f023dd94a59f5b5ab90bbf0aaecb1fbebb9c5e1eacbfc: Expecting value: line 1 column 1 (char 0)
+Traceback (most recent call last):
+  File "/home/john/.local/lib/python3.10/site-packages/requests/models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/runtime_monitor.py", line 294, in _check_all_containers
+    self._check_container(container_id)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/runtime_monitor.py", line 311, in _check_container
+    stats = self.container_monitor.get_container_stats(container_id)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/container_monitor.py", line 171, in get_container_stats
+    return self._collect_stats(container)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/sandbox/container_monitor.py", line 233, in _collect_stats
+    stats_data = container.stats(stream=False)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/models/containers.py", line 438, in stats
+    return self.client.api.stats(self.id, **kwargs)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
+    return f(self, resource_id, *args, **kwargs)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/api/container.py", line 1184, in stats
+    return self._result(self._get(url, params=params), json=True)
+  File "/home/john/.local/lib/python3.10/site-packages/docker/api/client.py", line 284, in _result
+    return response.json()
+  File "/home/john/.local/lib/python3.10/site-packages/requests/models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014618.553808   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 55.4ms (target: <50ms)
+Alert evaluation took 59.3ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+E0000 00:00:1762014636.971448   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert: low_success_rate - Low success rate detected: 0.0% (threshold: 20.0%)
+ALERT TRIGGERED: low_success_rate - Low success rate detected: 0.0% (threshold: 20.0%)
+Alert evaluation took 61.4ms (target: <50ms)
+Alert evaluation took 157.2ms (target: <50ms)
+Configuration capture failed: No module named 'src.config.experiment_config'
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+market_cap = data.get('etl:market_value') # For market cap filter
+roe = data.get('fundamental_features:ROE稅後') # Quality factor
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)') # Growth factor
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Institutional flow
+rsi = data.indicator('RSI') # Technical indic...
+   ✓ Detected raw Python code (Strategy 3): 52/55 lines are Python
+✅ Successfully generated strategy (3154 chars)
+✅ Strategy generated (3154 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 95822051a239d7e8
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (888 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter7.py
+
+============================================================
+ITERATION 8
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')  # Quarterly fundamental data
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')  # Monthly fundamental data
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)') # Daily institutional flow
+rsi = data.indicator('RSI') # Daily technical indicator
+
+# 2. Calculate factors
+...
+   ✓ Detected raw Python code (Strategy 3): 38/41 lines are Python
+✅ Successfully generated strategy (2165 chars)
+✅ Strategy generated (2165 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 177c58d157de47f0
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter8.py
+
+============================================================
+ITERATION 9
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11315 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+close = data.get('etl:adj_close')
+trading_value = data.get('price:成交金額')
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+pe_ratio = data.get('price_earning_ratio:本益比')
+market_value = data.get('etl:market_value')
+
+# 2. Calculate factors
+# Factor 1: Long-term Price Momentum (60-day returns)
+momentum = close.pct_change(60).shift(1)
+
+# Factor 2: Qual...
+   ✓ Detected raw Python code (Strategy 3): 42/45 lines are Python
+✅ Successfully generated strategy (2215 chars)
+✅ Strategy generated (2215 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 6c004d429b944997
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter9.py
+
+============================================================
+ITERATION 10
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (9263 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data - ALWAYS use adjusted data for price!
+close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+roe = data.get('fundamental_features:ROE稅後')
+revenue_yoy = data.get('monthly_revenue:去年同月增減(%)')
+foreign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')
+pe_ratio = data.get('price_earning_ratio:本益比')
+
+# 2. Calculate factors
+# Factor 1: Price Momentum (60-day returns)
+momentum = c...
+   ✓ Detected raw Python code (Strategy 3): 44/48 lines are Python
+✅ Successfully generated strategy (2555 chars)
+✅ Strategy generated (2555 chars)
+
+[2.3/6] Validating champion preservation...
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 462bd5de30b02745
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+✅ Validation passed
+
+[4/6] Executing strategy (mode: sandbox)...
+❌ Execution failed
+   Error: Container exited with code 1:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/s...
+
+[5/6] Building feedback...
+✅ Feedback generated (884 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter10.py
+
+============================================================
+ITERATION 11
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (11316 chars)
+
+[2/6] Generating strategy with gemini-2.5-flash...
+   → Using LLM innovation (rate: 30.0%)
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 1/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Gemini API error None: 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/models/anthropic/claude-3.5-sonnet:generateContent?key=AIzaSyBcKA1pfkFcsQ6IFkyu10_IXdc2MB_nIg0
+❌ Innovation generation failed: LLM API call failed after all retries
+E0000 00:00:1762014667.679540   71164 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.

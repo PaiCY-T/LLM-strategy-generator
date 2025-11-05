@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "total": 20,
+    "successful": 20,
+    "failed": 0,
+    "classification_breakdown": {
+      "level_0_failed": 0,
+      "level_1_executed": 0,
+      "level_2_valid_metrics": 0,
+      "level_3_profitable": 20
+    }
+  },
+  "metrics": {
+    "avg_sharpe": 0.7162707136304195,
+    "avg_return": 4.009925858558001,
+    "avg_drawdown": -0.34371866557538855,
+    "win_rate": 1.0,
+    "execution_success_rate": 1.0
+  },
+  "errors": {
+    "by_category": {
+      "timeout": 0,
+      "data_missing": 0,
+      "calculation": 0,
+      "syntax": 0,
+      "other": 0
+    },
+    "top_errors": []
+  },
+  "execution_stats": {
+    "avg_execution_time": 15.89,
+    "total_execution_time": 317.86,
+    "timeout_count": 0
+  }
+}

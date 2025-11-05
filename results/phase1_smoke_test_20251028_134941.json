@@ -1,0 +1,122 @@
+{
+  "test_completed": true,
+  "total_generations": 10,
+  "test_duration_seconds": 846.7752134799957,
+  "champion_update_count": 5,
+  "champion_update_rate": 0.5,
+  "best_is_sharpe": 1.155839223781099,
+  "champion_oos_sharpe": 1.155839223781099,
+  "avg_is_sharpe": 1.2957190935921568,
+  "population_diversity_final": 0.6333333333333333,
+  "restart_count": 0,
+  "cache_hit_rate": 0.16334920634920636,
+  "final_champion": {
+    "id": "a8adb49f",
+    "template_type": "Momentum",
+    "parameters": {
+      "momentum_period": 10,
+      "ma_periods": 90,
+      "catalyst_type": "revenue",
+      "catalyst_lookback": 3,
+      "n_stocks": 5,
+      "stop_loss": 0.12,
+      "resample": "W",
+      "resample_offset": 2
+    },
+    "fitness": 1.155839223781099,
+    "metrics": {
+      "annual_return": 0.5308345173689764,
+      "sharpe_ratio": 1.155839223781099,
+      "max_drawdown": -0.3083800224111015,
+      "success": false
+    },
+    "generation": 3,
+    "parent_ids": [
+      "e5469b00"
+    ]
+  },
+  "evolution_summary": {
+    "total_generations": 10,
+    "champion_updates_count": 5,
+    "champion_update_rate": 0.5,
+    "best_fitness": 1.155839223781099,
+    "avg_fitness": 1.2957190935921568,
+    "final_diversity": 0.6333333333333333,
+    "avg_cache_hit_rate": 0.16334920634920636,
+    "avg_fitness_progression": [
+      0.061861735812401536,
+      0.2002512567984745,
+      0.5587791992124652,
+      0.856025306490608,
+      1.0435870468761852,
+      1.0740704040589737,
+      1.1264568579580236,
+      1.1980275928117807,
+      1.2742045891438796,
+      1.2957190935921568
+    ],
+    "diversity_progression": [
+      1.0,
+      0.9666666666666667,
+      0.9666666666666667,
+      0.9333333333333333,
+      0.8666666666666667,
+      0.9,
+      0.8666666666666667,
+      0.9,
+      0.7,
+      0.6333333333333333
+    ],
+    "cache_performance": {
+      "avg_hit_rate": 0.16334920634920636,
+      "final_cache_size": 214
+    },
+    "champion_lineage": [
+      [],
+      [
+        "40f48b4e"
+      ],
+      [
+        "66270b8c"
+      ],
+      [
+        "d3a9eac1"
+      ],
+      [
+        "e5469b00"
+      ]
+    ],
+    "final_champion": {
+      "id": "a8adb49f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.155839223781099,
+      "metrics": {
+        "annual_return": 0.5308345173689764,
+        "sharpe_ratio": 1.155839223781099,
+        "max_drawdown": -0.3083800224111015,
+        "success": false
+      },
+      "generation": 3,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    }
+  },
+  "decision": "FAILURE",
+  "phase1_status": {
+    "all_available": true,
+    "missing_components": []
+  },
+  "log_file": "logs/phase1_smoke_test_20251028_133356.log",
+  "success": true
+}
