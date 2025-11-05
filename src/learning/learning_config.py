@@ -222,12 +222,62 @@ class LearningConfig:
             raise
 
     @staticmethod
+    def _resolve_env_var(value, default, value_type=str):
+        """Resolve environment variable placeholder or return value.
+
+        Args:
+            value: Raw value (may contain ${ENV_VAR:default})
+            default: Default value if resolution fails
+            value_type: Type to convert to (int, float, str, bool)
+
+        Returns:
+            Resolved and typed value
+        """
+        if isinstance(value, str) and value.startswith('${') and value.endswith('}'):
+            # Extract env var name and default: ${VAR_NAME:default_value}
+            inner = value[2:-1]  # Remove ${ and }
+            if ':' in inner:
+                env_name, env_default = inner.split(':', 1)
+                resolved = os.getenv(env_name, env_default)
+            else:
+                env_name = inner
+                resolved = os.getenv(env_name)
+
+            if resolved is None:
+                return default
+
+            # Type conversion
+            try:
+                if value_type == bool:
+                    return resolved.lower() in ('true', '1', 'yes')
+                elif value_type in (int, float):
+                    return value_type(resolved)
+                else:
+                    return resolved
+            except (ValueError, AttributeError):
+                return default
+        elif isinstance(value, str) and value_type != str:
+            # String value but expecting different type (coerce)
+            try:
+                if value_type == bool:
+                    return value.lower() in ('true', '1', 'yes')
+                else:
+                    return value_type(value)
+            except (ValueError, AttributeError):
+                return default
+        elif value is None:
+            return default
+        else:
+            return value
+
+    @staticmethod
     def _map_nested_config(raw: dict) -> dict:
         """Map nested YAML structure to flat config dict.
 
         Handles both:
         - Nested structure: learning_loop.max_iterations, llm.model, etc.
         - Flat structure: max_iterations, llm_model, etc. (backward compat)
+        - Environment variable placeholders: ${VAR_NAME:default}
 
         Args:
             raw: Raw YAML dict
@@ -235,12 +285,19 @@ class LearningConfig:
         Returns:
             Flat config dict with LearningConfig attribute names
         """
+        resolve = LearningConfig._resolve_env_var
         config = {}
 
         # === Loop Control ===
         learning_loop = raw.get('learning_loop', {})
-        config['max_iterations'] = learning_loop.get('max_iterations', raw.get('max_iterations', 20))
-        config['continue_on_error'] = learning_loop.get('continue_on_error', raw.get('continue_on_error', False))
+        config['max_iterations'] = resolve(
+            learning_loop.get('max_iterations', raw.get('max_iterations', 20)),
+            20, int
+        )
+        config['continue_on_error'] = resolve(
+            learning_loop.get('continue_on_error', raw.get('continue_on_error', False)),
+            False, bool
+        )
 
         # === LLM Configuration ===
         llm = raw.get('llm', {})
@@ -264,7 +321,24 @@ class LearningConfig:
 
         # === Innovation Mode ===
         config['innovation_mode'] = llm.get('enabled', raw.get('innovation_mode', True))
-        config['innovation_rate'] = int(llm.get('innovation_rate', raw.get('innovation_rate', 1.0)) * 100)  # Convert 0.0-1.0 to 0-100
+
+        # Innovation rate: handle both 0.0-1.0 (float) and 0-100 (int) formats
+        innovation_rate_raw = llm.get('innovation_rate', raw.get('innovation_rate', 1.0))
+        if isinstance(innovation_rate_raw, (int, float)):
+            if innovation_rate_raw <= 1.0:
+                # Float format (0.0-1.0), convert to 0-100
+                config['innovation_rate'] = int(innovation_rate_raw * 100)
+            else:
+                # Already in 0-100 format
+                config['innovation_rate'] = int(innovation_rate_raw)
+        else:
+            # String (environment variable placeholder), try to parse
+            try:
+                val = float(innovation_rate_raw)
+                config['innovation_rate'] = int(val * 100) if val <= 1.0 else int(val)
+            except (ValueError, TypeError):
+                config['innovation_rate'] = 100  # Default
+
         llm_retry = learning_loop.get('llm', {})
         config['llm_retry_count'] = llm_retry.get('retry_count', raw.get('llm_retry_count', 3))
 
