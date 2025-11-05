@@ -1,0 +1,14 @@
+{
+  "filePath": ".claude/specs/docker-sandbox-security/design.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-24T22:12:47.179Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761343967133_xyzxns2y0",
+      "approvalTitle": "Docker Sandbox Security - Design Document"
+    }
+  ]
+}

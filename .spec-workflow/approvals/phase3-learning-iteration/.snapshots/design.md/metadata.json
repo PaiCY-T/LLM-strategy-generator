@@ -1,0 +1,38 @@
+{
+  "filePath": ".spec-workflow/specs/phase3-learning-iteration/design.md",
+  "currentVersion": 4,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-30T23:00:11.526Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761865211372_nhtm3cdhx",
+      "approvalTitle": "Phase 3 Learning Iteration - Design Document"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-30T23:09:23.305Z",
+      "trigger": "revision_requested",
+      "approvalId": "approval_1761865211372_nhtm3cdhx",
+      "approvalTitle": "Phase 3 Learning Iteration - Design Document"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-10-30T23:15:31.257Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761865890440_qleqcczlg",
+      "approvalTitle": "Phase 3 Learning Iteration - Design Document (Revised)"
+    },
+    {
+      "version": 4,
+      "filename": "snapshot-004.json",
+      "timestamp": "2025-10-30T23:51:28.834Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761868232302_7nuw1qgzt",
+      "approvalTitle": "Phase 3 Design Document (Revised - All Issues Fixed)"
+    }
+  ]
+}

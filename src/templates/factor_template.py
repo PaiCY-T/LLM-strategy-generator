@@ -463,22 +463,22 @@ class FactorTemplate(BaseTemplate):
             without these filters, but they typically improve risk-adjusted returns
             by avoiding illiquid stocks and weak technical setups.
         """
-        # Load price and volume data
-        close = self._get_cached_data('price:收盤價')
-        volume = self._get_cached_data('price:成交股數')
+        # Load price and trading value data
+        close = self._get_cached_data('etl:adj_close')  # ✅ Adjusted for dividends/splits
+        trading_value = self._get_cached_data('price:成交金額')  # OK for liquidity filter
 
         # Technical confirmation: Price above 20-day MA (uptrend)
         ma20 = close.average(20)
         technical_filter = close > ma20
 
-        # Liquidity filter: Minimum 5-day average volume (100k shares)
-        liquidity_filter = volume.average(5) >= 100_000
+        # Liquidity filter: Minimum 5-day average trading value (50M TWD)
+        liquidity_filter = trading_value.average(5) >= 50_000_000
 
-        # Volume momentum: Increasing volume (5-day > 20-day average)
-        volume_momentum = volume.average(5) > volume.average(20)
+        # Trading activity: Increasing activity (5-day > 20-day average)
+        activity_momentum = trading_value.average(5) > trading_value.average(20)
 
         # Combine quality filters with AND logic
-        quality_conditions = technical_filter & liquidity_filter & volume_momentum
+        quality_conditions = technical_filter & liquidity_filter & activity_momentum
 
         # Apply quality filters to ranked data
         # Keep only stocks that pass quality filters
@@ -586,6 +586,7 @@ class FactorTemplate(BaseTemplate):
                 stop_loss=params['stop_loss'],
                 take_profit=params['take_profit'],
                 position_limit=params['position_limit'],
+                upload=False,  # Disable upload for sandbox testing
                 name=strategy_name
             )
 

@@ -1,0 +1,27 @@
+2025-10-09 21:34:08,641 - __main__ - INFO - Pre-loading Finlab datasets to avoid repeated imports in sandbox...
+2025-10-09 21:34:08,642 - __main__ - INFO - Logged into Finlab 1.5.3
+2025-10-09 21:34:13,575 - __main__ - ERROR - Failed to pre-load Finlab datasets: **Error: price:漲跌百分比 not exists
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/iteration_engine.py", line 1019, in main_loop
+    datasets = load_common_datasets()
+  File "/mnt/c/Users/jnpi/Documents/finlab/data_wrapper.py", line 123, in load_common_datasets
+    datasets['price:漲跌百分比'] = data.get('price:漲跌百分比')
+  File "/home/john/.local/lib/python3.10/site-packages/finlab/data/data.py", line 413, in get
+    raise Exception(f"**Error: {dataset} not exists")
+Exception: **Error: price:漲跌百分比 not exists
+======================================================================
+🚀 Autonomous Iteration Engine - Starting
+======================================================================
+Configuration:
+  - Total Iterations: 3
+  - Start Iteration: 0
+  - History File: iteration_history.jsonl
+  - Best Strategy File: best_strategy.py
+======================================================================
+
+⏳ Pre-loading Finlab datasets (this may take 10+ minutes)...
+輸入成功!
+   Loading datasets from Finlab API...
+   Loading price data...
+❌ Error: Failed to pre-load Finlab datasets: **Error: price:漲跌百分比 not exists
+Cannot proceed without Finlab datasets

@@ -22,3 +22,4 @@ cond_all = cond_all*rev_growth_rate
 cond_all = cond_all[cond_all>0].is_largest(10)
 
 report = backtest.sim(cond_all, resample='M',fee_ratio=1.425/1000/3, stop_loss=0.06, take_profit=0.5, position_limit=0.125,name='高殖利率烏龜', live_performance_start='2022-05-01')
+report.display()

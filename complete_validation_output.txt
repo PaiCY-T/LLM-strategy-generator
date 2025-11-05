@@ -1,0 +1,285 @@
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+
+======================================================================
+YAML Mode Real API Validation
+======================================================================
+Provider: openrouter
+Model: google/gemini-2.5-flash-lite
+Iterations: 20
+Target: >90% success rate
+======================================================================
+
+[1/3] Initializing InnovationEngine (YAML mode)...
+✅ Engine initialized successfully
+   Using model: google/gemini-2.5-flash-lite
+
+[2/3] Running 20 iterations with real API calls...
+======================================================================
+
+Iteration 1/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: Unexpected error in YAML mode: 'list' object has no attribute 'get'
+  ❌ FAILURE - No code generated
+     Progress: 0/1 (0.0%)
+
+Iteration 2/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: [{'name': 'SMA_Fast', 'type': 'SMA', 'params': {'length': 20}}, {'name': 'SMA_Slow', 'type': 'SMA', 'params': {'length': 50}}, {'name': 'RSI', 'type': 'RSI', 'params': {'length': 14}}] is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 0/2 (0.0%)
+
+Iteration 3/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: {'ranking_rules': [{'condition': 'relative_strength_252d > 0.75', 'description': 'Asset is in the top quartile of relative performers over the past year.'}], 'threshold_rules': [{'condition': 'rsi_14 > 55', 'description': 'RSI is above 55, indicating strong upward momentum without being excessively overbought.'}, {'condition': 'close > sma_50', 'description': 'Current price is above the 50-day moving average, confirming short-to-medium term uptrend.'}, {'condition': 'sma_50 > sma_200', 'description': '50-day moving average is above the 200-day moving average, indicating a long-term uptrend.'}, {'condition': 'avg_volume_30d > 50000000', 'description': 'Sufficient average daily volume to ensure liquidity and minimize slippage.'}], 'logical_operator': 'AND', 'min_liquidity': {'average_volume_20d': 100000000}} is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 0/3 (0.0%)
+
+Iteration 4/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: [{'condition': {'operator': 'AND', 'operands': [{'operator': '>', 'left': {'type': 'indicator', 'alias': 'sma_short'}, 'right': {'type': 'indicator', 'alias': 'sma_long'}}, {'operator': '>', 'left': {'type': 'indicator', 'alias': 'rsi'}, 'right': {'value': 50}}]}}] is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 0/4 (0.0%)
+
+Iteration 5/20:
+✅ YAML innovation generated successfully (attempt 1/3)
+   Cost: $0.000000, Tokens: 1838, Time: 3.52s
+  ✅ SUCCESS - 3.52s, $0.000000
+     Code length: 3146 chars
+     Progress: 1/5 (20.0%)
+
+Iteration 6/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: {'technical_indicators': [{'name': 'rsi_14', 'type': 'RSI', 'period': 14, 'source': "data.get('RSI_14')"}, {'name': 'macd_hist_12_26_9', 'type': 'MACD_Histogram', 'fast_period': 12, 'slow_period': 26, 'signal_period': 9, 'source': "data.get('MACD_Hist_12_26_9')"}, {'name': 'sma_50', 'type': 'SMA', 'period': 50, 'source': "data.get('MA_50')"}, {'name': 'sma_200', 'type': 'SMA', 'period': 200, 'source': "data.get('MA_200')"}, {'name': 'adx_14', 'type': 'ADX', 'period': 14, 'source': "data.get('ADX_14')"}, {'name': 'atr_14', 'type': 'ATR', 'period': 14, 'source': "data.get('ATR_14')"}, {'name': 'volume_sma_20', 'type': 'SMA', 'period': 20, 'source': "data.get('volume_20d_avg')"}]} is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 1/6 (16.7%)
+
+Iteration 7/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  OpenRouter API timeout (attempt 1/1)
+❌ OpenRouter failed after 1 attempts: Request timeout after 60s
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Innovation generation failed: YAML validation failed: Missing required field: 'indicators'
+  ❌ FAILURE - No code generated
+     Progress: 1/7 (14.3%)
+
+Iteration 8/20:
+⚠️  YAML parsing failed (attempt 1/3): while parsing a block mapping
+  in "<unicode string>", line 78, column 3:
+      stop_loss_pct: 0.08 # Tighter st ... 
+      ^
+expected <block end>, but found '-'
+  in "<unicode string>", line 86, column 3:
+      - condition: "rsi_14 > 75"
+      ^
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: Missing required field: 'indicators'
+  ❌ FAILURE - No code generated
+     Progress: 1/8 (12.5%)
+
+Iteration 9/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: [{'name': 'MACD', 'type': 'MACD', 'params': {'fast_period': '{{ parameters.fast_period }}', 'slow_period': '{{ parameters.slow_period }}', 'signal_period': '{{ parameters.signal_period }}'}}, {'name': 'RSI', 'type': 'RSI', 'params': {'period': '{{ parameters.rsi_period }}'}}, {'name': 'SMA_Trend', 'type': 'SMA', 'params': {'period': '{{ parameters.trend_confirmation_period }}'}}] is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 1/9 (11.1%)
+
+Iteration 10/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: {'ranking_rules': [{'rule': 'momentum_score >= 3', 'description': 'Asset exhibits strong overall momentum (RSI, Trend, ADX, Relative Strength)'}, {'rule': 'relative_strength_rank <= 20', 'description': 'Asset is in the top 20% of relative strength performers'}], 'logical_operator': 'AND', 'min_liquidity': {'average_volume_20d': 50000000, 'market_cap': 1000000000}} is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 1/10 (10.0%)
+
+Iteration 11/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: {'technical_indicators': [{'name': 'sma_short', 'type': 'SMA', 'period': '{{ parameters.sma_short_period }}', 'source': "data.get('close')"}, {'name': 'sma_long', 'type': 'SMA', 'period': '{{ parameters.sma_long_period }}', 'source': "data.get('close')"}, {'name': 'rsi', 'type': 'RSI', 'period': '{{ parameters.rsi_period }}', 'source': "data.get('close')"}, {'name': 'macd_line', 'type': 'MACD', 'fast_period': '{{ parameters.macd_fast_period }}', 'slow_period': '{{ parameters.macd_slow_period }}', 'signal_period': '{{ parameters.macd_signal_period }}', 'source': "data.get('close')"}, {'name': 'macd_signal', 'type': 'MACD_Signal', 'fast_period': '{{ parameters.macd_fast_period }}', 'slow_period': '{{ parameters.macd_slow_period }}', 'signal_period': '{{ parameters.macd_signal_period }}', 'source': "data.get('close')"}]} is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 1/11 (9.1%)
+
+Iteration 12/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: [{'name': 'SMA_Fast', 'type': 'SMA', 'params': {'period': 20}}, {'name': 'SMA_Slow', 'type': 'SMA', 'params': {'period': 50}}, {'name': 'RSI', 'type': 'RSI', 'params': {'period': 14}}] is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 1/12 (8.3%)
+
+Iteration 13/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: ['moving_average_short > moving_average_long', 'rsi > 50'] is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 1/13 (7.7%)
+
+Iteration 14/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: {'technical_indicators': [{'name': 'rsi_14', 'type': 'RSI', 'period': 14, 'source': "data.get('RSI_14')"}, {'name': 'sma_50', 'type': 'SMA', 'period': 50, 'source': "data.get('MA_50')"}, {'name': 'sma_200', 'type': 'SMA', 'period': 200, 'source': "data.get('MA_200')"}, {'name': 'macd_histogram_12_26_9', 'type': 'MACD_Histogram', 'fast_period': 12, 'slow_period': 26, 'signal_period': 9, 'source': "data.get('MACD_Hist_12_26_9')"}, {'name': 'atr_14', 'type': 'ATR', 'period': 14, 'source': "data.get('ATR_14')"}, {'name': 'volume_ma_20', 'type': 'SMA', 'period': 20, 'source': "data.get('volume_20d_avg')"}]} is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 1/14 (7.1%)
+
+Iteration 15/20:
+✅ YAML innovation generated successfully (attempt 1/3)
+   Cost: $0.000000, Tokens: 1860, Time: 3.92s
+  ✅ SUCCESS - 3.92s, $0.000000
+     Code length: 2973 chars
+     Progress: 2/15 (13.3%)
+
+Iteration 16/20:
+✅ YAML innovation generated successfully (attempt 1/3)
+   Cost: $0.000000, Tokens: 1509, Time: 3.44s
+  ✅ SUCCESS - 3.44s, $0.000000
+     Code length: 2811 chars
+     Progress: 3/16 (18.8%)
+
+Iteration 17/20:
+✅ YAML innovation generated successfully (attempt 1/3)
+   Cost: $0.000000, Tokens: 1690, Time: 3.58s
+  ✅ SUCCESS - 3.58s, $0.000000
+     Code length: 3090 chars
+     Progress: 4/17 (23.5%)
+
+Iteration 18/20:
+✅ YAML innovation generated successfully (attempt 1/3)
+   Cost: $0.000000, Tokens: 1560, Time: 3.02s
+  ✅ SUCCESS - 3.02s, $0.000000
+     Code length: 2966 chars
+     Progress: 5/18 (27.8%)
+
+Iteration 19/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: [{'name': 'RSI', 'type': 'rsi', 'params': {'period': 14}}, {'name': 'MACD', 'type': 'macd', 'params': {'fast_period': 12, 'slow_period': 26, 'signal_period': 9}}, {'name': 'SMA_Fast', 'type': 'sma', 'params': {'period': 20}}, {'name': 'SMA_Slow', 'type': 'sma', 'params': {'period': 50}}] is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 5/19 (26.3%)
+
+Iteration 20/20:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: indicators: [{'name': 'SMA_Fast', 'type': 'sma', 'params': {'length': 20}}, {'name': 'SMA_Slow', 'type': 'sma', 'params': {'length': 50}}, {'name': 'RSI', 'type': 'rsi', 'params': {'length': 14}}, {'name': 'ATR', 'type': 'atr', 'params': {'length': 14}}] is not valid under any of the given schemas
+  ❌ FAILURE - No code generated
+     Progress: 5/20 (25.0%)
+
+======================================================================
+[3/3] Test Complete
+
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+
+Success Metrics:
+  Total Attempts:  20
+  Successes:       5
+  Failures:        15
+  Success Rate:    25.0%
+  Target (>90%):   ❌ BELOW TARGET
+
+Cost Metrics:
+  Total Cost:      $0.000000
+  Avg per Attempt: $0.000000
+
+Performance Metrics:
+  Total Time:      241.53s
+  Avg per Attempt: 12.08s
+  Throughput:      0.08 gen/s
+
+Generated Code:
+  Total Generated: 5
+  Avg Length:      2997 chars
+
+Errors (15):
+  - No code generated: 15x
+
+======================================================================
+
+Results saved to: complete_validation_results.json
+❌ TEST FAILED - Success rate 25.0% < 90%

@@ -28,7 +28,7 @@ Usage:
 """
 
 from dataclasses import dataclass, field
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 from enum import Enum
 
 
@@ -481,6 +481,535 @@ class TemplateValidator:
         """
         raise NotImplementedError("Subclasses must implement validate_backtest_config()")
 
+    def validate_diversity(
+        self,
+        strategy_codes: List[str],
+        min_unique_ratio: float = 0.8,
+        distance_threshold: float = 0.2
+    ) -> Dict[str, Any]:
+        """
+        Validate strategy diversity to ensure generated strategies are sufficiently different.
+
+        **Task 27 Requirements**:
+        - Ensure ≥80% unique strategies (8/10 different)
+        - Use Levenshtein distance ≥0.2 for code comparison
+        - Return validation results with {is_valid, errors, metrics}
+
+        The diversity validation prevents the system from generating redundant strategies
+        by comparing code similarity using Levenshtein distance. This addresses the
+        oversimplification problem observed in 150-iteration failure (130/150 identical).
+
+        Algorithm:
+            1. Compare each strategy code with all others using Levenshtein distance
+            2. Normalize distance to [0, 1] range (0 = identical, 1 = completely different)
+            3. Consider strategies "unique" if distance ≥ distance_threshold (default: 0.2)
+            4. Calculate unique_ratio = unique_count / total_count
+            5. Pass if unique_ratio ≥ min_unique_ratio (default: 0.8)
+
+        Args:
+            strategy_codes: List of strategy code strings to compare
+            min_unique_ratio: Minimum ratio of unique strategies required (default: 0.8 = 80%)
+            distance_threshold: Minimum Levenshtein distance for uniqueness (default: 0.2)
+
+        Returns:
+            Dictionary with validation results:
+                {
+                    'is_valid': bool,  # True if diversity meets threshold
+                    'errors': List[str],  # Error messages if validation fails
+                    'metrics': {
+                        'total_strategies': int,
+                        'unique_strategies': int,
+                        'unique_ratio': float,
+                        'min_distance': float,
+                        'max_distance': float,
+                        'avg_distance': float,
+                        'duplicate_pairs': List[Tuple[int, int, float]]  # (idx1, idx2, distance)
+                    }
+                }
+
+        Example:
+            >>> validator = TemplateValidator()
+            >>> codes = [strategy1_code, strategy2_code, ..., strategy10_code]
+            >>> result = validator.validate_diversity(codes, min_unique_ratio=0.8)
+            >>> if not result['is_valid']:
+            ...     print(f"Diversity validation failed: {result['errors']}")
+            ...     print(f"Unique ratio: {result['metrics']['unique_ratio']:.1%}")
+
+        Performance:
+            - Time complexity: O(n²) for n strategies (pairwise comparison)
+            - For 10 strategies: ~50ms
+            - For 100 strategies: ~5s (acceptable for validation)
+
+        Requirements:
+            - Requirement 3: Template validation system
+            - Prevents 90% oversimplification problem from 150-iteration failure
+        """
+        try:
+            from Levenshtein import distance as levenshtein_distance
+        except ImportError:
+            # Fallback to difflib if Levenshtein not available
+            import difflib
+            def levenshtein_distance(s1: str, s2: str) -> int:
+                """Fallback Levenshtein distance using difflib."""
+                seq_matcher = difflib.SequenceMatcher(None, s1, s2)
+                return int((1.0 - seq_matcher.ratio()) * max(len(s1), len(s2)))
+
+        errors = []
+        metrics = {
+            'total_strategies': len(strategy_codes),
+            'unique_strategies': 0,
+            'unique_ratio': 0.0,
+            'min_distance': 1.0,
+            'max_distance': 0.0,
+            'avg_distance': 0.0,
+            'duplicate_pairs': []
+        }
+
+        # Validate input
+        if not strategy_codes:
+            errors.append("No strategy codes provided for diversity validation")
+            return {'is_valid': False, 'errors': errors, 'metrics': metrics}
+
+        if len(strategy_codes) < 2:
+            # Single strategy is always unique
+            metrics['unique_strategies'] = 1
+            metrics['unique_ratio'] = 1.0
+            return {'is_valid': True, 'errors': [], 'metrics': metrics}
+
+        # Calculate pairwise Levenshtein distances
+        n = len(strategy_codes)
+        distances = []
+        duplicate_pairs = []
+
+        for i in range(n):
+            is_unique = True
+            for j in range(i + 1, n):
+                # Calculate raw Levenshtein distance
+                raw_distance = levenshtein_distance(strategy_codes[i], strategy_codes[j])
+
+                # Normalize to [0, 1] range
+                max_len = max(len(strategy_codes[i]), len(strategy_codes[j]))
+                normalized_distance = raw_distance / max_len if max_len > 0 else 0.0
+
+                distances.append(normalized_distance)
+
+                # Check if strategies are too similar (duplicates)
+                if normalized_distance < distance_threshold:
+                    duplicate_pairs.append((i, j, normalized_distance))
+                    is_unique = False
+
+            if is_unique or i == 0:  # First strategy is always counted
+                metrics['unique_strategies'] += 1
+
+        # Calculate distance statistics
+        if distances:
+            metrics['min_distance'] = min(distances)
+            metrics['max_distance'] = max(distances)
+            metrics['avg_distance'] = sum(distances) / len(distances)
+            metrics['duplicate_pairs'] = duplicate_pairs
+
+        # Calculate unique ratio
+        metrics['unique_ratio'] = metrics['unique_strategies'] / metrics['total_strategies']
+
+        # Validate diversity threshold
+        is_valid = metrics['unique_ratio'] >= min_unique_ratio
+
+        if not is_valid:
+            errors.append(
+                f"Diversity validation failed: {metrics['unique_strategies']}/{metrics['total_strategies']} "
+                f"unique strategies ({metrics['unique_ratio']:.1%}) is below threshold {min_unique_ratio:.1%}"
+            )
+            errors.append(
+                f"Found {len(duplicate_pairs)} duplicate pairs with distance < {distance_threshold}"
+            )
+
+            # Add specific duplicate pair information
+            if len(duplicate_pairs) <= 5:  # Show details for small number of duplicates
+                for idx1, idx2, dist in duplicate_pairs:
+                    errors.append(
+                        f"  - Strategy {idx1} and {idx2} are too similar (distance: {dist:.3f})"
+                    )
+
+        return {
+            'is_valid': is_valid,
+            'errors': errors,
+            'metrics': metrics
+        }
+
+    def validate_performance(
+        self,
+        metrics: Dict[str, float],
+        min_sharpe: float = 0.5,
+        sharpe_range: Optional[Tuple[float, float]] = None,
+        annual_return_range: Optional[Tuple[float, float]] = None,
+        max_dd_range: Optional[Tuple[float, float]] = None
+    ) -> Dict[str, Any]:
+        """
+        Validate strategy performance metrics against thresholds and bounds.
+
+        **Task 28 Requirements**:
+        - Performance validation with min_sharpe threshold
+        - Metric bounds validation (annual_return, max_dd)
+        - Return validation results as dict with {is_valid, errors, metrics}
+
+        The performance validation ensures generated strategies meet minimum quality
+        standards before being added to Hall of Fame or used in further iterations.
+
+        Validation Rules:
+            CRITICAL:
+                - Sharpe ratio ≥ min_sharpe (default: 0.5)
+                - Annual return within bounds (if specified)
+                - Max drawdown within bounds (if specified)
+
+            MODERATE:
+                - Sharpe ratio outside optimal range (if specified)
+                - Warning for negative returns
+                - Warning for excessive drawdown
+
+        Args:
+            metrics: Performance metrics dictionary with at minimum:
+                - 'sharpe_ratio': float
+                - 'annual_return': float (optional)
+                - 'max_drawdown': float (optional)
+            min_sharpe: Minimum acceptable Sharpe ratio (default: 0.5)
+            sharpe_range: Optional (min, max) bounds for Sharpe ratio
+            annual_return_range: Optional (min, max) bounds for annual return
+            max_dd_range: Optional (min, max) bounds for max drawdown (negative values)
+
+        Returns:
+            Dictionary with validation results:
+                {
+                    'is_valid': bool,  # True if all critical checks pass
+                    'errors': List[str],  # Critical errors
+                    'warnings': List[str],  # Moderate warnings
+                    'metrics': {
+                        'sharpe_ratio': float,
+                        'annual_return': float,
+                        'max_drawdown': float,
+                        'meets_min_sharpe': bool,
+                        'in_sharpe_range': bool,
+                        'in_return_range': bool,
+                        'in_dd_range': bool
+                    }
+                }
+
+        Example:
+            >>> validator = TemplateValidator()
+            >>> metrics = {
+            ...     'sharpe_ratio': 1.8,
+            ...     'annual_return': 0.25,
+            ...     'max_drawdown': -0.15
+            ... }
+            >>> result = validator.validate_performance(
+            ...     metrics,
+            ...     min_sharpe=1.5,
+            ...     sharpe_range=(1.5, 2.5),
+            ...     annual_return_range=(0.20, 0.35),
+            ...     max_dd_range=(-0.25, -0.10)
+            ... )
+            >>> if not result['is_valid']:
+            ...     print(f"Performance validation failed: {result['errors']}")
+
+        Performance Targets by Template:
+            TurtleTemplate: Sharpe 1.5-2.5, Return 20-35%, MDD -25% to -10%
+            MastiffTemplate: Sharpe 1.2-2.0, Return 15-30%, MDD -30% to -15%
+            FactorTemplate: Sharpe 0.8-1.3, Return 10-20%, MDD -20% to -10%
+            MomentumTemplate: Sharpe 0.8-1.5, Return 12-25%, MDD -25% to -12%
+
+        Requirements:
+            - Requirement 3: Template validation system
+            - NFR Performance: Validation completes in <5s
+        """
+        errors = []
+        warnings = []
+        validation_metrics = {
+            'sharpe_ratio': metrics.get('sharpe_ratio', 0.0),
+            'annual_return': metrics.get('annual_return', 0.0),
+            'max_drawdown': metrics.get('max_drawdown', 0.0),
+            'meets_min_sharpe': False,
+            'in_sharpe_range': True,
+            'in_return_range': True,
+            'in_dd_range': True
+        }
+
+        # Validate required metrics are present
+        if 'sharpe_ratio' not in metrics:
+            errors.append("Missing required metric: 'sharpe_ratio'")
+            return {
+                'is_valid': False,
+                'errors': errors,
+                'warnings': warnings,
+                'metrics': validation_metrics
+            }
+
+        sharpe_ratio = metrics['sharpe_ratio']
+        annual_return = metrics.get('annual_return')
+        max_drawdown = metrics.get('max_drawdown')
+
+        # CRITICAL: Check minimum Sharpe ratio threshold
+        validation_metrics['meets_min_sharpe'] = sharpe_ratio >= min_sharpe
+        if not validation_metrics['meets_min_sharpe']:
+            errors.append(
+                f"Sharpe ratio {sharpe_ratio:.2f} is below minimum threshold {min_sharpe:.2f}"
+            )
+
+        # MODERATE: Check Sharpe ratio range (if specified)
+        if sharpe_range is not None:
+            min_sharpe_range, max_sharpe_range = sharpe_range
+            validation_metrics['in_sharpe_range'] = (
+                min_sharpe_range <= sharpe_ratio <= max_sharpe_range
+            )
+
+            if sharpe_ratio < min_sharpe_range:
+                warnings.append(
+                    f"Sharpe ratio {sharpe_ratio:.2f} is below optimal range "
+                    f"[{min_sharpe_range:.2f}, {max_sharpe_range:.2f}]"
+                )
+            elif sharpe_ratio > max_sharpe_range:
+                warnings.append(
+                    f"Sharpe ratio {sharpe_ratio:.2f} exceeds optimal range "
+                    f"[{min_sharpe_range:.2f}, {max_sharpe_range:.2f}] - "
+                    f"may indicate overfitting"
+                )
+
+        # CRITICAL/MODERATE: Check annual return bounds (if specified)
+        if annual_return is not None:
+            if annual_return_range is not None:
+                min_return, max_return = annual_return_range
+                validation_metrics['in_return_range'] = (
+                    min_return <= annual_return <= max_return
+                )
+
+                if annual_return < min_return:
+                    errors.append(
+                        f"Annual return {annual_return:.1%} is below minimum "
+                        f"threshold {min_return:.1%}"
+                    )
+                elif annual_return > max_return:
+                    warnings.append(
+                        f"Annual return {annual_return:.1%} exceeds maximum "
+                        f"threshold {max_return:.1%} - may indicate overfitting"
+                    )
+
+            # Warning for negative returns
+            if annual_return < 0:
+                warnings.append(
+                    f"Strategy has negative annual return: {annual_return:.1%}"
+                )
+
+        # CRITICAL/MODERATE: Check max drawdown bounds (if specified)
+        if max_drawdown is not None:
+            if max_dd_range is not None:
+                min_dd, max_dd = max_dd_range  # Both negative, min_dd more negative
+                validation_metrics['in_dd_range'] = (
+                    min_dd <= max_drawdown <= max_dd
+                )
+
+                if max_drawdown < min_dd:
+                    errors.append(
+                        f"Max drawdown {max_drawdown:.1%} exceeds maximum "
+                        f"acceptable drawdown {min_dd:.1%}"
+                    )
+                elif max_drawdown > max_dd:
+                    warnings.append(
+                        f"Max drawdown {max_drawdown:.1%} is better than "
+                        f"optimal range [{min_dd:.1%}, {max_dd:.1%}]"
+                    )
+
+            # Warning for excessive drawdown
+            if max_drawdown < -0.5:  # More than 50% drawdown
+                warnings.append(
+                    f"Strategy has excessive drawdown: {max_drawdown:.1%}"
+                )
+
+        # Determine overall validation status
+        is_valid = len(errors) == 0
+
+        return {
+            'is_valid': is_valid,
+            'errors': errors,
+            'warnings': warnings,
+            'metrics': validation_metrics
+        }
+
+    def validate_params(
+        self,
+        parameters: Dict[str, Any],
+        param_schema: Dict[str, Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """
+        Validate parameters against schema with type checking, range validation, and required field checks.
+
+        **Task 29 Requirements**:
+        - Parameter type checking
+        - Parameter range validation (min/max bounds)
+        - Required field validation
+        - Return validation results as dict with {is_valid, errors, metrics}
+
+        This method provides comprehensive parameter validation against a schema
+        definition, ensuring all parameters meet type, range, and presence requirements.
+
+        Schema Format:
+            {
+                'parameter_name': {
+                    'type': type | Tuple[type, ...],  # Expected type(s)
+                    'required': bool,  # Whether parameter is required (default: False)
+                    'min': float,  # Minimum value for numeric types (optional)
+                    'max': float,  # Maximum value for numeric types (optional)
+                    'allowed_values': List[Any],  # Allowed values for enum types (optional)
+                    'description': str  # Human-readable description (optional)
+                }
+            }
+
+        Validation Rules:
+            CRITICAL:
+                - Missing required parameters
+                - Type mismatches
+                - Values outside min/max bounds
+                - Values not in allowed_values list
+
+            MODERATE:
+                - Unknown parameters not in schema
+                - Values at boundary of ranges
+
+        Args:
+            parameters: Dictionary of parameter values to validate
+            param_schema: Schema definition for parameter validation
+
+        Returns:
+            Dictionary with validation results:
+                {
+                    'is_valid': bool,  # True if all validations pass
+                    'errors': List[str],  # Critical errors
+                    'warnings': List[str],  # Moderate warnings
+                    'metrics': {
+                        'total_parameters': int,
+                        'validated_parameters': int,
+                        'missing_required': List[str],
+                        'type_errors': List[str],
+                        'range_errors': List[str],
+                        'unknown_parameters': List[str]
+                    }
+                }
+
+        Example:
+            >>> schema = {
+            ...     'n_stocks': {
+            ...         'type': int,
+            ...         'required': True,
+            ...         'min': 5,
+            ...         'max': 50,
+            ...         'description': 'Number of stocks to select'
+            ...     },
+            ...     'sharpe_threshold': {
+            ...         'type': (int, float),
+            ...         'required': False,
+            ...         'min': 0.0,
+            ...         'description': 'Minimum Sharpe ratio'
+            ...     }
+            ... }
+            >>> params = {'n_stocks': 30, 'sharpe_threshold': 1.5}
+            >>> result = validator.validate_params(params, schema)
+            >>> if not result['is_valid']:
+            ...     print(f"Parameter validation failed: {result['errors']}")
+
+        Integration:
+            - Used by ParameterValidator for template-specific validation
+            - Integrates with validate_parameters() in parameter_validator.py
+            - Used by all template validators (Turtle, Mastiff, Factor, Momentum)
+
+        Requirements:
+            - Requirement 1.8: Parameter validation with template-specific rules
+            - Requirement 3.1: Comprehensive parameter validation
+        """
+        errors = []
+        warnings = []
+        metrics = {
+            'total_parameters': len(parameters),
+            'validated_parameters': 0,
+            'missing_required': [],
+            'type_errors': [],
+            'range_errors': [],
+            'unknown_parameters': []
+        }
+
+        # Check for missing required parameters
+        for param_name, schema in param_schema.items():
+            if schema.get('required', False) and param_name not in parameters:
+                metrics['missing_required'].append(param_name)
+                errors.append(
+                    f"Missing required parameter: '{param_name}' - "
+                    f"{schema.get('description', 'No description available')}"
+                )
+
+        # Validate provided parameters
+        for param_name, param_value in parameters.items():
+            # Check if parameter is in schema
+            if param_name not in param_schema:
+                metrics['unknown_parameters'].append(param_name)
+                warnings.append(
+                    f"Unknown parameter: '{param_name}' not in schema"
+                )
+                continue
+
+            schema = param_schema[param_name]
+            metrics['validated_parameters'] += 1
+
+            # Type validation
+            expected_type = schema.get('type')
+            if expected_type is not None:
+                if not isinstance(param_value, expected_type):
+                    expected_str = (
+                        expected_type.__name__ if isinstance(expected_type, type)
+                        else ' or '.join(t.__name__ for t in expected_type)
+                    )
+                    actual_type = type(param_value).__name__
+
+                    metrics['type_errors'].append(param_name)
+                    errors.append(
+                        f"Parameter '{param_name}' has wrong type: "
+                        f"expected {expected_str}, got {actual_type} (value: {param_value})"
+                    )
+                    continue  # Skip further validation if type is wrong
+
+            # Range validation for numeric types
+            if isinstance(param_value, (int, float)):
+                min_val = schema.get('min')
+                max_val = schema.get('max')
+
+                if min_val is not None and param_value < min_val:
+                    metrics['range_errors'].append(param_name)
+                    errors.append(
+                        f"Parameter '{param_name}' is below minimum: "
+                        f"{param_value} < {min_val}"
+                    )
+
+                if max_val is not None and param_value > max_val:
+                    metrics['range_errors'].append(param_name)
+                    errors.append(
+                        f"Parameter '{param_name}' exceeds maximum: "
+                        f"{param_value} > {max_val}"
+                    )
+
+            # Allowed values validation (for enum types)
+            allowed_values = schema.get('allowed_values')
+            if allowed_values is not None and param_value not in allowed_values:
+                metrics['range_errors'].append(param_name)
+                errors.append(
+                    f"Parameter '{param_name}' has invalid value: "
+                    f"'{param_value}' not in allowed values {allowed_values}"
+                )
+
+        # Determine overall validation status
+        is_valid = len(errors) == 0
+
+        return {
+            'is_valid': is_valid,
+            'errors': errors,
+            'warnings': warnings,
+            'metrics': metrics
+        }
+
     @staticmethod
     def validate_strategy(
         template_name: str,
@@ -569,15 +1098,47 @@ class TemplateValidator:
         backtest_validator = BacktestValidator() if backtest_config else None
 
         # Step 3: Run parameter validation
-        param_validator.validate_parameters(parameters, template_name)
+        try:
+            param_validator.validate_parameters(parameters, template_name)
+        except Exception as e:
+            # Catch any exceptions during parameter validation
+            param_validator._add_error(
+                category=Category.PARAMETER,
+                error_type='invalid_range',
+                message=f"Parameter validation failed: {str(e)}",
+                suggestion="Check parameter types and values",
+                context={'exception': str(e), 'template_name': template_name}
+            )
 
         # Step 4: Run data access validation (if generated code provided)
         if data_validator and generated_code:
-            data_validator.validate_data_access(generated_code)
+            try:
+                data_validator.validate_data_access(generated_code)
+            except Exception as e:
+                # Catch any exceptions during data validation
+                data_validator._add_error(
+                    category=Category.DATA,
+                    error_type='invalid_range',
+                    message=f"Data access validation failed: {str(e)}",
+                    suggestion="Check generated code syntax and data.get() calls",
+                    context={'exception': str(e)}
+                )
 
         # Step 5: Run backtest configuration validation (if config provided)
         if backtest_validator and backtest_config:
-            backtest_validator.validate_backtest_config(backtest_config)
+            try:
+                # Extract n_stocks for position sizing validation
+                n_stocks = parameters.get('n_stocks')
+                backtest_validator.validate_backtest_config(backtest_config, n_stocks)
+            except Exception as e:
+                # Catch any exceptions during backtest validation
+                backtest_validator._add_error(
+                    category=Category.BACKTEST,
+                    error_type='invalid_range',
+                    message=f"Backtest configuration validation failed: {str(e)}",
+                    suggestion="Check backtest configuration parameters",
+                    context={'exception': str(e)}
+                )
 
         # Step 6: Aggregate errors from all validators
         all_errors = []
@@ -637,10 +1198,32 @@ class TemplateValidator:
         }
 
         # Add template-specific metadata if available
-        if hasattr(param_result, 'metadata'):
-            metadata.update(param_result.metadata)
+        if hasattr(param_result, 'metadata') and param_result.metadata:
+            # Merge without overwriting existing keys
+            for key, value in param_result.metadata.items():
+                if key not in metadata:
+                    metadata[key] = value
 
-        # Step 10: Return comprehensive validation result
+        # Add data validator metadata
+        if data_validator and hasattr(data_result, 'metadata') and data_result.metadata:
+            metadata['data_validation'] = {
+                'total_data_calls': data_result.metadata.get('total_data_calls', 0),
+                'unique_datasets': data_result.metadata.get('unique_datasets', 0),
+                'datasets_used': data_result.metadata.get('datasets_used', [])
+            }
+
+        # Step 10: Check performance target (<5s)
+        if validation_time > 5.0:
+            all_warnings.append(ValidationError(
+                severity=Severity.LOW,
+                category=Category.ARCHITECTURE,
+                message=f"Validation time {validation_time:.2f}s exceeds 5s target",
+                suggestion="Consider simplifying validation rules or optimizing regex patterns",
+                context={'validation_time': validation_time, 'target': 5.0}
+            ))
+            metadata['performance_warning'] = True
+
+        # Step 11: Return comprehensive validation result
         return ValidationResult(
             status=status,
             errors=all_errors,

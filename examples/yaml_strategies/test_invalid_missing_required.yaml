@@ -1,0 +1,22 @@
+# Invalid Strategy - Missing Required Fields
+# ==========================================
+# This spec is INTENTIONALLY INVALID for testing validation
+# Missing: strategy_type and rebalancing_frequency in metadata
+# Expected: ValidationError
+
+metadata:
+  name: "Invalid Missing Required Fields"
+  description: "This strategy is missing required metadata fields"
+  # MISSING: strategy_type (required)
+  # MISSING: rebalancing_frequency (required)
+  version: "1.0.0"
+
+indicators:
+  technical_indicators:
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+
+entry_conditions:
+  threshold_rules:
+    - condition: "rsi_14 > 30"

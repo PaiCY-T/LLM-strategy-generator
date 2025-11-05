@@ -1,0 +1,186 @@
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 14 error(s)
+YAML validation failed with 14 error(s)
+YAML validation failed with 6 error(s)
+YAML validation failed with 6 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 9 error(s)
+YAML validation failed with 9 error(s)
+YAML validation failed with 7 error(s)
+YAML validation failed with 7 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 5 error(s)
+YAML validation failed with 5 error(s)
+YAML validation failed with 6 error(s)
+YAML validation failed with 6 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 4 error(s)
+YAML validation failed with 4 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 3 error(s)
+YAML validation failed with 5 error(s)
+YAML validation failed with 5 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 2 error(s)
+YAML validation failed with 4 error(s)
+YAML validation failed with 4 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 1 error(s)
+YAML validation failed with 6 error(s)
+YAML validation failed with 6 error(s)
+
+======================================================================
+YAML Mode Real API Validation
+======================================================================
+Provider: openrouter
+Model: google/gemini-2.5-flash-lite
+Iterations: 10
+Target: >90% success rate
+======================================================================
+
+[1/3] Initializing InnovationEngine (YAML mode)...
+✅ Engine initialized successfully
+   Using model: google/gemini-2.5-flash-lite
+
+[2/3] Running 10 iterations with real API calls...
+======================================================================
+
+Iteration 1/10:
+✅ YAML innovation generated successfully (attempt 1/3)
+   Cost: $0.000000, Tokens: 1627, Time: 3.58s
+  ✅ SUCCESS - 3.58s, $0.000000
+     Code length: 2874 chars
+     Progress: 1/1 (100.0%)
+
+Iteration 2/10:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions.ranking_rules.0.method: 'above_indicator' is not one of ['top_percent', 'bottom_percent', 'top_n', 'bottom_n', 'percentile_range']. Allowed values: ['top_percent', 'bottom_percent', 'top_n', 'bottom_n', 'percentile_range']
+  ❌ FAILURE - No code generated
+     Progress: 1/2 (50.0%)
+
+Iteration 3/10:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: Expected type 'object', got list
+  ❌ FAILURE - No code generated
+     Progress: 1/3 (33.3%)
+
+Iteration 4/10:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: Expected type 'object', got list
+  ❌ FAILURE - No code generated
+     Progress: 1/4 (25.0%)
+
+Iteration 5/10:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: Expected type 'object', got list
+  ❌ FAILURE - No code generated
+     Progress: 1/5 (20.0%)
+
+Iteration 6/10:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: Expected type 'object', got list
+  ❌ FAILURE - No code generated
+     Progress: 1/6 (16.7%)
+
+Iteration 7/10:
+⚠️  YAML parsing failed (attempt 1/3): while parsing a block mapping
+  in "<unicode string>", line 77, column 3:
+      stop_loss_pct: 0.08 # Tight stop ... 
+      ^
+expected <block end>, but found '-'
+  in "<unicode string>", line 88, column 3:
+      - condition: "rsi_14 < 40"
+      ^
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: Expected type 'object', got list
+  ❌ FAILURE - No code generated
+     Progress: 1/7 (14.3%)
+
+Iteration 8/10:
+⚠️  YAML parsing failed (attempt 1/3): while parsing a block mapping
+  in "<unicode string>", line 88, column 3:
+      method: "risk_parity" # Aims to  ... 
+      ^
+expected <block end>, but found '<scalar>'
+  in "<unicode string>", line 91, column 4:
+       Kelly Criterion calculation can  ... 
+       ^
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: metadata.tags.1: Value 'sharpe-1.50' does not match required pattern: ^[a-z0-9_-]+$
+  ❌ FAILURE - No code generated
+     Progress: 1/8 (12.5%)
+
+Iteration 9/10:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+❌ Innovation generation failed: YAML validation failed: entry_conditions: Expected type 'object', got list
+  ❌ FAILURE - No code generated
+     Progress: 1/9 (11.1%)
+
+Iteration 10/10:
+⚠️  YAML validation failed (attempt 1/3)
+⚠️  YAML validation failed (attempt 2/3)
+✅ YAML innovation generated successfully (attempt 3/3)
+   Cost: $0.000000, Tokens: 1533, Time: 10.58s
+  ✅ SUCCESS - 10.58s, $0.000000
+     Code length: 1898 chars
+     Progress: 2/10 (20.0%)
+
+======================================================================
+[3/3] Test Complete
+
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+
+Success Metrics:
+  Total Attempts:  10
+  Successes:       2
+  Failures:        8
+  Success Rate:    20.0%
+  Target (>90%):   ❌ BELOW TARGET
+
+Cost Metrics:
+  Total Cost:      $0.000000
+  Avg per Attempt: $0.000000
+
+Performance Metrics:
+  Total Time:      100.97s
+  Avg per Attempt: 10.10s
+  Throughput:      0.10 gen/s
+
+Generated Code:
+  Total Generated: 2
+  Avg Length:      2386 chars
+
+Errors (8):
+  - No code generated: 8x
+
+======================================================================
+
+Results saved to: openrouter_schema_fixed_results.json
+❌ TEST FAILED - Success rate 20.0% < 90%

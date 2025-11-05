@@ -1,0 +1,185 @@
+======================================================================
+20-GENERATION VALIDATION TEST
+Population-Based Learning System
+======================================================================
+
+Configuration:
+  Population Size: 20
+  Generations:     20
+  Output Report:   baseline_20gen_report.md
+
+2025-10-23 22:24:48,953 - __main__ - INFO - Initializing PopulationManager...
+2025-10-23 22:24:48,954 - src.evolution.selection - INFO - Initialized SelectionManager: tournament_size=3, selection_pressure=0.8, elite_count=2, diversity_weight=0.3
+2025-10-23 22:24:48,980 - src.evolution.population_manager - INFO - Exit mutation config loaded: enabled=True, probability=0.3, tier_weights=(0.5, 0.3, 0.2)
+2025-10-23 22:24:48,981 - src.evolution.population_manager - INFO - PopulationManager initialized: population_size=20, elite_count=2, tournament_size=3, exit_mutation_enabled=True
+Initializing population...
+2025-10-23 22:24:48,981 - src.evolution.population_manager - INFO - Initializing population of size 20
+2025-10-23 22:24:48,982 - src.evolution.population_manager - INFO - Created 20 initial strategies
+2025-10-23 22:24:48,982 - src.evolution.population_manager - INFO - Evaluating population of 20 strategies
+2025-10-23 22:24:49,218 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_0: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,270 - src.evolution.population_manager - WARNING - Invalid template type 'Value', falling back to Momentum
+2025-10-23 22:24:49,270 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_1: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,275 - src.evolution.population_manager - WARNING - Invalid template type 'Quality', falling back to Momentum
+2025-10-23 22:24:49,275 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_2: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,278 - src.evolution.population_manager - WARNING - Invalid template type 'Mixed', falling back to Momentum
+2025-10-23 22:24:49,279 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_3: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,282 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_4: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,285 - src.evolution.population_manager - WARNING - Invalid template type 'Value', falling back to Momentum
+2025-10-23 22:24:49,285 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_5: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,288 - src.evolution.population_manager - WARNING - Invalid template type 'Quality', falling back to Momentum
+2025-10-23 22:24:49,289 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_6: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,292 - src.evolution.population_manager - WARNING - Invalid template type 'Mixed', falling back to Momentum
+2025-10-23 22:24:49,292 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_7: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,297 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_8: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,299 - src.evolution.population_manager - WARNING - Invalid template type 'Value', falling back to Momentum
+2025-10-23 22:24:49,300 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_9: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,303 - src.evolution.population_manager - WARNING - Invalid template type 'Quality', falling back to Momentum
+2025-10-23 22:24:49,303 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_10: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,306 - src.evolution.population_manager - WARNING - Invalid template type 'Mixed', falling back to Momentum
+2025-10-23 22:24:49,306 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_11: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,308 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_12: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,311 - src.evolution.population_manager - WARNING - Invalid template type 'Value', falling back to Momentum
+2025-10-23 22:24:49,311 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_13: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,315 - src.evolution.population_manager - WARNING - Invalid template type 'Quality', falling back to Momentum
+2025-10-23 22:24:49,315 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_14: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,317 - src.evolution.population_manager - WARNING - Invalid template type 'Mixed', falling back to Momentum
+2025-10-23 22:24:49,318 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_15: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,320 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_16: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,322 - src.evolution.population_manager - WARNING - Invalid template type 'Value', falling back to Momentum
+2025-10-23 22:24:49,323 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_17: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,325 - src.evolution.population_manager - WARNING - Invalid template type 'Quality', falling back to Momentum
+2025-10-23 22:24:49,325 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_18: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+2025-10-23 22:24:49,328 - src.evolution.population_manager - WARNING - Invalid template type 'Mixed', falling back to Momentum
+2025-10-23 22:24:49,328 - src.evolution.population_manager - WARNING - Backtest evaluation failed for strategy init_19: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 491, in _evaluate_strategy
+    report, metadata = template.generate_strategy(strategy.parameters)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/templates/momentum_template.py", line 506, in generate_strategy
+    raise ValueError(
+ValueError: Parameter validation failed: Missing required parameters: ['catalyst_lookback', 'catalyst_type', 'ma_periods', 'momentum_period', 'n_stocks', 'resample', 'resample_offset', 'stop_loss']; Unknown parameters: ['index', 'lookback', 'template']
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/run_20generation_validation.py", line 588, in <module>
+    sys.exit(main())
+  File "/mnt/c/Users/jnpi/documents/finlab/run_20generation_validation.py", line 499, in main
+    manager.initialize_population()
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 345, in initialize_population
+    evaluated_population = self.evaluate_population(population)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/population_manager.py", line 434, in evaluate_population
+    distances = calculate_crowding_distance(population)
+  File "/mnt/c/Users/jnpi/documents/finlab/src/evolution/multi_objective.py", line 538, in calculate_crowding_distance
+    raise ValueError(
+ValueError: Cannot calculate crowding distance: no strategies with successful evaluations

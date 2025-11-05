@@ -45,6 +45,11 @@ from template_fallback import get_fallback_strategy, log_fallback_usage, get_cha
 from sandbox_executor import execute_strategy_in_sandbox
 from metrics_extractor import extract_metrics_from_signal
 
+# Phase 2: Learning System Stability - Monitoring
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))  # Add project root to path
+from src.monitoring import VarianceMonitor
+
 
 # Configure logging
 logging.basicConfig(
@@ -1148,6 +1153,10 @@ def main_loop(num_iterations: int = DEFAULT_ITERATIONS,
     # Initialize feedback
     feedback = load_previous_feedback() if start_iteration > 0 else ""
 
+    # Phase 2: Initialize VarianceMonitor for convergence tracking (Story 1, Task 1.5)
+    variance_monitor = VarianceMonitor(alert_threshold=0.8)
+    logger.info("Initialized VarianceMonitor with alert_threshold=0.8")
+
     # Pre-load Finlab datasets once to avoid repeated expensive imports in sandbox
     # This is critical for performance - Finlab data loading takes 10+ minutes
     print("⏳ Pre-loading Finlab datasets (this may take 10+ minutes)...")
@@ -1241,6 +1250,16 @@ def main_loop(num_iterations: int = DEFAULT_ITERATIONS,
                 print(f"  Max Drawdown:  {metrics.get('max_drawdown', 0):>7.2%}")
                 print(f"  Win Rate:      {metrics.get('win_rate', 0):>7.2%}")
 
+                # Phase 2: Update VarianceMonitor with Sharpe ratio (Story 1, Task 1.5)
+                sharpe_ratio = metrics.get('sharpe_ratio', 0.0)
+                variance_monitor.update(iteration, sharpe_ratio)
+
+                # Check for alert condition (high variance for 5+ consecutive iterations)
+                alert_triggered, alert_message = variance_monitor.check_alert_condition()
+                if alert_triggered:
+                    logger.warning(f"[Iteration {iteration}] ⚠️ VARIANCE ALERT: {alert_message}")
+                    print(f"  ⚠️ Convergence Alert: {alert_message}")
+
                 # Check if best strategy
                 if is_best_strategy(metrics, best_metrics):
                     best_metrics = metrics
@@ -1333,6 +1352,23 @@ def main_loop(num_iterations: int = DEFAULT_ITERATIONS,
         champion_meta = get_champion_metadata()
         print(f"  - Template: Iteration {champion_meta['iteration']} "
               f"(Sharpe: {champion_meta['sharpe_ratio']:.4f})")
+
+    # Phase 2: Generate and display convergence report (Story 1, Task 1.5)
+    convergence_report = variance_monitor.generate_convergence_report()
+    print(f"\n📈 Convergence Analysis:")
+    print(f"  - Status: {convergence_report['convergence_status'].upper()}")
+    print(f"  - Current Variance (σ): {convergence_report['current_variance']:.4f}")
+    print(f"  - Total Iterations: {convergence_report['total_iterations']}")
+
+    if convergence_report['convergence_iteration'] is not None:
+        print(f"  - Converged at: Iteration {convergence_report['convergence_iteration'] + 1}")
+    else:
+        print(f"  - Converged at: Not yet converged")
+
+    if convergence_report['recommendations']:
+        print(f"\n💡 Recommendations:")
+        for i, rec in enumerate(convergence_report['recommendations'], 1):
+            print(f"  {i}. {rec}")
 
     print(f"\n📊 Full history available in: {HISTORY_FILE}")
     print()

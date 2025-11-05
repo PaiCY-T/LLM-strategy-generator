@@ -54,6 +54,8 @@ Requirements:
 from typing import Dict, Any, List, Tuple, Optional, Callable
 from dataclasses import dataclass, field
 import logging
+import time
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 
 
 @dataclass
@@ -160,6 +162,10 @@ class SensitivityTester:
     DEFAULT_VARIATION_STEPS = 5  # Number of variation points to test
                                   # Reduce to 3 for faster testing (~40% time savings)
 
+    # Timeout settings (prevents runaway backtests)
+    DEFAULT_TIMEOUT_PER_PARAMETER = 300  # 5 minutes per parameter (in seconds)
+    DEFAULT_TIMEOUT_PER_BACKTEST = 60  # 60 seconds per individual backtest
+
     def __init__(self, logger: Optional[logging.Logger] = None):
         """
         Initialize sensitivity tester.
@@ -175,7 +181,9 @@ class SensitivityTester:
         baseline_params: Dict[str, Any],
         parameters_to_test: Optional[List[str]] = None,
         variation_percent: float = DEFAULT_VARIATION_PERCENT,
-        variation_steps: int = DEFAULT_VARIATION_STEPS
+        variation_steps: int = DEFAULT_VARIATION_STEPS,
+        timeout_per_parameter: float = DEFAULT_TIMEOUT_PER_PARAMETER,
+        timeout_per_backtest: float = DEFAULT_TIMEOUT_PER_BACKTEST
     ) -> Dict[str, SensitivityResult]:
         """
         Test parameter sensitivity for specified parameters.
@@ -197,6 +205,8 @@ class SensitivityTester:
             parameters_to_test: List of parameter names to test (None = test all)
             variation_percent: Variation percentage (default: 0.20 for ±20%)
             variation_steps: Number of variation points (default: 5)
+            timeout_per_parameter: Maximum seconds per parameter test (default: 300s = 5min)
+            timeout_per_backtest: Maximum seconds per individual backtest (default: 60s)
 
         Returns:
             Dictionary mapping parameter name to SensitivityResult
@@ -250,7 +260,9 @@ class SensitivityTester:
                 param_name=param_name,
                 baseline_sharpe=baseline_sharpe,
                 variation_percent=variation_percent,
-                variation_steps=variation_steps
+                variation_steps=variation_steps,
+                timeout_per_parameter=timeout_per_parameter,
+                timeout_per_backtest=timeout_per_backtest
             )
             results[param_name] = result
 
@@ -259,10 +271,43 @@ class SensitivityTester:
     def _run_backtest(
         self,
         template: Any,
+        parameters: Dict[str, Any],
+        timeout: Optional[float] = None
+    ) -> Optional[float]:
+        """
+        Run backtest and extract Sharpe ratio with optional timeout protection.
+
+        Args:
+            template: Template instance with generate_strategy() method
+            parameters: Parameter dictionary for backtest
+            timeout: Maximum execution time in seconds (None = no timeout)
+
+        Returns:
+            Sharpe ratio (float) or None if backtest fails or times out
+        """
+        if timeout is None:
+            # No timeout - run directly
+            return self._execute_backtest(template, parameters)
+
+        # Use ThreadPoolExecutor for timeout protection
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(self._execute_backtest, template, parameters)
+            try:
+                return future.result(timeout=timeout)
+            except FuturesTimeoutError:
+                self.logger.error(f"Backtest timed out after {timeout}s")
+                return None
+            except Exception as e:
+                self.logger.error(f"Backtest failed with exception: {e}")
+                return None
+
+    def _execute_backtest(
+        self,
+        template: Any,
         parameters: Dict[str, Any]
     ) -> Optional[float]:
         """
-        Run backtest and extract Sharpe ratio.
+        Execute backtest and extract Sharpe ratio (internal method without timeout).
 
         Args:
             template: Template instance with generate_strategy() method
@@ -315,7 +360,9 @@ class SensitivityTester:
         param_name: str,
         baseline_sharpe: float,
         variation_percent: float,
-        variation_steps: int
+        variation_steps: int,
+        timeout_per_parameter: float,
+        timeout_per_backtest: float
     ) -> SensitivityResult:
         """
         Test sensitivity for a single parameter.
@@ -331,6 +378,8 @@ class SensitivityTester:
             baseline_sharpe: Baseline Sharpe ratio
             variation_percent: Variation percentage (e.g., 0.20 for ±20%)
             variation_steps: Number of variation points
+            timeout_per_parameter: Maximum seconds for all variations of this parameter
+            timeout_per_backtest: Maximum seconds per individual backtest
 
         Returns:
             SensitivityResult with stability score and variations
@@ -344,22 +393,34 @@ class SensitivityTester:
             steps=variation_steps
         )
 
-        # Test each variation
+        # Test each variation with timeout protection
         sharpe_values = []
         variation_results = []
+        start_time = time.time()
 
         for varied_value in variations:
+            # Check parameter-level timeout
+            elapsed = time.time() - start_time
+            if elapsed > timeout_per_parameter:
+                self.logger.warning(
+                    f"Parameter-level timeout reached for '{param_name}' after {elapsed:.1f}s. "
+                    f"Tested {len(variation_results)}/{len(variations)} variations."
+                )
+                break
+
             # Create parameter set with varied value
             test_params = baseline_params.copy()
             test_params[param_name] = varied_value
 
-            # Run backtest
-            sharpe = self._run_backtest(template, test_params)
+            # Run backtest with per-backtest timeout
+            sharpe = self._run_backtest(template, test_params, timeout=timeout_per_backtest)
 
             if sharpe is not None:
                 sharpe_values.append(sharpe)
                 variation_results.append((varied_value, sharpe))
                 self.logger.debug(f"  {param_name}={varied_value}: Sharpe={sharpe:.3f}")
+            else:
+                self.logger.warning(f"  {param_name}={varied_value}: Backtest failed or timed out")
 
         # Calculate stability score
         if sharpe_values:

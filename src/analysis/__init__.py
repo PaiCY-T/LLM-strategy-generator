@@ -187,6 +187,38 @@ class LearningEngine:
         raise NotImplementedError("Implemented in learning.py")
 
 
+# Import duplicate detection (Task 2.1)
+try:
+    from .duplicate_detector import (
+        DuplicateDetector,
+        DuplicateGroup,
+        StrategyInfo
+    )
+    _DUPLICATE_DETECTOR_AVAILABLE = True
+except ImportError:
+    _DUPLICATE_DETECTOR_AVAILABLE = False
+
+# Import diversity analyzer (Task 3.1)
+try:
+    from .diversity_analyzer import (
+        DiversityAnalyzer,
+        DiversityReport
+    )
+    _DIVERSITY_ANALYZER_AVAILABLE = True
+except ImportError:
+    _DIVERSITY_ANALYZER_AVAILABLE = False
+
+# Import decision framework (Task 5.1)
+try:
+    from .decision_framework import (
+        DecisionFramework,
+        DecisionReport,
+        DecisionCriteria
+    )
+    _DECISION_FRAMEWORK_AVAILABLE = True
+except ImportError:
+    _DECISION_FRAMEWORK_AVAILABLE = False
+
 __all__ = [
     "AnalysisEngine",
     "LearningEngine",
@@ -196,3 +228,26 @@ __all__ = [
     "DifficultyLevel",
     "ImpactLevel"
 ]
+
+# Add duplicate detection exports if available
+if _DUPLICATE_DETECTOR_AVAILABLE:
+    __all__.extend([
+        "DuplicateDetector",
+        "DuplicateGroup",
+        "StrategyInfo"
+    ])
+
+# Add diversity analyzer exports if available
+if _DIVERSITY_ANALYZER_AVAILABLE:
+    __all__.extend([
+        "DiversityAnalyzer",
+        "DiversityReport"
+    ])
+
+# Add decision framework exports if available
+if _DECISION_FRAMEWORK_AVAILABLE:
+    __all__.extend([
+        "DecisionFramework",
+        "DecisionReport",
+        "DecisionCriteria"
+    ])

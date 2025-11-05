@@ -1,0 +1,149 @@
+# Momentum Strategy Example
+# =========================
+# Classic price momentum strategy with volume confirmation and trailing stops
+#
+# Strategy Logic:
+# - Select stocks with strong 20-day price momentum
+# - Confirm with above-average volume
+# - Use RSI to avoid overextended positions
+# - Implement trailing stops to protect profits
+#
+# Expected Performance: Sharpe 1.5-2.0, Annual Return 15-25%
+
+metadata:
+  name: "Price Momentum with Volume Confirmation"
+  description: "Buys stocks showing strong 20-day price momentum with above-average trading volume, uses RSI filter to avoid overbought conditions, and trailing stops for profit protection"
+  strategy_type: "momentum"
+  rebalancing_frequency: "W-FRI"
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - momentum
+    - volume
+    - rsi
+    - trailing_stop
+  risk_level: "medium"
+
+indicators:
+  # Technical indicators for momentum detection
+  technical_indicators:
+    # RSI for overbought/oversold detection
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # 50-day moving average for trend confirmation
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+    # 20-day moving average for shorter-term trend
+    - name: "ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('MA_20')"
+
+    # 20-day average volume
+    - name: "volume_ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('volume_20d_avg')"
+
+  # Custom momentum calculation
+  custom_calculations:
+    # 20-day price momentum (percentage change)
+    - name: "momentum_20d"
+      expression: "(close - close.shift(20)) / close.shift(20)"
+      description: "20-day price momentum as percentage change"
+
+    # Volume ratio (current volume vs 20-day average)
+    - name: "volume_ratio"
+      expression: "volume / volume_ma_20"
+      description: "Current volume relative to 20-day average"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # Strong positive momentum
+    - condition: "momentum_20d > 0.10"
+      description: "Price up >10% over 20 days (strong momentum)"
+
+    # RSI not overbought
+    - condition: "rsi_14 < 70"
+      description: "RSI below 70 (not overbought)"
+
+    # Price above 50-day MA (uptrend)
+    - condition: "close > ma_50"
+      description: "Price above 50-day MA (uptrend confirmation)"
+
+    # Price above 20-day MA (short-term strength)
+    - condition: "close > ma_20"
+      description: "Price above 20-day MA (short-term strength)"
+
+    # Above-average volume
+    - condition: "volume_ratio > 1.2"
+      description: "Volume 20% above 20-day average (strong conviction)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # Liquidity requirements
+  min_liquidity:
+    average_volume_20d: 100000000  # 100M minimum volume
+
+exit_conditions:
+  # Stop loss at -8%
+  stop_loss_pct: 0.08
+
+  # Take profit at +25%
+  take_profit_pct: 0.25
+
+  # Trailing stop configuration
+  trailing_stop:
+    trail_percent: 0.08      # Trail 8% below peak
+    activation_profit: 0.05  # Activate after 5% profit
+
+  # Conditional exits
+  conditional_exits:
+    # Exit if RSI becomes overbought
+    - condition: "rsi_14 > 80"
+      description: "Exit on extreme overbought (RSI > 80)"
+
+    # Exit if price falls below 20-day MA
+    - condition: "close < ma_20"
+      description: "Exit on short-term trend reversal (below 20-day MA)"
+
+  # Maximum holding period
+  holding_period_days: 30
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Equal weight allocation
+  method: "equal_weight"
+
+  # Maximum 20 positions
+  max_positions: 20
+
+  # Maximum 10% per position
+  max_position_pct: 0.10
+
+risk_management:
+  # Sector concentration limit
+  max_sector_exposure: 0.30
+
+  # Rebalance if position drifts >15%
+  rebalance_threshold: 0.15
+
+  # Stop trading if portfolio drawdown >20%
+  max_drawdown_limit: 0.20
+
+backtest_config:
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.001

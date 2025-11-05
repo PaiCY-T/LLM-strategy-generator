@@ -1,0 +1,428 @@
+======================================================================
+EXIT MUTATION 20-GENERATION VALIDATION TEST
+Parameter-Based Exit Mutation Redesign
+======================================================================
+
+Configuration:
+  Generations:     20
+  Population Size: 10
+  Random Seed:     42
+  Output Report:   EXIT_MUTATION_VALIDATION_REPORT.md
+
+2025-10-28 05:33:56,780 - __main__ - INFO - Initializing ExitMutationValidator...
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/documents/finlab/scripts/validate_exit_mutation.py", line 724, in <module>
+    sys.exit(main())
+  File "/mnt/c/Users/jnpi/documents/finlab/scripts/validate_exit_mutation.py", line 627, in main
+    validator = ExitMutationValidator(
+  File "/mnt/c/Users/jnpi/documents/finlab/scripts/validate_exit_mutation.py", line 119, in __init__
+    self.mutator = UnifiedMutationOperator()
+TypeError: UnifiedMutationOperator.__init__() missing 4 required positional arguments: 'yaml_interpreter', 'tier2_engine', 'tier3_mutator', and 'tier_selector'
+2025-10-28 05:34:38,807 - __main__ - INFO - Initializing ExitMutationValidator...
+2025-10-28 05:34:38,820 - __main__ - INFO - Initializing population (N=10)
+2025-10-28 05:34:38,820 - __main__ - INFO - Initialized 10 strategies
+2025-10-28 05:34:38,830 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,830 - __main__ - INFO - GENERATION 1
+2025-10-28 05:34:38,830 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,832 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 30.5310 to 31.0000
+2025-10-28 05:34:38,832 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 20.0667 to 20.0000
+2025-10-28 05:34:38,833 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,833 - __main__ - INFO - Exit mutations:      5 (50.0%)
+2025-10-28 05:34:38,834 - __main__ - INFO - Exit successes:      5 (100.0%)
+2025-10-28 05:34:38,834 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,834 - __main__ - INFO - Avg param diversity: 1.8338
+2025-10-28 05:34:38,845 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,845 - __main__ - INFO - GENERATION 2
+2025-10-28 05:34:38,846 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,846 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 18.7166 to 19.0000
+2025-10-28 05:34:38,847 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,847 - __main__ - INFO - Exit mutations:      3 (30.0%)
+2025-10-28 05:34:38,848 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 05:34:38,848 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,848 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,858 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,859 - __main__ - INFO - GENERATION 3
+2025-10-28 05:34:38,859 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,859 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 22.3376 to 22.0000
+2025-10-28 05:34:38,860 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,860 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:38,861 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:38,861 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,861 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,872 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,873 - __main__ - INFO - GENERATION 4
+2025-10-28 05:34:38,873 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,874 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,874 - __main__ - INFO - Exit mutations:      1 (10.0%)
+2025-10-28 05:34:38,874 - __main__ - INFO - Exit successes:      1 (100.0%)
+2025-10-28 05:34:38,875 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,875 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,885 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,885 - __main__ - INFO - GENERATION 5
+2025-10-28 05:34:38,885 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,886 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,886 - __main__ - INFO - Exit mutations:      1 (10.0%)
+2025-10-28 05:34:38,886 - __main__ - INFO - Exit successes:      1 (100.0%)
+2025-10-28 05:34:38,887 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,887 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,894 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,894 - __main__ - INFO - GENERATION 6
+2025-10-28 05:34:38,895 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,895 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 21.6522 to 22.0000
+2025-10-28 05:34:38,896 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,896 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:38,897 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:38,897 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,897 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,906 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,906 - __main__ - INFO - GENERATION 7
+2025-10-28 05:34:38,907 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,907 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,908 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:38,908 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:38,908 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,908 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,916 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,917 - __main__ - INFO - GENERATION 8
+2025-10-28 05:34:38,917 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,918 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,918 - __main__ - INFO - Exit mutations:      3 (30.0%)
+2025-10-28 05:34:38,918 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 05:34:38,919 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,919 - __main__ - INFO - Avg param diversity: 0.0019
+2025-10-28 05:34:38,930 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,931 - __main__ - INFO - GENERATION 9
+2025-10-28 05:34:38,931 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,932 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 23.1910 to 23.0000
+2025-10-28 05:34:38,933 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,933 - __main__ - INFO - Exit mutations:      5 (50.0%)
+2025-10-28 05:34:38,933 - __main__ - INFO - Exit successes:      5 (100.0%)
+2025-10-28 05:34:38,934 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,934 - __main__ - INFO - Avg param diversity: 0.0056
+2025-10-28 05:34:38,941 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,941 - __main__ - INFO - GENERATION 10
+2025-10-28 05:34:38,942 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,942 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 27.0027 to 27.0000
+2025-10-28 05:34:38,943 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,943 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:38,944 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:38,944 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,944 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,955 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,956 - __main__ - INFO - GENERATION 11
+2025-10-28 05:34:38,956 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,957 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 24.1899 to 24.0000
+2025-10-28 05:34:38,957 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 38.8427 to 39.0000
+2025-10-28 05:34:38,958 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 21.2704 to 21.0000
+2025-10-28 05:34:38,958 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,959 - __main__ - INFO - Exit mutations:      4 (40.0%)
+2025-10-28 05:34:38,959 - __main__ - INFO - Exit successes:      4 (100.0%)
+2025-10-28 05:34:38,959 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,959 - __main__ - INFO - Avg param diversity: 3.9370
+2025-10-28 05:34:38,966 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,967 - __main__ - INFO - GENERATION 12
+2025-10-28 05:34:38,967 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,968 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,968 - __main__ - INFO - Exit mutations:      1 (10.0%)
+2025-10-28 05:34:38,968 - __main__ - INFO - Exit successes:      1 (100.0%)
+2025-10-28 05:34:38,968 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,969 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:38,980 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:38,980 - __main__ - INFO - GENERATION 13
+2025-10-28 05:34:38,981 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:38,982 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 17.4873 to 17.0000
+2025-10-28 05:34:38,985 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 22.0316 to 22.0000
+2025-10-28 05:34:38,987 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:38,988 - __main__ - INFO - Exit mutations:      3 (30.0%)
+2025-10-28 05:34:38,988 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 05:34:38,988 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:38,989 - __main__ - INFO - Avg param diversity: 1.2500
+2025-10-28 05:34:39,000 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:39,001 - __main__ - INFO - GENERATION 14
+2025-10-28 05:34:39,001 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:39,002 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 25.3016 to 25.0000
+2025-10-28 05:34:39,003 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:39,003 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:39,003 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:39,004 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:39,004 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:39,014 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:39,015 - __main__ - INFO - GENERATION 15
+2025-10-28 05:34:39,015 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:39,016 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 26.3510 to 26.0000
+2025-10-28 05:34:39,016 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:39,017 - __main__ - INFO - Exit mutations:      1 (10.0%)
+2025-10-28 05:34:39,017 - __main__ - INFO - Exit successes:      1 (100.0%)
+2025-10-28 05:34:39,017 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:39,018 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:39,024 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:39,024 - __main__ - INFO - GENERATION 16
+2025-10-28 05:34:39,024 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:39,025 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 30.3005 to 30.0000
+2025-10-28 05:34:39,026 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:39,026 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:39,026 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:39,027 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:39,027 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:39,035 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:39,036 - __main__ - INFO - GENERATION 17
+2025-10-28 05:34:39,036 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:39,036 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:39,037 - __main__ - INFO - Exit mutations:      0 (0.0%)
+2025-10-28 05:34:39,037 - __main__ - INFO - Exit successes:      0 (0.0%)
+2025-10-28 05:34:39,037 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:39,038 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:39,048 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:39,048 - __main__ - INFO - GENERATION 18
+2025-10-28 05:34:39,048 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:39,049 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 27.7015 to 28.0000
+2025-10-28 05:34:39,050 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 33.8185 to 34.0000
+2025-10-28 05:34:39,050 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:39,051 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:39,052 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:39,052 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:39,052 - __main__ - INFO - Avg param diversity: 3.0000
+2025-10-28 05:34:39,061 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:39,061 - __main__ - INFO - GENERATION 19
+2025-10-28 05:34:39,061 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:39,062 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:39,063 - __main__ - INFO - Exit mutations:      3 (30.0%)
+2025-10-28 05:34:39,063 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 05:34:39,063 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:39,063 - __main__ - INFO - Avg param diversity: 0.0117
+2025-10-28 05:34:39,071 - __main__ - INFO - 
+======================================================================
+2025-10-28 05:34:39,071 - __main__ - INFO - GENERATION 20
+2025-10-28 05:34:39,071 - __main__ - INFO - ======================================================================
+2025-10-28 05:34:39,072 - __main__ - INFO - Total mutations:     10
+2025-10-28 05:34:39,072 - __main__ - INFO - Exit mutations:      2 (20.0%)
+2025-10-28 05:34:39,073 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 05:34:39,073 - __main__ - INFO - Bounds violations:   0
+2025-10-28 05:34:39,073 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 05:34:39,120 - __main__ - INFO - Validation report saved to: EXIT_MUTATION_VALIDATION_REPORT.md
+2025-10-28 11:33:54,160 - __main__ - INFO - Initializing ExitMutationValidator...
+2025-10-28 11:33:54,174 - __main__ - INFO - Initializing population (N=20)
+2025-10-28 11:33:54,175 - __main__ - INFO - Initialized 20 strategies
+2025-10-28 11:33:54,188 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,188 - __main__ - INFO - GENERATION 1
+2025-10-28 11:33:54,189 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,191 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 30.5310 to 31.0000
+2025-10-28 11:33:54,191 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 20.0667 to 20.0000
+2025-10-28 11:33:54,192 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 18.7166 to 19.0000
+2025-10-28 11:33:54,193 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,193 - __main__ - INFO - Exit mutations:      8 (40.0%)
+2025-10-28 11:33:54,193 - __main__ - INFO - Exit successes:      8 (100.0%)
+2025-10-28 11:33:54,194 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,194 - __main__ - INFO - Avg param diversity: 1.3596
+2025-10-28 11:33:54,207 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,209 - __main__ - INFO - GENERATION 2
+2025-10-28 11:33:54,210 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,210 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 22.3376 to 22.0000
+2025-10-28 11:33:54,211 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,211 - __main__ - INFO - Exit mutations:      3 (15.0%)
+2025-10-28 11:33:54,212 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 11:33:54,212 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,212 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 11:33:54,227 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,228 - __main__ - INFO - GENERATION 3
+2025-10-28 11:33:54,228 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,229 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 21.6522 to 22.0000
+2025-10-28 11:33:54,230 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,231 - __main__ - INFO - Exit mutations:      3 (15.0%)
+2025-10-28 11:33:54,231 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 11:33:54,231 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,232 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 11:33:54,245 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,246 - __main__ - INFO - GENERATION 4
+2025-10-28 11:33:54,246 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,247 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,248 - __main__ - INFO - Exit mutations:      5 (25.0%)
+2025-10-28 11:33:54,248 - __main__ - INFO - Exit successes:      5 (100.0%)
+2025-10-28 11:33:54,248 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,249 - __main__ - INFO - Avg param diversity: 0.0006
+2025-10-28 11:33:54,260 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,260 - __main__ - INFO - GENERATION 5
+2025-10-28 11:33:54,261 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,261 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 21.0828 to 21.0000
+2025-10-28 11:33:54,262 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 27.0027 to 27.0000
+2025-10-28 11:33:54,263 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,263 - __main__ - INFO - Exit mutations:      7 (35.0%)
+2025-10-28 11:33:54,264 - __main__ - INFO - Exit successes:      7 (100.0%)
+2025-10-28 11:33:54,264 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,264 - __main__ - INFO - Avg param diversity: 0.7623
+2025-10-28 11:33:54,277 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,278 - __main__ - INFO - GENERATION 6
+2025-10-28 11:33:54,278 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,279 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 22.0864 to 22.0000
+2025-10-28 11:33:54,279 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 38.8427 to 39.0000
+2025-10-28 11:33:54,279 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 21.2704 to 21.0000
+2025-10-28 11:33:54,280 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,281 - __main__ - INFO - Exit mutations:      5 (25.0%)
+2025-10-28 11:33:54,281 - __main__ - INFO - Exit successes:      5 (100.0%)
+2025-10-28 11:33:54,281 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,281 - __main__ - INFO - Avg param diversity: 4.1345
+2025-10-28 11:33:54,292 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,293 - __main__ - INFO - GENERATION 7
+2025-10-28 11:33:54,293 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,294 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 17.4873 to 17.0000
+2025-10-28 11:33:54,294 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 22.0316 to 22.0000
+2025-10-28 11:33:54,295 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 23.0015 to 23.0000
+2025-10-28 11:33:54,295 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,296 - __main__ - INFO - Exit mutations:      5 (25.0%)
+2025-10-28 11:33:54,296 - __main__ - INFO - Exit successes:      5 (100.0%)
+2025-10-28 11:33:54,296 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,296 - __main__ - INFO - Avg param diversity: 1.3215
+2025-10-28 11:33:54,328 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,329 - __main__ - INFO - GENERATION 8
+2025-10-28 11:33:54,330 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,331 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 24.1551 to 24.0000
+2025-10-28 11:33:54,331 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 25.6389 to 26.0000
+2025-10-28 11:33:54,332 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,332 - __main__ - INFO - Exit mutations:      3 (15.0%)
+2025-10-28 11:33:54,333 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 11:33:54,333 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,333 - __main__ - INFO - Avg param diversity: 0.5000
+2025-10-28 11:33:54,342 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,342 - __main__ - INFO - GENERATION 9
+2025-10-28 11:33:54,342 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,343 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 25.4853 to 25.0000
+2025-10-28 11:33:54,344 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 32.7276 to 33.0000
+2025-10-28 11:33:54,345 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,345 - __main__ - INFO - Exit mutations:      2 (10.0%)
+2025-10-28 11:33:54,346 - __main__ - INFO - Exit successes:      2 (100.0%)
+2025-10-28 11:33:54,346 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,346 - __main__ - INFO - Avg param diversity: 4.0000
+2025-10-28 11:33:54,356 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,356 - __main__ - INFO - GENERATION 10
+2025-10-28 11:33:54,357 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,358 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,358 - __main__ - INFO - Exit mutations:      5 (25.0%)
+2025-10-28 11:33:54,358 - __main__ - INFO - Exit successes:      5 (100.0%)
+2025-10-28 11:33:54,359 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,359 - __main__ - INFO - Avg param diversity: 0.0226
+2025-10-28 11:33:54,372 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,373 - __main__ - INFO - GENERATION 11
+2025-10-28 11:33:54,373 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,374 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 21.0381 to 21.0000
+2025-10-28 11:33:54,375 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,376 - __main__ - INFO - Exit mutations:      4 (20.0%)
+2025-10-28 11:33:54,378 - __main__ - INFO - Exit successes:      4 (100.0%)
+2025-10-28 11:33:54,379 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,380 - __main__ - INFO - Avg param diversity: 0.0147
+2025-10-28 11:33:54,396 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,398 - __main__ - INFO - GENERATION 12
+2025-10-28 11:33:54,399 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,401 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,401 - __main__ - INFO - Exit mutations:      4 (20.0%)
+2025-10-28 11:33:54,401 - __main__ - INFO - Exit successes:      4 (100.0%)
+2025-10-28 11:33:54,402 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,402 - __main__ - INFO - Avg param diversity: 0.0380
+2025-10-28 11:33:54,415 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,415 - __main__ - INFO - GENERATION 13
+2025-10-28 11:33:54,416 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,417 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,418 - __main__ - INFO - Exit mutations:      4 (20.0%)
+2025-10-28 11:33:54,418 - __main__ - INFO - Exit successes:      4 (100.0%)
+2025-10-28 11:33:54,418 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,419 - __main__ - INFO - Avg param diversity: 0.0031
+2025-10-28 11:33:54,437 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,437 - __main__ - INFO - GENERATION 14
+2025-10-28 11:33:54,438 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,439 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 25.8980 to 26.0000
+2025-10-28 11:33:54,440 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,440 - __main__ - INFO - Exit mutations:      6 (30.0%)
+2025-10-28 11:33:54,441 - __main__ - INFO - Exit successes:      6 (100.0%)
+2025-10-28 11:33:54,441 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,441 - __main__ - INFO - Avg param diversity: 0.0093
+2025-10-28 11:33:54,451 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,452 - __main__ - INFO - GENERATION 15
+2025-10-28 11:33:54,452 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,453 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 32.7382 to 33.0000
+2025-10-28 11:33:54,453 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,454 - __main__ - INFO - Exit mutations:      4 (20.0%)
+2025-10-28 11:33:54,454 - __main__ - INFO - Exit successes:      4 (100.0%)
+2025-10-28 11:33:54,454 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,455 - __main__ - INFO - Avg param diversity: 0.0072
+2025-10-28 11:33:54,465 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,466 - __main__ - INFO - GENERATION 16
+2025-10-28 11:33:54,466 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,467 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,467 - __main__ - INFO - Exit mutations:      3 (15.0%)
+2025-10-28 11:33:54,467 - __main__ - INFO - Exit successes:      3 (100.0%)
+2025-10-28 11:33:54,468 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,468 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 11:33:54,477 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,477 - __main__ - INFO - GENERATION 17
+2025-10-28 11:33:54,478 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,479 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,479 - __main__ - INFO - Exit mutations:      1 (5.0%)
+2025-10-28 11:33:54,480 - __main__ - INFO - Exit successes:      1 (100.0%)
+2025-10-28 11:33:54,480 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,480 - __main__ - INFO - Avg param diversity: 0.0000
+2025-10-28 11:33:54,490 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,491 - __main__ - INFO - GENERATION 18
+2025-10-28 11:33:54,491 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,492 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 21.4646 to 21.0000
+2025-10-28 11:33:54,493 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 23.4540 to 23.0000
+2025-10-28 11:33:54,495 - src.mutation.exit_parameter_mutator - INFO - Parameter holding_period_days clamped from 20.2602 to 20.0000
+2025-10-28 11:33:54,496 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,496 - __main__ - INFO - Exit mutations:      8 (40.0%)
+2025-10-28 11:33:54,496 - __main__ - INFO - Exit successes:      8 (100.0%)
+2025-10-28 11:33:54,497 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,497 - __main__ - INFO - Avg param diversity: 0.4261
+2025-10-28 11:33:54,506 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,506 - __main__ - INFO - GENERATION 19
+2025-10-28 11:33:54,507 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,508 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,508 - __main__ - INFO - Exit mutations:      5 (25.0%)
+2025-10-28 11:33:54,509 - __main__ - INFO - Exit successes:      5 (100.0%)
+2025-10-28 11:33:54,509 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,509 - __main__ - INFO - Avg param diversity: 0.0289
+2025-10-28 11:33:54,520 - __main__ - INFO - 
+======================================================================
+2025-10-28 11:33:54,520 - __main__ - INFO - GENERATION 20
+2025-10-28 11:33:54,521 - __main__ - INFO - ======================================================================
+2025-10-28 11:33:54,524 - __main__ - INFO - Total mutations:     20
+2025-10-28 11:33:54,524 - __main__ - INFO - Exit mutations:      4 (20.0%)
+2025-10-28 11:33:54,525 - __main__ - INFO - Exit successes:      4 (100.0%)
+2025-10-28 11:33:54,525 - __main__ - INFO - Bounds violations:   0
+2025-10-28 11:33:54,526 - __main__ - INFO - Avg param diversity: 0.0022
+2025-10-28 11:33:54,549 - __main__ - INFO - Validation report saved to: EXIT_MUTATION_VALIDATION_REPORT.md

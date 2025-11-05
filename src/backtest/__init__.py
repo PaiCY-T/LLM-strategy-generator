@@ -64,6 +64,19 @@ class PerformanceMetrics:
     worst_trade: float = 0.0
 
 
+# Import metrics functions after dataclasses are defined to avoid circular import
+from .classifier import ClassificationResult, SuccessClassifier
+from .error_classifier import ErrorCategory, ErrorClassifier
+from .executor import BacktestExecutor, ExecutionResult
+from .metrics import (
+    MetricsExtractor,
+    StrategyMetrics,
+    calculate_calmar_ratio,
+    calculate_max_drawdown,
+)
+from .reporter import ReportMetrics, ResultsReporter
+
+
 class BacktestEngine:
     """Core backtest execution engine.
 
@@ -134,5 +147,17 @@ class BacktestEngine:
 __all__ = [
     "BacktestEngine",
     "BacktestResult",
-    "PerformanceMetrics"
+    "BacktestExecutor",
+    "ClassificationResult",
+    "ErrorCategory",
+    "ErrorClassifier",
+    "ExecutionResult",
+    "MetricsExtractor",
+    "PerformanceMetrics",
+    "ReportMetrics",
+    "ResultsReporter",
+    "StrategyMetrics",
+    "SuccessClassifier",
+    "calculate_calmar_ratio",
+    "calculate_max_drawdown"
 ]

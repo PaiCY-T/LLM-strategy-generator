@@ -78,5 +78,105 @@
     "performance_impact": -2.51074681636763,
     "iteration_discovered": 1,
     "timestamp": "2025-10-08T22:39:54.652573"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Decreasing liquidity threshold from 50 to 40",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 40,
+    "performance_impact": -0.10851017840928989,
+    "iteration_discovered": 3,
+    "timestamp": "2025-10-12T08:35:05.840130"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Increasing liquidity threshold from 50 to 60",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 60,
+    "performance_impact": -2.5319764765791373,
+    "iteration_discovered": 152,
+    "timestamp": "2025-10-13T01:48:19.338721"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Increasing liquidity threshold from 50 to 70",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 70,
+    "performance_impact": -2.917684355039216,
+    "iteration_discovered": 0,
+    "timestamp": "2025-10-17T00:44:33.600636"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Increasing liquidity threshold from 50 to 75",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 75,
+    "performance_impact": -0.833796713839067,
+    "iteration_discovered": 10,
+    "timestamp": "2025-10-17T00:52:42.816143"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Increasing liquidity threshold from 50 to 80",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 80,
+    "performance_impact": -2.6364921043288545,
+    "iteration_discovered": 15,
+    "timestamp": "2025-10-17T00:56:51.292509"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Increasing liquidity threshold from 50 to 70000000",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 70000000,
+    "performance_impact": -0.3122054893320412,
+    "iteration_discovered": 103,
+    "timestamp": "2025-10-17T02:20:59.165478"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Changing liquidity threshold from 50 to None",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": null,
+    "performance_impact": -1.7676305439136173,
+    "iteration_discovered": 0,
+    "timestamp": "2025-10-27T14:38:51.874588"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Increasing liquidity threshold from 50 to 40000000",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 40000000,
+    "performance_impact": -1.2649937351172464,
+    "iteration_discovered": 1,
+    "timestamp": "2025-11-02T18:25:23.041324"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Increasing liquidity threshold from 50 to 100000000",
+    "parameter": "liquidity_threshold",
+    "change_from": 50,
+    "change_to": 100000000,
+    "performance_impact": -2.036502825013308,
+    "iteration_discovered": 2,
+    "timestamp": "2025-11-02T18:25:41.016506"
+  },
+  {
+    "pattern_type": "parameter_change",
+    "description": "Decreasing liquidity threshold from 100000000 to 40",
+    "parameter": "liquidity_threshold",
+    "change_from": 100000000,
+    "change_to": 40,
+    "performance_impact": -1.7797499366914495,
+    "iteration_discovered": 18,
+    "timestamp": "2025-11-02T18:38:40.081058"
   }
 ]

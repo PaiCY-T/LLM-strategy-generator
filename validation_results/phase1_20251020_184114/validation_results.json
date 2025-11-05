@@ -1,0 +1,285 @@
+{
+  "test_name": "Exit Mutation Long-Running Validation",
+  "timestamp": "2025-10-20T18:41:16.421134",
+  "parameters": {
+    "num_generations": 10,
+    "generations_completed": 10,
+    "population_size": 20,
+    "checkpoint_freq": 5,
+    "timeout_minutes": 30
+  },
+  "performance": {
+    "initial_sharpe": 1.7384259898989207,
+    "final_sharpe": 1.7384259898989207,
+    "best_sharpe": 1.7384259898989207,
+    "sharpe_improvement": 0.0,
+    "avg_improvement_rate": 1.2155183296752467e-16,
+    "plateaued": true,
+    "sharpe_history": [
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207,
+      1.7384259898989207
+    ]
+  },
+  "diversity": {
+    "unique_patterns": 3,
+    "final_jaccard_diversity": 0.3038286893704851,
+    "exit_patterns": [
+      "stop_loss",
+      "basic",
+      "take_profit"
+    ]
+  },
+  "mutation_statistics": {
+    "total_attempts": 51,
+    "total_successes": 0,
+    "total_failures": 51,
+    "overall_success_rate": 0.0,
+    "by_type": {
+      "parametric": 0,
+      "structural": 0,
+      "relational": 0
+    }
+  },
+  "stability": {
+    "issues_count": 0,
+    "issues": []
+  },
+  "generation_breakdown": [
+    {
+      "generation": 1,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 5,
+      "mutation_successes": 0,
+      "mutation_failures": 5,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.53578357658853,
+      "improvement_rate": -5.543467226406375e-16,
+      "pareto_front_size": 1,
+      "time": 0.04187512397766113,
+      "elapsed_total": 0.06615662574768066
+    },
+    {
+      "generation": 2,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 3,
+      "mutation_successes": 0,
+      "mutation_failures": 3,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.3188662833554474,
+      "improvement_rate": 2.291409764791552e-16,
+      "pareto_front_size": 1,
+      "time": 0.78867506980896,
+      "elapsed_total": 0.8561203479766846
+    },
+    {
+      "generation": 3,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 6,
+      "mutation_successes": 0,
+      "mutation_failures": 6,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.3083399675659737,
+      "improvement_rate": -2.8826117098995645e-16,
+      "pareto_front_size": 1,
+      "time": 0.2861912250518799,
+      "elapsed_total": 1.1436245441436768
+    },
+    {
+      "generation": 4,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 0,
+      "mutation_successes": 0,
+      "mutation_failures": 0,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.29630989237800376,
+      "improvement_rate": -1.1136283007689682e-17,
+      "pareto_front_size": 1,
+      "time": 0.17618393898010254,
+      "elapsed_total": 1.3216311931610107
+    },
+    {
+      "generation": 5,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 4,
+      "mutation_successes": 0,
+      "mutation_failures": 4,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.3083399675659739,
+      "improvement_rate": -1.062658028193245e-16,
+      "pareto_front_size": 1,
+      "time": 0.11250877380371094,
+      "elapsed_total": 1.4348487854003906
+    },
+    {
+      "generation": 6,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 7,
+      "mutation_successes": 0,
+      "mutation_failures": 7,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.3263850803479287,
+      "improvement_rate": 7.799196914919509e-17,
+      "pareto_front_size": 1,
+      "time": 0.1747117042541504,
+      "elapsed_total": 1.622781753540039
+    },
+    {
+      "generation": 7,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 7,
+      "mutation_successes": 0,
+      "mutation_failures": 7,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.3128512457614625,
+      "improvement_rate": 7.80585135753762e-17,
+      "pareto_front_size": 1,
+      "time": 0.2162027359008789,
+      "elapsed_total": 1.8411118984222412
+    },
+    {
+      "generation": 8,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 7,
+      "mutation_successes": 0,
+      "mutation_failures": 7,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.3083399675659737,
+      "improvement_rate": 7.625517428012555e-18,
+      "pareto_front_size": 1,
+      "time": 0.11210155487060547,
+      "elapsed_total": 1.9540584087371826
+    },
+    {
+      "generation": 9,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 6,
+      "mutation_successes": 0,
+      "mutation_failures": 6,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.30984372696447027,
+      "improvement_rate": 2.3372690412380077e-17,
+      "pareto_front_size": 1,
+      "time": 0.18694186210632324,
+      "elapsed_total": 2.141838312149048
+    },
+    {
+      "generation": 10,
+      "best_sharpe": 1.7384259898989207,
+      "avg_sharpe": 1.6512573525515872,
+      "mutation_attempts": 6,
+      "mutation_successes": 0,
+      "mutation_failures": 6,
+      "success_rate": 0.0,
+      "diversity_score": 0.18947368421052632,
+      "unique_patterns": 3,
+      "exit_patterns": [
+        "stop_loss",
+        "basic",
+        "take_profit"
+      ],
+      "jaccard_diversity": 0.3038286893704851,
+      "improvement_rate": 1.2155183296752467e-16,
+      "pareto_front_size": 1,
+      "time": 0.177687406539917,
+      "elapsed_total": 2.320542812347412
+    }
+  ],
+  "timing": {
+    "total_time": 2.328756332397461,
+    "avg_generation_time": 0.23287563323974608
+  },
+  "decision": {
+    "recommendation": "OPTIMIZATION_NEEDED",
+    "recommendation_text": "\u26a0\ufe0f  OPTIMIZATION NEEDED - Address stability/success rate issues",
+    "phase2a_criteria": {
+      "sharpe_target": false,
+      "diversity_target": true,
+      "success_rate_target": false,
+      "stability_ok": true,
+      "performance_maintained": false
+    },
+    "phase2a_passed": false,
+    "exit_code": 2
+  }
+}

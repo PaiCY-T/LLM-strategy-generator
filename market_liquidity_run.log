@@ -1,0 +1,52 @@
+======================================================================
+Taiwan Stock Market Liquidity Statistics Analyzer
+======================================================================
+
+🔑 Finlab API token found
+
+🔐 Logging in to Finlab...
+輸入成功!
+   ✅ Login successful
+
+📊 Querying market liquidity data...
+   Lookback period: 60 days
+   ✅ Loaded trading value data: 4544 rows × 2648 stocks
+   🔄 Calculating 60-day rolling averages...
+   ✅ Analyzed 2632 stocks with valid data
+   📈 Average trading value range: 0.0M - 38710.3M TWD
+
+📦 Categorizing stocks by threshold...
+       50M TWD:  803 stocks ( 30.5%)
+      100M TWD:  599 stocks ( 22.8%)
+      150M TWD:  480 stocks ( 18.2%)
+      200M TWD:  413 stocks ( 15.7%)
+
+💰 Querying market capitalization data...
+   ✅ Loaded market cap data: 3278 rows × 2021 stocks
+   📊 Matched 1884 stocks with market cap data
+   🔄 Categorizing by market cap and threshold...
+      large_cap:  108 stocks
+        mid_cap:  499 stocks
+      small_cap: 1277 stocks
+
+📝 Generating market report...
+   ✅ Report saved to: MARKET_LIQUIDITY_STATS.md
+
+======================================================================
+📊 Analysis Summary
+======================================================================
+Total stocks analyzed: 2,632
+
+Stock counts by threshold:
+      50M TWD:  803 stocks ( 30.5%)
+     100M TWD:  599 stocks ( 22.8%)
+     150M TWD:  480 stocks ( 18.2%)
+     200M TWD:  413 stocks ( 15.7%)
+
+Market cap distribution at 150M TWD threshold:
+  Large cap:  105 stocks
+  Mid cap:    231 stocks
+  Small cap:   74 stocks
+
+✅ Report generated: MARKET_LIQUIDITY_STATS.md
+======================================================================

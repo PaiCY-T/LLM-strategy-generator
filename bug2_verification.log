@@ -1,0 +1,186 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1762055720.424749   88171 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Alert evaluation took 73.5ms (target: <50ms)
+E0000 00:00:1762055766.692199   88171 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+================================================================================
+BUG #2 FIX VERIFICATION
+================================================================================
+
+Testing config fix:
+  ✓ provider: openrouter (was: gemini)
+  ✓ model: google/gemini-2.5-flash (was: anthropic/claude-3.5-sonnet)
+
+Expected: No 404 errors, LLM innovation should work via OpenRouter
+================================================================================
+
+📋 Loop initialized: model=google/gemini-2.5-flash, max_iterations=2
+📋 LLM enabled: True
+📋 Innovation rate: 30.0%
+
+
+============================================================
+AUTONOMOUS LEARNING LOOP - START
+============================================================
+Model: google/gemini-2.5-flash
+Max iterations: 2
+Sandbox mode: ENABLED
+
+
+============================================================
+ITERATION 0
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (8814 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+🎨 Added diversity guidance to prompt (population-aware generation)
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+❌ API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.
+Waiting 1s before retry...
+Calling Google AI with gemini-2.5-flash (attempt 2/3)...
+📝 Response preview: # 1. Load data
+import numpy as np
+
+close = data.get('etl:adj_close')  # ✅ Use adjusted data
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+market_cap = data.get('etl:market_value') # Market capitalization for size filter
+
+# Underused/rare factors (PRIORITIZE these)
+op_margin = data.get('fundamental_features:營業利益率')
+net_margin = data.get('fundamental_features:稅後淨利率')
+pb_ratio = data.get('fundamental_features:股價淨值比')
+pe_ratio = data.get('price:本益比')
+debt_ratio = data.get('fundam...
+   ✓ Detected raw Python code (Strategy 3): 59/62 lines are Python
+✅ Successfully generated strategy (3426 chars)
+✅ Strategy generated (3426 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 7bac27f5bad8ee6d
+✅ Applied 2 fixes:
+   - Fixed: fundamental_features:股價淨值比 → price_earning_ratio:股價淨值比
+   - Fixed: etl:foreign_main_force_buy_sell_summary:strength → institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)
+
+[2.7/6] Static validation...
+❌ Static validation failed (1 issues)
+   - Unknown dataset key: 'price:本益比' not in available datasets
+
+[3/6] Skipping AST validation (static validation failed)
+
+[4/6] Skipping execution (validation failed)
+❌ Validation failed (1 errors)
+   - Unknown dataset key: 'price:本益比' not in available datasets
+
+[4/6] Skipping execution (validation failed)
+
+[5/6] Building feedback...
+✅ Feedback generated (115 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter0.py
+
+============================================================
+ITERATION 1
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (9417 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+   → Using Factor Graph mutation (default)
+🎯 Attempting Google AI (primary)...
+🎨 Added diversity guidance to prompt (population-aware generation)
+Calling Google AI with gemini-2.5-flash (attempt 1/3)...
+📝 Response preview: # 1. Load data
+adj_close = data.get('etl:adj_close')  # ✅ Adjusted for dividends/splits
+trading_value = data.get('price:成交金額')  # OK for liquidity filter
+market_value = data.get('etl:market_value') # Market capitalization for size filter
+
+# Underused fundamental factors
+operating_margin = data.get('fundamental_features:營業利益率')
+net_profit_margin = data.get('fundamental_features:稅後淨利率')
+pb_ratio = data.get('price:股價淨值比')
+debt_ratio = data.get('fundamental_features:負債比率')
+
+# Underused institutional...
+   ✓ Detected raw Python code (Strategy 3): 51/55 lines are Python
+✅ Successfully generated strategy (3228 chars)
+✅ Strategy generated (3228 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 1f359b6eed962ec8
+✅ No fixes needed
+
+[2.7/6] Static validation...
+❌ Static validation failed (2 issues)
+   - Unknown dataset key: 'price:股價淨值比' not in available datasets
+   - Unknown dataset key: 'etl:broker_transactions:balance_index' not in available datasets
+
+[3/6] Skipping AST validation (static validation failed)
+
+[4/6] Skipping execution (validation failed)
+❌ Validation failed (2 errors)
+   - Unknown dataset key: 'price:股價淨值比' not in available datasets
+   - Unknown dataset key: 'etl:broker_transactions:balance_index' not in available datasets
+
+[4/6] Skipping execution (validation failed)
+
+[5/6] Building feedback...
+✅ Feedback generated (206 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter1.py
+
+============================================================
+AUTONOMOUS LEARNING LOOP - COMPLETE
+============================================================
+Total time: 68.3s
+Total iterations: 2
+✅ Successful: 0
+❌ Failed: 2
+   - Validation failures: 0
+   - Execution failures: 0
+
+Success rate: 0.0%
+
+🎉 Generated 593 successful strategies!
+
+🏆 Best strategy: Iteration 0
+   Sharpe: 2.4956
+   Return: -0.23650336808245218
+
+============================================================
+LLM INNOVATION STATISTICS
+============================================================
+LLM enabled: True
+Innovation rate: 30.0%
+LLM innovations: 0
+LLM fallbacks: 0
+Factor Graph mutations: 2
+LLM success rate: 0.0%
+
+LLM Costs:
+  Total cost: $0.000000
+  Total tokens: 0
+  Successful generations: 0
+
+================================================================================
+✅ VERIFICATION COMPLETE - No 404 errors!
+================================================================================
+
+Bug #2 is FIXED if you see:
+  ✓ LLM innovation attempts
+  ✓ No '404' errors
+  ✓ Either successful generation OR valid API errors (rate limits, etc.)
+

@@ -138,20 +138,23 @@ def test_logger() -> logging.Logger:
     return logger
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def reset_logging_cache() -> Generator[None, None, None]:
     """
     Reset logger cache and settings singleton before and after each test.
 
     This ensures tests don't interfere with each other's logger state
-    or settings configuration. Automatically applied to all tests.
+    or settings configuration. Must be explicitly requested by tests that need it.
+
+    Note: autouse=True was removed to fix pytest I/O errors. The fixture was closing
+    logger file handlers that pytest's output capture mechanism was still using,
+    causing "ValueError: I/O operation on closed file" during teardown.
 
     Yields:
         None
 
     Example:
-        # Automatically applied, no need to use explicitly
-        >>> def test_something():
+        >>> def test_something(reset_logging_cache):
         >>>     # Logger cache and settings are clean
         >>>     pass
     """

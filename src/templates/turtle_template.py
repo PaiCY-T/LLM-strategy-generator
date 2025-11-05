@@ -474,6 +474,7 @@ class TurtleTemplate(BaseTemplate):
                 stop_loss=params['stop_loss'],
                 take_profit=params['take_profit'],
                 position_limit=params['position_limit'],
+                upload=False,  # Disable upload for sandbox testing
                 name=strategy_name
             )
 

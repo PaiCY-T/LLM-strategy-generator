@@ -1,0 +1,38 @@
+{
+  "filePath": ".spec-workflow/specs/phase2-backtest-execution/tasks.md",
+  "currentVersion": 4,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-30T22:26:02.954Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761863162800_fuikqij5i",
+      "approvalTitle": "Phase 2 Backtest Execution - Tasks Document"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-30T22:54:09.703Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761863162800_fuikqij5i",
+      "approvalTitle": "Phase 2 Backtest Execution - Tasks Document"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-10-30T23:51:29.577Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761868231923_o4kf3xnow",
+      "approvalTitle": "Phase 2 Tasks Document (Revised - Multiprocessing)"
+    },
+    {
+      "version": 4,
+      "filename": "snapshot-004.json",
+      "timestamp": "2025-10-31T02:30:13.598Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761868960252_m7lmjhgox",
+      "approvalTitle": "Phase 2 Tasks with Dependencies & Parallel Keys"
+    }
+  ]
+}

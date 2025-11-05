@@ -1,0 +1,1 @@
+def strategy(data): return True

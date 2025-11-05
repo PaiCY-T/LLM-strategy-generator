@@ -1,0 +1,594 @@
+
+🚀 Starting Phase 1 smoke test (10 generations)...
+
+⏱️  Estimated duration: 25-30 minutes
+
+2025-10-18 00:10:45,108 - __main__ - INFO - Logging initialized: logs/phase1_smoke_test_20251018_001045.log
+2025-10-18 00:10:45,108 - __main__ - INFO - ======================================================================
+2025-10-18 00:10:45,108 - __main__ - INFO - PHASE 1: SMOKE TEST (10 GENERATIONS)
+2025-10-18 00:10:45,108 - __main__ - INFO - ======================================================================
+2025-10-18 00:10:45,109 - __main__ - INFO - Timestamp: 2025-10-18T00:10:45.109170
+2025-10-18 00:10:45,109 - __main__ - INFO - Mode: Population-based evolutionary learning
+2025-10-18 00:10:45,109 - __main__ - INFO - Target generations: 10
+2025-10-18 00:10:45,109 - __main__ - INFO - Population size: 30 (quick validation)
+2025-10-18 00:10:45,110 - __main__ - INFO - Expected duration: 25-30 minutes
+2025-10-18 00:10:45,110 - __main__ - INFO - Log file: logs/phase1_smoke_test_20251018_001045.log
+2025-10-18 00:10:45,110 - __main__ - INFO - 
+2025-10-18 00:10:45,111 - __main__ - INFO - ======================================================================
+2025-10-18 00:10:45,111 - __main__ - INFO - VALIDATING PHASE 1 COMPONENTS
+2025-10-18 00:10:45,111 - __main__ - INFO - ======================================================================
+2025-10-18 00:10:45,111 - __main__ - INFO -   ✅ Individual available
+2025-10-18 00:10:45,111 - __main__ - INFO -   ✅ PopulationManager available
+2025-10-18 00:10:45,111 - __main__ - INFO -   ✅ GeneticOperators available
+2025-10-18 00:10:45,112 - __main__ - INFO -   ✅ FitnessEvaluator available
+2025-10-18 00:10:45,112 - __main__ - INFO -   ✅ EvolutionMonitor available
+2025-10-18 00:10:45,112 - __main__ - INFO -   ✅ MomentumTemplate available
+2025-10-18 00:10:45,112 - __main__ - INFO - 
+2025-10-18 00:10:45,112 - __main__ - INFO - ✅ All Phase 1 components available
+2025-10-18 00:10:45,113 - __main__ - INFO - ======================================================================
+2025-10-18 00:10:45,113 - __main__ - INFO - 
+輸入成功!
+2025-10-18 00:10:45,333 - __main__ - INFO - ✅ Finlab data loaded successfully
+2025-10-18 00:10:45,333 - __main__ - INFO - Initializing Phase1TestHarness for smoke test...
+2025-10-18 00:10:45,499 - tests.integration.phase0_test_harness - INFO - Logging initialized: logs/phase0_test_phase1_smoke_20251018_001045.log
+2025-10-18 00:10:45,500 - tests.integration.phase0_test_harness - INFO - Phase0TestHarness initialized:
+2025-10-18 00:10:45,500 - tests.integration.phase0_test_harness - INFO -   Test name: phase1_smoke
+2025-10-18 00:10:45,501 - tests.integration.phase0_test_harness - INFO -   Model: N/A
+2025-10-18 00:10:45,501 - tests.integration.phase0_test_harness - INFO -   Max iterations: 10
+2025-10-18 00:10:45,501 - tests.integration.phase0_test_harness - INFO -   Checkpoint interval: 5
+2025-10-18 00:10:45,501 - tests.integration.phase0_test_harness - INFO -   Checkpoint dir: checkpoints
+2025-10-18 00:10:45,501 - tests.integration.phase0_test_harness - INFO -   Template mode: ENABLED (Momentum)
+2025-10-18 00:10:45,501 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:10:45,501 - tests.integration.phase0_test_harness - INFO - PHASE 1 TEST HARNESS INITIALIZED
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO - Population-Based Evolutionary Learning Configuration:
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO -   Test name: phase1_smoke
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO -   Generations: 10
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO -   Population size: 30
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO -   Elite size: 3 (10%)
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.15 (adaptive 0.05-0.30)
+2025-10-18 00:10:45,502 - tests.integration.phase0_test_harness - INFO -   Tournament size: 2
+2025-10-18 00:10:45,503 - tests.integration.phase0_test_harness - INFO -   Max restarts: 2
+2025-10-18 00:10:45,503 - tests.integration.phase0_test_harness - INFO -   IS period: 2015:2020 (fitness optimization)
+2025-10-18 00:10:45,503 - tests.integration.phase0_test_harness - INFO -   OOS period: 2021:2024 (validation)
+2025-10-18 00:10:45,503 - tests.integration.phase0_test_harness - INFO -   Checkpoint interval: 5
+2025-10-18 00:10:45,503 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:10:45,503 - __main__ - INFO - Starting 10-generation smoke test...
+2025-10-18 00:10:45,503 - __main__ - INFO - 
+2025-10-18 00:10:45,503 - tests.integration.phase0_test_harness - INFO - Initializing components...
+2025-10-18 00:10:45,504 - tests.integration.phase0_test_harness - INFO -   ✅ MomentumTemplate initialized
+2025-10-18 00:10:45,504 - tests.integration.phase0_test_harness - INFO -   ✅ PopulationManager initialized (size=30, elites=3)
+2025-10-18 00:10:45,504 - tests.integration.phase0_test_harness - INFO -   ✅ GeneticOperators initialized (mutation_rate=0.15)
+2025-10-18 00:10:45,504 - tests.integration.phase0_test_harness - INFO -   ✅ FitnessEvaluator initialized (IS: 2015:2020, OOS: 2021:2024)
+2025-10-18 00:10:45,504 - tests.integration.phase0_test_harness - INFO -   ✅ EvolutionMonitor initialized
+2025-10-18 00:10:45,504 - tests.integration.phase0_test_harness - INFO - All components initialized successfully
+2025-10-18 00:10:45,504 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:10:45,505 - tests.integration.phase0_test_harness - INFO - STARTING PHASE 1 EVOLUTIONARY LEARNING
+2025-10-18 00:10:45,505 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:10:45,505 - tests.integration.phase0_test_harness - INFO - Configuration:
+2025-10-18 00:10:45,505 - tests.integration.phase0_test_harness - INFO -   Population size: 30
+2025-10-18 00:10:45,505 - tests.integration.phase0_test_harness - INFO -   Generations: 10
+2025-10-18 00:10:45,505 - tests.integration.phase0_test_harness - INFO -   Start generation: 0
+2025-10-18 00:10:45,505 - tests.integration.phase0_test_harness - INFO -   IS period: 2015:2020
+2025-10-18 00:10:45,506 - tests.integration.phase0_test_harness - INFO -   OOS period: 2021:2024
+2025-10-18 00:10:45,506 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:10:45,506 - tests.integration.phase0_test_harness - INFO - 🧬 Initializing population...
+2025-10-18 00:10:45,507 - tests.integration.phase0_test_harness - INFO - ✅ Population initialized
+2025-10-18 00:10:45,507 - tests.integration.phase0_test_harness - INFO -    Population size: 30
+2025-10-18 00:10:45,507 - tests.integration.phase0_test_harness - INFO -    Initial diversity: 100.0%
+2025-10-18 00:10:45,507 - tests.integration.phase0_test_harness - INFO - 📊 Evaluating initial population on IS data...
+上傳成功，策略名稱：Momentum_MW5_MA90_rev3_N10_SL10_M0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_rev4_N20_SL8_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA20_rev3_N20_SL12_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA60_ear2_N10_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA90_rev2_N5_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear4_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_ear6_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA90_ear3_N20_SL12_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA90_rev2_N20_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear4_N15_SL15_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA90_rev2_N5_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA60_rev3_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA20_rev6_N15_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA120_ear6_N5_SL10_M0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear4_N20_SL12_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:12:40,532 - tests.integration.phase0_test_harness - INFO - ✅ Initial population evaluated
+2025-10-18 00:12:40,533 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:12:40,533 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:12:40,533 - tests.integration.phase0_test_harness - INFO - GENERATION 0/9
+2025-10-18 00:12:40,534 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:12:40,535 - tests.integration.phase0_test_harness - INFO - Generation 0 Summary:
+2025-10-18 00:12:40,535 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.2378
+2025-10-18 00:12:40,535 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 0.2166
+2025-10-18 00:12:40,536 - tests.integration.phase0_test_harness - INFO -   Diversity: 100.0%
+2025-10-18 00:12:40,536 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 0.0%
+2025-10-18 00:12:40,537 - tests.integration.phase0_test_harness - INFO -   🏆 NEW CHAMPION!
+上傳成功，策略名稱：Momentum_MW30_MA20_rev6_N20_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_ear2_N10_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA120_ear6_N10_SL15_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear6_N10_SL15_M0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA60_rev3_N15_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_ear4_N10_SL10_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear4_N10_SL15_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N10_SL8_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_rev3_N10_SL12_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_rev6_N20_SL12_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear4_N15_SL8_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA20_rev6_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N20_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA90_rev3_N20_SL8_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_ear4_N10_SL10_M0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N20_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear2_N10_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:14:36,413 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.120
+2025-10-18 00:14:36,414 - tests.integration.phase0_test_harness - INFO -   Generation time: 115.9s
+2025-10-18 00:14:36,414 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:14:36,415 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:14:36,415 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:14:36,415 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:14:36,416 - tests.integration.phase0_test_harness - INFO - Generation: 1/10 (10.0%)
+2025-10-18 00:14:36,416 - tests.integration.phase0_test_harness - INFO - Champion updates: 1 (1.0%)
+2025-10-18 00:14:36,417 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.2378
+2025-10-18 00:14:36,417 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 0.2166
+2025-10-18 00:14:36,417 - tests.integration.phase0_test_harness - INFO - Final diversity: 100.0%
+2025-10-18 00:14:36,418 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 0.0%
+2025-10-18 00:14:36,418 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:14:36,418 - tests.integration.phase0_test_harness - INFO - Avg generation time: 115.9s
+2025-10-18 00:14:36,419 - tests.integration.phase0_test_harness - INFO - ETA: 17.4 minutes (1043s)
+2025-10-18 00:14:36,419 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:14:36,420 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:14:36,420 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:14:36,420 - tests.integration.phase0_test_harness - INFO - GENERATION 1/9
+2025-10-18 00:14:36,420 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:14:36,421 - tests.integration.phase0_test_harness - INFO - Generation 1 Summary:
+2025-10-18 00:14:36,421 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.3044
+2025-10-18 00:14:36,421 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 0.5306
+2025-10-18 00:14:36,421 - tests.integration.phase0_test_harness - INFO -   Diversity: 100.0%
+2025-10-18 00:14:36,421 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 1.7%
+2025-10-18 00:14:36,422 - tests.integration.phase0_test_harness - INFO -   🏆 NEW CHAMPION!
+上傳成功，策略名稱：Momentum_MW30_MA120_ear2_N20_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL8_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev4_N20_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear4_N20_SL15_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N20_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear4_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N20_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA120_rev6_N20_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev4_N10_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear4_N15_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA90_ear3_N10_SL8_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_rev2_N10_SL8_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_ear3_N10_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_ear6_N10_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N20_SL12_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA90_rev2_N5_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev3_N5_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA20_ear3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_ear6_N20_SL10_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA90_ear2_N10_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_rev3_N15_SL12_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA90_rev6_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear3_N10_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:16:54,777 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.096
+2025-10-18 00:16:54,778 - tests.integration.phase0_test_harness - INFO -   Generation time: 138.4s
+2025-10-18 00:16:54,779 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:16:54,779 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:16:54,780 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:16:54,780 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:16:54,781 - tests.integration.phase0_test_harness - INFO - Generation: 2/10 (20.0%)
+2025-10-18 00:16:54,781 - tests.integration.phase0_test_harness - INFO - Champion updates: 2 (1.0%)
+2025-10-18 00:16:54,782 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.3044
+2025-10-18 00:16:54,782 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 0.5306
+2025-10-18 00:16:54,782 - tests.integration.phase0_test_harness - INFO - Final diversity: 100.0%
+2025-10-18 00:16:54,782 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 0.8%
+2025-10-18 00:16:54,783 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:16:54,783 - tests.integration.phase0_test_harness - INFO - Avg generation time: 127.1s
+2025-10-18 00:16:54,783 - tests.integration.phase0_test_harness - INFO - ETA: 16.9 minutes (1017s)
+2025-10-18 00:16:54,783 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:16:54,783 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:16:54,784 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:16:54,784 - tests.integration.phase0_test_harness - INFO - GENERATION 2/9
+2025-10-18 00:16:54,784 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:16:54,784 - tests.integration.phase0_test_harness - INFO - Generation 2 Summary:
+2025-10-18 00:16:54,784 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.3044
+2025-10-18 00:16:54,785 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 0.8559
+2025-10-18 00:16:54,785 - tests.integration.phase0_test_harness - INFO -   Diversity: 100.0%
+2025-10-18 00:16:54,785 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 1.1%
+上傳成功，策略名稱：Momentum_MW20_MA60_rev2_N10_SL10_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA20_ear3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N15_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA120_rev4_N15_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N10_SL12_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA20_ear4_N10_SL12_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL10_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear4_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear6_N20_SL15_M0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_ear4_N10_SL10_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear4_N10_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA20_ear6_N10_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear3_N5_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA20_ear3_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA90_rev6_N10_SL8_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N20_SL8_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA20_ear2_N10_SL12_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_ear3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_rev3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear2_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:18:48,198 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.077
+2025-10-18 00:18:48,199 - tests.integration.phase0_test_harness - INFO -   Generation time: 113.4s
+2025-10-18 00:18:48,199 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:18:48,200 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:18:48,200 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:18:48,201 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:18:48,201 - tests.integration.phase0_test_harness - INFO - Generation: 3/10 (30.0%)
+2025-10-18 00:18:48,201 - tests.integration.phase0_test_harness - INFO - Champion updates: 2 (0.7%)
+2025-10-18 00:18:48,202 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.3044
+2025-10-18 00:18:48,202 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 0.8559
+2025-10-18 00:18:48,202 - tests.integration.phase0_test_harness - INFO - Final diversity: 100.0%
+2025-10-18 00:18:48,203 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 0.9%
+2025-10-18 00:18:48,203 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:18:48,203 - tests.integration.phase0_test_harness - INFO - Avg generation time: 122.6s
+2025-10-18 00:18:48,203 - tests.integration.phase0_test_harness - INFO - ETA: 14.3 minutes (858s)
+2025-10-18 00:18:48,204 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:18:48,204 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:18:48,204 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:18:48,204 - tests.integration.phase0_test_harness - INFO - GENERATION 3/9
+2025-10-18 00:18:48,204 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:18:48,205 - tests.integration.phase0_test_harness - INFO - Generation 3 Summary:
+2025-10-18 00:18:48,205 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.4638
+2025-10-18 00:18:48,205 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 0.9705
+2025-10-18 00:18:48,205 - tests.integration.phase0_test_harness - INFO -   Diversity: 90.0%
+2025-10-18 00:18:48,205 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 6.7%
+2025-10-18 00:18:48,206 - tests.integration.phase0_test_harness - INFO -   🏆 NEW CHAMPION!
+上傳成功，策略名稱：Momentum_MW10_MA20_ear3_N10_SL8_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear6_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev3_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N20_SL8_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev3_N5_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N5_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_rev3_N20_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N5_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear4_N20_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_ear4_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA20_rev3_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear3_N10_SL8_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N5_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev3_N20_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear2_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N15_SL12_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA60_rev2_N20_SL10_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear3_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:20:43,611 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.061
+2025-10-18 00:20:43,612 - tests.integration.phase0_test_harness - INFO -   Generation time: 115.4s
+2025-10-18 00:20:43,612 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:20:43,613 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:20:43,613 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:20:43,613 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:20:43,614 - tests.integration.phase0_test_harness - INFO - Generation: 4/10 (40.0%)
+2025-10-18 00:20:43,614 - tests.integration.phase0_test_harness - INFO - Champion updates: 3 (0.8%)
+2025-10-18 00:20:43,614 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.4638
+2025-10-18 00:20:43,615 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 0.9705
+2025-10-18 00:20:43,615 - tests.integration.phase0_test_harness - INFO - Final diversity: 90.0%
+2025-10-18 00:20:43,615 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 2.4%
+2025-10-18 00:20:43,616 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:20:43,616 - tests.integration.phase0_test_harness - INFO - Avg generation time: 120.8s
+2025-10-18 00:20:43,616 - tests.integration.phase0_test_harness - INFO - ETA: 12.1 minutes (725s)
+2025-10-18 00:20:43,616 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:20:43,617 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:20:43,617 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:20:43,617 - tests.integration.phase0_test_harness - INFO - GENERATION 4/9
+2025-10-18 00:20:43,617 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:20:43,618 - tests.integration.phase0_test_harness - INFO - Generation 4 Summary:
+2025-10-18 00:20:43,618 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.4638
+2025-10-18 00:20:43,618 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 1.2051
+2025-10-18 00:20:43,618 - tests.integration.phase0_test_harness - INFO -   Diversity: 80.0%
+2025-10-18 00:20:43,619 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 10.0%
+上傳成功，策略名稱：Momentum_MW20_MA90_ear3_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_rev3_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA120_ear4_N20_SL8_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear6_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_rev3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev4_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_ear3_N5_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_ear3_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N20_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_ear3_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:22:05,959 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.066
+2025-10-18 00:22:05,960 - tests.integration.phase0_test_harness - INFO -   Generation time: 82.3s
+2025-10-18 00:22:05,960 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:22:05,961 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:22:05,961 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:22:05,961 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:22:05,961 - tests.integration.phase0_test_harness - INFO - Generation: 5/10 (50.0%)
+2025-10-18 00:22:05,962 - tests.integration.phase0_test_harness - INFO - Champion updates: 3 (0.6%)
+2025-10-18 00:22:05,962 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.4638
+2025-10-18 00:22:05,962 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 1.2051
+2025-10-18 00:22:05,962 - tests.integration.phase0_test_harness - INFO - Final diversity: 80.0%
+2025-10-18 00:22:05,963 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 3.9%
+2025-10-18 00:22:05,963 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:22:05,964 - tests.integration.phase0_test_harness - INFO - Avg generation time: 113.1s
+2025-10-18 00:22:05,964 - tests.integration.phase0_test_harness - INFO - ETA: 9.4 minutes (565s)
+2025-10-18 00:22:05,964 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:22:05,964 - tests.integration.phase0_test_harness - INFO - 
+📁 Saving checkpoint at generation 4...
+2025-10-18 00:22:05,976 - tests.integration.phase0_test_harness - INFO - ✅ Checkpoint saved: checkpoints/checkpoint_phase1_smoke_gen_4.json
+2025-10-18 00:22:05,976 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:22:05,977 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:22:05,977 - tests.integration.phase0_test_harness - INFO - GENERATION 5/9
+2025-10-18 00:22:05,977 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:22:05,978 - tests.integration.phase0_test_harness - INFO - Generation 5 Summary:
+2025-10-18 00:22:05,979 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.4698
+2025-10-18 00:22:05,980 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 1.2833
+2025-10-18 00:22:05,980 - tests.integration.phase0_test_harness - INFO -   Diversity: 76.7%
+2025-10-18 00:22:05,980 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 15.6%
+2025-10-18 00:22:05,980 - tests.integration.phase0_test_harness - INFO -   🏆 NEW CHAMPION!
+上傳成功，策略名稱：Momentum_MW20_MA60_ear3_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N10_SL15_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev2_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA60_ear3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev2_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev2_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA120_rev3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA60_rev3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_ear4_N10_SL8_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:23:36,520 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.070
+2025-10-18 00:23:36,521 - tests.integration.phase0_test_harness - INFO -   Generation time: 90.5s
+2025-10-18 00:23:36,521 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:23:36,521 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:23:36,521 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:23:36,522 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:23:36,522 - tests.integration.phase0_test_harness - INFO - Generation: 6/10 (60.0%)
+2025-10-18 00:23:36,522 - tests.integration.phase0_test_harness - INFO - Champion updates: 4 (0.7%)
+2025-10-18 00:23:36,522 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.4698
+2025-10-18 00:23:36,522 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 1.2833
+2025-10-18 00:23:36,523 - tests.integration.phase0_test_harness - INFO - Final diversity: 76.7%
+2025-10-18 00:23:36,523 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 5.8%
+2025-10-18 00:23:36,523 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:23:36,523 - tests.integration.phase0_test_harness - INFO - Avg generation time: 109.3s
+2025-10-18 00:23:36,524 - tests.integration.phase0_test_harness - INFO - ETA: 7.3 minutes (437s)
+2025-10-18 00:23:36,524 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:23:36,524 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:23:36,524 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:23:36,525 - tests.integration.phase0_test_harness - INFO - GENERATION 6/9
+2025-10-18 00:23:36,525 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:23:36,525 - tests.integration.phase0_test_harness - INFO - Generation 6 Summary:
+2025-10-18 00:23:36,526 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.4941
+2025-10-18 00:23:36,526 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 1.3133
+2025-10-18 00:23:36,526 - tests.integration.phase0_test_harness - INFO -   Diversity: 83.3%
+2025-10-18 00:23:36,526 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 18.6%
+2025-10-18 00:23:36,526 - tests.integration.phase0_test_harness - INFO -   🏆 NEW CHAMPION!
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N10_SL12_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev2_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA20_ear3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev4_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N10_SL8_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear3_N15_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL15_W0，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev6_N10_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N10_SL10_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev2_N20_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:24:26,973 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.056
+2025-10-18 00:24:26,973 - tests.integration.phase0_test_harness - INFO -   Generation time: 50.4s
+2025-10-18 00:24:26,974 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:24:26,974 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:24:26,974 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:24:26,974 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:24:26,974 - tests.integration.phase0_test_harness - INFO - Generation: 7/10 (70.0%)
+2025-10-18 00:24:26,975 - tests.integration.phase0_test_harness - INFO - Champion updates: 5 (0.7%)
+2025-10-18 00:24:26,975 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.4941
+2025-10-18 00:24:26,975 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 1.3133
+2025-10-18 00:24:26,975 - tests.integration.phase0_test_harness - INFO - Final diversity: 83.3%
+2025-10-18 00:24:26,975 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 7.7%
+2025-10-18 00:24:26,976 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:24:26,976 - tests.integration.phase0_test_harness - INFO - Avg generation time: 100.9s
+2025-10-18 00:24:26,976 - tests.integration.phase0_test_harness - INFO - ETA: 5.0 minutes (303s)
+2025-10-18 00:24:26,976 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:24:26,976 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:24:26,977 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:24:26,977 - tests.integration.phase0_test_harness - INFO - GENERATION 7/9
+2025-10-18 00:24:26,977 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:24:26,977 - tests.integration.phase0_test_harness - INFO - Generation 7 Summary:
+2025-10-18 00:24:26,978 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.4941
+2025-10-18 00:24:26,978 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 1.3483
+2025-10-18 00:24:26,978 - tests.integration.phase0_test_harness - INFO -   Diversity: 73.3%
+2025-10-18 00:24:26,978 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 24.2%
+上傳成功，策略名稱：Momentum_MW10_MA120_ear3_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev4_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA20_rev4_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N10_SL15_W3，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA20_rev4_N10_SL10_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N10_SL15_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N15_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev4_N20_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev6_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev2_N10_SL10_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW5_MA20_rev2_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:25:22,075 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.061
+2025-10-18 00:25:22,076 - tests.integration.phase0_test_harness - INFO -   Generation time: 55.1s
+2025-10-18 00:25:22,076 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:25:22,077 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:25:22,077 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:25:22,077 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:25:22,078 - tests.integration.phase0_test_harness - INFO - Generation: 8/10 (80.0%)
+2025-10-18 00:25:22,078 - tests.integration.phase0_test_harness - INFO - Champion updates: 5 (0.6%)
+2025-10-18 00:25:22,079 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.4941
+2025-10-18 00:25:22,079 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 1.3483
+2025-10-18 00:25:22,079 - tests.integration.phase0_test_harness - INFO - Final diversity: 73.3%
+2025-10-18 00:25:22,079 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 9.7%
+2025-10-18 00:25:22,080 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:25:22,080 - tests.integration.phase0_test_harness - INFO - Avg generation time: 95.2s
+2025-10-18 00:25:22,080 - tests.integration.phase0_test_harness - INFO - ETA: 3.2 minutes (190s)
+2025-10-18 00:25:22,080 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:25:22,080 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:25:22,081 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:25:22,081 - tests.integration.phase0_test_harness - INFO - GENERATION 8/9
+2025-10-18 00:25:22,081 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:25:22,081 - tests.integration.phase0_test_harness - INFO - Generation 8 Summary:
+2025-10-18 00:25:22,082 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.4941
+2025-10-18 00:25:22,082 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 1.3695
+2025-10-18 00:25:22,082 - tests.integration.phase0_test_harness - INFO -   Diversity: 53.3%
+2025-10-18 00:25:22,082 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 28.5%
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N10_SL10_W1，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA20_rev3_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW30_MA20_rev2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev6_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:25:43,826 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.065
+2025-10-18 00:25:43,827 - tests.integration.phase0_test_harness - INFO -   Generation time: 21.7s
+2025-10-18 00:25:43,827 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:25:43,828 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:25:43,828 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:25:43,828 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:25:43,829 - tests.integration.phase0_test_harness - INFO - Generation: 9/10 (90.0%)
+2025-10-18 00:25:43,829 - tests.integration.phase0_test_harness - INFO - Champion updates: 5 (0.6%)
+2025-10-18 00:25:43,829 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.4941
+2025-10-18 00:25:43,830 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 1.3695
+2025-10-18 00:25:43,830 - tests.integration.phase0_test_harness - INFO - Final diversity: 53.3%
+2025-10-18 00:25:43,830 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 11.8%
+2025-10-18 00:25:43,831 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:25:43,831 - tests.integration.phase0_test_harness - INFO - Avg generation time: 87.0s
+2025-10-18 00:25:43,831 - tests.integration.phase0_test_harness - INFO - ETA: 1.5 minutes (87s)
+2025-10-18 00:25:43,831 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:25:43,831 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:25:43,832 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:25:43,832 - tests.integration.phase0_test_harness - INFO - GENERATION 9/9
+2025-10-18 00:25:43,832 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:25:43,832 - tests.integration.phase0_test_harness - INFO - Generation 9 Summary:
+2025-10-18 00:25:43,833 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.4941
+2025-10-18 00:25:43,833 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 1.4337
+2025-10-18 00:25:43,833 - tests.integration.phase0_test_harness - INFO -   Diversity: 43.3%
+2025-10-18 00:25:43,833 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 34.0%
+上傳成功，策略名稱：Momentum_MW20_MA120_rev3_N5_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL8_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N20_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW10_MA120_rev2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N10_SL15_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA20_rev3_N15_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_ear2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL15_W4，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N15_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+上傳成功，策略名稱：Momentum_MW20_MA90_rev2_N10_SL12_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:26:35,405 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.078
+2025-10-18 00:26:35,405 - tests.integration.phase0_test_harness - INFO -   Generation time: 51.6s
+2025-10-18 00:26:35,406 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:26:35,406 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:26:35,407 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-18 00:26:35,407 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:26:35,407 - tests.integration.phase0_test_harness - INFO - Generation: 10/10 (100.0%)
+2025-10-18 00:26:35,408 - tests.integration.phase0_test_harness - INFO - Champion updates: 5 (0.5%)
+2025-10-18 00:26:35,408 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 1.4941
+2025-10-18 00:26:35,408 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 1.4337
+2025-10-18 00:26:35,408 - tests.integration.phase0_test_harness - INFO - Final diversity: 43.3%
+2025-10-18 00:26:35,409 - tests.integration.phase0_test_harness - INFO - Avg cache hit rate: 14.0%
+2025-10-18 00:26:35,409 - tests.integration.phase0_test_harness - INFO - Restarts: 0/2
+2025-10-18 00:26:35,409 - tests.integration.phase0_test_harness - INFO - Avg generation time: 83.5s
+2025-10-18 00:26:35,410 - tests.integration.phase0_test_harness - INFO - ETA: 0.0 minutes (0s)
+2025-10-18 00:26:35,410 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-18 00:26:35,410 - tests.integration.phase0_test_harness - INFO - 
+📁 Saving checkpoint at generation 9...
+2025-10-18 00:26:35,419 - tests.integration.phase0_test_harness - INFO - ✅ Checkpoint saved: checkpoints/checkpoint_phase1_smoke_gen_9.json
+2025-10-18 00:26:35,420 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:26:35,420 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:35,421 - tests.integration.phase0_test_harness - INFO - PHASE 1 EVOLUTIONARY LEARNING - COMPLETE
+2025-10-18 00:26:35,421 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:35,421 - tests.integration.phase0_test_harness - INFO - Total duration: 834.9s (13.9m)
+2025-10-18 00:26:35,422 - tests.integration.phase0_test_harness - INFO - Total generations: 10
+2025-10-18 00:26:35,422 - tests.integration.phase0_test_harness - INFO - Restarts: 0
+2025-10-18 00:26:35,422 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:26:35,422 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:35,423 - tests.integration.phase0_test_harness - INFO - FINAL CHAMPION OOS VALIDATION
+2025-10-18 00:26:35,423 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:35,423 - tests.integration.phase0_test_harness - INFO - Champion ID: 1814d794
+2025-10-18 00:26:35,423 - tests.integration.phase0_test_harness - INFO - Champion IS fitness: 1.4941
+上傳成功，策略名稱：Momentum_MW20_MA120_rev2_N10_SL10_W2，欲顯示 report，請將 report 放在 cell 的最後一行。或用 report.display() 顯示。
+2025-10-18 00:26:39,837 - tests.integration.phase0_test_harness - INFO - Champion OOS fitness: 0.8095
+2025-10-18 00:26:39,838 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:26:39,839 - tests.integration.phase0_test_harness - INFO - 📁 Saving final checkpoint...
+2025-10-18 00:26:39,849 - tests.integration.phase0_test_harness - INFO - ✅ Final checkpoint saved: checkpoints/checkpoint_phase1_smoke_gen_9.json
+2025-10-18 00:26:39,849 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:26:39,850 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:39,850 - tests.integration.phase0_test_harness - INFO - RESULTS SUMMARY
+2025-10-18 00:26:39,850 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:39,851 - tests.integration.phase0_test_harness - INFO - Total generations: 10
+2025-10-18 00:26:39,851 - tests.integration.phase0_test_harness - INFO - Champion updates: 5 (0.5%)
+2025-10-18 00:26:39,851 - tests.integration.phase0_test_harness - INFO - Best IS Sharpe: 0.8095
+2025-10-18 00:26:39,852 - tests.integration.phase0_test_harness - INFO - Champion OOS Sharpe: 0.8095
+2025-10-18 00:26:39,852 - tests.integration.phase0_test_harness - INFO - Avg IS Sharpe: 1.4337
+2025-10-18 00:26:39,853 - tests.integration.phase0_test_harness - INFO - Final diversity: 43.3%
+2025-10-18 00:26:39,853 - tests.integration.phase0_test_harness - INFO - Restarts: 0
+2025-10-18 00:26:39,853 - tests.integration.phase0_test_harness - INFO - Cache hit rate: 14.0%
+2025-10-18 00:26:39,854 - tests.integration.phase0_test_harness - INFO - 
+2025-10-18 00:26:39,854 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:39,854 - tests.integration.phase0_test_harness - INFO - DECISION ANALYSIS
+2025-10-18 00:26:39,855 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:39,855 - tests.integration.phase0_test_harness - INFO - ❌ FAILURE - Did not meet targets
+2025-10-18 00:26:39,855 - tests.integration.phase0_test_harness - INFO -    Investigate root cause and revise approach
+2025-10-18 00:26:39,856 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-18 00:26:39,863 - __main__ - INFO - Results saved to: results/phase1_smoke_test_20251018_002639.json
+2025-10-18 00:26:39,863 - __main__ - INFO - 
+2025-10-18 00:26:39,864 - __main__ - INFO - ======================================================================
+2025-10-18 00:26:39,864 - __main__ - INFO - PHASE 1 SMOKE TEST - COMPLETE
+2025-10-18 00:26:39,864 - __main__ - INFO - ======================================================================
+2025-10-18 00:26:39,864 - __main__ - INFO - Test completed: True
+2025-10-18 00:26:39,865 - __main__ - INFO - Total generations: 10
+2025-10-18 00:26:39,865 - __main__ - INFO - Champion updates: 5 (0.5%)
+2025-10-18 00:26:39,865 - __main__ - INFO - Best IS Sharpe: 0.8095
+2025-10-18 00:26:39,865 - __main__ - INFO - Champion OOS Sharpe: 0.8095
+2025-10-18 00:26:39,865 - __main__ - INFO - Avg IS Sharpe: 1.4337
+2025-10-18 00:26:39,866 - __main__ - INFO - Final diversity: 43.3%
+2025-10-18 00:26:39,866 - __main__ - INFO - Restarts: 0
+2025-10-18 00:26:39,866 - __main__ - INFO - Cache hit rate: 14.0%
+2025-10-18 00:26:39,866 - __main__ - INFO - Decision: FAILURE
+2025-10-18 00:26:39,866 - __main__ - INFO - 
+2025-10-18 00:26:39,866 - __main__ - INFO - Results file: results/phase1_smoke_test_20251018_002639.json
+2025-10-18 00:26:39,867 - __main__ - INFO - Log file: logs/phase1_smoke_test_20251018_001045.log
+2025-10-18 00:26:39,867 - __main__ - INFO - ======================================================================
+
+✅ Smoke test completed successfully
+   Total generations: 10
+   Champion updates: 5 (0.5%)
+   Best IS Sharpe: 0.8095
+   Champion OOS Sharpe: 0.8095
+   Avg IS Sharpe: 1.4337
+   Final diversity: 43.3%
+   Restarts: 0
+   Cache hit rate: 14.0%
+   Decision: FAILURE
+   Phase 1 components: ✅ All available
+   Log file: logs/phase1_smoke_test_20251018_001045.log
+
+📊 Phase 1 Smoke Test Analysis:
+   ❌ NEEDS IMPROVEMENT: Below expectations
+   📝 Recommendation: Review configuration before full test
+
+   Metrics achieved:
+   - Champion update rate: 0.5% (target: ≥10%)
+   - Best IS Sharpe: 0.8095 (target: >2.5)
+   - Champion OOS Sharpe: 0.8095 (target: >1.0)

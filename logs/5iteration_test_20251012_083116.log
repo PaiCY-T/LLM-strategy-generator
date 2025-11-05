@@ -1,0 +1,72 @@
+2025-10-12 08:31:16,758 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:16,759 - __main__ - INFO - 5-ITERATION TEST RUN - START
+2025-10-12 08:31:16,759 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:16,759 - __main__ - INFO - Timestamp: 2025-10-12T08:31:16.759770
+2025-10-12 08:31:16,760 - __main__ - INFO - Model: google/gemini-2.5-flash
+2025-10-12 08:31:16,760 - __main__ - INFO - Target iterations: 5
+2025-10-12 08:31:16,760 - __main__ - INFO - Log file: logs/5iteration_test_20251012_083116.log
+2025-10-12 08:31:16,773 - __main__ - INFO - 
+2025-10-12 08:31:17,116 - __main__ - INFO - ✅ Finlab data loaded successfully
+2025-10-12 08:31:17,140 - __main__ - INFO - 
+2025-10-12 08:31:17,140 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,140 - __main__ - INFO - ITERATION 0/4 (0-indexed)
+2025-10-12 08:31:17,140 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,141 - __main__ - ERROR - ❌ Iteration 0 EXCEPTION: 'NoneType' object has no attribute 'validation_passed'
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_5iteration_test.py", line 172, in run_5iteration_test
+    if not record.validation_passed:
+AttributeError: 'NoneType' object has no attribute 'validation_passed'
+2025-10-12 08:31:17,143 - __main__ - INFO - 
+2025-10-12 08:31:17,143 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,143 - __main__ - INFO - ITERATION 1/4 (0-indexed)
+2025-10-12 08:31:17,144 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,144 - __main__ - ERROR - ❌ Iteration 1 EXCEPTION: 'NoneType' object has no attribute 'validation_passed'
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_5iteration_test.py", line 172, in run_5iteration_test
+    if not record.validation_passed:
+AttributeError: 'NoneType' object has no attribute 'validation_passed'
+2025-10-12 08:31:17,144 - __main__ - INFO - 
+2025-10-12 08:31:17,145 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,145 - __main__ - INFO - ITERATION 2/4 (0-indexed)
+2025-10-12 08:31:17,145 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,145 - __main__ - ERROR - ❌ Iteration 2 EXCEPTION: 'NoneType' object has no attribute 'validation_passed'
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_5iteration_test.py", line 172, in run_5iteration_test
+    if not record.validation_passed:
+AttributeError: 'NoneType' object has no attribute 'validation_passed'
+2025-10-12 08:31:17,146 - __main__ - INFO - 
+2025-10-12 08:31:17,146 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,146 - __main__ - INFO - ITERATION 3/4 (0-indexed)
+2025-10-12 08:31:17,147 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,147 - __main__ - ERROR - ❌ Iteration 3 EXCEPTION: 'NoneType' object has no attribute 'validation_passed'
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_5iteration_test.py", line 172, in run_5iteration_test
+    if not record.validation_passed:
+AttributeError: 'NoneType' object has no attribute 'validation_passed'
+2025-10-12 08:31:17,148 - __main__ - INFO - 
+2025-10-12 08:31:17,148 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,148 - __main__ - INFO - ITERATION 4/4 (0-indexed)
+2025-10-12 08:31:17,148 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,148 - __main__ - ERROR - ❌ Iteration 4 EXCEPTION: 'NoneType' object has no attribute 'validation_passed'
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_5iteration_test.py", line 172, in run_5iteration_test
+    if not record.validation_passed:
+AttributeError: 'NoneType' object has no attribute 'validation_passed'
+2025-10-12 08:31:17,149 - __main__ - INFO - 
+2025-10-12 08:31:17,149 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,149 - __main__ - INFO - 5-ITERATION TEST - COMPLETE
+2025-10-12 08:31:17,149 - __main__ - INFO - ======================================================================
+2025-10-12 08:31:17,150 - __main__ - INFO - Total iterations: 5
+2025-10-12 08:31:17,150 - __main__ - INFO - ✅ Successful: 0
+2025-10-12 08:31:17,150 - __main__ - INFO - ❌ Failed: 10
+2025-10-12 08:31:17,150 - __main__ - INFO -    - Validation failures: 0
+2025-10-12 08:31:17,150 - __main__ - INFO -    - Execution failures: 0
+2025-10-12 08:31:17,150 - __main__ - INFO - Success rate: 0.0%
+2025-10-12 08:31:17,150 - __main__ - INFO - 
+2025-10-12 08:31:17,151 - __main__ - INFO - 
+2025-10-12 08:31:17,151 - __main__ - INFO - 🏆 FINAL CHAMPION: Iteration 6
+2025-10-12 08:31:17,151 - __main__ - INFO -    Sharpe: 2.4751
+2025-10-12 08:31:17,151 - __main__ - INFO -    Champion updates: 0
+2025-10-12 08:31:17,151 - __main__ - INFO - 
+2025-10-12 08:31:17,151 - __main__ - INFO - Log file saved: logs/5iteration_test_20251012_083116.log
+2025-10-12 08:31:17,151 - __main__ - INFO - ======================================================================

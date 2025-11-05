@@ -1,0 +1,690 @@
+{
+  "generation": 20,
+  "population": [
+    {
+      "id": "gen12_offspring_20",
+      "generation": 12,
+      "parent_ids": [
+        "gen9_offspring_20",
+        "gen11_offspring_20"
+      ],
+      "code": "# Offspring from gen9_off + gen11_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": {
+        "sharpe_ratio": 5.495190897371629,
+        "calmar_ratio": 75.5694818613935,
+        "max_drawdown": -0.12104463560120408,
+        "total_return": 0.8608649685925127,
+        "win_rate": 0.0,
+        "annual_return": 9.147280394484177,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 1,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-20T11:32:20.409889",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen13_offspring_20",
+      "generation": 13,
+      "parent_ids": [
+        "gen12_offspring_20",
+        "gen8_offspring_20"
+      ],
+      "code": "# Offspring from gen12_of + gen8_off",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": {
+        "sharpe_ratio": 5.385591210205382,
+        "calmar_ratio": 132.45192806201894,
+        "max_drawdown": -0.07122896394368773,
+        "total_return": 0.8870891187000551,
+        "win_rate": 0.0,
+        "annual_return": 9.434413608201469,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 1,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-20T11:32:20.534506",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503295",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen13_offspring_20",
+        "gen19_offspring_20"
+      ],
+      "code": "# Offspring from gen13_of + gen19_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503312",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen12_offspring_20",
+        "gen19_offspring_20"
+      ],
+      "code": "# Offspring from gen12_of + gen19_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503317",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen13_offspring_20",
+        "gen19_offspring_20"
+      ],
+      "code": "# Offspring from gen13_of + gen19_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503322",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503327",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503332",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503374",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen13_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen13_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503378",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen13_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen13_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503383",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen13_offspring_20",
+        "gen19_offspring_20"
+      ],
+      "code": "# Offspring from gen13_of + gen19_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503388",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen13_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen13_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503392",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503396",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503400",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen12_offspring_20",
+        "gen19_offspring_20"
+      ],
+      "code": "# Offspring from gen12_of + gen19_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503404",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.8,
+          0.2
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503409",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503413",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503417",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen20_offspring_20",
+      "generation": 20,
+      "parent_ids": [
+        "gen19_offspring_20",
+        "gen12_offspring_20"
+      ],
+      "code": "# Offspring from gen19_of + gen12_of",
+      "parameters": {
+        "templates": [
+          "turtle",
+          "mastiff"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "rebalance": "M"
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-20T11:32:21.503421",
+      "template_type": "Momentum",
+      "metadata": {}
+    }
+  ],
+  "generation_history": [
+    {
+      "generation": 1,
+      "diversity_score": 0.0,
+      "total_time": 0.11568236351013184,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 2,
+      "diversity_score": 0.0,
+      "total_time": 0.09027338027954102,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 3,
+      "diversity_score": 0.0,
+      "total_time": 0.09668135643005371,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 4,
+      "diversity_score": 0.0,
+      "total_time": 0.1348433494567871,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 5,
+      "diversity_score": 0.0,
+      "total_time": 0.1359539031982422,
+      "pareto_front_size": 0
+    },
+    {
+      "generation": 6,
+      "diversity_score": 0.0,
+      "total_time": 0.11600470542907715,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 7,
+      "diversity_score": 0.0,
+      "total_time": 0.11223435401916504,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 8,
+      "diversity_score": 0.0,
+      "total_time": 0.11707901954650879,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 9,
+      "diversity_score": 0.0,
+      "total_time": 0.10686993598937988,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 10,
+      "diversity_score": 0.0,
+      "total_time": 0.12301278114318848,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 11,
+      "diversity_score": 0.0,
+      "total_time": 0.11823081970214844,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 12,
+      "diversity_score": 0.0,
+      "total_time": 0.08910059928894043,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 13,
+      "diversity_score": 0.0,
+      "total_time": 0.11207914352416992,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 14,
+      "diversity_score": 0.0,
+      "total_time": 0.12261462211608887,
+      "pareto_front_size": 1
+    },
+    {
+      "generation": 15,
+      "diversity_score": 0.0,
+      "total_time": 0.12254047393798828,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 16,
+      "diversity_score": 0.0,
+      "total_time": 0.11507725715637207,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 17,
+      "diversity_score": 0.0,
+      "total_time": 0.11617898941040039,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 18,
+      "diversity_score": 0.0,
+      "total_time": 0.1150970458984375,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 19,
+      "diversity_score": 0.0,
+      "total_time": 0.1076362133026123,
+      "pareto_front_size": 2
+    },
+    {
+      "generation": 20,
+      "diversity_score": 0.0,
+      "total_time": 0.0918576717376709,
+      "pareto_front_size": 2
+    }
+  ],
+  "config": {
+    "population_size": 20,
+    "elite_count": 2,
+    "tournament_size": 3,
+    "mutation_rate": 0.5
+  },
+  "timestamp": "2025-10-20T11:32:21.512112"
+}

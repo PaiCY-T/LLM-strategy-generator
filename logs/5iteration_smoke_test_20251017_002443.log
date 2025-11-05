@@ -1,0 +1,52 @@
+2025-10-17 00:24:43,214 - __main__ - INFO - Logging initialized: logs/5iteration_smoke_test_20251017_002443.log
+2025-10-17 00:24:43,214 - __main__ - INFO - ======================================================================
+2025-10-17 00:24:43,214 - __main__ - INFO - 5-ITERATION SMOKE TEST - START
+2025-10-17 00:24:43,215 - __main__ - INFO - ======================================================================
+2025-10-17 00:24:43,215 - __main__ - INFO - Timestamp: 2025-10-17T00:24:43.215351
+2025-10-17 00:24:43,215 - __main__ - INFO - Model: google/gemini-2.5-flash
+2025-10-17 00:24:43,215 - __main__ - INFO - Target iterations: 5
+2025-10-17 00:24:43,216 - __main__ - INFO - Mode: Enhanced with Phase 2 monitoring
+2025-10-17 00:24:43,216 - __main__ - INFO - Log file: logs/5iteration_smoke_test_20251017_002443.log
+2025-10-17 00:24:43,216 - __main__ - INFO - 
+2025-10-17 00:24:43,216 - __main__ - INFO - ======================================================================
+2025-10-17 00:24:43,216 - __main__ - INFO - VALIDATING PHASE 2 FEATURES
+2025-10-17 00:24:43,216 - __main__ - INFO - ======================================================================
+2025-10-17 00:24:43,217 - __main__ - INFO -   ✅ Story 1: VarianceMonitor available
+2025-10-17 00:24:43,223 - __main__ - INFO -   ✅ Story 2: PreservationValidator available
+2025-10-17 00:24:43,224 - __main__ - INFO -   ✅ Story 4: AntiChurnManager available
+2025-10-17 00:24:43,241 - __main__ - INFO -   ✅ Story 9: RollbackManager available
+2025-10-17 00:24:43,241 - __main__ - INFO - 
+2025-10-17 00:24:43,241 - __main__ - INFO - ✅ All Phase 2 features available
+2025-10-17 00:24:43,242 - __main__ - INFO - ======================================================================
+2025-10-17 00:24:43,242 - __main__ - INFO - 
+2025-10-17 00:24:43,427 - __main__ - INFO - ✅ Finlab data loaded successfully
+2025-10-17 00:24:43,427 - __main__ - INFO - Initializing ExtendedTestHarness with Phase 2 monitoring...
+2025-10-17 00:24:43,512 - extended_test_harness - INFO - Logging initialized: logs/extended_test_20251017_002443.log
+2025-10-17 00:24:43,513 - extended_test_harness - INFO - ExtendedTestHarness initialized:
+2025-10-17 00:24:43,514 - extended_test_harness - INFO -   Model: gemini-2.5-flash
+2025-10-17 00:24:43,514 - extended_test_harness - INFO -   Target iterations: 5
+2025-10-17 00:24:43,514 - extended_test_harness - INFO -   Checkpoint interval: 5
+2025-10-17 00:24:43,514 - extended_test_harness - INFO -   Checkpoint dir: checkpoints
+2025-10-17 00:24:43,514 - __main__ - INFO - Starting 5-iteration test with full monitoring...
+2025-10-17 00:24:43,515 - __main__ - INFO - 
+2025-10-17 00:24:43,515 - extended_test_harness - INFO - ======================================================================
+2025-10-17 00:24:43,515 - extended_test_harness - INFO - STARTING EXTENDED TEST RUN
+2025-10-17 00:24:43,515 - extended_test_harness - INFO - ======================================================================
+2025-10-17 00:24:43,515 - extended_test_harness - INFO - Configuration:
+2025-10-17 00:24:43,515 - extended_test_harness - INFO -   Model: gemini-2.5-flash
+2025-10-17 00:24:43,516 - extended_test_harness - INFO -   Target iterations: 5
+2025-10-17 00:24:43,516 - extended_test_harness - INFO -   Start iteration: 0
+2025-10-17 00:24:43,516 - extended_test_harness - INFO -   Checkpoint interval: 5
+2025-10-17 00:24:43,516 - extended_test_harness - INFO -   Checkpoint directory: checkpoints
+2025-10-17 00:24:43,516 - extended_test_harness - INFO - 
+2025-10-17 00:24:43,516 - extended_test_harness - INFO - 
+2025-10-17 00:24:43,517 - extended_test_harness - INFO - ======================================================================
+2025-10-17 00:24:43,517 - extended_test_harness - INFO - ITERATION 0/4
+2025-10-17 00:24:43,517 - extended_test_harness - INFO - ======================================================================
+2025-10-17 00:24:43,518 - extended_test_harness - INFO - Attempt 1/3
+2025-10-17 00:24:53,861 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 0
+2025-10-17 00:24:56,077 - __main__ - WARNING - 
+2025-10-17 00:24:56,077 - __main__ - WARNING - ======================================================================
+2025-10-17 00:24:56,078 - __main__ - WARNING - TEST INTERRUPTED BY USER
+2025-10-17 00:24:56,078 - __main__ - WARNING - ======================================================================
+2025-10-17 00:24:56,078 - __main__ - WARNING - Partial results may be available in checkpoint

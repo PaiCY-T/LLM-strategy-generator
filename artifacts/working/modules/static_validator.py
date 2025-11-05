@@ -21,13 +21,16 @@ def load_available_datasets() -> Set[str]:
                     datasets.add(line)
             return datasets
     except FileNotFoundError:
-        # Fallback to hardcoded critical datasets
+        # Fallback to hardcoded critical datasets (adjusted data only!)
         return {
-            'price:收盤價', 'price:開盤價', 'price:最高價', 'price:最低價',
-            'price:成交股數', 'price:成交金額', 'price:漲跌價差', 'price:漲跌幅',
+            # ✅ Adjusted price data (preferred)
+            'etl:adj_close', 'etl:adj_high', 'etl:adj_low', 'etl:adj_open',
+            # Trading value/count OK for liquidity filters
+            'price:成交金額', 'price:成交筆數',
+            # Fundamental and other data
             'etl:market_value', 'monthly_revenue:當月營收', 'monthly_revenue:去年同月增減(%)',
             'financial_statement:每股盈餘', 'fundamental_features:ROE稅後',
-            'price_earning_ratio:本益比',
+            'price_earning_ratio:本益比', 'price_earning_ratio:股價淨值比',
             'institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)',
             'institutional_investors_trading_summary:投信買賣超股數',
         }

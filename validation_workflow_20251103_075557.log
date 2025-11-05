@@ -1,0 +1,499 @@
+[07:55:57] =========================================
+[07:55:57] Full Validation Workflow
+[07:55:57] =========================================
+[07:55:57] Timestamp: 20251103_075557
+[07:55:57] Project Root: /mnt/c/Users/jnpi/Documents/finlab
+[07:55:57] Log File: /mnt/c/Users/jnpi/Documents/finlab/validation_workflow_20251103_075557.log
+[07:55:57] 
+[07:55:57] Checking prerequisites...
+[07:55:58] Re-validation will be skipped
+[07:55:58] Found Specified validation results: phase2_validated_results_20251101_132244.json
+[07:55:58] Found Duplicate detection script: detect_duplicates.py
+[07:55:58] Found Diversity analysis script: analyze_diversity.py
+[07:55:58] Found Decision evaluation script: evaluate_phase3_decision.py
+[0;32m[07:55:58] ✓ Prerequisites check passed[0m
+[07:55:58] 
+[0;34m[07:55:58] ℹ Skipping re-validation step (using existing results)[0m
+[07:55:58] 
+[07:55:58] ========================================
+[07:55:58] Step 1/4: Duplicate Detection
+[07:55:58] ========================================
+[07:55:58] Command: python3 scripts/detect_duplicates.py         --validation-results "/mnt/c/Users/jnpi/Documents/finlab/phase2_validated_results_20251101_132244.json"         --strategy-dir .         --output "/mnt/c/Users/jnpi/Documents/finlab/duplicate_report.md"
+[07:55:58] 
+2025-11-03 07:55:59,111 - __main__ - INFO - Starting duplicate detection...
+2025-11-03 07:55:59,111 - __main__ - INFO - Validation results: /mnt/c/Users/jnpi/Documents/finlab/phase2_validated_results_20251101_132244.json
+2025-11-03 07:55:59,111 - __main__ - INFO - Strategy directory: .
+2025-11-03 07:55:59,111 - __main__ - INFO - Output file: /mnt/c/Users/jnpi/Documents/finlab/duplicate_report.md
+2025-11-03 07:55:59,113 - __main__ - INFO - Loaded validation results from /mnt/c/Users/jnpi/Documents/finlab/phase2_validated_results_20251101_132244.json
+2025-11-03 07:55:59,118 - __main__ - INFO - Found 195 strategy files in .
+2025-11-03 07:55:59,118 - __main__ - INFO - Running duplicate detection...
+2025-11-03 07:55:59,118 - src.analysis.duplicate_detector - INFO - DuplicateDetector initialized: tolerance=1e-08, threshold=0.95
+2025-11-03 07:55:59,118 - src.analysis.duplicate_detector - INFO - Finding duplicates in 195 strategies
+2025-11-03 07:55:59,159 - src.analysis.duplicate_detector - ERROR - Cannot parse generated_strategy_loop_iter7.py: invalid syntax (<unknown>, line 9)
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 20
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 21
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 22
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 23
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 24
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 25
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 26
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 27
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 28
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 29
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 30
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 31
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 32
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 33
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 34
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 35
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 36
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 37
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 38
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 39
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 40
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 41
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 42
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 43
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 44
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 45
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 46
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 47
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 48
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 49
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 50
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 51
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 52
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 53
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 54
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 55
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 56
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 57
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 58
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 59
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 60
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 61
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 62
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 63
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 64
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 65
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 66
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 67
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 68
+2025-11-03 07:55:59,336 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 69
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 70
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 71
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 72
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 73
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 74
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 75
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 76
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 77
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 78
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 79
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 80
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 81
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 82
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 83
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 84
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 85
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 86
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 87
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 88
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 89
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 90
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 91
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 92
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 93
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 94
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 95
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 96
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 97
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 98
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 99
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 100
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 101
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 102
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 103
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 104
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 105
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 106
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 107
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 108
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 109
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 110
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 111
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 112
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 113
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 114
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 115
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 116
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 117
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 118
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 119
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 120
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 121
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 122
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 123
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 124
+2025-11-03 07:55:59,337 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 125
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 126
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 127
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 128
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 129
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 130
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 131
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 132
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 133
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 134
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 135
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 136
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 137
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 138
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 139
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 140
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 141
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 142
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 143
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 144
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 145
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 146
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 147
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 148
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 149
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 150
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 151
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 152
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 153
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 154
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 155
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 156
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 157
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 158
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 159
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 160
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 161
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 162
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 163
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 164
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 165
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 166
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 167
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 168
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 169
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 170
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 171
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 172
+2025-11-03 07:55:59,338 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 173
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 174
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 175
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 176
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 177
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 178
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 179
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 180
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 181
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 182
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 183
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 184
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 185
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 186
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 187
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 188
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 189
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 190
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 191
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 192
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 193
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 194
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 195
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 196
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 197
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 198
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - WARNING - No validation info for strategy 199
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - INFO - Extracted info for 14 strategies
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - INFO - Found 13 Sharpe ratio groups
+2025-11-03 07:55:59,339 - src.analysis.duplicate_detector - INFO - Analyzing group with Sharpe 0.9443348034803672 (2 strategies)
+2025-11-03 07:55:59,348 - src.analysis.duplicate_detector - INFO - Found 0 duplicate groups
+2025-11-03 07:55:59,348 - __main__ - INFO - Generating reports...
+2025-11-03 07:55:59,352 - __main__ - INFO - JSON report saved to /mnt/c/Users/jnpi/Documents/finlab/duplicate_report.json
+2025-11-03 07:55:59,357 - __main__ - INFO - Markdown report saved to /mnt/c/Users/jnpi/Documents/finlab/duplicate_report.md
+
+============================================================
+DUPLICATE DETECTION COMPLETE
+============================================================
+Total strategies analyzed: 195
+Duplicate groups found: 0
+
+No duplicates detected.
+
+Reports saved:
+  - Markdown: /mnt/c/Users/jnpi/Documents/finlab/duplicate_report.md
+  - JSON: /mnt/c/Users/jnpi/Documents/finlab/duplicate_report.json
+============================================================
+[0;32m[07:55:59] ✓ Step 1/4 completed: Duplicate Detection[0m
+[07:55:59] Found Duplicate report JSON: duplicate_report.json
+[07:55:59] Found Duplicate report Markdown: duplicate_report.md
+[07:55:59] 
+[07:55:59] ========================================
+[07:55:59] Step 2/4: Diversity Analysis
+[07:55:59] ========================================
+[07:55:59] Command: python3 scripts/analyze_diversity.py         --validation-results "/mnt/c/Users/jnpi/Documents/finlab/phase2_validated_results_20251101_132244.json"         --duplicate-report "/mnt/c/Users/jnpi/Documents/finlab/duplicate_report.json"         --strategy-dir .         --output "/mnt/c/Users/jnpi/Documents/finlab/diversity_report.md"
+[07:55:59] 
+2025-11-03 07:56:01,068 - __main__ - INFO - ============================================================
+2025-11-03 07:56:01,068 - __main__ - INFO - Strategy Diversity Analysis (Task 3.2)
+2025-11-03 07:56:01,068 - __main__ - INFO - ============================================================
+2025-11-03 07:56:01,068 - __main__ - INFO - Loading input files...
+2025-11-03 07:56:01,070 - __main__ - INFO - Loaded validation results from /mnt/c/Users/jnpi/Documents/finlab/phase2_validated_results_20251101_132244.json
+2025-11-03 07:56:01,071 - __main__ - INFO - Loaded duplicate report from /mnt/c/Users/jnpi/Documents/finlab/duplicate_report.json
+2025-11-03 07:56:01,072 - __main__ - INFO - Finding strategy files...
+2025-11-03 07:56:01,075 - __main__ - INFO - Found 215 strategy files
+2025-11-03 07:56:01,075 - __main__ - INFO - Filtering to validated strategies...
+2025-11-03 07:56:01,075 - __main__ - INFO - Found 4 validated strategies: [1, 2, 9, 13]
+2025-11-03 07:56:01,075 - __main__ - INFO - Analyzing 6 strategies after exclusions
+2025-11-03 07:56:01,075 - __main__ - INFO - Initializing diversity analyzer...
+2025-11-03 07:56:01,076 - __main__ - INFO - Running diversity analysis...
+2025-11-03 07:56:01,076 - DiversityAnalyzer - INFO - Extracting factors from 6 strategies...
+2025-11-03 07:56:01,138 - DiversityAnalyzer - INFO - Calculating factor diversity...
+2025-11-03 07:56:01,139 - DiversityAnalyzer - INFO - Calculating return correlation...
+2025-11-03 07:56:01,139 - DiversityAnalyzer - WARNING - No population or strategies found in validation_results
+2025-11-03 07:56:01,139 - DiversityAnalyzer - INFO - Calculating risk diversity...
+2025-11-03 07:56:01,139 - DiversityAnalyzer - WARNING - No population or strategies found in validation_results
+2025-11-03 07:56:01,139 - __main__ - INFO - Calculating additional metrics...
+2025-11-03 07:56:01,149 - __main__ - INFO - Generating reports and visualizations...
+2025-11-03 07:56:01,152 - __main__ - INFO - Saved JSON report to /mnt/c/Users/jnpi/Documents/finlab/diversity_report.json
+2025-11-03 07:56:01,466 - __main__ - INFO - Saved correlation heatmap to /mnt/c/Users/jnpi/Documents/finlab/diversity_report_correlation_heatmap.png
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 25104 (\N{CJK UNIFIED IDEOGRAPH-6210}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 20132 (\N{CJK UNIFIED IDEOGRAPH-4EA4}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 37329 (\N{CJK UNIFIED IDEOGRAPH-91D1}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 38989 (\N{CJK UNIFIED IDEOGRAPH-984D}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 22806 (\N{CJK UNIFIED IDEOGRAPH-5916}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 38520 (\N{CJK UNIFIED IDEOGRAPH-9678}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 36039 (\N{CJK UNIFIED IDEOGRAPH-8CC7}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 36023 (\N{CJK UNIFIED IDEOGRAPH-8CB7}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 36067 (\N{CJK UNIFIED IDEOGRAPH-8CE3}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 36229 (\N{CJK UNIFIED IDEOGRAPH-8D85}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 32929 (\N{CJK UNIFIED IDEOGRAPH-80A1}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 25976 (\N{CJK UNIFIED IDEOGRAPH-6578}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 19981 (\N{CJK UNIFIED IDEOGRAPH-4E0D}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 21547 (\N{CJK UNIFIED IDEOGRAPH-542B}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 33258 (\N{CJK UNIFIED IDEOGRAPH-81EA}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 29151 (\N{CJK UNIFIED IDEOGRAPH-71DF}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 21830 (\N{CJK UNIFIED IDEOGRAPH-5546}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 31237 (\N{CJK UNIFIED IDEOGRAPH-7A05}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 24460 (\N{CJK UNIFIED IDEOGRAPH-5F8C}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 21435 (\N{CJK UNIFIED IDEOGRAPH-53BB}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 24180 (\N{CJK UNIFIED IDEOGRAPH-5E74}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 21516 (\N{CJK UNIFIED IDEOGRAPH-540C}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 26376 (\N{CJK UNIFIED IDEOGRAPH-6708}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 22686 (\N{CJK UNIFIED IDEOGRAPH-589E}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 28187 (\N{CJK UNIFIED IDEOGRAPH-6E1B}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 19978 (\N{CJK UNIFIED IDEOGRAPH-4E0A}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 27604 (\N{CJK UNIFIED IDEOGRAPH-6BD4}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 36611 (\N{CJK UNIFIED IDEOGRAPH-8F03}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 20729 (\N{CJK UNIFIED IDEOGRAPH-50F9}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 28136 (\N{CJK UNIFIED IDEOGRAPH-6DE8}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 20540 (\N{CJK UNIFIED IDEOGRAPH-503C}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 26412 (\N{CJK UNIFIED IDEOGRAPH-672C}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 30410 (\N{CJK UNIFIED IDEOGRAPH-76CA}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 21033 (\N{CJK UNIFIED IDEOGRAPH-5229}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:472: UserWarning: Glyph 29575 (\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 25104 (\N{CJK UNIFIED IDEOGRAPH-6210}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 20132 (\N{CJK UNIFIED IDEOGRAPH-4EA4}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 37329 (\N{CJK UNIFIED IDEOGRAPH-91D1}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 38989 (\N{CJK UNIFIED IDEOGRAPH-984D}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 22806 (\N{CJK UNIFIED IDEOGRAPH-5916}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 38520 (\N{CJK UNIFIED IDEOGRAPH-9678}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 36039 (\N{CJK UNIFIED IDEOGRAPH-8CC7}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 36023 (\N{CJK UNIFIED IDEOGRAPH-8CB7}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 36067 (\N{CJK UNIFIED IDEOGRAPH-8CE3}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 36229 (\N{CJK UNIFIED IDEOGRAPH-8D85}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 32929 (\N{CJK UNIFIED IDEOGRAPH-80A1}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 25976 (\N{CJK UNIFIED IDEOGRAPH-6578}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 19981 (\N{CJK UNIFIED IDEOGRAPH-4E0D}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 21547 (\N{CJK UNIFIED IDEOGRAPH-542B}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 33258 (\N{CJK UNIFIED IDEOGRAPH-81EA}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 29151 (\N{CJK UNIFIED IDEOGRAPH-71DF}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 21830 (\N{CJK UNIFIED IDEOGRAPH-5546}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 31237 (\N{CJK UNIFIED IDEOGRAPH-7A05}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 24460 (\N{CJK UNIFIED IDEOGRAPH-5F8C}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 21435 (\N{CJK UNIFIED IDEOGRAPH-53BB}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 24180 (\N{CJK UNIFIED IDEOGRAPH-5E74}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 21516 (\N{CJK UNIFIED IDEOGRAPH-540C}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 26376 (\N{CJK UNIFIED IDEOGRAPH-6708}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 22686 (\N{CJK UNIFIED IDEOGRAPH-589E}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 28187 (\N{CJK UNIFIED IDEOGRAPH-6E1B}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 19978 (\N{CJK UNIFIED IDEOGRAPH-4E0A}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 27604 (\N{CJK UNIFIED IDEOGRAPH-6BD4}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 36611 (\N{CJK UNIFIED IDEOGRAPH-8F03}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 20729 (\N{CJK UNIFIED IDEOGRAPH-50F9}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 28136 (\N{CJK UNIFIED IDEOGRAPH-6DE8}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 20540 (\N{CJK UNIFIED IDEOGRAPH-503C}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 26412 (\N{CJK UNIFIED IDEOGRAPH-672C}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 30410 (\N{CJK UNIFIED IDEOGRAPH-76CA}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 21033 (\N{CJK UNIFIED IDEOGRAPH-5229}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+/mnt/c/Users/jnpi/Documents/finlab/scripts/analyze_diversity.py:473: UserWarning: Glyph 29575 (\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.
+  plt.savefig(output_path, dpi=150, bbox_inches='tight')
+2025-11-03 07:56:01,682 - __main__ - INFO - Saved factor usage chart to /mnt/c/Users/jnpi/Documents/finlab/diversity_report_factor_usage.png
+2025-11-03 07:56:01,690 - __main__ - INFO - Saved Markdown report to /mnt/c/Users/jnpi/Documents/finlab/diversity_report.md
+2025-11-03 07:56:01,690 - __main__ - INFO - ============================================================
+2025-11-03 07:56:01,690 - __main__ - INFO - Analysis Complete!
+2025-11-03 07:56:01,690 - __main__ - INFO - ============================================================
+2025-11-03 07:56:01,690 - __main__ - INFO - Total Strategies Analyzed: 6
+2025-11-03 07:56:01,690 - __main__ - INFO - Excluded Strategies: 0
+2025-11-03 07:56:01,690 - __main__ - INFO - Diversity Score: 38.3/100
+2025-11-03 07:56:01,690 - __main__ - INFO - Recommendation: INSUFFICIENT
+2025-11-03 07:56:01,691 - __main__ - INFO - 
+2025-11-03 07:56:01,691 - __main__ - INFO - Output Files:
+2025-11-03 07:56:01,691 - __main__ - INFO -   - Markdown Report: /mnt/c/Users/jnpi/Documents/finlab/diversity_report.md
+2025-11-03 07:56:01,691 - __main__ - INFO -   - JSON Report: /mnt/c/Users/jnpi/Documents/finlab/diversity_report.json
+2025-11-03 07:56:01,691 - __main__ - INFO -   - Correlation Heatmap: /mnt/c/Users/jnpi/Documents/finlab/diversity_report_correlation_heatmap.png
+2025-11-03 07:56:01,691 - __main__ - INFO -   - Factor Usage Chart: /mnt/c/Users/jnpi/Documents/finlab/diversity_report_factor_usage.png
+2025-11-03 07:56:01,691 - __main__ - INFO - ============================================================
+2025-11-03 07:56:01,691 - __main__ - WARNING - Warnings:
+2025-11-03 07:56:01,691 - __main__ - WARNING -   - Low factor diversity detected: 0.466 < 0.5
+2025-11-03 07:56:01,691 - __main__ - WARNING -   - Low risk diversity detected: 0.000 < 0.3
+[0;32m[07:56:01] ✓ Step 2/4 completed: Diversity Analysis[0m
+[07:56:01] Found Diversity report JSON: diversity_report.json
+[07:56:01] Found Diversity report Markdown: diversity_report.md
+[07:56:02] 
+[07:56:02] ========================================
+[07:56:02] Step 3/4: Decision Evaluation
+[07:56:02] ========================================
+[07:56:02] Command: python3 scripts/evaluate_phase3_decision.py         --validation-results "/mnt/c/Users/jnpi/Documents/finlab/phase2_validated_results_20251101_132244.json"         --duplicate-report "/mnt/c/Users/jnpi/Documents/finlab/duplicate_report.json"         --diversity-report "/mnt/c/Users/jnpi/Documents/finlab/diversity_report.json"         --output "/mnt/c/Users/jnpi/Documents/finlab/phase3_decision_report.md"
+[07:56:02] 
+2025-11-03 07:56:02,802 - __main__ - INFO - ================================================================================
+2025-11-03 07:56:02,802 - __main__ - INFO - Phase 3 GO/NO-GO Decision Evaluation (Task 5.2)
+2025-11-03 07:56:02,802 - __main__ - INFO - ================================================================================
+2025-11-03 07:56:02,802 - __main__ - INFO - Loading input files...
+2025-11-03 07:56:02,804 - __main__ - INFO - Loaded validation results from /mnt/c/Users/jnpi/Documents/finlab/phase2_validated_results_20251101_132244.json
+2025-11-03 07:56:02,806 - __main__ - INFO - Loaded duplicate report from /mnt/c/Users/jnpi/Documents/finlab/duplicate_report.json
+2025-11-03 07:56:02,809 - __main__ - INFO - Loaded diversity report from /mnt/c/Users/jnpi/Documents/finlab/diversity_report.json
+2025-11-03 07:56:02,809 - __main__ - INFO - Validating JSON schemas...
+2025-11-03 07:56:02,809 - __main__ - INFO - Initializing decision framework...
+2025-11-03 07:56:02,809 - __main__ - INFO - Evaluating GO/NO-GO criteria...
+2025-11-03 07:56:02,809 - DecisionFramework - INFO - Starting GO/NO-GO decision evaluation...
+2025-11-03 07:56:02,809 - DecisionFramework - INFO - Decision evaluation complete: NO-GO (Risk: HIGH)
+2025-11-03 07:56:02,809 - __main__ - INFO - Metrics: unique=6, diversity=38.3, corr=1.000
+2025-11-03 07:56:02,809 - __main__ - INFO - Generating comprehensive decision document...
+2025-11-03 07:56:02,813 - __main__ - INFO - Decision document saved to /mnt/c/Users/jnpi/Documents/finlab/phase3_decision_report.md
+2025-11-03 07:56:02,813 - __main__ - ERROR - ❌ NO-GO - Blocking issues must be resolved
+
+================================================================================
+[1mPHASE 3 GO/NO-GO DECISION[0m
+================================================================================
+
+[1mDecision:[0m [91m❌ NO-GO[0m
+[1mRisk Level:[0m HIGH
+
+[1mKey Metrics:[0m
+  Unique Strategies:   6
+  Diversity Score:     38.3/100
+  Average Correlation: 1.000
+
+[1mCriteria Evaluation:[0m
+  Passed: 3/7
+  [91mCritical Failures: 1[0m
+    - Average Correlation: 1.00 < 0.8
+
+[91m[1mBlocking Issues:[0m
+  1. Average Correlation: 1.00 < 0.8
+
+[94m[1mRecommendations:[0m
+  1. **PRIMARY ACTION**: Do not proceed to Phase 3 until diversity issues are resolved
+  2. Increase diversity by adjusting Phase 2 mutation parameters to explore more diverse strategy patterns
+  3. Promote factor diversity by ensuring mutations explore different factor combinations more aggressively
+  ... and 1 more (see decision document)
+
+================================================================================
+
+[0;31m[07:56:02] ERROR: Step 3/4 failed: Decision Evaluation (exit code: 1)[0m
+[1;33m[07:56:02] ⚠ Decision evaluation completed with exit code: 0[0m
+[07:56:02] Found Decision report: phase3_decision_report.md
+[07:56:02] 
+[07:56:02] =========================================
+[07:56:02] Workflow Summary
+[07:56:02] =========================================
+[07:56:02] 
+[07:56:02] Final Decision: NO-GO
+[07:56:02] 
+[07:56:02] Generated Reports:
+[07:56:02]   - Validation Results: phase2_validated_results_20251101_132244.json
+[07:56:02]   - Duplicate Report (JSON): duplicate_report.json
+[07:56:02]   - Duplicate Report (MD): duplicate_report.md
+[07:56:03]   - Diversity Report (JSON): diversity_report.json
+[07:56:03]   - Diversity Report (MD): diversity_report.md
+[07:56:03]   - Decision Report: phase3_decision_report.md
+[07:56:03] 
+[07:56:03] Workflow Log: /mnt/c/Users/jnpi/Documents/finlab/validation_workflow_20251103_075557.log
+[07:56:03] 
+[07:56:03] =========================================
+[0;31m[07:56:03] ERROR: Workflow complete: NO-GO decision[0m

@@ -1,0 +1,1 @@
+{"id": "innov_20251028153707_6aa5fd452b75", "code": "data.get(\"price:\u6536\u76e4\u50f9\").rolling(20).mean()", "rationale": "Simple 20-day moving average for momentum", "performance": {"sharpe": 0.85, "calmar": 2.5}, "validation_report": {"layers_passed": [1, 2, 3, 4, 5]}, "timestamp": "2025-10-28T00:00:00", "category": "momentum"}

@@ -1,0 +1,73 @@
+{
+  "config": {
+    "seed": 42,
+    "iterations": 5,
+    "generated_at": "2025-11-04T14:26:07.138385",
+    "baseline_type": "structural",
+    "note": "Pre-refactor code incomplete. This baseline defines expected contract."
+  },
+  "final_champion": {
+    "sharpe_ratio": 0.0,
+    "max_drawdown": 0.0,
+    "total_return": 0.0,
+    "annual_return": 0.0,
+    "note": "Structural placeholder - refactored code should populate these fields"
+  },
+  "iteration_outcomes": [
+    {
+      "id": 0,
+      "success": null,
+      "sharpe": null,
+      "error": null,
+      "note": "Structural placeholder - refactored code should populate"
+    },
+    {
+      "id": 1,
+      "success": null,
+      "sharpe": null,
+      "error": null,
+      "note": "Structural placeholder - refactored code should populate"
+    },
+    {
+      "id": 2,
+      "success": null,
+      "sharpe": null,
+      "error": null,
+      "note": "Structural placeholder - refactored code should populate"
+    },
+    {
+      "id": 3,
+      "success": null,
+      "sharpe": null,
+      "error": null,
+      "note": "Structural placeholder - refactored code should populate"
+    },
+    {
+      "id": 4,
+      "success": null,
+      "sharpe": null,
+      "error": null,
+      "note": "Structural placeholder - refactored code should populate"
+    }
+  ],
+  "history_entries": 5,
+  "trade_count": 0,
+  "baseline_exists": true,
+  "validation_notes": {
+    "purpose": "This baseline defines the expected data structure for golden master tests",
+    "usage": "Refactored code should produce the same structure with populated values",
+    "tolerance": {
+      "sharpe_ratio": 0.01,
+      "max_drawdown": 0.01,
+      "total_return": 0.01
+    },
+    "required_fields": [
+      "config",
+      "final_champion",
+      "iteration_outcomes",
+      "history_entries",
+      "trade_count"
+    ],
+    "implementation_note": "Week 1 refactoring (ConfigManager, LLMClient) should maintain behavioral equivalence - same inputs produce same outputs within tolerance"
+  }
+}

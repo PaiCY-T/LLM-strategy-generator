@@ -248,7 +248,7 @@ from src.validation.baseline import BaselineComparator, compare_strategy_with_ba
 11. `PHASE2_VALIDATION_COMPLETE.md` (this file)
 
 ### Modified Files (2)
-1. `.claude/specs/system-fix-validation-enhancement/tasks.md` (updated progress tracking)
+1. `.spec-workflow/specs/system-fix-validation-enhancement/tasks.md` (updated progress tracking)
 2. `src/validation/data_split.py` (bug fix for NoneType formatting)
 
 ### Generated Reports (2)

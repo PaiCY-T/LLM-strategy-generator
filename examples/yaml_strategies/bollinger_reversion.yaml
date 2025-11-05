@@ -1,0 +1,199 @@
+# Bollinger Mean Reversion Strategy
+# ===================================
+# Classic mean reversion using Bollinger Bands oversold/overbought signals
+#
+# Strategy Logic:
+# - Buy when price breaches lower Bollinger Band (oversold)
+# - Sell when price reaches middle band or upper band (mean reversion)
+# - Equal weight position sizing for simplicity
+# - Designed for range-bound markets
+#
+# Expected Performance: Sharpe 1.3-1.9, Annual Return 12-18%, Turnover: Medium
+# Market Conditions: Best in sideways/range-bound markets with low trend strength
+# Risk Level: Medium (mean reversion carries reversal risk)
+
+metadata:
+  name: "Bollinger Band Mean Reversion"
+  description: "Classic mean reversion strategy buying at lower Bollinger Band oversold levels and exiting at middle band, equal-weighted positions for range-bound markets"
+  strategy_type: "mean_reversion"
+  rebalancing_frequency: "W-FRI"  # Weekly Friday rebalancing
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - mean-reversion
+    - bollinger-bands
+    - oversold
+    - range-bound
+    - equal-weight
+  risk_level: "medium"
+
+indicators:
+  # Technical indicators
+  technical_indicators:
+    # Bollinger Bands (20-day, 2 std dev)
+    - name: "bb_upper"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_UPPER')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_middle"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_MIDDLE')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_lower"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_LOWER')"
+      parameters:
+        std_dev: 2.0
+
+    # RSI for confirmation
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # ADX for trend strength (avoid trending markets)
+    - name: "adx_14"
+      type: "ADX"
+      period: 14
+      source: "data.get('ADX_14')"
+
+    # 50-day MA for long-term trend filter
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+  # Custom calculations
+  custom_calculations:
+    # BB width (volatility measure)
+    - name: "bb_width"
+      expression: "(bb_upper - bb_lower) / bb_middle"
+      description: "Bollinger Band width as percentage of middle band"
+
+    # Distance from lower band (oversold measure)
+    - name: "lower_band_distance"
+      expression: "(close - bb_lower) / bb_lower"
+      description: "Distance from lower Bollinger Band"
+
+    # Distance from upper band
+    - name: "upper_band_distance"
+      expression: "(bb_upper - close) / bb_upper"
+      description: "Distance to upper Bollinger Band"
+
+    # Position within bands (-1 to +1)
+    - name: "bb_position"
+      expression: "(close - bb_lower) / (bb_upper - bb_lower)"
+      description: "Position within Bollinger Bands (0=lower, 1=upper)"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # Price at or below lower Bollinger Band
+    - condition: "close <= bb_lower"
+      description: "Price at or below lower Bollinger Band (oversold)"
+
+    # Extreme oversold (price >1% below lower band)
+    - condition: "lower_band_distance < 0"
+      description: "Price breached lower band (extreme oversold)"
+
+    # RSI confirmation (oversold)
+    - condition: "rsi_14 < 35"
+      description: "RSI oversold (<35)"
+
+    # Weak trend (ADX <30) - mean reversion works in range-bound markets
+    - condition: "adx_14 < 30"
+      description: "Weak trend (ADX <30) - suitable for mean reversion"
+
+    # BB width sufficient (not too tight)
+    - condition: "bb_width > 0.08"
+      description: "Bollinger Bands width >8% (sufficient volatility)"
+
+    # BB width not excessive (not too volatile)
+    - condition: "bb_width < 0.30"
+      description: "Bollinger Bands width <30% (not excessive volatility)"
+
+    # Long-term support (price above 50-day MA)
+    - condition: "close > ma_50 * 0.90"
+      description: "Price within 10% of 50-day MA (long-term support)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # Liquidity requirements
+  min_liquidity:
+    average_volume_20d: 100000000  # 100M minimum
+
+exit_conditions:
+  # Stop loss (in case trend continues down)
+  stop_loss_pct: 0.08  # 8% stop loss
+
+  # Take profit at middle band (mean reversion target)
+  take_profit_pct: 0.10  # 10% take profit
+
+  # Conditional exits (mean reversion complete)
+  conditional_exits:
+    # Exit when price reaches middle band
+    - condition: "close >= bb_middle"
+      description: "Price reached middle Bollinger Band (mean reversion complete)"
+
+    # Exit when RSI normalizes
+    - condition: "rsi_14 > 60"
+      description: "RSI normalized above 60 (exit on reversion)"
+
+    # Exit if price reaches upper band (full reversion)
+    - condition: "close >= bb_upper"
+      description: "Price reached upper band (full mean reversion)"
+
+    # Exit if ADX strengthens (trending market developing)
+    - condition: "adx_14 > 35"
+      description: "Strong trend developing (ADX >35) - exit mean reversion"
+
+    # Exit if BB position >0.7 (near upper band)
+    - condition: "bb_position > 0.70"
+      description: "Position within bands >70% (near upper band)"
+
+  # Holding period for mean reversion
+  holding_period_days: 30
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Equal weight allocation
+  method: "equal_weight"
+
+  # Maximum 18 positions
+  max_positions: 18
+
+  # Maximum 10% per position
+  max_position_pct: 0.10
+
+  # Minimum 3% per position
+  min_position_pct: 0.03
+
+risk_management:
+  # Sector concentration limit
+  max_sector_exposure: 0.30
+
+  # Rebalance threshold
+  rebalance_threshold: 0.15
+
+  # Drawdown limit
+  max_drawdown_limit: 0.18
+
+  # Cash reserve
+  cash_reserve_pct: 0.05
+
+backtest_config:
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.001

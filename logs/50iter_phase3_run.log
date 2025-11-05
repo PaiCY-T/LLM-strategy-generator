@@ -1,0 +1,3292 @@
+
+🚀 Starting 50-iteration production test...
+
+2025-10-16 11:07:31,138 - __main__ - INFO - ======================================================================
+2025-10-16 11:07:31,139 - __main__ - INFO - 50-ITERATION PRODUCTION TEST - START
+2025-10-16 11:07:31,140 - __main__ - INFO - ======================================================================
+2025-10-16 11:07:31,141 - __main__ - INFO - Timestamp: 2025-10-16T11:07:31.141003
+2025-10-16 11:07:31,141 - __main__ - INFO - Model: google/gemini-2.5-flash
+2025-10-16 11:07:31,142 - __main__ - INFO - Target iterations: 50
+2025-10-16 11:07:31,142 - __main__ - INFO - Checkpoint interval: 10
+2025-10-16 11:07:31,143 - __main__ - INFO - Log file: logs/50iteration_test_20251016_110731.log
+2025-10-16 11:07:31,144 - __main__ - INFO - 
+2025-10-16 11:07:31,144 - __main__ - INFO - Validating Phase 1 stability features...
+2025-10-16 11:07:31,144 - __main__ - INFO -   ✅ Story 6: MetricValidator available
+2025-10-16 11:07:31,146 - __main__ - INFO -   ⏳ Story 5: BehavioralValidator not yet implemented
+2025-10-16 11:07:31,147 - __main__ - INFO -   ✅ Story 7: DataPipelineIntegrity available
+2025-10-16 11:07:31,148 - __main__ - INFO -   ✅ Story 8: ExperimentConfigManager available
+2025-10-16 11:07:31,148 - __main__ - INFO - ✅ All Phase 1 features available
+2025-10-16 11:07:31,148 - __main__ - INFO - 
+輸入成功!
+2025-10-16 11:07:31,505 - __main__ - INFO - ✅ Finlab data loaded successfully
+2025-10-16 11:07:31,507 - __main__ - INFO - Initializing ExtendedTestHarness...
+2025-10-16 11:07:31,960 - autonomous_loop - WARNING - Config file not found: /mnt/c/Users/jnpi/documents/finlab/artifacts/config/learning_system.yaml, using defaults
+2025-10-16 11:07:31,964 - tests.integration.extended_test_harness - INFO - Logging initialized: logs/extended_test_20251016_110731.log
+2025-10-16 11:07:31,967 - tests.integration.extended_test_harness - INFO - ExtendedTestHarness initialized:
+2025-10-16 11:07:31,968 - tests.integration.extended_test_harness - INFO -   Model: google/gemini-2.5-flash
+2025-10-16 11:07:31,969 - tests.integration.extended_test_harness - INFO -   Target iterations: 50
+2025-10-16 11:07:31,969 - tests.integration.extended_test_harness - INFO -   Checkpoint interval: 10
+2025-10-16 11:07:31,970 - tests.integration.extended_test_harness - INFO -   Checkpoint dir: checkpoints
+2025-10-16 11:07:31,971 - __main__ - INFO - ✅ ExtendedTestHarness initialized successfully
+2025-10-16 11:07:31,971 - __main__ - INFO - 
+2025-10-16 11:07:31,972 - __main__ - INFO - Starting test run...
+2025-10-16 11:07:31,973 - __main__ - INFO - 
+2025-10-16 11:07:31,973 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:07:31,974 - tests.integration.extended_test_harness - INFO - STARTING EXTENDED TEST RUN
+2025-10-16 11:07:31,975 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:07:31,975 - tests.integration.extended_test_harness - INFO - Configuration:
+2025-10-16 11:07:31,976 - tests.integration.extended_test_harness - INFO -   Model: google/gemini-2.5-flash
+2025-10-16 11:07:31,977 - tests.integration.extended_test_harness - INFO -   Target iterations: 50
+2025-10-16 11:07:31,978 - tests.integration.extended_test_harness - INFO -   Start iteration: 0
+2025-10-16 11:07:31,979 - tests.integration.extended_test_harness - INFO -   Checkpoint interval: 10
+2025-10-16 11:07:31,979 - tests.integration.extended_test_harness - INFO -   Checkpoint directory: checkpoints
+2025-10-16 11:07:31,980 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:07:31,980 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:07:31,981 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:07:31,982 - tests.integration.extended_test_harness - INFO - ITERATION 0/49
+2025-10-16 11:07:31,983 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:07:31,985 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 0
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:07:56,076 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 0
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (7937 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2438 chars)
+✅ Strategy generated (2438 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 975526d56ff72059
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:08:01,171 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1914 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter0.py
+2025-10-16 11:08:21,458 - tests.integration.extended_test_harness - INFO - ✅ Iteration 0 SUCCESS (duration: 49.5s)
+2025-10-16 11:08:21,458 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.2923
+2025-10-16 11:08:21,459 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5211767323649532
+2025-10-16 11:08:21,459 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:08:21,460 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:08:21,460 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:08:21,460 - tests.integration.extended_test_harness - INFO - ITERATION 1/49
+2025-10-16 11:08:21,461 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:08:21,461 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 1
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:08:35,392 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 1
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (8440 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2581 chars)
+✅ Strategy generated (2581 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 950a90d2b27ca6dc
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:08:40,843 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1912 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter1.py
+2025-10-16 11:09:07,230 - tests.integration.extended_test_harness - INFO - ✅ Iteration 1 SUCCESS (duration: 45.8s)
+2025-10-16 11:09:07,231 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.8692
+2025-10-16 11:09:07,232 - tests.integration.extended_test_harness - INFO -    Total Return: 0.7022293099044812
+2025-10-16 11:09:07,232 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:09:07,233 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:09:07,233 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:09:07,234 - tests.integration.extended_test_harness - INFO - ITERATION 2/49
+2025-10-16 11:09:07,234 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:09:07,235 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 2
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:09:21,740 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 2
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (8440 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2413 chars)
+✅ Strategy generated (2413 chars)
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: fe173d58104143bf
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:09:26,038 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1912 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter2.py
+2025-10-16 11:09:51,810 - tests.integration.extended_test_harness - INFO - ✅ Iteration 2 SUCCESS (duration: 44.6s)
+2025-10-16 11:09:51,810 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.1686
+2025-10-16 11:09:51,811 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5073672505730096
+2025-10-16 11:09:51,811 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:09:51,812 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:09:51,812 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:09:51,813 - tests.integration.extended_test_harness - INFO - ITERATION 3/49
+2025-10-16 11:09:51,813 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:09:51,813 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 3
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:10:07,587 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 3
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10128 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2693 chars)
+✅ Strategy generated (2693 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:10:13,280 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 22f3234a585aa199
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:10:13,282 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter3.py
+2025-10-16 11:10:27,136 - tests.integration.extended_test_harness - INFO - ✅ Iteration 3 SUCCESS (duration: 35.3s)
+2025-10-16 11:10:27,137 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.3666
+2025-10-16 11:10:27,137 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5604299662430396
+2025-10-16 11:10:27,138 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:10:27,138 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:10:27,138 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:10:27,139 - tests.integration.extended_test_harness - INFO - ITERATION 4/49
+2025-10-16 11:10:27,139 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:10:27,139 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 4
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:10:41,292 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 4
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10128 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2421 chars)
+✅ Strategy generated (2421 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:10:46,202 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 37bbc40a2407259f
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:10:46,204 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter4.py
+2025-10-16 11:10:59,787 - tests.integration.extended_test_harness - INFO - ✅ Iteration 4 SUCCESS (duration: 32.6s)
+2025-10-16 11:10:59,788 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.8968
+2025-10-16 11:10:59,788 - tests.integration.extended_test_harness - INFO -    Total Return: -0.15799373134474953
+2025-10-16 11:10:59,789 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:10:59,789 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:10:59,789 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:10:59,790 - tests.integration.extended_test_harness - INFO - ITERATION 5/49
+2025-10-16 11:10:59,790 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:10:59,790 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 5
+============================================================
+
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:11:12,158 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 5
+✅ Configuration captured
+[1/6] Building prompt...
+2025-10-16 11:11:12,159 - prompt_builder - INFO - Forcing exploration mode (iteration 5)
+✅ Prompt ready (8480 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2496 chars)
+✅ Strategy generated (2496 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:11:18,553 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 9ec5fa486f5a674b
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:11:18,559 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1846 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter5.py
+2025-10-16 11:11:34,822 - tests.integration.extended_test_harness - INFO - ✅ Iteration 5 SUCCESS (duration: 35.0s)
+2025-10-16 11:11:34,823 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.2932
+2025-10-16 11:11:34,823 - tests.integration.extended_test_harness - INFO -    Total Return: 0.7183927553087885
+2025-10-16 11:11:34,824 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:11:34,824 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:11:34,825 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:11:34,825 - tests.integration.extended_test_harness - INFO - ITERATION 6/49
+2025-10-16 11:11:34,826 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:11:34,826 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 6
+============================================================
+
+2025-10-16 11:12:08,642 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:12:08,718 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 6
+2025-10-16 11:12:08,721 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10128 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2440 chars)
+✅ Strategy generated (2440 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:12:13,263 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: a67485e7aa624de8
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:12:13,265 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter6.py
+2025-10-16 11:12:28,282 - tests.integration.extended_test_harness - INFO - ✅ Iteration 6 SUCCESS (duration: 53.5s)
+2025-10-16 11:12:28,283 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.1306
+2025-10-16 11:12:28,284 - tests.integration.extended_test_harness - INFO -    Total Return: 0.7939380770094511
+2025-10-16 11:12:28,284 - tests.integration.extended_test_harness - INFO -    🏆 NEW CHAMPION ESTABLISHED
+2025-10-16 11:12:28,285 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:12:28,285 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:12:28,286 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:12:28,286 - tests.integration.extended_test_harness - INFO - ITERATION 7/49
+2025-10-16 11:12:28,287 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:12:28,287 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 7
+============================================================
+
+2025-10-16 11:12:51,439 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:12:51,489 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 7
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10128 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2465 chars)
+✅ Strategy generated (2465 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:12:57,152 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 23135a6a1c3f948f
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:12:57,154 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1912 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter7.py
+2025-10-16 11:13:08,925 - tests.integration.extended_test_harness - INFO - ✅ Iteration 7 SUCCESS (duration: 40.6s)
+2025-10-16 11:13:08,926 - tests.integration.extended_test_harness - INFO -    Sharpe: -0.3924
+2025-10-16 11:13:08,926 - tests.integration.extended_test_harness - INFO -    Total Return: 0.3801864617270841
+2025-10-16 11:13:08,927 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:13:08,928 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:13:08,928 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:13:08,928 - tests.integration.extended_test_harness - INFO - ITERATION 8/49
+2025-10-16 11:13:08,929 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:13:08,929 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 8
+============================================================
+
+2025-10-16 11:13:33,795 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:13:33,841 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 8
+2025-10-16 11:13:33,844 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10128 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2528 chars)
+✅ Strategy generated (2528 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:13:37,945 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 819645bc505b63d9
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:13:37,947 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1912 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter8.py
+2025-10-16 11:13:50,970 - tests.integration.extended_test_harness - INFO - ✅ Iteration 8 SUCCESS (duration: 42.0s)
+2025-10-16 11:13:50,971 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.3220
+2025-10-16 11:13:50,972 - tests.integration.extended_test_harness - INFO -    Total Return: 0.022352367035924803
+2025-10-16 11:13:50,972 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:13:50,973 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:13:50,973 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:13:50,974 - tests.integration.extended_test_harness - INFO - ITERATION 9/49
+2025-10-16 11:13:50,974 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:13:50,974 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 9
+============================================================
+
+2025-10-16 11:14:19,587 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:14:19,651 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 9
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10128 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2381 chars)
+✅ Strategy generated (2381 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:14:23,695 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 977dac8eb513d71e
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:14:23,697 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1912 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter9.py
+2025-10-16 11:14:36,904 - tests.integration.extended_test_harness - INFO - ✅ Iteration 9 SUCCESS (duration: 45.9s)
+2025-10-16 11:14:36,905 - tests.integration.extended_test_harness - INFO -    Sharpe: -0.3832
+2025-10-16 11:14:36,905 - tests.integration.extended_test_harness - INFO -    Total Return: 0.6061313147885159
+2025-10-16 11:14:36,905 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:14:36,906 - tests.integration.extended_test_harness - INFO - 
+📁 Saving checkpoint at iteration 9...
+2025-10-16 11:14:36,906 - tests.integration.extended_test_harness - ERROR - Failed to save checkpoint at iteration 9: 'ChampionStrategy' object has no attribute 'get'
+2025-10-16 11:14:36,906 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:14:36,907 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:14:36,907 - tests.integration.extended_test_harness - INFO - ITERATION 10/49
+2025-10-16 11:14:36,907 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:14:36,908 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 10
+============================================================
+
+2025-10-16 11:15:02,663 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:15:02,886 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 10
+2025-10-16 11:15:02,940 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+2025-10-16 11:15:03,004 - prompt_builder - INFO - Forcing exploration mode (iteration 10)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2472 chars)
+✅ Strategy generated (2472 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:15:07,633 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 03db53603a1e3bdb
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:15:07,636 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1915 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter10.py
+2025-10-16 11:15:21,768 - tests.integration.extended_test_harness - INFO - ✅ Iteration 10 SUCCESS (duration: 44.9s)
+2025-10-16 11:15:21,769 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.0289
+2025-10-16 11:15:21,769 - tests.integration.extended_test_harness - INFO -    Total Return: 0.583778847543257
+2025-10-16 11:15:21,770 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:15:21,770 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:15:21,771 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:15:21,771 - tests.integration.extended_test_harness - INFO - ITERATION 11/49
+2025-10-16 11:15:21,771 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:15:21,772 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 11
+============================================================
+
+2025-10-16 11:15:44,712 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:15:44,761 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 11
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2654 chars)
+✅ Strategy generated (2654 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:15:51,149 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: f75b0f11f5dcbd7f
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:15:51,150 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1914 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter11.py
+2025-10-16 11:16:03,116 - tests.integration.extended_test_harness - INFO - ✅ Iteration 11 SUCCESS (duration: 41.3s)
+2025-10-16 11:16:03,117 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.8558
+2025-10-16 11:16:03,118 - tests.integration.extended_test_harness - INFO -    Total Return: 0.1587145111442591
+2025-10-16 11:16:03,118 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:16:03,118 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:16:03,119 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:16:03,119 - tests.integration.extended_test_harness - INFO - ITERATION 12/49
+2025-10-16 11:16:03,119 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:16:03,120 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 12
+============================================================
+
+2025-10-16 11:16:27,845 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:16:27,883 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 12
+2025-10-16 11:16:27,884 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2529 chars)
+✅ Strategy generated (2529 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:16:31,382 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 3a4a0b40995ce20a
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:16:31,385 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter12.py
+2025-10-16 11:16:42,658 - tests.integration.extended_test_harness - INFO - ✅ Iteration 12 SUCCESS (duration: 39.5s)
+2025-10-16 11:16:42,658 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.8552
+2025-10-16 11:16:42,659 - tests.integration.extended_test_harness - INFO -    Total Return: 0.7457872673156147
+2025-10-16 11:16:42,659 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:16:42,660 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:16:42,660 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:16:42,660 - tests.integration.extended_test_harness - INFO - ITERATION 13/49
+2025-10-16 11:16:42,661 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:16:42,661 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 13
+============================================================
+
+2025-10-16 11:17:07,832 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:17:07,874 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 13
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2542 chars)
+✅ Strategy generated (2542 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:17:11,853 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 983c188906e96d73
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:17:11,855 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter13.py
+2025-10-16 11:17:23,549 - tests.integration.extended_test_harness - INFO - ✅ Iteration 13 SUCCESS (duration: 40.9s)
+2025-10-16 11:17:23,550 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.1047
+2025-10-16 11:17:23,551 - tests.integration.extended_test_harness - INFO -    Total Return: 0.30910774839708316
+2025-10-16 11:17:23,551 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:17:23,552 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:17:23,552 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:17:23,553 - tests.integration.extended_test_harness - INFO - ITERATION 14/49
+2025-10-16 11:17:23,553 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:17:23,553 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 14
+============================================================
+
+2025-10-16 11:17:47,175 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:17:47,218 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 14
+2025-10-16 11:17:47,221 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2484 chars)
+✅ Strategy generated (2484 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:17:51,189 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 3f217f34dcc32962
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:17:51,190 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1915 chars)
+2025-10-16 11:18:06,840 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9599) for 5 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter14.py
+2025-10-16 11:18:07,093 - tests.integration.extended_test_harness - INFO - ✅ Iteration 14 SUCCESS (duration: 43.5s)
+2025-10-16 11:18:07,093 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.3866
+2025-10-16 11:18:07,094 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5489087201809724
+2025-10-16 11:18:07,094 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:18:07,094 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:18:07,095 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:18:07,095 - tests.integration.extended_test_harness - INFO - ITERATION 15/49
+2025-10-16 11:18:07,095 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:18:07,096 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 15
+============================================================
+
+2025-10-16 11:18:29,713 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:18:29,761 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 15
+✅ Configuration captured
+[1/6] Building prompt...
+2025-10-16 11:18:29,762 - prompt_builder - INFO - Forcing exploration mode (iteration 15)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2737 chars)
+✅ Strategy generated (2737 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:18:33,865 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: e3f27deadb042c0d
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:18:33,867 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1879 chars)
+2025-10-16 11:18:48,902 - autonomous_loop - WARNING - Variance alert: High variance (σ=1.0354) for 6 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter15.py
+2025-10-16 11:18:49,117 - tests.integration.extended_test_harness - INFO - ✅ Iteration 15 SUCCESS (duration: 42.0s)
+2025-10-16 11:18:49,117 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.6934
+2025-10-16 11:18:49,118 - tests.integration.extended_test_harness - INFO -    Total Return: 0.39061431439966093
+2025-10-16 11:18:49,118 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:18:49,118 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:18:49,119 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:18:49,119 - tests.integration.extended_test_harness - INFO - ITERATION 16/49
+2025-10-16 11:18:49,120 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:18:49,120 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 16
+============================================================
+
+2025-10-16 11:19:13,447 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:19:13,489 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 16
+2025-10-16 11:19:13,491 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2635 chars)
+✅ Strategy generated (2635 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:19:18,112 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: c035e6a4eb525878
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:19:18,115 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:19:30,047 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9651) for 7 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter16.py
+2025-10-16 11:19:30,253 - tests.integration.extended_test_harness - INFO - ✅ Iteration 16 SUCCESS (duration: 41.1s)
+2025-10-16 11:19:30,253 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.1346
+2025-10-16 11:19:30,254 - tests.integration.extended_test_harness - INFO -    Total Return: 0.7984986074195732
+2025-10-16 11:19:30,254 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:19:30,255 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:19:30,255 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:19:30,255 - tests.integration.extended_test_harness - INFO - ITERATION 17/49
+2025-10-16 11:19:30,256 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:19:30,256 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 17
+============================================================
+
+2025-10-16 11:19:54,146 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:19:54,188 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 17
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2653 chars)
+✅ Strategy generated (2653 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:19:58,207 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 517a709261499bb7
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:19:58,211 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:20:09,596 - autonomous_loop - WARNING - Variance alert: High variance (σ=1.0074) for 8 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter17.py
+2025-10-16 11:20:09,818 - tests.integration.extended_test_harness - INFO - ✅ Iteration 17 SUCCESS (duration: 39.6s)
+2025-10-16 11:20:09,819 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.5418
+2025-10-16 11:20:09,819 - tests.integration.extended_test_harness - INFO -    Total Return: 0.1456374025645597
+2025-10-16 11:20:09,820 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:20:09,820 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:20:09,820 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:20:09,821 - tests.integration.extended_test_harness - INFO - ITERATION 18/49
+2025-10-16 11:20:09,821 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:20:09,821 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 18
+============================================================
+
+2025-10-16 11:20:33,815 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:20:33,859 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 18
+2025-10-16 11:20:33,862 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2847 chars)
+✅ Strategy generated (2847 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:20:38,278 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 635d4c2d2a668d54
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:20:38,279 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1879 chars)
+2025-10-16 11:20:53,666 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9621) for 9 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter18.py
+2025-10-16 11:20:53,876 - tests.integration.extended_test_harness - INFO - ✅ Iteration 18 SUCCESS (duration: 44.1s)
+2025-10-16 11:20:53,876 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.7708
+2025-10-16 11:20:53,877 - tests.integration.extended_test_harness - INFO -    Total Return: 0.350383656122878
+2025-10-16 11:20:53,877 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:20:53,878 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:20:53,878 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:20:53,878 - tests.integration.extended_test_harness - INFO - ITERATION 19/49
+2025-10-16 11:20:53,879 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:20:53,879 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 19
+============================================================
+
+2025-10-16 11:21:16,786 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:21:16,826 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 19
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2446 chars)
+✅ Strategy generated (2446 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:21:21,344 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 0f0e8591f1f275a4
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:21:21,346 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:21:35,027 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9924) for 10 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter19.py
+2025-10-16 11:21:35,308 - tests.integration.extended_test_harness - INFO - ✅ Iteration 19 SUCCESS (duration: 41.4s)
+2025-10-16 11:21:35,309 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.3382
+2025-10-16 11:21:35,309 - tests.integration.extended_test_harness - INFO -    Total Return: -0.009661380069094283
+2025-10-16 11:21:35,310 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:21:35,310 - tests.integration.extended_test_harness - INFO - 
+📁 Saving checkpoint at iteration 19...
+2025-10-16 11:21:35,310 - tests.integration.extended_test_harness - ERROR - Failed to save checkpoint at iteration 19: 'ChampionStrategy' object has no attribute 'get'
+2025-10-16 11:21:35,311 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:21:35,311 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:21:35,311 - tests.integration.extended_test_harness - INFO - ITERATION 20/49
+2025-10-16 11:21:35,311 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:21:35,312 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 20
+============================================================
+
+2025-10-16 11:21:57,465 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:21:57,503 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 20
+2025-10-16 11:21:57,504 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+2025-10-16 11:21:57,505 - prompt_builder - INFO - Forcing exploration mode (iteration 20)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2535 chars)
+✅ Strategy generated (2535 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:22:03,093 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: fa4ae303c12b0a70
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:22:03,094 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:22:13,747 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9394) for 11 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter20.py
+2025-10-16 11:22:13,942 - tests.integration.extended_test_harness - INFO - ✅ Iteration 20 SUCCESS (duration: 38.6s)
+2025-10-16 11:22:13,943 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.9316
+2025-10-16 11:22:13,944 - tests.integration.extended_test_harness - INFO -    Total Return: 0.11448445417457409
+2025-10-16 11:22:13,944 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:22:13,945 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:22:13,945 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:22:13,945 - tests.integration.extended_test_harness - INFO - ITERATION 21/49
+2025-10-16 11:22:13,945 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:22:13,946 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 21
+============================================================
+
+2025-10-16 11:22:37,478 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:22:37,516 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 21
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2541 chars)
+✅ Strategy generated (2541 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:22:41,224 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 2f2d705d63a9d5aa
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:22:41,226 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:22:52,933 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8025) for 12 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter21.py
+2025-10-16 11:22:53,136 - tests.integration.extended_test_harness - INFO - ✅ Iteration 21 SUCCESS (duration: 39.2s)
+2025-10-16 11:22:53,137 - tests.integration.extended_test_harness - INFO -    Sharpe: -0.3415
+2025-10-16 11:22:53,137 - tests.integration.extended_test_harness - INFO -    Total Return: 0.09244814918254957
+2025-10-16 11:22:53,138 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:22:53,138 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:22:53,139 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:22:53,139 - tests.integration.extended_test_harness - INFO - ITERATION 22/49
+2025-10-16 11:22:53,139 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:22:53,140 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 22
+============================================================
+
+2025-10-16 11:23:18,897 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:23:18,943 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 22
+2025-10-16 11:23:18,946 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (3330 chars)
+✅ Strategy generated (3330 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:23:23,827 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: a3d685b5c80ef778
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:23:23,830 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1764 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter22.py
+2025-10-16 11:23:41,976 - tests.integration.extended_test_harness - INFO - ✅ Iteration 22 SUCCESS (duration: 48.8s)
+2025-10-16 11:23:41,977 - tests.integration.extended_test_harness - INFO -    Sharpe: -0.2293
+2025-10-16 11:23:41,977 - tests.integration.extended_test_harness - INFO -    Total Return: -0.22296778522356947
+2025-10-16 11:23:41,978 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:23:41,979 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:23:41,979 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:23:41,979 - tests.integration.extended_test_harness - INFO - ITERATION 23/49
+2025-10-16 11:23:41,980 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:23:41,980 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 23
+============================================================
+
+2025-10-16 11:24:18,364 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:24:18,445 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 23
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2335 chars)
+✅ Strategy generated (2335 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:24:22,346 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 0ef6b5811e4bbfe3
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:24:22,349 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1851 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter23.py
+2025-10-16 11:24:38,005 - tests.integration.extended_test_harness - INFO - ✅ Iteration 23 SUCCESS (duration: 56.0s)
+2025-10-16 11:24:38,006 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.5385
+2025-10-16 11:24:38,007 - tests.integration.extended_test_harness - INFO -    Total Return: -0.2793360871132023
+2025-10-16 11:24:38,008 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:24:38,008 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:24:38,009 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:24:38,009 - tests.integration.extended_test_harness - INFO - ITERATION 24/49
+2025-10-16 11:24:38,009 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:24:38,010 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 24
+============================================================
+
+2025-10-16 11:25:04,832 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:25:04,877 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 24
+2025-10-16 11:25:04,880 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2398 chars)
+✅ Strategy generated (2398 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:25:08,698 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: bac5ab4e4c9a259a
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:25:08,700 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1851 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter24.py
+2025-10-16 11:25:29,261 - tests.integration.extended_test_harness - INFO - ✅ Iteration 24 SUCCESS (duration: 51.3s)
+2025-10-16 11:25:29,262 - tests.integration.extended_test_harness - INFO -    Sharpe: -0.2884
+2025-10-16 11:25:29,263 - tests.integration.extended_test_harness - INFO -    Total Return: -0.014467807154736001
+2025-10-16 11:25:29,264 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:25:29,264 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:25:29,265 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:25:29,265 - tests.integration.extended_test_harness - INFO - ITERATION 25/49
+2025-10-16 11:25:29,266 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:25:29,266 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 25
+============================================================
+
+2025-10-16 11:25:59,567 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:25:59,611 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 25
+✅ Configuration captured
+[1/6] Building prompt...
+2025-10-16 11:25:59,612 - prompt_builder - INFO - Forcing exploration mode (iteration 25)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2407 chars)
+✅ Strategy generated (2407 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:26:02,956 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 432786261b6602b9
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:26:02,958 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter25.py
+2025-10-16 11:26:17,283 - tests.integration.extended_test_harness - INFO - ✅ Iteration 25 SUCCESS (duration: 48.0s)
+2025-10-16 11:26:17,283 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.4584
+2025-10-16 11:26:17,284 - tests.integration.extended_test_harness - INFO -    Total Return: 0.4059893407363064
+2025-10-16 11:26:17,284 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:26:17,284 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:26:17,285 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:26:17,285 - tests.integration.extended_test_harness - INFO - ITERATION 26/49
+2025-10-16 11:26:17,286 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:26:17,286 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 26
+============================================================
+
+2025-10-16 11:26:47,047 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:26:47,086 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 26
+2025-10-16 11:26:47,088 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2621 chars)
+✅ Strategy generated (2621 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:26:51,633 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 7a87437eb643417a
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:26:51,635 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1914 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter26.py
+2025-10-16 11:27:04,203 - tests.integration.extended_test_harness - INFO - ✅ Iteration 26 SUCCESS (duration: 46.9s)
+2025-10-16 11:27:04,203 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.2972
+2025-10-16 11:27:04,204 - tests.integration.extended_test_harness - INFO -    Total Return: 0.47341812011245316
+2025-10-16 11:27:04,204 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:27:04,204 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:27:04,205 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:27:04,205 - tests.integration.extended_test_harness - INFO - ITERATION 27/49
+2025-10-16 11:27:04,205 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:27:04,206 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 27
+============================================================
+
+2025-10-16 11:27:27,098 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:27:27,136 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 27
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2407 chars)
+✅ Strategy generated (2407 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:27:30,844 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 72753723f6ebef44
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:27:30,846 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter27.py
+2025-10-16 11:27:44,356 - tests.integration.extended_test_harness - INFO - ✅ Iteration 27 SUCCESS (duration: 40.2s)
+2025-10-16 11:27:44,357 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.5019
+2025-10-16 11:27:44,357 - tests.integration.extended_test_harness - INFO -    Total Return: 0.6357165701478944
+2025-10-16 11:27:44,358 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:27:44,358 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:27:44,358 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:27:44,359 - tests.integration.extended_test_harness - INFO - ITERATION 28/49
+2025-10-16 11:27:44,359 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:27:44,359 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 28
+============================================================
+
+2025-10-16 11:28:07,624 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:28:07,668 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 28
+2025-10-16 11:28:07,672 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (1972 chars)
+✅ Strategy generated (1972 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:28:12,625 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: bcba155d8a73e764
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:28:12,627 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1885 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter28.py
+2025-10-16 11:28:23,323 - tests.integration.extended_test_harness - INFO - ✅ Iteration 28 SUCCESS (duration: 39.0s)
+2025-10-16 11:28:23,323 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.6472
+2025-10-16 11:28:23,324 - tests.integration.extended_test_harness - INFO -    Total Return: 0.19847553187980138
+2025-10-16 11:28:23,324 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:28:23,324 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:28:23,324 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:28:23,325 - tests.integration.extended_test_harness - INFO - ITERATION 29/49
+2025-10-16 11:28:23,325 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:28:23,325 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 29
+============================================================
+
+2025-10-16 11:28:48,803 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:28:48,846 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 29
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2105 chars)
+✅ Strategy generated (2105 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:28:52,350 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 835d3480bc745882
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:28:52,352 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1885 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter29.py
+2025-10-16 11:29:03,523 - tests.integration.extended_test_harness - INFO - ✅ Iteration 29 SUCCESS (duration: 40.2s)
+2025-10-16 11:29:03,524 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.3494
+2025-10-16 11:29:03,524 - tests.integration.extended_test_harness - INFO -    Total Return: 0.37880985811031903
+2025-10-16 11:29:03,525 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:29:03,525 - tests.integration.extended_test_harness - INFO - 
+📁 Saving checkpoint at iteration 29...
+2025-10-16 11:29:03,525 - tests.integration.extended_test_harness - ERROR - Failed to save checkpoint at iteration 29: 'ChampionStrategy' object has no attribute 'get'
+2025-10-16 11:29:03,526 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:29:03,526 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:29:03,526 - tests.integration.extended_test_harness - INFO - ITERATION 30/49
+2025-10-16 11:29:03,527 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:29:03,527 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 30
+============================================================
+
+2025-10-16 11:29:28,118 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:29:28,158 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 30
+2025-10-16 11:29:28,160 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+2025-10-16 11:29:28,160 - prompt_builder - INFO - Forcing exploration mode (iteration 30)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2489 chars)
+✅ Strategy generated (2489 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:29:31,678 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: a9bdc1d26ce9d1ed
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:29:31,679 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1879 chars)
+2025-10-16 11:29:43,237 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8426) for 5 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter30.py
+2025-10-16 11:29:43,471 - tests.integration.extended_test_harness - INFO - ✅ Iteration 30 SUCCESS (duration: 39.9s)
+2025-10-16 11:29:43,472 - tests.integration.extended_test_harness - INFO -    Sharpe: -0.4743
+2025-10-16 11:29:43,472 - tests.integration.extended_test_harness - INFO -    Total Return: 0.726020823450489
+2025-10-16 11:29:43,473 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:29:43,473 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:29:43,473 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:29:43,474 - tests.integration.extended_test_harness - INFO - ITERATION 31/49
+2025-10-16 11:29:43,474 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:29:43,474 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 31
+============================================================
+
+2025-10-16 11:30:07,803 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:30:07,846 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 31
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2442 chars)
+✅ Strategy generated (2442 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:30:12,016 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: a49a5cea425c2cd3
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:30:12,018 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1914 chars)
+2025-10-16 11:30:24,368 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9706) for 6 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter31.py
+2025-10-16 11:30:24,583 - tests.integration.extended_test_harness - INFO - ✅ Iteration 31 SUCCESS (duration: 41.1s)
+2025-10-16 11:30:24,583 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.8289
+2025-10-16 11:30:24,584 - tests.integration.extended_test_harness - INFO -    Total Return: 0.2788267918197426
+2025-10-16 11:30:24,584 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:30:24,585 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:30:24,585 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:30:24,586 - tests.integration.extended_test_harness - INFO - ITERATION 32/49
+2025-10-16 11:30:24,586 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:30:24,586 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 32
+============================================================
+
+2025-10-16 11:30:49,533 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:30:49,585 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 32
+2025-10-16 11:30:49,587 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2475 chars)
+✅ Strategy generated (2475 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:30:53,530 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 1b02181512fca23f
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:30:53,532 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1915 chars)
+2025-10-16 11:31:07,760 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8792) for 7 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter32.py
+2025-10-16 11:31:08,003 - tests.integration.extended_test_harness - INFO - ✅ Iteration 32 SUCCESS (duration: 43.4s)
+2025-10-16 11:31:08,003 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.7045
+2025-10-16 11:31:08,004 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5346855434383222
+2025-10-16 11:31:08,004 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:31:08,004 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:31:08,005 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:31:08,005 - tests.integration.extended_test_harness - INFO - ITERATION 33/49
+2025-10-16 11:31:08,006 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:31:08,006 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 33
+============================================================
+
+2025-10-16 11:31:31,715 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:31:31,770 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 33
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2660 chars)
+✅ Strategy generated (2660 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:31:37,674 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: db350767fc89f61c
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:31:37,676 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1916 chars)
+2025-10-16 11:31:49,059 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8358) for 8 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter33.py
+2025-10-16 11:31:49,277 - tests.integration.extended_test_harness - INFO - ✅ Iteration 33 SUCCESS (duration: 41.3s)
+2025-10-16 11:31:49,278 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.9005
+2025-10-16 11:31:49,279 - tests.integration.extended_test_harness - INFO -    Total Return: 0.7815850264993389
+2025-10-16 11:31:49,279 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:31:49,279 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:31:49,280 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:31:49,280 - tests.integration.extended_test_harness - INFO - ITERATION 34/49
+2025-10-16 11:31:49,280 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:31:49,281 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 34
+============================================================
+
+2025-10-16 11:32:13,519 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:32:13,558 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 34
+2025-10-16 11:32:13,559 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2335 chars)
+✅ Strategy generated (2335 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:32:17,557 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 0ef6b5811e4bbfe3
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:32:17,561 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1851 chars)
+2025-10-16 11:32:29,994 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8478) for 9 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter34.py
+2025-10-16 11:32:30,208 - tests.integration.extended_test_harness - INFO - ✅ Iteration 34 SUCCESS (duration: 40.9s)
+2025-10-16 11:32:30,209 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.8137
+2025-10-16 11:32:30,210 - tests.integration.extended_test_harness - INFO -    Total Return: -0.23712369094944158
+2025-10-16 11:32:30,211 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:32:30,211 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:32:30,212 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:32:30,213 - tests.integration.extended_test_harness - INFO - ITERATION 35/49
+2025-10-16 11:32:30,213 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:32:30,213 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 35
+============================================================
+
+2025-10-16 11:33:02,510 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:33:02,560 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 35
+✅ Configuration captured
+[1/6] Building prompt...
+2025-10-16 11:33:02,561 - prompt_builder - INFO - Forcing exploration mode (iteration 35)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2611 chars)
+✅ Strategy generated (2611 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:33:06,356 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: bb33c20bbd551482
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:33:06,358 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1881 chars)
+2025-10-16 11:33:23,401 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8238) for 10 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter35.py
+2025-10-16 11:33:23,660 - tests.integration.extended_test_harness - INFO - ✅ Iteration 35 SUCCESS (duration: 53.4s)
+2025-10-16 11:33:23,661 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.0328
+2025-10-16 11:33:23,661 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5340993045440354
+2025-10-16 11:33:23,662 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:33:23,662 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:33:23,662 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:33:23,663 - tests.integration.extended_test_harness - INFO - ITERATION 36/49
+2025-10-16 11:33:23,663 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:33:23,663 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 36
+============================================================
+
+2025-10-16 11:33:45,044 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:33:45,081 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 36
+2025-10-16 11:33:45,083 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2516 chars)
+✅ Strategy generated (2516 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:33:49,500 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 2b085df20f1b72c6
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:33:49,502 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1916 chars)
+2025-10-16 11:34:03,716 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8604) for 11 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter36.py
+2025-10-16 11:34:03,919 - tests.integration.extended_test_harness - INFO - ✅ Iteration 36 SUCCESS (duration: 40.3s)
+2025-10-16 11:34:03,919 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.3104
+2025-10-16 11:34:03,920 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5676803335856397
+2025-10-16 11:34:03,920 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:34:03,921 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:34:03,921 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:34:03,921 - tests.integration.extended_test_harness - INFO - ITERATION 37/49
+2025-10-16 11:34:03,922 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:34:03,922 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 37
+============================================================
+
+2025-10-16 11:34:29,137 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:34:29,190 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 37
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2141 chars)
+✅ Strategy generated (2141 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:34:32,648 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: a5d77e2086cbf374
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:34:32,650 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1885 chars)
+2025-10-16 11:34:48,129 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9967) for 12 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter37.py
+2025-10-16 11:34:48,456 - tests.integration.extended_test_harness - INFO - ✅ Iteration 37 SUCCESS (duration: 44.5s)
+2025-10-16 11:34:48,457 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.3926
+2025-10-16 11:34:48,469 - tests.integration.extended_test_harness - INFO -    Total Return: -0.08332706556592126
+2025-10-16 11:34:48,469 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:34:48,471 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:34:48,472 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:34:48,472 - tests.integration.extended_test_harness - INFO - ITERATION 38/49
+2025-10-16 11:34:48,473 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:34:48,474 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 38
+============================================================
+
+2025-10-16 11:35:19,995 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:35:20,057 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 38
+2025-10-16 11:35:20,059 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2525 chars)
+✅ Strategy generated (2525 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:35:23,913 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: e72f23fa353a4899
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:35:23,915 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: NameError: name 'np' is not defined...
+
+[5/6] Building feedback...
+✅ Feedback generated (124 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter38.py
+2025-10-16 11:35:29,750 - tests.integration.extended_test_harness - ERROR - ❌ Iteration 38 EXECUTION FAILURE
+2025-10-16 11:35:29,751 - tests.integration.extended_test_harness - ERROR -    Unknown error
+2025-10-16 11:35:29,751 - tests.integration.extended_test_harness - WARNING - ⚠️  Retrying iteration 38 (attempt 2/3)
+2025-10-16 11:35:31,753 - tests.integration.extended_test_harness - INFO - Attempt 2/3
+
+============================================================
+ITERATION 38
+============================================================
+
+2025-10-16 11:35:57,753 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:35:57,790 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 38
+2025-10-16 11:35:57,793 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2680 chars)
+✅ Strategy generated (2680 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:36:02,438 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 2af1300c70383f90
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:36:02,440 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:36:16,536 - autonomous_loop - WARNING - Variance alert: High variance (σ=1.0832) for 13 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter38.py
+2025-10-16 11:36:16,722 - tests.integration.extended_test_harness - INFO - ✅ Iteration 38 SUCCESS (duration: 88.2s)
+2025-10-16 11:36:16,723 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.6222
+2025-10-16 11:36:16,724 - tests.integration.extended_test_harness - INFO -    Total Return: -0.28384553193940454
+2025-10-16 11:36:16,725 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:36:16,725 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:36:16,726 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:36:16,726 - tests.integration.extended_test_harness - INFO - ITERATION 39/49
+2025-10-16 11:36:16,726 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:36:16,727 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 39
+============================================================
+
+2025-10-16 11:36:39,592 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:36:39,635 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 39
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2340 chars)
+✅ Strategy generated (2340 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:36:45,019 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: dae27e53d4508ab0
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:36:45,021 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:36:56,198 - autonomous_loop - WARNING - Variance alert: High variance (σ=1.1563) for 14 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter39.py
+2025-10-16 11:36:56,430 - tests.integration.extended_test_harness - INFO - ✅ Iteration 39 SUCCESS (duration: 39.7s)
+2025-10-16 11:36:56,431 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.0413
+2025-10-16 11:36:56,431 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5949663099989508
+2025-10-16 11:36:56,431 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:36:56,431 - tests.integration.extended_test_harness - INFO - 
+📁 Saving checkpoint at iteration 39...
+2025-10-16 11:36:56,432 - tests.integration.extended_test_harness - ERROR - Failed to save checkpoint at iteration 39: 'ChampionStrategy' object has no attribute 'get'
+2025-10-16 11:36:56,432 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:36:56,432 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:36:56,432 - tests.integration.extended_test_harness - INFO - ITERATION 40/49
+2025-10-16 11:36:56,432 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:36:56,433 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 40
+============================================================
+
+2025-10-16 11:37:19,990 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:37:20,029 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 40
+2025-10-16 11:37:20,031 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+2025-10-16 11:37:20,032 - prompt_builder - INFO - Forcing exploration mode (iteration 40)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2661 chars)
+✅ Strategy generated (2661 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:37:24,283 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: ae1a0b255520721b
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:37:24,284 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+❌ Execution failed
+   Error: NameError: name 'np' is not defined...
+
+[5/6] Building feedback...
+✅ Feedback generated (124 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter40.py
+2025-10-16 11:37:28,724 - tests.integration.extended_test_harness - ERROR - ❌ Iteration 40 EXECUTION FAILURE
+2025-10-16 11:37:28,725 - tests.integration.extended_test_harness - ERROR -    Unknown error
+2025-10-16 11:37:28,725 - tests.integration.extended_test_harness - WARNING - ⚠️  Retrying iteration 40 (attempt 2/3)
+2025-10-16 11:37:30,727 - tests.integration.extended_test_harness - INFO - Attempt 2/3
+
+============================================================
+ITERATION 40
+============================================================
+
+2025-10-16 11:37:55,575 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:37:55,616 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 40
+2025-10-16 11:37:55,619 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+2025-10-16 11:37:55,620 - prompt_builder - INFO - Forcing exploration mode (iteration 40)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2801 chars)
+✅ Strategy generated (2801 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:38:00,406 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: cf6729fcb68b37c1
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:38:00,408 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:16: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:38:11,721 - autonomous_loop - WARNING - Variance alert: High variance (σ=1.1713) for 15 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter40.py
+2025-10-16 11:38:11,946 - tests.integration.extended_test_harness - INFO - ✅ Iteration 40 SUCCESS (duration: 75.5s)
+2025-10-16 11:38:11,947 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.2377
+2025-10-16 11:38:11,947 - tests.integration.extended_test_harness - INFO -    Total Return: -0.018054792613349135
+2025-10-16 11:38:11,948 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:38:11,949 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:38:11,949 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:38:11,950 - tests.integration.extended_test_harness - INFO - ITERATION 41/49
+2025-10-16 11:38:11,950 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:38:11,951 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 41
+============================================================
+
+2025-10-16 11:38:36,825 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:38:36,863 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 41
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2874 chars)
+✅ Strategy generated (2874 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:38:40,720 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 573e0e1d8e41398f
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:38:40,723 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:38:53,314 - autonomous_loop - WARNING - Variance alert: High variance (σ=1.0444) for 16 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter41.py
+2025-10-16 11:38:53,586 - tests.integration.extended_test_harness - INFO - ✅ Iteration 41 SUCCESS (duration: 41.6s)
+2025-10-16 11:38:53,587 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.7002
+2025-10-16 11:38:53,587 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5429458415812434
+2025-10-16 11:38:53,587 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:38:53,588 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:38:53,588 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:38:53,588 - tests.integration.extended_test_harness - INFO - ITERATION 42/49
+2025-10-16 11:38:53,589 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:38:53,589 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 42
+============================================================
+
+2025-10-16 11:39:21,397 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:39:21,449 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 42
+2025-10-16 11:39:21,451 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2677 chars)
+✅ Strategy generated (2677 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:39:25,174 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: bb92cd99c6645475
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:39:25,176 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:39:40,916 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.9915) for 17 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter42.py
+2025-10-16 11:39:41,188 - tests.integration.extended_test_harness - INFO - ✅ Iteration 42 SUCCESS (duration: 47.6s)
+2025-10-16 11:39:41,189 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.4392
+2025-10-16 11:39:41,189 - tests.integration.extended_test_harness - INFO -    Total Return: 0.01773420944492471
+2025-10-16 11:39:41,189 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:39:41,190 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:39:41,190 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:39:41,190 - tests.integration.extended_test_harness - INFO - ITERATION 43/49
+2025-10-16 11:39:41,191 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:39:41,191 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 43
+============================================================
+
+2025-10-16 11:40:10,514 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:40:10,566 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 43
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2402 chars)
+✅ Strategy generated (2402 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:40:14,319 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 170d646ba69f748f
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:40:14,321 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:40:26,841 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8714) for 18 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter43.py
+2025-10-16 11:40:27,066 - tests.integration.extended_test_harness - INFO - ✅ Iteration 43 SUCCESS (duration: 45.9s)
+2025-10-16 11:40:27,067 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.4437
+2025-10-16 11:40:27,067 - tests.integration.extended_test_harness - INFO -    Total Return: 0.5803100379910644
+2025-10-16 11:40:27,067 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:40:27,067 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:40:27,068 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:40:27,068 - tests.integration.extended_test_harness - INFO - ITERATION 44/49
+2025-10-16 11:40:27,068 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:40:27,069 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 44
+============================================================
+
+2025-10-16 11:40:59,567 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:40:59,615 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 44
+2025-10-16 11:40:59,618 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2512 chars)
+✅ Strategy generated (2512 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:41:03,750 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: ed89300f14129862
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:41:03,752 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+2025-10-16 11:41:23,164 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8913) for 19 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter44.py
+2025-10-16 11:41:23,524 - tests.integration.extended_test_harness - INFO - ✅ Iteration 44 SUCCESS (duration: 56.5s)
+2025-10-16 11:41:23,524 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.1353
+2025-10-16 11:41:23,525 - tests.integration.extended_test_harness - INFO -    Total Return: 0.046074806691231485
+2025-10-16 11:41:23,526 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:41:23,526 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:41:23,527 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:41:23,527 - tests.integration.extended_test_harness - INFO - ITERATION 45/49
+2025-10-16 11:41:23,528 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:41:23,528 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 45
+============================================================
+
+2025-10-16 11:42:02,517 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:42:02,614 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 45
+✅ Configuration captured
+[1/6] Building prompt...
+2025-10-16 11:42:02,615 - prompt_builder - INFO - Forcing exploration mode (iteration 45)
+✅ Prompt ready (8481 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2917 chars)
+✅ Strategy generated (2917 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:42:07,031 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: fc063fbbc3c0eab6
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:42:07,036 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:13: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1879 chars)
+2025-10-16 11:42:28,377 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8961) for 20 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter45.py
+2025-10-16 11:42:28,698 - tests.integration.extended_test_harness - INFO - ✅ Iteration 45 SUCCESS (duration: 65.2s)
+2025-10-16 11:42:28,699 - tests.integration.extended_test_harness - INFO -    Sharpe: 0.1645
+2025-10-16 11:42:28,699 - tests.integration.extended_test_harness - INFO -    Total Return: -0.2089922478380947
+2025-10-16 11:42:28,700 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:42:28,700 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:42:28,701 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:42:28,701 - tests.integration.extended_test_harness - INFO - ITERATION 46/49
+2025-10-16 11:42:28,702 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:42:28,702 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 46
+============================================================
+
+2025-10-16 11:42:55,107 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:42:55,188 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 46
+2025-10-16 11:42:55,190 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2499 chars)
+✅ Strategy generated (2499 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:43:01,473 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 72d8d8e89417d5fd
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:43:01,476 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1914 chars)
+2025-10-16 11:43:17,783 - autonomous_loop - WARNING - Variance alert: High variance (σ=0.8157) for 21 consecutive iterations. Learning may be unstable.
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter46.py
+2025-10-16 11:43:18,083 - tests.integration.extended_test_harness - INFO - ✅ Iteration 46 SUCCESS (duration: 49.4s)
+2025-10-16 11:43:18,084 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.2919
+2025-10-16 11:43:18,084 - tests.integration.extended_test_harness - INFO -    Total Return: 0.2121656413076955
+2025-10-16 11:43:18,085 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:43:18,085 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:43:18,086 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:43:18,086 - tests.integration.extended_test_harness - INFO - ITERATION 47/49
+2025-10-16 11:43:18,086 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:43:18,087 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 47
+============================================================
+
+2025-10-16 11:43:45,693 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:43:45,736 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 47
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2454 chars)
+✅ Strategy generated (2454 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:43:49,539 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 82bec2073458fed7
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:43:49,541 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1915 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter47.py
+2025-10-16 11:44:01,906 - tests.integration.extended_test_harness - INFO - ✅ Iteration 47 SUCCESS (duration: 43.8s)
+2025-10-16 11:44:01,906 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.1950
+2025-10-16 11:44:01,907 - tests.integration.extended_test_harness - INFO -    Total Return: 0.23477507916758483
+2025-10-16 11:44:01,908 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:44:01,908 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:44:01,909 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:44:01,909 - tests.integration.extended_test_harness - INFO - ITERATION 48/49
+2025-10-16 11:44:01,910 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:44:01,910 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 48
+============================================================
+
+2025-10-16 11:44:26,792 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:44:26,834 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 48
+2025-10-16 11:44:26,837 - autonomous_loop - WARNING - Configuration capture failed: No module named 'src.config.experiment_config'
+⚠️  Configuration capture failed (continuing)
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2577 chars)
+✅ Strategy generated (2577 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:44:30,198 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 567b2e14dd6a3fde
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:44:30,203 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1914 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter48.py
+2025-10-16 11:44:44,249 - tests.integration.extended_test_harness - INFO - ✅ Iteration 48 SUCCESS (duration: 42.3s)
+2025-10-16 11:44:44,250 - tests.integration.extended_test_harness - INFO -    Sharpe: 1.4453
+2025-10-16 11:44:44,250 - tests.integration.extended_test_harness - INFO -    Total Return: 0.11703237973787156
+2025-10-16 11:44:44,251 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:44:44,252 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:44:44,252 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:44:44,253 - tests.integration.extended_test_harness - INFO - ITERATION 49/49
+2025-10-16 11:44:44,253 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:44:44,254 - tests.integration.extended_test_harness - INFO - Attempt 1/3
+
+============================================================
+ITERATION 49
+============================================================
+
+2025-10-16 11:45:08,386 - autonomous_loop - WARNING - Data checksum changed: Data checksum mismatch: expected=9ad3afa19b659d4d..., current=3256de3f0a8f5058...
+
+[0.5/6] Capturing configuration snapshot...
+2025-10-16 11:45:08,422 - src.config.experiment_config_manager - INFO - Configuration snapshot saved for iteration 49
+✅ Configuration captured
+[1/6] Building prompt...
+✅ Prompt ready (10129 chars)
+
+[2/6] Generating strategy with google/gemini-2.5-flash...
+Calling OpenRouter API with google/gemini-2.5-flash (attempt 1/3)...
+✅ Successfully generated strategy (2486 chars)
+✅ Strategy generated (2486 chars)
+
+[2.3/6] Validating champion preservation...
+2025-10-16 11:45:12,491 - autonomous_loop - INFO - Preservation validated: ✅ PRESERVED | 2/2 params | similarity 50.00%
+✅ Preservation validated - critical patterns maintained
+
+[2.5/6] Auto-fixing dataset keys...
+   Code hash: 0fba522cc9cabeca
+✅ No fixes needed
+
+[2.7/6] Static validation...
+✅ Static validation passed
+
+[3/6] Validating code...
+2025-10-16 11:45:12,494 - scripts.validate_code - INFO - Code validation passed - no security violations detected
+<string>:12: FutureWarning: The default fill_method='pad' in FinlabDataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+✅ Validation passed
+
+[4/6] Executing in sandbox...
+✅ Execution successful
+   Metrics: ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'win_rate', 'position_count']
+
+[4.5/6] Validating metric integrity...
+✅ Metric validation passed
+
+[4.6/6] Validating semantic behavior...
+✅ Semantic validation passed
+
+[5/6] Building feedback...
+✅ Feedback generated (1913 chars)
+
+[6/6] Recording iteration...
+✅ Iteration recorded
+✅ Code saved to generated_strategy_loop_iter49.py
+2025-10-16 11:45:27,507 - tests.integration.extended_test_harness - INFO - ✅ Iteration 49 SUCCESS (duration: 43.3s)
+2025-10-16 11:45:27,507 - tests.integration.extended_test_harness - INFO -    Sharpe: -0.0925
+2025-10-16 11:45:27,508 - tests.integration.extended_test_harness - INFO -    Total Return: 0.16331228272390708
+2025-10-16 11:45:27,509 - tests.integration.extended_test_harness - INFO -    Current Champion: Iteration 6 (Sharpe 2.4751)
+2025-10-16 11:45:27,509 - tests.integration.extended_test_harness - INFO - 
+📁 Saving checkpoint at iteration 49...
+2025-10-16 11:45:27,510 - tests.integration.extended_test_harness - ERROR - Failed to save checkpoint at iteration 49: 'ChampionStrategy' object has no attribute 'get'
+2025-10-16 11:45:27,510 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:45:27,511 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,511 - tests.integration.extended_test_harness - INFO - EXTENDED TEST RUN - COMPLETE
+2025-10-16 11:45:27,511 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,512 - tests.integration.extended_test_harness - INFO - Total duration: 2275.5s (37.9m)
+2025-10-16 11:45:27,513 - tests.integration.extended_test_harness - INFO - Total iterations: 52
+2025-10-16 11:45:27,513 - tests.integration.extended_test_harness - INFO - ✅ Successful: 50
+2025-10-16 11:45:27,514 - tests.integration.extended_test_harness - INFO - ❌ Failed: 2
+2025-10-16 11:45:27,514 - tests.integration.extended_test_harness - INFO -    - Validation failures: 0
+2025-10-16 11:45:27,514 - tests.integration.extended_test_harness - INFO -    - Execution failures: 2
+2025-10-16 11:45:27,515 - tests.integration.extended_test_harness - INFO - Success rate: 96.2%
+2025-10-16 11:45:27,515 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:45:27,516 - tests.integration.extended_test_harness - INFO - Best Sharpe: 2.4437
+2025-10-16 11:45:27,516 - tests.integration.extended_test_harness - INFO - Avg Sharpe: 1.5226
+2025-10-16 11:45:27,517 - tests.integration.extended_test_harness - INFO - Median Sharpe: 1.6222
+2025-10-16 11:45:27,517 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:45:27,518 - tests.integration.extended_test_harness - INFO - 🏆 FINAL CHAMPION: Iteration 6
+2025-10-16 11:45:27,518 - tests.integration.extended_test_harness - INFO -    Sharpe: 2.4751
+2025-10-16 11:45:27,518 - tests.integration.extended_test_harness - INFO -    Champion updates: 1
+2025-10-16 11:45:27,519 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:45:27,519 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,520 - tests.integration.extended_test_harness - INFO - GENERATING STATISTICAL REPORT
+2025-10-16 11:45:27,520 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,520 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,521 - tests.integration.extended_test_harness - INFO - GENERATING STATISTICAL REPORT
+2025-10-16 11:45:27,521 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,523 - tests.integration.extended_test_harness - INFO - Basic Statistics:
+2025-10-16 11:45:27,523 - tests.integration.extended_test_harness - INFO -   Sample size: 52
+2025-10-16 11:45:27,524 - tests.integration.extended_test_harness - INFO -   Mean Sharpe: 1.217
+2025-10-16 11:45:27,524 - tests.integration.extended_test_harness - INFO -   Std Sharpe: 0.908
+2025-10-16 11:45:27,525 - tests.integration.extended_test_harness - INFO -   Range: [-0.474, 2.444]
+2025-10-16 11:45:27,525 - tests.integration.extended_test_harness - INFO - 
+Statistical Analysis:
+2025-10-16 11:45:27,526 - tests.integration.extended_test_harness - INFO - Cohen's d: 0.369 (small)
+2025-10-16 11:45:27,527 - tests.integration.extended_test_harness - INFO -   First 10 mean: 0.956, Last 10 mean: 1.296
+2025-10-16 11:45:27,527 - tests.integration.extended_test_harness - INFO -   Improvement: 0.340
+2025-10-16 11:45:27,539 - tests.integration.extended_test_harness - INFO - Paired t-test: p-value=0.4070, significant=False
+2025-10-16 11:45:27,540 - tests.integration.extended_test_harness - INFO -   First half mean: 1.129
+2025-10-16 11:45:27,540 - tests.integration.extended_test_harness - INFO -   Second half mean: 1.305
+2025-10-16 11:45:27,541 - tests.integration.extended_test_harness - INFO -   No significant change detected (p >= 0.05)
+2025-10-16 11:45:27,545 - tests.integration.extended_test_harness - INFO - 95% Confidence Interval: [0.964, 1.470]
+2025-10-16 11:45:27,546 - tests.integration.extended_test_harness - INFO -   Mean: 1.217, SE: 0.126
+2025-10-16 11:45:27,546 - tests.integration.extended_test_harness - INFO -   Interval width: 0.506
+2025-10-16 11:45:27,546 - tests.integration.extended_test_harness - INFO - 
+Convergence Analysis:
+2025-10-16 11:45:27,547 - tests.integration.extended_test_harness - INFO -   Rolling variance (last 10): 0.778
+2025-10-16 11:45:27,547 - tests.integration.extended_test_harness - INFO -   Convergence threshold: 0.5
+2025-10-16 11:45:27,548 - tests.integration.extended_test_harness - INFO -   Convergence achieved: False
+2025-10-16 11:45:27,548 - tests.integration.extended_test_harness - INFO - 
+======================================================================
+2025-10-16 11:45:27,548 - tests.integration.extended_test_harness - INFO - PRODUCTION READINESS ASSESSMENT
+2025-10-16 11:45:27,549 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,549 - tests.integration.extended_test_harness - INFO -   NOT READY FOR PRODUCTION: Some criteria failed
+2025-10-16 11:45:27,550 - tests.integration.extended_test_harness - INFO -   Statistical significance NOT met: p-value = 0.4070 >= 0.05
+2025-10-16 11:45:27,550 - tests.integration.extended_test_harness - INFO -   Effect size too small: Cohen's d = 0.369 < 0.4
+2025-10-16 11:45:27,551 - tests.integration.extended_test_harness - INFO -   Convergence NOT achieved: rolling variance = 0.778 >= 0.5
+2025-10-16 11:45:27,551 - tests.integration.extended_test_harness - INFO - 
+Additional Metrics:
+2025-10-16 11:45:27,551 - tests.integration.extended_test_harness - INFO -   Champion update frequency: 1.9%
+2025-10-16 11:45:27,552 - tests.integration.extended_test_harness - INFO -   Avg duration per iteration: 45.17s
+2025-10-16 11:45:27,552 - tests.integration.extended_test_harness - INFO - 
+======================================================================
+2025-10-16 11:45:27,553 - tests.integration.extended_test_harness - INFO - STATISTICAL REPORT COMPLETE
+2025-10-16 11:45:27,553 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,553 - tests.integration.extended_test_harness - INFO - ✅ Statistical report generated
+2025-10-16 11:45:27,554 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:45:27,554 - tests.integration.extended_test_harness - INFO - 📁 Saving final checkpoint...
+2025-10-16 11:45:27,554 - tests.integration.extended_test_harness - ERROR - Failed to save checkpoint at iteration 49: 'ChampionStrategy' object has no attribute 'get'
+2025-10-16 11:45:27,555 - tests.integration.extended_test_harness - INFO - 
+2025-10-16 11:45:27,555 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,555 - tests.integration.extended_test_harness - INFO - TEST COMPLETE - RESULTS SUMMARY
+2025-10-16 11:45:27,555 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,556 - tests.integration.extended_test_harness - INFO - Test completed: True
+2025-10-16 11:45:27,556 - tests.integration.extended_test_harness - INFO - Total iterations: 52
+2025-10-16 11:45:27,556 - tests.integration.extended_test_harness - INFO - Success rate: 96.2%
+2025-10-16 11:45:27,557 - tests.integration.extended_test_harness - INFO - Best Sharpe: 2.4437
+2025-10-16 11:45:27,557 - tests.integration.extended_test_harness - INFO - Avg Sharpe: 1.5226
+2025-10-16 11:45:27,557 - tests.integration.extended_test_harness - INFO - Production ready: False
+2025-10-16 11:45:27,558 - tests.integration.extended_test_harness - INFO - ======================================================================
+2025-10-16 11:45:27,558 - __main__ - INFO - 
+2025-10-16 11:45:27,558 - __main__ - INFO - Extracting Phase 1 stability metrics...
+2025-10-16 11:45:27,595 - __main__ - INFO - ✅ Phase 1 metrics extracted:
+2025-10-16 11:45:27,596 - __main__ - INFO -    Data integrity checks: 361
+2025-10-16 11:45:27,597 - __main__ - INFO -    Config snapshots: 215
+2025-10-16 11:45:27,597 - __main__ - INFO - 
+2025-10-16 11:45:27,598 - __main__ - INFO - ======================================================================
+2025-10-16 11:45:27,598 - __main__ - INFO - TEST EXECUTION SUMMARY
+2025-10-16 11:45:27,598 - __main__ - INFO - ======================================================================
+2025-10-16 11:45:27,599 - __main__ - INFO - Test completed: True
+2025-10-16 11:45:27,599 - __main__ - INFO - Total iterations: 52
+2025-10-16 11:45:27,599 - __main__ - INFO - Success rate: 96.2%
+2025-10-16 11:45:27,600 - __main__ - INFO - Best Sharpe: 2.4437
+2025-10-16 11:45:27,600 - __main__ - INFO - Avg Sharpe: 1.5226
+2025-10-16 11:45:27,600 - __main__ - INFO - Final checkpoint: 
+2025-10-16 11:45:27,601 - __main__ - INFO - ======================================================================
+2025-10-16 11:45:27,601 - __main__ - INFO - 
+2025-10-16 11:45:27,601 - __main__ - INFO - ======================================================================
+2025-10-16 11:45:27,601 - __main__ - INFO - PRODUCTION READINESS REPORT
+2025-10-16 11:45:27,602 - __main__ - INFO - ======================================================================
+2025-10-16 11:45:27,602 - __main__ - INFO - ❌ STATUS: NOT READY FOR PRODUCTION
+2025-10-16 11:45:27,603 - __main__ - INFO - 
+2025-10-16 11:45:27,603 - __main__ - INFO - STATISTICAL METRICS:
+2025-10-16 11:45:27,603 - __main__ - INFO -   Sample size: 52
+2025-10-16 11:45:27,604 - __main__ - INFO -   Mean Sharpe: 1.2168
+2025-10-16 11:45:27,604 - __main__ - INFO -   Std Sharpe: 0.9085
+2025-10-16 11:45:27,604 - __main__ - INFO -   Range: [-0.4743, 2.4437]
+2025-10-16 11:45:27,605 - __main__ - INFO - 
+2025-10-16 11:45:27,605 - __main__ - INFO - LEARNING EFFECT ANALYSIS:
+2025-10-16 11:45:27,606 - __main__ - INFO -   Cohen's d: 0.369 (small)
+2025-10-16 11:45:27,606 - __main__ - INFO -   P-value: 0.4070 (not significant)
+2025-10-16 11:45:27,606 - __main__ - INFO -   95% CI: [0.964, 1.470]
+2025-10-16 11:45:27,607 - __main__ - INFO - 
+2025-10-16 11:45:27,607 - __main__ - INFO - CONVERGENCE ANALYSIS:
+2025-10-16 11:45:27,607 - __main__ - INFO -   Rolling variance: 0.778
+2025-10-16 11:45:27,608 - __main__ - INFO -   Convergence achieved: False
+2025-10-16 11:45:27,608 - __main__ - INFO - 
+2025-10-16 11:45:27,608 - __main__ - INFO - ADDITIONAL METRICS:
+2025-10-16 11:45:27,609 - __main__ - INFO -   Champion update frequency: 1.9%
+2025-10-16 11:45:27,609 - __main__ - INFO -   Avg duration per iteration: 45.17s
+2025-10-16 11:45:27,609 - __main__ - INFO - 
+2025-10-16 11:45:27,610 - __main__ - INFO - PHASE 1 STABILITY FEATURES:
+2025-10-16 11:45:27,610 - __main__ - INFO -   Data integrity checks: 361
+2025-10-16 11:45:27,610 - __main__ - INFO -   Data changes detected: 1
+2025-10-16 11:45:27,610 - __main__ - INFO -   Config snapshots captured: 215
+2025-10-16 11:45:27,611 - __main__ - INFO -   Config changes detected: 4
+2025-10-16 11:45:27,611 - __main__ - INFO -     - Critical changes: 1
+2025-10-16 11:45:27,611 - __main__ - INFO -     - Moderate changes: 6
+2025-10-16 11:45:27,612 - __main__ - INFO -     - Minor changes: 0
+2025-10-16 11:45:27,612 - __main__ - INFO - 
+2025-10-16 11:45:27,613 - __main__ - INFO - READINESS REASONING:
+2025-10-16 11:45:27,614 - __main__ - INFO -   NOT READY FOR PRODUCTION: Some criteria failed
+2025-10-16 11:45:27,614 - __main__ - INFO -   Statistical significance NOT met: p-value = 0.4070 >= 0.05
+2025-10-16 11:45:27,614 - __main__ - INFO -   Effect size too small: Cohen's d = 0.369 < 0.4
+2025-10-16 11:45:27,615 - __main__ - INFO -   Convergence NOT achieved: rolling variance = 0.778 >= 0.5
+2025-10-16 11:45:27,615 - __main__ - INFO - ======================================================================
+
+✅ Test completed successfully
+   Total iterations: 52
+   Success rate: 96.2%
+   Best Sharpe: 2.4437
+   Avg Sharpe: 1.5226
+
+⚠️  NOT PRODUCTION READY: Some criteria not met
+   Review statistical report for details
+   Log file: logs/50iteration_test_20251016_110731.log
+   Final checkpoint: 

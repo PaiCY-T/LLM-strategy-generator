@@ -1,0 +1,137 @@
+2025-10-08 11:48:51,917 - __main__ - INFO - ============================================================
+2025-10-08 11:48:51,918 - __main__ - INFO - STARTING 10-ITERATION VALIDATION RUN (TASK 30)
+2025-10-08 11:48:51,919 - __main__ - INFO - ============================================================
+2025-10-08 11:48:51,919 - __main__ - INFO - Target: 10 iterations
+2025-10-08 11:48:51,919 - __main__ - INFO - Model: google/gemini-2.5-flash
+2025-10-08 11:48:51,920 - __main__ - INFO - 
+2025-10-08 11:48:54,139 - __main__ - INFO - ✅ Finlab data loaded successfully
+2025-10-08 11:48:54,178 - __main__ - INFO - 
+2025-10-08 11:48:54,178 - __main__ - INFO - ============================================================
+2025-10-08 11:48:54,179 - __main__ - INFO - ITERATION 0/9
+2025-10-08 11:48:54,179 - __main__ - INFO - ============================================================
+2025-10-08 11:49:08,635 - autonomous_loop - INFO - New champion: Iteration 0, Sharpe 1.7651
+2025-10-08 11:49:08,636 - autonomous_loop - INFO - Champion updated successfully
+2025-10-08 11:49:08,654 - __main__ - INFO - ✅ Iteration 0 SUCCESS
+2025-10-08 11:49:08,654 - __main__ - INFO -    Sharpe: 1.7651
+2025-10-08 11:49:08,654 - __main__ - INFO -    Champion: Iteration 0 (Sharpe 1.7651)
+2025-10-08 11:49:08,655 - __main__ - INFO - 
+2025-10-08 11:49:08,655 - __main__ - INFO - ============================================================
+2025-10-08 11:49:08,655 - __main__ - INFO - ITERATION 1/9
+2025-10-08 11:49:08,656 - __main__ - INFO - ============================================================
+2025-10-08 11:49:18,603 - autonomous_loop - INFO - New champion: Iteration 1, Sharpe 2.4013
+2025-10-08 11:49:18,603 - autonomous_loop - INFO - Champion updated: 1.7651 → 2.4013 (+36.0%)
+2025-10-08 11:49:18,603 - autonomous_loop - INFO - Champion updated successfully
+2025-10-08 11:49:18,626 - __main__ - INFO - ✅ Iteration 1 SUCCESS
+2025-10-08 11:49:18,627 - __main__ - INFO -    Sharpe: 2.4013
+2025-10-08 11:49:18,627 - __main__ - INFO -    Champion: Iteration 1 (Sharpe 2.4013)
+2025-10-08 11:49:18,627 - __main__ - INFO - 
+2025-10-08 11:49:18,628 - __main__ - INFO - ============================================================
+2025-10-08 11:49:18,628 - __main__ - INFO - ITERATION 2/9
+2025-10-08 11:49:18,629 - __main__ - INFO - ============================================================
+2025-10-08 11:49:31,513 - __main__ - INFO - ✅ Iteration 2 SUCCESS
+2025-10-08 11:49:31,513 - __main__ - INFO -    Sharpe: 1.1965
+2025-10-08 11:49:31,514 - __main__ - INFO -    Champion: Iteration 1 (Sharpe 2.4013)
+2025-10-08 11:49:31,514 - __main__ - INFO - 
+2025-10-08 11:49:31,515 - __main__ - INFO - ============================================================
+2025-10-08 11:49:31,515 - __main__ - INFO - ITERATION 3/9
+2025-10-08 11:49:31,515 - __main__ - INFO - ============================================================
+2025-10-08 11:49:36,291 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 90.0% (from 1,000 to 100)
+2025-10-08 11:49:36,292 - __main__ - ERROR - ❌ Iteration 3 EXCEPTION: local variable 'logger' referenced before assignment
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_10iteration_validation.py", line 117, in run_validation_test
+    success, status = loop.run_iteration(i, data)
+  File "/mnt/c/Users/jnpi/Documents/finlab/autonomous_loop.py", line 158, in run_iteration
+    logger.warning(f"Iteration {iteration_num}: Preservation validation failed, retrying generation")
+UnboundLocalError: local variable 'logger' referenced before assignment
+2025-10-08 11:49:36,301 - __main__ - INFO - 
+2025-10-08 11:49:36,301 - __main__ - INFO - ============================================================
+2025-10-08 11:49:36,301 - __main__ - INFO - ITERATION 4/9
+2025-10-08 11:49:36,302 - __main__ - INFO - ============================================================
+2025-10-08 11:49:40,187 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 95.0% (from 1,000 to 50)
+2025-10-08 11:49:40,188 - __main__ - ERROR - ❌ Iteration 4 EXCEPTION: local variable 'logger' referenced before assignment
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_10iteration_validation.py", line 117, in run_validation_test
+    success, status = loop.run_iteration(i, data)
+  File "/mnt/c/Users/jnpi/Documents/finlab/autonomous_loop.py", line 158, in run_iteration
+    logger.warning(f"Iteration {iteration_num}: Preservation validation failed, retrying generation")
+UnboundLocalError: local variable 'logger' referenced before assignment
+2025-10-08 11:49:40,190 - __main__ - INFO - 
+2025-10-08 11:49:40,191 - __main__ - INFO - ============================================================
+2025-10-08 11:49:40,192 - __main__ - INFO - ITERATION 5/9
+2025-10-08 11:49:40,192 - __main__ - INFO - ============================================================
+2025-10-08 11:49:40,192 - prompt_builder - INFO - Forcing exploration mode (iteration 5)
+2025-10-08 11:49:51,623 - __main__ - INFO - ✅ Iteration 5 SUCCESS
+2025-10-08 11:49:51,624 - __main__ - INFO -    Sharpe: 0.7896
+2025-10-08 11:49:51,624 - __main__ - INFO -    Champion: Iteration 1 (Sharpe 2.4013)
+2025-10-08 11:49:51,624 - __main__ - INFO - 
+2025-10-08 11:49:51,625 - __main__ - INFO - ============================================================
+2025-10-08 11:49:51,625 - __main__ - INFO - ITERATION 6/9
+2025-10-08 11:49:51,625 - __main__ - INFO - ============================================================
+2025-10-08 11:49:56,260 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 95.0% (from 1,000 to 50)
+2025-10-08 11:49:56,260 - __main__ - ERROR - ❌ Iteration 6 EXCEPTION: local variable 'logger' referenced before assignment
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_10iteration_validation.py", line 117, in run_validation_test
+    success, status = loop.run_iteration(i, data)
+  File "/mnt/c/Users/jnpi/Documents/finlab/autonomous_loop.py", line 158, in run_iteration
+    logger.warning(f"Iteration {iteration_num}: Preservation validation failed, retrying generation")
+UnboundLocalError: local variable 'logger' referenced before assignment
+2025-10-08 11:49:56,263 - __main__ - INFO - 
+2025-10-08 11:49:56,263 - __main__ - INFO - ============================================================
+2025-10-08 11:49:56,264 - __main__ - INFO - ITERATION 7/9
+2025-10-08 11:49:56,264 - __main__ - INFO - ============================================================
+2025-10-08 11:50:01,731 - __main__ - ERROR - ❌ Iteration 7 FAILED: FAILED
+2025-10-08 11:50:01,731 - __main__ - INFO - 
+2025-10-08 11:50:01,732 - __main__ - INFO - ============================================================
+2025-10-08 11:50:01,732 - __main__ - INFO - ITERATION 8/9
+2025-10-08 11:50:01,732 - __main__ - INFO - ============================================================
+2025-10-08 11:50:05,360 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 95.0% (from 1,000 to 50)
+2025-10-08 11:50:05,361 - __main__ - ERROR - ❌ Iteration 8 EXCEPTION: local variable 'logger' referenced before assignment
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_10iteration_validation.py", line 117, in run_validation_test
+    success, status = loop.run_iteration(i, data)
+  File "/mnt/c/Users/jnpi/Documents/finlab/autonomous_loop.py", line 158, in run_iteration
+    logger.warning(f"Iteration {iteration_num}: Preservation validation failed, retrying generation")
+UnboundLocalError: local variable 'logger' referenced before assignment
+2025-10-08 11:50:05,364 - __main__ - INFO - 
+2025-10-08 11:50:05,364 - __main__ - INFO - ============================================================
+2025-10-08 11:50:05,365 - __main__ - INFO - ITERATION 9/9
+2025-10-08 11:50:05,365 - __main__ - INFO - ============================================================
+2025-10-08 11:50:09,508 - autonomous_loop - WARNING - Preservation violation: Liquidity threshold relaxed by 95.0% (from 1,000 to 50)
+2025-10-08 11:50:09,509 - __main__ - ERROR - ❌ Iteration 9 EXCEPTION: local variable 'logger' referenced before assignment
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_10iteration_validation.py", line 117, in run_validation_test
+    success, status = loop.run_iteration(i, data)
+  File "/mnt/c/Users/jnpi/Documents/finlab/autonomous_loop.py", line 158, in run_iteration
+    logger.warning(f"Iteration {iteration_num}: Preservation validation failed, retrying generation")
+UnboundLocalError: local variable 'logger' referenced before assignment
+2025-10-08 11:50:09,511 - __main__ - INFO - 
+2025-10-08 11:50:09,512 - __main__ - INFO - ============================================================
+2025-10-08 11:50:09,512 - __main__ - INFO - VALIDATION RESULTS
+2025-10-08 11:50:09,513 - __main__ - INFO - ============================================================
+2025-10-08 11:50:09,513 - __main__ - INFO - 
+2025-10-08 11:50:09,513 - __main__ - INFO - Iterations completed: 10
+2025-10-08 11:50:09,514 - __main__ - INFO - Successful iterations (Sharpe >0.5): 4
+2025-10-08 11:50:09,514 - __main__ - INFO - 
+2025-10-08 11:50:09,514 - __main__ - INFO - SUCCESS CRITERIA (need 3/4 to pass):
+2025-10-08 11:50:09,515 - __main__ - INFO - 
+2025-10-08 11:50:09,515 - __main__ - INFO - ✅ PASS 1. Best Sharpe >1.2
+2025-10-08 11:50:09,515 - __main__ - INFO -      Actual: 2.4013 | Target: 1.2 | Baseline: 0.97
+2025-10-08 11:50:09,516 - __main__ - INFO - ❌ FAIL 2. Success rate >60%
+2025-10-08 11:50:09,517 - __main__ - INFO -      Actual: 40.0% | Target: 60.0% | Baseline: 33.0%
+2025-10-08 11:50:09,517 - __main__ - INFO - ✅ PASS 3. Avg Sharpe >0.5
+2025-10-08 11:50:09,517 - __main__ - INFO -      Actual: 0.6152 | Target: 0.5 | Baseline: 0.33
+2025-10-08 11:50:09,518 - __main__ - INFO - ❌ FAIL 4. No regression >10%
+2025-10-08 11:50:09,518 - __main__ - INFO -      Actual: -1.0000 | Target: -0.1 | Baseline: N/A
+2025-10-08 11:50:09,518 - __main__ - INFO - 
+2025-10-08 11:50:09,519 - __main__ - INFO - CRITERIA PASSED: 2/4
+2025-10-08 11:50:09,519 - __main__ - INFO - 
+2025-10-08 11:50:09,519 - __main__ - WARNING - ============================================================
+2025-10-08 11:50:09,519 - __main__ - WARNING - ⚠️  VALIDATION PARTIALLY SUCCESSFUL
+2025-10-08 11:50:09,520 - __main__ - WARNING - ============================================================
+2025-10-08 11:50:09,520 - __main__ - WARNING - Passed 2/4 criteria (need 3/4)
+2025-10-08 11:50:09,520 - __main__ - WARNING - 
+2025-10-08 11:50:09,521 - __main__ - WARNING - Recommended actions:
+2025-10-08 11:50:09,521 - __main__ - WARNING - 1. Analyze which criteria failed
+2025-10-08 11:50:09,521 - __main__ - WARNING - 2. Tune thresholds (champion update, probation period)
+2025-10-08 11:50:09,522 - __main__ - WARNING - 3. Review prompt effectiveness
+2025-10-08 11:50:09,522 - __main__ - WARNING - 4. Re-run validation

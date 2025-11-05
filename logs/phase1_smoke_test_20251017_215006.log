@@ -1,0 +1,104 @@
+2025-10-17 21:50:06,241 - __main__ - INFO - Logging initialized: logs/phase1_smoke_test_20251017_215006.log
+2025-10-17 21:50:06,241 - __main__ - INFO - ======================================================================
+2025-10-17 21:50:06,242 - __main__ - INFO - PHASE 1: SMOKE TEST (10 GENERATIONS)
+2025-10-17 21:50:06,242 - __main__ - INFO - ======================================================================
+2025-10-17 21:50:06,242 - __main__ - INFO - Timestamp: 2025-10-17T21:50:06.242422
+2025-10-17 21:50:06,242 - __main__ - INFO - Mode: Population-based evolutionary learning
+2025-10-17 21:50:06,242 - __main__ - INFO - Target generations: 10
+2025-10-17 21:50:06,243 - __main__ - INFO - Population size: 30 (quick validation)
+2025-10-17 21:50:06,243 - __main__ - INFO - Expected duration: 25-30 minutes
+2025-10-17 21:50:06,243 - __main__ - INFO - Log file: logs/phase1_smoke_test_20251017_215006.log
+2025-10-17 21:50:06,243 - __main__ - INFO - 
+2025-10-17 21:50:06,243 - __main__ - INFO - ======================================================================
+2025-10-17 21:50:06,243 - __main__ - INFO - VALIDATING PHASE 1 COMPONENTS
+2025-10-17 21:50:06,243 - __main__ - INFO - ======================================================================
+2025-10-17 21:50:06,244 - __main__ - INFO -   ✅ Individual available
+2025-10-17 21:50:06,244 - __main__ - INFO -   ✅ PopulationManager available
+2025-10-17 21:50:06,244 - __main__ - INFO -   ✅ GeneticOperators available
+2025-10-17 21:50:06,244 - __main__ - INFO -   ✅ FitnessEvaluator available
+2025-10-17 21:50:06,244 - __main__ - INFO -   ✅ EvolutionMonitor available
+2025-10-17 21:50:06,244 - __main__ - INFO -   ✅ MomentumTemplate available
+2025-10-17 21:50:06,245 - __main__ - INFO - 
+2025-10-17 21:50:06,245 - __main__ - INFO - ✅ All Phase 1 components available
+2025-10-17 21:50:06,245 - __main__ - INFO - ======================================================================
+2025-10-17 21:50:06,245 - __main__ - INFO - 
+2025-10-17 21:50:06,412 - __main__ - INFO - ✅ Finlab data loaded successfully
+2025-10-17 21:50:06,413 - __main__ - INFO - Initializing Phase1TestHarness for smoke test...
+2025-10-17 21:50:06,484 - tests.integration.phase0_test_harness - INFO - Logging initialized: logs/phase0_test_phase1_smoke_20251017_215006.log
+2025-10-17 21:50:06,485 - tests.integration.phase0_test_harness - INFO - Phase0TestHarness initialized:
+2025-10-17 21:50:06,486 - tests.integration.phase0_test_harness - INFO -   Test name: phase1_smoke
+2025-10-17 21:50:06,486 - tests.integration.phase0_test_harness - INFO -   Model: N/A
+2025-10-17 21:50:06,486 - tests.integration.phase0_test_harness - INFO -   Max iterations: 10
+2025-10-17 21:50:06,486 - tests.integration.phase0_test_harness - INFO -   Checkpoint interval: 5
+2025-10-17 21:50:06,486 - tests.integration.phase0_test_harness - INFO -   Checkpoint dir: checkpoints
+2025-10-17 21:50:06,486 - tests.integration.phase0_test_harness - INFO -   Template mode: ENABLED (Momentum)
+2025-10-17 21:50:06,487 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-17 21:50:06,487 - tests.integration.phase0_test_harness - INFO - PHASE 1 TEST HARNESS INITIALIZED
+2025-10-17 21:50:06,487 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-17 21:50:06,487 - tests.integration.phase0_test_harness - INFO - Population-Based Evolutionary Learning Configuration:
+2025-10-17 21:50:06,487 - tests.integration.phase0_test_harness - INFO -   Test name: phase1_smoke
+2025-10-17 21:50:06,487 - tests.integration.phase0_test_harness - INFO -   Generations: 10
+2025-10-17 21:50:06,488 - tests.integration.phase0_test_harness - INFO -   Population size: 30
+2025-10-17 21:50:06,488 - tests.integration.phase0_test_harness - INFO -   Elite size: 3 (10%)
+2025-10-17 21:50:06,488 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.15 (adaptive 0.05-0.30)
+2025-10-17 21:50:06,488 - tests.integration.phase0_test_harness - INFO -   Tournament size: 2
+2025-10-17 21:50:06,488 - tests.integration.phase0_test_harness - INFO -   Max restarts: 2
+2025-10-17 21:50:06,488 - tests.integration.phase0_test_harness - INFO -   IS period: 2015:2020 (fitness optimization)
+2025-10-17 21:50:06,488 - tests.integration.phase0_test_harness - INFO -   OOS period: 2021:2024 (validation)
+2025-10-17 21:50:06,489 - tests.integration.phase0_test_harness - INFO -   Checkpoint interval: 5
+2025-10-17 21:50:06,489 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-17 21:50:06,489 - __main__ - INFO - Starting 10-generation smoke test...
+2025-10-17 21:50:06,489 - __main__ - INFO - 
+2025-10-17 21:50:06,489 - tests.integration.phase0_test_harness - INFO - Initializing components...
+2025-10-17 21:50:06,489 - tests.integration.phase0_test_harness - INFO -   ✅ MomentumTemplate initialized
+2025-10-17 21:50:06,490 - tests.integration.phase0_test_harness - INFO -   ✅ PopulationManager initialized (size=30, elites=3)
+2025-10-17 21:50:06,490 - tests.integration.phase0_test_harness - INFO -   ✅ GeneticOperators initialized (mutation_rate=0.15)
+2025-10-17 21:50:06,490 - tests.integration.phase0_test_harness - INFO -   ✅ FitnessEvaluator initialized (IS: 2015:2020, OOS: 2021:2024)
+2025-10-17 21:50:06,490 - tests.integration.phase0_test_harness - INFO -   ✅ EvolutionMonitor initialized
+2025-10-17 21:50:06,490 - tests.integration.phase0_test_harness - INFO - All components initialized successfully
+2025-10-17 21:50:06,490 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-17 21:50:06,491 - tests.integration.phase0_test_harness - INFO - STARTING PHASE 1 EVOLUTIONARY LEARNING
+2025-10-17 21:50:06,491 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-17 21:50:06,491 - tests.integration.phase0_test_harness - INFO - Configuration:
+2025-10-17 21:50:06,491 - tests.integration.phase0_test_harness - INFO -   Population size: 30
+2025-10-17 21:50:06,491 - tests.integration.phase0_test_harness - INFO -   Generations: 10
+2025-10-17 21:50:06,491 - tests.integration.phase0_test_harness - INFO -   Start generation: 0
+2025-10-17 21:50:06,491 - tests.integration.phase0_test_harness - INFO -   IS period: 2015:2020
+2025-10-17 21:50:06,492 - tests.integration.phase0_test_harness - INFO -   OOS period: 2021:2024
+2025-10-17 21:50:06,492 - tests.integration.phase0_test_harness - INFO - 
+2025-10-17 21:50:06,492 - tests.integration.phase0_test_harness - INFO - 🧬 Initializing population...
+2025-10-17 21:50:06,492 - tests.integration.phase0_test_harness - INFO - ✅ Population initialized
+2025-10-17 21:50:06,493 - tests.integration.phase0_test_harness - INFO -    Population size: 30
+2025-10-17 21:50:06,493 - tests.integration.phase0_test_harness - INFO -    Initial diversity: 100.0%
+2025-10-17 21:50:06,493 - tests.integration.phase0_test_harness - INFO - 📊 Evaluating initial population on IS data...
+2025-10-17 21:53:08,829 - tests.integration.phase0_test_harness - INFO - ✅ Initial population evaluated
+2025-10-17 21:53:08,830 - tests.integration.phase0_test_harness - INFO - 
+2025-10-17 21:53:08,831 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-17 21:53:08,831 - tests.integration.phase0_test_harness - INFO - GENERATION 0/9
+2025-10-17 21:53:08,831 - tests.integration.phase0_test_harness - INFO - ======================================================================
+2025-10-17 21:53:08,832 - tests.integration.phase0_test_harness - INFO - Generation 0 Summary:
+2025-10-17 21:53:08,832 - tests.integration.phase0_test_harness - INFO -   Best fitness: 1.1029
+2025-10-17 21:53:08,833 - tests.integration.phase0_test_harness - INFO -   Avg fitness: 0.4542
+2025-10-17 21:53:08,833 - tests.integration.phase0_test_harness - INFO -   Diversity: 100.0%
+2025-10-17 21:53:08,834 - tests.integration.phase0_test_harness - INFO -   Cache hit rate: 0.0%
+2025-10-17 21:53:08,834 - tests.integration.phase0_test_harness - INFO -   🏆 NEW CHAMPION!
+2025-10-17 21:55:29,831 - tests.integration.phase0_test_harness - INFO -   Mutation rate: 0.120
+2025-10-17 21:55:29,831 - tests.integration.phase0_test_harness - INFO -   Generation time: 141.0s
+2025-10-17 21:55:29,832 - tests.integration.phase0_test_harness - INFO - 
+2025-10-17 21:55:29,832 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 21:55:29,833 - tests.integration.phase0_test_harness - INFO - PROGRESS UPDATE
+2025-10-17 21:55:29,833 - tests.integration.phase0_test_harness - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-17 21:55:29,834 - tests.integration.phase0_test_harness - INFO - Generation: 1/10 (10.0%)
+2025-10-17 21:55:29,834 - __main__ - ERROR - 
+2025-10-17 21:55:29,834 - __main__ - ERROR - ======================================================================
+2025-10-17 21:55:29,835 - __main__ - ERROR - TEST FAILED WITH EXCEPTION
+2025-10-17 21:55:29,835 - __main__ - ERROR - ======================================================================
+2025-10-17 21:55:29,835 - __main__ - ERROR - Error: 'champion_updates'
+Traceback (most recent call last):
+  File "/mnt/c/Users/jnpi/Documents/finlab/run_phase1_smoke_test.py", line 212, in run_phase1_smoke_test
+    results = harness.run(data=data, resume_from_checkpoint=None)
+  File "/mnt/c/Users/jnpi/Documents/finlab/tests/integration/phase1_test_harness.py", line 364, in run
+    self._update_progress_phase1(generation)
+  File "/mnt/c/Users/jnpi/Documents/finlab/tests/integration/phase1_test_harness.py", line 474, in _update_progress_phase1
+    self.logger.info(f"Champion updates: {summary['champion_updates']} ({summary['champion_update_rate']:.1f}%)")
+KeyError: 'champion_updates'

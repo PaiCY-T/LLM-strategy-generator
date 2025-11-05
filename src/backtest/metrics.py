@@ -6,18 +6,178 @@ built-in metrics functions and pandas operations.
 """
 
 import logging
-from typing import Tuple
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any, Optional, Tuple
 
 import numpy as np
 import pandas as pd
 
-from ..backtest import BacktestResult, PerformanceMetrics
+if TYPE_CHECKING:
+    from . import BacktestResult, PerformanceMetrics
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
 
-def calculate_metrics(backtest_result: BacktestResult) -> PerformanceMetrics:
+@dataclass
+class StrategyMetrics:
+    """Extracted metrics from finlab backtest reports.
+
+    This dataclass represents key performance metrics extracted from
+    finlab backtest report objects. All metrics are optional to handle
+    cases where metrics cannot be extracted or are unavailable.
+
+    Attributes:
+        sharpe_ratio: Sharpe ratio of strategy returns (risk-adjusted return)
+        total_return: Total return percentage (0.25 = 25% return)
+        max_drawdown: Maximum peak-to-trough decline (negative value)
+        win_rate: Percentage of winning trades (0.65 = 65% win rate)
+        execution_success: Whether metrics were successfully extracted from report
+
+    Examples:
+        >>> metrics = StrategyMetrics(
+        ...     sharpe_ratio=1.5,
+        ...     total_return=0.25,
+        ...     max_drawdown=-0.15,
+        ...     win_rate=0.55,
+        ...     execution_success=True
+        ... )
+        >>> print(f"Sharpe: {metrics.sharpe_ratio}, Return: {metrics.total_return:.1%}")
+        Sharpe: 1.5, Return: 25.0%
+    """
+
+    sharpe_ratio: Optional[float] = None
+    total_return: Optional[float] = None
+    max_drawdown: Optional[float] = None
+    win_rate: Optional[float] = None
+    execution_success: bool = False
+
+    def __post_init__(self):
+        """Validate metrics after initialization."""
+        # Ensure NaN values are converted to None
+        if pd.isna(self.sharpe_ratio):
+            self.sharpe_ratio = None
+        if pd.isna(self.total_return):
+            self.total_return = None
+        if pd.isna(self.max_drawdown):
+            self.max_drawdown = None
+        if pd.isna(self.win_rate):
+            self.win_rate = None
+
+
+def calculate_max_drawdown(equity_curve: list) -> float:
+    """Calculate maximum drawdown from equity curve.
+
+    Computes the peak-to-trough decline in portfolio value, representing
+    the largest loss from a historical high. Returns negative value.
+
+    The maximum drawdown measures the largest cumulative loss during a
+    specific period, useful for understanding downside risk and capital
+    preservation requirements.
+
+    Formula: max_drawdown = min((equity - cummax(equity)) / cummax(equity))
+
+    Args:
+        equity_curve: List of equity values over time (e.g., portfolio values)
+
+    Returns:
+        Maximum drawdown as negative decimal (e.g., -0.25 for 25% drawdown)
+
+    Notes:
+        - Returns 0.0 for empty or single-value lists
+        - Returns 0.0 if no drawdown occurred (monotonically increasing)
+        - Uses numpy cumulative maximum for efficiency
+        - Always returns non-positive values (0 or negative)
+
+    Examples:
+        >>> calculate_max_drawdown([100, 110, 105, 120, 90])
+        -0.25  # 25% drawdown from 120 to 90
+        >>> calculate_max_drawdown([100, 110, 120, 130])
+        0.0  # No drawdown (always increasing)
+        >>> calculate_max_drawdown([100])
+        0.0  # Single value, no drawdown
+        >>> calculate_max_drawdown([])
+        0.0  # Empty list
+    """
+    # Convert to numpy array for efficient computation
+    equity_array = np.array(equity_curve, dtype=float)
+
+    # Handle edge cases
+    if equity_array.size == 0 or len(equity_array) < 2:
+        return 0.0
+
+    # Handle NaN or infinite values
+    if np.any(np.isnan(equity_array)) or np.any(np.isinf(equity_array)):
+        return 0.0
+
+    # Calculate running maximum using numpy cumulative max
+    running_max = np.maximum.accumulate(equity_array)
+
+    # Calculate drawdown at each point
+    # drawdown = (current_value - peak_value) / peak_value
+    drawdown = (equity_array - running_max) / running_max
+
+    # Get maximum drawdown (most negative value)
+    max_dd = float(np.min(drawdown))
+
+    return max_dd
+
+
+def calculate_calmar_ratio(annual_return: float, max_drawdown: float) -> Optional[float]:
+    """Calculate Calmar Ratio: annual return divided by maximum drawdown.
+
+    The Calmar ratio measures risk-adjusted return focusing on downside risk.
+    Higher values indicate better risk-adjusted performance.
+
+    Formula: calmar_ratio = annual_return / abs(max_drawdown)
+
+    Args:
+        annual_return: Annualized return as decimal (e.g., 0.15 for 15%)
+        max_drawdown: Maximum drawdown as negative decimal (e.g., -0.20 for -20%)
+
+    Returns:
+        Calmar ratio as float, or None if inputs are invalid
+
+    Notes:
+        - Returns None for zero or near-zero drawdown (< 1e-10)
+        - Returns None for NaN inputs
+        - Can return negative values if annual_return is negative
+        - Typical interpretation: >3.0 excellent, 2.0-3.0 good, 1.0-2.0 acceptable
+
+    Examples:
+        >>> calculate_calmar_ratio(0.15, -0.20)
+        0.75
+        >>> calculate_calmar_ratio(0.30, -0.10)
+        3.0
+        >>> calculate_calmar_ratio(0.10, 0.0)  # Zero drawdown
+        None
+        >>> calculate_calmar_ratio(-0.05, -0.10)  # Negative return
+        -0.5
+        >>> calculate_calmar_ratio(float('nan'), -0.10)  # Invalid input
+        None
+    """
+    # Handle NaN inputs
+    if pd.isna(annual_return) or pd.isna(max_drawdown):
+        return None
+
+    # Handle infinite inputs
+    if np.isinf(annual_return) or np.isinf(max_drawdown):
+        return None
+
+    # Convert drawdown to absolute value
+    abs_drawdown = abs(max_drawdown)
+
+    # Handle zero or near-zero drawdown (epsilon threshold)
+    if abs_drawdown < 1e-10:
+        return None
+
+    # Calculate Calmar ratio
+    calmar_ratio = annual_return / abs_drawdown
+
+    return float(calmar_ratio)
+
+
+def calculate_metrics(backtest_result: "BacktestResult") -> "PerformanceMetrics":
     """Calculate performance metrics from backtest results.
 
     Computes standard performance metrics including:
@@ -65,7 +225,10 @@ def calculate_metrics(backtest_result: BacktestResult) -> PerformanceMetrics:
         if pd.isna(sharpe_ratio):
             sharpe_ratio = 0.0
     except Exception as e:
-        logger.warning(f"Failed to calculate Sharpe ratio: {e}")
+        logger.warning(
+            f"Failed to calculate Sharpe ratio using finlab metrics: {e}. "
+            f"Using fallback calculation (may be inaccurate if equity_curve lacks DatetimeIndex)"
+        )
         sharpe_ratio = _calculate_sharpe_ratio_fallback(equity_curve)
 
     # Calculate max drawdown
@@ -91,6 +254,9 @@ def calculate_metrics(backtest_result: BacktestResult) -> PerformanceMetrics:
         avg_holding_period = 0.0
         best_trade = 0.0
         worst_trade = 0.0
+
+    # Import at runtime to avoid circular import
+    from . import PerformanceMetrics
 
     return PerformanceMetrics(
         annualized_return=float(annualized_return),
@@ -234,7 +400,7 @@ def _calculate_best_worst_trades(trade_records: pd.DataFrame) -> Tuple[float, fl
     return best_trade, worst_trade
 
 
-def _calculate_metrics_fallback(backtest_result: BacktestResult) -> PerformanceMetrics:
+def _calculate_metrics_fallback(backtest_result: "BacktestResult") -> "PerformanceMetrics":
     """Fallback metrics calculation when finlab metrics unavailable.
 
     Args:
@@ -262,6 +428,9 @@ def _calculate_metrics_fallback(backtest_result: BacktestResult) -> PerformanceM
         avg_holding_period = 0.0
         best_trade = 0.0
         worst_trade = 0.0
+
+    # Import at runtime to avoid circular import
+    from . import PerformanceMetrics
 
     return PerformanceMetrics(
         annualized_return=float(annualized_return),
@@ -323,10 +492,35 @@ def _calculate_sharpe_ratio_fallback(equity_curve: pd.Series) -> float:
     if len(returns) == 0 or returns.std() == 0:
         return 0.0
 
-    # Annualized Sharpe (assuming daily returns)
+    # Infer data frequency and use correct annualization factor
+    if isinstance(equity_curve.index, pd.DatetimeIndex):
+        freq = pd.infer_freq(equity_curve.index)
+        if freq is None:
+            # Try to infer from first few periods
+            if len(equity_curve) >= 2:
+                days_diff = (equity_curve.index[1] - equity_curve.index[0]).days
+                if days_diff >= 25:  # Monthly (~30 days)
+                    annualization_factor = np.sqrt(12)
+                elif days_diff >= 5:  # Weekly (~7 days)
+                    annualization_factor = np.sqrt(52)
+                else:  # Daily
+                    annualization_factor = np.sqrt(252)
+            else:
+                annualization_factor = np.sqrt(252)  # Default to daily
+        elif 'M' in freq or 'ME' in freq:  # Monthly
+            annualization_factor = np.sqrt(12)
+        elif 'W' in freq:  # Weekly
+            annualization_factor = np.sqrt(52)
+        else:  # Daily or other
+            annualization_factor = np.sqrt(252)
+    else:
+        # Non-datetime index, default to daily assumption
+        annualization_factor = np.sqrt(252)
+
+    # Annualized Sharpe ratio
     mean_return = float(returns.mean())
     std_return = float(returns.std())
-    sharpe = (mean_return / std_return) * np.sqrt(252)
+    sharpe = (mean_return / std_return) * annualization_factor
 
     return float(sharpe)
 
@@ -352,3 +546,332 @@ def _calculate_max_drawdown_fallback(equity_curve: pd.Series) -> float:
     max_dd = float(drawdown.min())
 
     return max_dd
+
+
+class MetricsExtractor:
+    """Extract metrics from finlab backtest report objects.
+
+    Provides a unified interface for extracting key performance metrics
+    from finlab.backtest report objects. Handles various report formats
+    and gracefully manages missing/NaN values using pd.isna() checks.
+
+    The extractor attempts to access metrics through multiple common
+    attribute/method names to support different finlab versions and
+    report structures.
+
+    Example:
+        >>> from finlab.backtest import sim
+        >>> # Execute backtest to get report
+        >>> report = sim(...)
+        >>> extractor = MetricsExtractor()
+        >>> metrics = extractor.extract_metrics(report)
+        >>> if metrics.execution_success:
+        ...     print(f"Sharpe: {metrics.sharpe_ratio}")
+    """
+
+    def extract_metrics(self, report: Any) -> StrategyMetrics:
+        """Extract metrics from finlab backtest report.
+
+        Uses the official finlab API methods (get_stats() and get_metrics())
+        to extract performance metrics. These methods return dictionaries with
+        standardized metric keys.
+
+        Primary extraction method:
+        - report.get_stats() - Returns comprehensive statistics dict
+
+        Fallback extraction method:
+        - report.get_metrics() - Returns structured dict with categories
+          (profitability, risk, ratio, winrate, liquidity)
+
+        Args:
+            report: Finlab backtest report object (result from finlab.backtest.sim)
+
+        Returns:
+            StrategyMetrics dataclass with extracted metrics. All metrics will be
+            None if extraction fails. execution_success will be True only if at
+            least one metric was successfully extracted.
+
+        Notes:
+            - NaN values are converted to None
+            - Non-numeric values are ignored and converted to None
+            - If report is None or has no extractable metrics, returns
+              StrategyMetrics with execution_success=False
+            - All percentage-based metrics are returned as decimals
+              (e.g., 0.15 for 15% return)
+        """
+        if report is None:
+            logger.warning("Report is None, returning empty metrics")
+            return StrategyMetrics(execution_success=False)
+
+        # Initialize metrics container
+        metrics = StrategyMetrics(execution_success=False)
+        extracted_count = 0
+
+        # Try to extract using get_stats() first (primary method)
+        stats_dict = None
+        try:
+            if hasattr(report, 'get_stats'):
+                stats_dict = report.get_stats()
+                logger.debug(f"Retrieved stats dict with keys: {list(stats_dict.keys()) if stats_dict else None}")
+        except Exception as e:
+            logger.debug(f"Failed to call get_stats(): {type(e).__name__}: {e}")
+
+        # If get_stats() worked, extract metrics from it
+        if stats_dict and isinstance(stats_dict, dict):
+            # Extract Sharpe Ratio (daily_sharpe or sharpe_ratio)
+            sharpe = self._extract_from_dict(
+                stats_dict,
+                ['daily_sharpe', 'sharpe_ratio', 'sharpe', 'annual_sharpe']
+            )
+            if sharpe is not None:
+                metrics.sharpe_ratio = sharpe
+                extracted_count += 1
+                logger.debug(f"Extracted sharpe_ratio: {sharpe}")
+
+            # Extract Total Return
+            total_return = self._extract_from_dict(
+                stats_dict,
+                ['total_return', 'cumulative_return', 'cum_return', 'return']
+            )
+            if total_return is not None:
+                metrics.total_return = total_return
+                extracted_count += 1
+                logger.debug(f"Extracted total_return: {total_return}")
+
+            # Extract Max Drawdown
+            max_drawdown = self._extract_from_dict(
+                stats_dict,
+                ['max_drawdown', 'maximum_drawdown', 'mdd', 'drawdown']
+            )
+            if max_drawdown is not None:
+                metrics.max_drawdown = max_drawdown
+                extracted_count += 1
+                logger.debug(f"Extracted max_drawdown: {max_drawdown}")
+
+            # Extract Win Rate (win_ratio or win_rate)
+            win_rate = self._extract_from_dict(
+                stats_dict,
+                ['win_ratio', 'win_rate', 'winning_rate', 'winrate']
+            )
+            if win_rate is not None:
+                # Ensure value is between 0 and 1
+                if 0 <= win_rate <= 1:
+                    metrics.win_rate = win_rate
+                    extracted_count += 1
+                    logger.debug(f"Extracted win_rate: {win_rate}")
+                else:
+                    logger.warning(f"Invalid win_rate value {win_rate}, ignoring")
+
+        # If get_stats() didn't work or didn't have all metrics, try get_metrics()
+        if extracted_count == 0:
+            try:
+                if hasattr(report, 'get_metrics'):
+                    metrics_dict = report.get_metrics()
+                    logger.debug(f"Retrieved metrics dict with keys: {list(metrics_dict.keys()) if metrics_dict else None}")
+
+                    if metrics_dict and isinstance(metrics_dict, dict):
+                        # get_metrics() returns structured dict with categories
+                        # Try to extract from 'ratio' category for Sharpe
+                        if 'ratio' in metrics_dict:
+                            sharpe = self._extract_from_dict(
+                                metrics_dict['ratio'],
+                                ['sharpe_ratio', 'sharpe', 'daily_sharpe']
+                            )
+                            if sharpe is not None:
+                                metrics.sharpe_ratio = sharpe
+                                extracted_count += 1
+
+                        # Try to extract from 'profitability' category for return
+                        if 'profitability' in metrics_dict:
+                            total_return = self._extract_from_dict(
+                                metrics_dict['profitability'],
+                                ['total_return', 'annual_return', 'return']
+                            )
+                            if total_return is not None:
+                                metrics.total_return = total_return
+                                extracted_count += 1
+
+                        # Try to extract from 'risk' category for drawdown
+                        if 'risk' in metrics_dict:
+                            max_drawdown = self._extract_from_dict(
+                                metrics_dict['risk'],
+                                ['max_drawdown', 'maximum_drawdown', 'mdd']
+                            )
+                            if max_drawdown is not None:
+                                metrics.max_drawdown = max_drawdown
+                                extracted_count += 1
+
+                        # Try to extract from 'winrate' category
+                        if 'winrate' in metrics_dict:
+                            win_rate = self._extract_from_dict(
+                                metrics_dict['winrate'],
+                                ['win_ratio', 'win_rate', 'winning_rate']
+                            )
+                            if win_rate is not None and 0 <= win_rate <= 1:
+                                metrics.win_rate = win_rate
+                                extracted_count += 1
+
+            except Exception as e:
+                logger.debug(f"Failed to call get_metrics(): {type(e).__name__}: {e}")
+
+        # Set execution_success if at least one metric was extracted
+        metrics.execution_success = extracted_count > 0
+
+        if metrics.execution_success:
+            logger.info(f"Successfully extracted {extracted_count} metrics from report")
+        else:
+            logger.warning("Failed to extract any metrics from report")
+
+        return metrics
+
+    def _extract_attribute(
+        self,
+        obj: Any,
+        attribute_names: list
+    ) -> Optional[float]:
+        """Extract numeric attribute from object using multiple possible names.
+
+        Tries to access an attribute/property using multiple possible names.
+        Handles both attributes and callable methods. Uses pd.isna() to check
+        for NaN values.
+
+        Args:
+            obj: Object to extract attribute from
+            attribute_names: List of possible attribute/method names to try
+
+        Returns:
+            Extracted float value, or None if:
+            - Object is None
+            - All attribute names fail
+            - Extracted value is NaN
+            - Extracted value is not numeric
+            - Extraction raises exception
+
+        Examples:
+            >>> extractor = MetricsExtractor()
+            >>> class Report:
+            ...     sharpe_ratio = 1.5
+            >>> report = Report()
+            >>> val = extractor._extract_attribute(report, ['sharpe_ratio', 'sharpe'])
+            >>> print(val)
+            1.5
+        """
+        if obj is None:
+            return None
+
+        for attr_name in attribute_names:
+            try:
+                # Try to access as attribute
+                value = getattr(obj, attr_name, None)
+
+                # If not found as attribute, skip
+                if value is None:
+                    continue
+
+                # If it's callable, call it
+                if callable(value):
+                    value = value()
+
+                # Check if value is NaN
+                if pd.isna(value):
+                    logger.debug(f"Attribute {attr_name} is NaN, skipping")
+                    continue
+
+                # Try to convert to float
+                float_value = float(value)
+
+                # Check if converted value is NaN or infinite
+                if np.isnan(float_value) or np.isinf(float_value):
+                    logger.debug(
+                        f"Attribute {attr_name} converted to invalid float "
+                        f"({float_value}), skipping"
+                    )
+                    continue
+
+                logger.debug(f"Successfully extracted {attr_name}: {float_value}")
+                return float_value
+
+            except (AttributeError, TypeError, ValueError) as e:
+                logger.debug(f"Failed to extract {attr_name}: {type(e).__name__}")
+                continue
+            except Exception as e:
+                logger.warning(
+                    f"Unexpected error extracting {attr_name}: {type(e).__name__}: {e}"
+                )
+                continue
+
+        return None
+
+    def _extract_from_dict(
+        self,
+        data_dict: dict,
+        key_names: list
+    ) -> Optional[float]:
+        """Extract numeric value from dictionary using multiple possible keys.
+
+        Tries to access a value using multiple possible key names.
+        Uses pd.isna() to check for NaN values.
+
+        Args:
+            data_dict: Dictionary to extract value from
+            key_names: List of possible key names to try
+
+        Returns:
+            Extracted float value, or None if:
+            - Dictionary is None or not a dict
+            - All key names fail
+            - Extracted value is NaN
+            - Extracted value is not numeric
+            - Extraction raises exception
+
+        Examples:
+            >>> extractor = MetricsExtractor()
+            >>> stats = {'daily_sharpe': 1.5, 'total_return': 0.25}
+            >>> val = extractor._extract_from_dict(stats, ['daily_sharpe', 'sharpe'])
+            >>> print(val)
+            1.5
+        """
+        if not isinstance(data_dict, dict):
+            return None
+
+        for key_name in key_names:
+            try:
+                # Try to access as dictionary key
+                if key_name not in data_dict:
+                    continue
+
+                value = data_dict[key_name]
+
+                # If value is None, skip
+                if value is None:
+                    continue
+
+                # Check if value is NaN
+                if pd.isna(value):
+                    logger.debug(f"Key {key_name} is NaN, skipping")
+                    continue
+
+                # Try to convert to float
+                float_value = float(value)
+
+                # Check if converted value is NaN or infinite
+                if np.isnan(float_value) or np.isinf(float_value):
+                    logger.debug(
+                        f"Key {key_name} converted to invalid float "
+                        f"({float_value}), skipping"
+                    )
+                    continue
+
+                logger.debug(f"Successfully extracted {key_name}: {float_value}")
+                return float_value
+
+            except (KeyError, TypeError, ValueError) as e:
+                logger.debug(f"Failed to extract {key_name}: {type(e).__name__}")
+                continue
+            except Exception as e:
+                logger.warning(
+                    f"Unexpected error extracting {key_name}: {type(e).__name__}: {e}"
+                )
+                continue
+
+        return None

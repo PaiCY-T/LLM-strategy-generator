@@ -1,0 +1,806 @@
+2025-10-05 19:49:31,393 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:49:31,533 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:31,534 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 19:49:31,540 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:49:31,542 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:31,544 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary network error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:49:31,555 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary server error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:49:31,577 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 3)
+2025-10-05 19:49:31,582 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:49:31,583 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:31,585 - src.data.downloader - WARNING - Rate limit encountered for dataset: price:收盤價. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:49:31,596 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 2)
+2025-10-05 19:49:31,601 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:49:31,602 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:31,603 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:49:31,614 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:49:31,636 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 3/5)
+2025-10-05 19:49:31,677 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.1s (attempt 4/5)
+2025-10-05 19:49:31,759 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Permanent API error
+2025-10-05 19:49:31,763 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:49:31,768 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:49:31,770 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:31,771 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:49:31,783 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:49:31,804 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 3/5)
+2025-10-05 19:49:31,846 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.1s (attempt 4/5)
+2025-10-05 19:49:31,927 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Expected DataFrame from Finlab API, got str
+2025-10-05 19:49:31,932 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:49:31,935 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:31,936 - src.data.downloader - WARNING - Downloaded empty DataFrame for dataset: price:收盤價
+2025-10-05 19:49:31,937 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (0, 0), attempt: 1)
+2025-10-05 19:49:31,946 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_save_and_load_cache0/data
+2025-10-05 19:49:31,989 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114931Z.parquet
+2025-10-05 19:49:32,022 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T114931Z.parquet (shape: (3, 2))
+2025-10-05 19:49:32,028 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_cache_age_calculation0/data
+2025-10-05 19:49:32,030 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,036 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_clear_cache0/data
+2025-10-05 19:49:32,038 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,042 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T114932Z.parquet (shape: (3, 2))
+2025-10-05 19:49:32,043 - src.data.cache - INFO - Cleared 1 cache file(s) for dataset: price:收盤價
+2025-10-05 19:49:32,048 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_load_nonexistent_cache0/data
+2025-10-05 19:49:32,054 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_iso8601_timestamp_format0/data
+2025-10-05 19:49:32,056 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,061 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_save_invalid_dataset0/data
+2025-10-05 19:49:32,065 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_save_invalid_data0/data
+2025-10-05 19:49:32,069 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_save_empty_dataframe0/data
+2025-10-05 19:49:32,070 - src.data.cache - WARNING - Saving empty DataFrame to cache for dataset: price:收盤價
+2025-10-05 19:49:32,072 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,075 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T114932Z.parquet (shape: (0, 0))
+2025-10-05 19:49:32,079 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_dataset_slug_conversion0/data
+2025-10-05 19:49:32,085 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_fresh_data0/data
+2025-10-05 19:49:32,086 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,089 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,090 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:49:32,094 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_stale_data0/data
+2025-10-05 19:49:32,095 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,097 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 19:49:32,102 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_missing_data0/data
+2025-10-05 19:49:32,103 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,104 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 19:49:32,108 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_bilingual_messages_englis0/data
+2025-10-05 19:49:32,109 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,112 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,113 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:49:32,114 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 19:49:32,118 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_bilingual_messages_chines0/data
+2025-10-05 19:49:32,119 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=zh-TW
+2025-10-05 19:49:32,122 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,123 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: 資料新鮮（0天前）
+2025-10-05 19:49:32,124 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: 無快取資料
+2025-10-05 19:49:32,128 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_custom_threshold0/data
+2025-10-05 19:49:32,130 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=3, language=en-US
+2025-10-05 19:49:32,131 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 5 days old (threshold: 3 days). Message: Data is stale (5 days old, threshold: 3 days)
+2025-10-05 19:49:32,132 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,132 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 5 days old. Message: Data is fresh (5 days old)
+2025-10-05 19:49:32,137 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_freshness_checker_initial0/data
+2025-10-05 19:49:32,143 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_check_freshness_invalid_d0/data
+2025-10-05 19:49:32,144 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,147 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,148 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_cache_miss0/data
+2025-10-05 19:49:32,148 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,149 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_cache_miss0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,151 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:49:32,152 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:49:32,152 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:32,153 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 19:49:32,154 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:49:32,156 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,159 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T114932Z.parquet (shape: (3, 2))
+2025-10-05 19:49:32,163 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,164 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_cache_hit_f0/data
+2025-10-05 19:49:32,165 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,166 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_cache_hit_f0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,169 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,170 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:49:32,173 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T114932Z.parquet (shape: (3, 2))
+2025-10-05 19:49:32,174 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:49:32,175 - src.data - INFO - Using fresh cached data for price:收盤價. Data is fresh (0 days old)
+2025-10-05 19:49:32,181 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,182 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_cache_stale0/data
+2025-10-05 19:49:32,182 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,183 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_cache_stale0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,186 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:49:32,189 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20250925T114932Z.parquet (shape: (3, 2))
+2025-10-05 19:49:32,190 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 19:49:32,190 - src.data - WARNING - Cached data is stale for price:收盤價. Data is stale (10 days old, threshold: 7 days). Downloading fresh data...
+2025-10-05 19:49:32,191 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:49:32,192 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:32,192 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 19:49:32,193 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:49:32,195 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,200 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,201 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_force_refre0/data
+2025-10-05 19:49:32,202 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,202 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_download_data_force_refre0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,205 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,206 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=True)
+2025-10-05 19:49:32,207 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:49:32,208 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:32,209 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 19:49:32,209 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:49:32,211 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,216 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,217 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_get_cached_data0/data
+2025-10-05 19:49:32,217 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,218 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_get_cached_data0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,221 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,223 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T114932Z.parquet (shape: (3, 2))
+2025-10-05 19:49:32,228 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,229 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_check_data_freshness0/data
+2025-10-05 19:49:32,230 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,230 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_check_data_freshness0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,232 - src.data.freshness - INFO - No cache found for dataset: price:收盤價. Message: No cached data available
+2025-10-05 19:49:32,234 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,235 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:49:32,239 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,240 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_list_available_datasets0/data
+2025-10-05 19:49:32,241 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,241 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_list_available_datasets0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,244 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,246 - src.data.cache - INFO - Successfully cached dataset: etl:broker:top15 → etl_broker_top15_20251005T114932Z.parquet
+2025-10-05 19:49:32,250 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,251 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_cleanup_old_cache0/data
+2025-10-05 19:49:32,252 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,253 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_cleanup_old_cache0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,257 - src.data - INFO - Cleaned up 1 cache file(s) older than 30 days
+2025-10-05 19:49:32,261 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,262 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_cleanup_old_cache_empty_d0/data
+2025-10-05 19:49:32,262 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,263 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_cleanup_old_cache_empty_d0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,269 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,271 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_datamanager_component_ini0/data
+2025-10-05 19:49:32,272 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:49:32,273 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-1/test_datamanager_component_ini0/data, max_retries=4, freshness_days=7
+2025-10-05 19:49:32,277 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_concurrent_cache_access0/data
+2025-10-05 19:49:32,277 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_concurrent_cache_access0/data
+2025-10-05 19:49:32,280 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T114932Z.parquet
+2025-10-05 19:49:32,283 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T114932Z.parquet (shape: (1, 1))
+2025-10-05 19:49:32,289 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_unicode_dataset_names0/data
+2025-10-05 19:49:32,292 - src.data.cache - INFO - Successfully cached dataset: 價格:收盤價:台股 → 價格_收盤價_台股_20251005T114932Z.parquet
+2025-10-05 19:49:32,295 - src.data.cache - INFO - Successfully loaded cached dataset: 價格:收盤價:台股 from 價格_收盤價_台股_20251005T114932Z.parquet (shape: (1, 1))
+2025-10-05 19:49:32,298 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:49:32,299 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:49:32,300 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 5.0s (attempt 1/5)
+2025-10-05 19:49:39,704 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 10.0s (attempt 2/5)
+2025-10-05 19:49:49,714 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 20.0s (attempt 3/5)
+2025-10-05 19:50:12,094 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 40.0s (attempt 4/5)
+2025-10-05 19:50:54,451 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'
+2025-10-05 19:50:54,457 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-1/test_corrupted_cache_file_hand0/data
+2025-10-05 19:51:01,513 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-2/test_corrupted_cache_file_hand0/data
+2025-10-05 19:51:16,616 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:51:16,828 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:16,830 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 19:51:16,837 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:51:16,839 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:16,840 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary network error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:51:16,852 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary server error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:51:16,874 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 3)
+2025-10-05 19:51:16,880 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:51:16,882 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:16,883 - src.data.downloader - WARNING - Rate limit encountered for dataset: price:收盤價. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:51:16,895 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 2)
+2025-10-05 19:51:16,901 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:51:16,903 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:16,905 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:51:16,916 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:51:16,938 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 3/5)
+2025-10-05 19:51:16,980 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.1s (attempt 4/5)
+2025-10-05 19:51:17,062 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Permanent API error
+2025-10-05 19:51:17,066 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:51:17,072 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:51:17,074 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:17,075 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:51:17,087 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:51:17,109 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 3/5)
+2025-10-05 19:51:17,151 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.1s (attempt 4/5)
+2025-10-05 19:51:17,233 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Expected DataFrame from Finlab API, got str
+2025-10-05 19:51:17,238 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:51:17,240 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:17,242 - src.data.downloader - WARNING - Downloaded empty DataFrame for dataset: price:收盤價
+2025-10-05 19:51:17,243 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (0, 0), attempt: 1)
+2025-10-05 19:51:17,252 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_save_and_load_cache0/data
+2025-10-05 19:51:17,263 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,279 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115117Z.parquet (shape: (3, 2))
+2025-10-05 19:51:17,285 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_cache_age_calculation0/data
+2025-10-05 19:51:17,288 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,295 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_clear_cache0/data
+2025-10-05 19:51:17,298 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,302 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115117Z.parquet (shape: (3, 2))
+2025-10-05 19:51:17,303 - src.data.cache - INFO - Cleared 1 cache file(s) for dataset: price:收盤價
+2025-10-05 19:51:17,309 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_load_nonexistent_cache0/data
+2025-10-05 19:51:17,315 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_iso8601_timestamp_format0/data
+2025-10-05 19:51:17,318 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,324 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_save_invalid_dataset0/data
+2025-10-05 19:51:17,331 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_save_invalid_data0/data
+2025-10-05 19:51:17,335 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_save_empty_dataframe0/data
+2025-10-05 19:51:17,337 - src.data.cache - WARNING - Saving empty DataFrame to cache for dataset: price:收盤價
+2025-10-05 19:51:17,338 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,341 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115117Z.parquet (shape: (0, 0))
+2025-10-05 19:51:17,347 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_dataset_slug_conversion0/data
+2025-10-05 19:51:17,356 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_fresh_data0/data
+2025-10-05 19:51:17,357 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,363 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,365 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:51:17,371 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_stale_data0/data
+2025-10-05 19:51:17,372 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,376 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 19:51:17,382 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_missing_data0/data
+2025-10-05 19:51:17,384 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,385 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 19:51:17,392 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_bilingual_messages_englis0/data
+2025-10-05 19:51:17,393 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,396 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,397 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:51:17,398 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 19:51:17,404 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_bilingual_messages_chines0/data
+2025-10-05 19:51:17,405 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=zh-TW
+2025-10-05 19:51:17,409 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,411 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: 資料新鮮（0天前）
+2025-10-05 19:51:17,412 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: 無快取資料
+2025-10-05 19:51:17,419 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_custom_threshold0/data
+2025-10-05 19:51:17,422 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=3, language=en-US
+2025-10-05 19:51:17,424 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 5 days old (threshold: 3 days). Message: Data is stale (5 days old, threshold: 3 days)
+2025-10-05 19:51:17,425 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,426 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 5 days old. Message: Data is fresh (5 days old)
+2025-10-05 19:51:17,431 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_freshness_checker_initial0/data
+2025-10-05 19:51:17,438 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_check_freshness_invalid_d0/data
+2025-10-05 19:51:17,439 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,446 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,447 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_cache_miss0/data
+2025-10-05 19:51:17,448 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,449 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_cache_miss0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,451 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:51:17,452 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:51:17,453 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:17,454 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 19:51:17,455 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:51:17,457 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,460 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115117Z.parquet (shape: (3, 2))
+2025-10-05 19:51:17,466 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,467 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_cache_hit_f0/data
+2025-10-05 19:51:17,468 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,469 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_cache_hit_f0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,472 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,473 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:51:17,476 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115117Z.parquet (shape: (3, 2))
+2025-10-05 19:51:17,477 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:51:17,477 - src.data - INFO - Using fresh cached data for price:收盤價. Data is fresh (0 days old)
+2025-10-05 19:51:17,482 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,483 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_cache_stale0/data
+2025-10-05 19:51:17,484 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,485 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_cache_stale0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,489 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:51:17,492 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20250925T115117Z.parquet (shape: (3, 2))
+2025-10-05 19:51:17,493 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 19:51:17,493 - src.data - WARNING - Cached data is stale for price:收盤價. Data is stale (10 days old, threshold: 7 days). Downloading fresh data...
+2025-10-05 19:51:17,494 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:51:17,495 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:17,496 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 19:51:17,497 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:51:17,500 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,505 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,506 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_force_refre0/data
+2025-10-05 19:51:17,507 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,507 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_download_data_force_refre0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,511 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,513 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=True)
+2025-10-05 19:51:17,514 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:51:17,515 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:17,516 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 19:51:17,517 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:51:17,519 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,524 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,525 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_get_cached_data0/data
+2025-10-05 19:51:17,526 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,527 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_get_cached_data0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,530 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,533 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115117Z.parquet (shape: (3, 2))
+2025-10-05 19:51:17,538 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,539 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_check_data_freshness0/data
+2025-10-05 19:51:17,540 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,541 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_check_data_freshness0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,543 - src.data.freshness - INFO - No cache found for dataset: price:收盤價. Message: No cached data available
+2025-10-05 19:51:17,546 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,547 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:51:17,551 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,552 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_list_available_datasets0/data
+2025-10-05 19:51:17,553 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,553 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_list_available_datasets0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,557 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,559 - src.data.cache - INFO - Successfully cached dataset: etl:broker:top15 → etl_broker_top15_20251005T115117Z.parquet
+2025-10-05 19:51:17,564 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,565 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_cleanup_old_cache0/data
+2025-10-05 19:51:17,565 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,566 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_cleanup_old_cache0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,570 - src.data - INFO - Cleaned up 1 cache file(s) older than 30 days
+2025-10-05 19:51:17,577 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,578 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_cleanup_old_cache_empty_d0/data
+2025-10-05 19:51:17,579 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,580 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_cleanup_old_cache_empty_d0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,586 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,587 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_datamanager_component_ini0/data
+2025-10-05 19:51:17,588 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:51:17,589 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-3/test_datamanager_component_ini0/data, max_retries=4, freshness_days=7
+2025-10-05 19:51:17,594 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_concurrent_cache_access0/data
+2025-10-05 19:51:17,595 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_concurrent_cache_access0/data
+2025-10-05 19:51:17,597 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115117Z.parquet
+2025-10-05 19:51:17,600 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115117Z.parquet (shape: (1, 1))
+2025-10-05 19:51:17,605 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_unicode_dataset_names0/data
+2025-10-05 19:51:17,608 - src.data.cache - INFO - Successfully cached dataset: 價格:收盤價:台股 → 價格_收盤價_台股_20251005T115117Z.parquet
+2025-10-05 19:51:17,612 - src.data.cache - INFO - Successfully loaded cached dataset: 價格:收盤價:台股 from 價格_收盤價_台股_20251005T115117Z.parquet (shape: (1, 1))
+2025-10-05 19:51:17,616 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:51:17,617 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:51:17,618 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 5.0s (attempt 1/5)
+2025-10-05 19:51:25,050 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 10.0s (attempt 2/5)
+2025-10-05 19:51:35,060 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 20.0s (attempt 3/5)
+2025-10-05 19:51:56,972 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 40.0s (attempt 4/5)
+2025-10-05 19:52:38,918 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'
+2025-10-05 19:52:38,924 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-3/test_corrupted_cache_file_hand0/data
+2025-10-05 19:52:57,373 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:52:57,544 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:57,546 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 19:52:57,552 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:52:57,554 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:57,555 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary network error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:52:57,567 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary server error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:52:57,589 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 3)
+2025-10-05 19:52:57,595 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:52:57,598 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:57,599 - src.data.downloader - WARNING - Rate limit encountered for dataset: price:收盤價. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:52:57,610 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 2)
+2025-10-05 19:52:57,616 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:52:57,618 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:57,619 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:52:57,631 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:52:57,652 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 3/5)
+2025-10-05 19:52:57,694 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.1s (attempt 4/5)
+2025-10-05 19:52:57,776 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Permanent API error
+2025-10-05 19:52:57,781 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:52:57,786 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:52:57,789 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:57,790 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 1/5)
+2025-10-05 19:52:57,801 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 2/5)
+2025-10-05 19:52:57,822 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 3/5)
+2025-10-05 19:52:57,864 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.1s (attempt 4/5)
+2025-10-05 19:52:57,945 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Expected DataFrame from Finlab API, got str
+2025-10-05 19:52:57,950 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 19:52:57,953 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:57,954 - src.data.downloader - WARNING - Downloaded empty DataFrame for dataset: price:收盤價
+2025-10-05 19:52:57,955 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (0, 0), attempt: 1)
+2025-10-05 19:52:57,964 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_save_and_load_cache0/data
+2025-10-05 19:52:57,975 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115257Z.parquet
+2025-10-05 19:52:57,994 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115257Z.parquet (shape: (3, 2))
+2025-10-05 19:52:58,000 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_cache_age_calculation0/data
+2025-10-05 19:52:58,005 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,013 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_clear_cache0/data
+2025-10-05 19:52:58,016 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,020 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115258Z.parquet (shape: (3, 2))
+2025-10-05 19:52:58,021 - src.data.cache - INFO - Cleared 1 cache file(s) for dataset: price:收盤價
+2025-10-05 19:52:58,028 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_load_nonexistent_cache0/data
+2025-10-05 19:52:58,032 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_iso8601_timestamp_format0/data
+2025-10-05 19:52:58,034 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,040 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_save_invalid_dataset0/data
+2025-10-05 19:52:58,046 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_save_invalid_data0/data
+2025-10-05 19:52:58,051 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_save_empty_dataframe0/data
+2025-10-05 19:52:58,053 - src.data.cache - WARNING - Saving empty DataFrame to cache for dataset: price:收盤價
+2025-10-05 19:52:58,057 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,061 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115258Z.parquet (shape: (0, 0))
+2025-10-05 19:52:58,065 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_dataset_slug_conversion0/data
+2025-10-05 19:52:58,076 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_fresh_data0/data
+2025-10-05 19:52:58,078 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,081 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,082 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:52:58,088 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_stale_data0/data
+2025-10-05 19:52:58,089 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,093 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 19:52:58,098 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_missing_data0/data
+2025-10-05 19:52:58,100 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,101 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 19:52:58,106 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_bilingual_messages_englis0/data
+2025-10-05 19:52:58,107 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,110 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,111 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:52:58,112 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 19:52:58,118 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_bilingual_messages_chines0/data
+2025-10-05 19:52:58,119 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=zh-TW
+2025-10-05 19:52:58,123 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,124 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: 資料新鮮（0天前）
+2025-10-05 19:52:58,125 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: 無快取資料
+2025-10-05 19:52:58,130 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_custom_threshold0/data
+2025-10-05 19:52:58,132 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=3, language=en-US
+2025-10-05 19:52:58,133 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 5 days old (threshold: 3 days). Message: Data is stale (5 days old, threshold: 3 days)
+2025-10-05 19:52:58,134 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,135 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 5 days old. Message: Data is fresh (5 days old)
+2025-10-05 19:52:58,139 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_freshness_checker_initial0/data
+2025-10-05 19:52:58,145 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_check_freshness_invalid_d0/data
+2025-10-05 19:52:58,147 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,151 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,152 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_cache_miss0/data
+2025-10-05 19:52:58,153 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,154 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_cache_miss0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,156 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:52:58,157 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:52:58,158 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:58,159 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 19:52:58,160 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:52:58,162 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,166 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115258Z.parquet (shape: (3, 2))
+2025-10-05 19:52:58,172 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,173 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_cache_hit_f0/data
+2025-10-05 19:52:58,174 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,175 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_cache_hit_f0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,178 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,180 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:52:58,183 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115258Z.parquet (shape: (3, 2))
+2025-10-05 19:52:58,184 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:52:58,184 - src.data - INFO - Using fresh cached data for price:收盤價. Data is fresh (0 days old)
+2025-10-05 19:52:58,189 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,190 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_cache_stale0/data
+2025-10-05 19:52:58,191 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,192 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_cache_stale0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,195 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 19:52:58,198 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20250925T115258Z.parquet (shape: (3, 2))
+2025-10-05 19:52:58,199 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 19:52:58,200 - src.data - WARNING - Cached data is stale for price:收盤價. Data is stale (10 days old, threshold: 7 days). Downloading fresh data...
+2025-10-05 19:52:58,201 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:52:58,202 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:58,202 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 19:52:58,203 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:52:58,205 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,209 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,210 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_force_refre0/data
+2025-10-05 19:52:58,211 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,211 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_download_data_force_refre0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,214 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,216 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=True)
+2025-10-05 19:52:58,217 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 19:52:58,217 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:58,218 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 19:52:58,219 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 19:52:58,221 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,226 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,227 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_get_cached_data0/data
+2025-10-05 19:52:58,228 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,229 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_get_cached_data0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,232 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,235 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115258Z.parquet (shape: (3, 2))
+2025-10-05 19:52:58,241 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,242 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_check_data_freshness0/data
+2025-10-05 19:52:58,243 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,244 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_check_data_freshness0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,245 - src.data.freshness - INFO - No cache found for dataset: price:收盤價. Message: No cached data available
+2025-10-05 19:52:58,247 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,249 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 19:52:58,254 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,255 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_list_available_datasets0/data
+2025-10-05 19:52:58,256 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,257 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_list_available_datasets0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,260 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,263 - src.data.cache - INFO - Successfully cached dataset: etl:broker:top15 → etl_broker_top15_20251005T115258Z.parquet
+2025-10-05 19:52:58,270 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,271 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_cleanup_old_cache0/data
+2025-10-05 19:52:58,272 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,273 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_cleanup_old_cache0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,278 - src.data - INFO - Cleaned up 1 cache file(s) older than 30 days
+2025-10-05 19:52:58,283 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,284 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_cleanup_old_cache_empty_d0/data
+2025-10-05 19:52:58,284 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,285 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_cleanup_old_cache_empty_d0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,289 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,290 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_datamanager_component_ini0/data
+2025-10-05 19:52:58,291 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 19:52:58,292 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-4/test_datamanager_component_ini0/data, max_retries=4, freshness_days=7
+2025-10-05 19:52:58,298 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_concurrent_cache_access0/data
+2025-10-05 19:52:58,299 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_concurrent_cache_access0/data
+2025-10-05 19:52:58,302 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T115258Z.parquet
+2025-10-05 19:52:58,305 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T115258Z.parquet (shape: (1, 1))
+2025-10-05 19:52:58,310 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-4/test_unicode_dataset_names0/data
+2025-10-05 19:52:58,313 - src.data.cache - INFO - Successfully cached dataset: 價格:收盤價:台股 → 價格_收盤價_台股_20251005T115258Z.parquet
+2025-10-05 19:52:58,316 - src.data.cache - INFO - Successfully loaded cached dataset: 價格:收盤價:台股 from 價格_收盤價_台股_20251005T115258Z.parquet (shape: (1, 1))
+2025-10-05 19:52:58,320 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 19:52:58,321 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 19:52:58,322 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 5.0s (attempt 1/5)
+2025-10-05 19:53:05,323 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 10.0s (attempt 2/5)
+2025-10-05 19:53:15,334 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 20.0s (attempt 3/5)
+2025-10-05 19:53:35,355 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 40.0s (attempt 4/5)
+2025-10-05 19:54:17,269 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'
+2025-10-05 20:56:08,712 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 20:56:08,991 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:08,992 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 20:56:08,997 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 20:56:08,998 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:08,999 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary network error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 20:56:09,010 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Temporary server error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 20:56:09,032 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 3)
+2025-10-05 20:56:09,035 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 20:56:09,037 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,038 - src.data.downloader - WARNING - Rate limit encountered for dataset: price:收盤價. Retrying in 0.0s (attempt 1/5)
+2025-10-05 20:56:09,048 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 2)
+2025-10-05 20:56:09,052 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 20:56:09,054 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,054 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 1/5)
+2025-10-05 20:56:09,066 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 2/5)
+2025-10-05 20:56:09,088 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.0s (attempt 3/5)
+2025-10-05 20:56:09,129 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Permanent API error. Retrying in 0.1s (attempt 4/5)
+2025-10-05 20:56:09,210 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Permanent API error
+2025-10-05 20:56:09,214 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 20:56:09,218 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 20:56:09,220 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,221 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 1/5)
+2025-10-05 20:56:09,232 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 2/5)
+2025-10-05 20:56:09,253 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.0s (attempt 3/5)
+2025-10-05 20:56:09,295 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Expected DataFrame from Finlab API, got str. Retrying in 0.1s (attempt 4/5)
+2025-10-05 20:56:09,376 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Expected DataFrame from Finlab API, got str
+2025-10-05 20:56:09,380 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=0.01s, max_delay=0.1s
+2025-10-05 20:56:09,382 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,383 - src.data.downloader - WARNING - Downloaded empty DataFrame for dataset: price:收盤價
+2025-10-05 20:56:09,384 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (0, 0), attempt: 1)
+2025-10-05 20:56:09,392 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_save_and_load_cache0/data
+2025-10-05 20:56:09,433 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,476 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T125609Z.parquet (shape: (3, 2))
+2025-10-05 20:56:09,482 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_cache_age_calculation0/data
+2025-10-05 20:56:09,485 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,491 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_clear_cache0/data
+2025-10-05 20:56:09,493 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,498 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T125609Z.parquet (shape: (3, 2))
+2025-10-05 20:56:09,499 - src.data.cache - INFO - Cleared 1 cache file(s) for dataset: price:收盤價
+2025-10-05 20:56:09,503 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_load_nonexistent_cache0/data
+2025-10-05 20:56:09,508 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_iso8601_timestamp_format0/data
+2025-10-05 20:56:09,511 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,516 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_save_invalid_dataset0/data
+2025-10-05 20:56:09,523 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_save_invalid_data0/data
+2025-10-05 20:56:09,528 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_save_empty_dataframe0/data
+2025-10-05 20:56:09,530 - src.data.cache - WARNING - Saving empty DataFrame to cache for dataset: price:收盤價
+2025-10-05 20:56:09,532 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,535 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T125609Z.parquet (shape: (0, 0))
+2025-10-05 20:56:09,539 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_dataset_slug_conversion0/data
+2025-10-05 20:56:09,545 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_fresh_data0/data
+2025-10-05 20:56:09,546 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,548 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,549 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 20:56:09,554 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_stale_data0/data
+2025-10-05 20:56:09,555 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,557 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 20:56:09,561 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_missing_data0/data
+2025-10-05 20:56:09,562 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,563 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 20:56:09,566 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_bilingual_messages_englis0/data
+2025-10-05 20:56:09,567 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,569 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,570 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 20:56:09,571 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: No cached data available
+2025-10-05 20:56:09,576 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_bilingual_messages_chines0/data
+2025-10-05 20:56:09,577 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=zh-TW
+2025-10-05 20:56:09,579 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,580 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: 資料新鮮（0天前）
+2025-10-05 20:56:09,581 - src.data.freshness - INFO - No cache found for dataset: nonexistent:dataset. Message: 無快取資料
+2025-10-05 20:56:09,585 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_custom_threshold0/data
+2025-10-05 20:56:09,588 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=3, language=en-US
+2025-10-05 20:56:09,589 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 5 days old (threshold: 3 days). Message: Data is stale (5 days old, threshold: 3 days)
+2025-10-05 20:56:09,590 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,590 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 5 days old. Message: Data is fresh (5 days old)
+2025-10-05 20:56:09,594 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_freshness_checker_initial0/data
+2025-10-05 20:56:09,599 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_check_freshness_invalid_d0/data
+2025-10-05 20:56:09,600 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,604 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,604 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_cache_miss0/data
+2025-10-05 20:56:09,605 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,606 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_cache_miss0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,607 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 20:56:09,608 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 20:56:09,608 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,609 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 2), attempt: 1)
+2025-10-05 20:56:09,610 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 20:56:09,611 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,615 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T125609Z.parquet (shape: (3, 2))
+2025-10-05 20:56:09,620 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,621 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_cache_hit_f0/data
+2025-10-05 20:56:09,622 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,623 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_cache_hit_f0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,627 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,628 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 20:56:09,631 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T125609Z.parquet (shape: (3, 2))
+2025-10-05 20:56:09,633 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 20:56:09,634 - src.data - INFO - Using fresh cached data for price:收盤價. Data is fresh (0 days old)
+2025-10-05 20:56:09,640 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,641 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_cache_stale0/data
+2025-10-05 20:56:09,642 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,643 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_cache_stale0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,646 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=False)
+2025-10-05 20:56:09,650 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20250925T125609Z.parquet (shape: (3, 2))
+2025-10-05 20:56:09,651 - src.data.freshness - WARNING - Dataset price:收盤價 is stale: 10 days old (threshold: 7 days). Message: Data is stale (10 days old, threshold: 7 days)
+2025-10-05 20:56:09,652 - src.data - WARNING - Cached data is stale for price:收盤價. Data is stale (10 days old, threshold: 7 days). Downloading fresh data...
+2025-10-05 20:56:09,653 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 20:56:09,653 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,654 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 20:56:09,655 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 20:56:09,657 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,662 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,663 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_force_refre0/data
+2025-10-05 20:56:09,664 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,665 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_download_data_force_refre0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,667 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,669 - src.data - INFO - Requesting dataset: price:收盤價 (force_refresh=True)
+2025-10-05 20:56:09,670 - src.data - INFO - Downloading dataset from Finlab API: price:收盤價
+2025-10-05 20:56:09,671 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,672 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (3, 1), attempt: 1)
+2025-10-05 20:56:09,673 - src.data - INFO - Saving downloaded data to cache: price:收盤價
+2025-10-05 20:56:09,675 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,679 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,680 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_get_cached_data0/data
+2025-10-05 20:56:09,681 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,682 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_get_cached_data0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,685 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,688 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T125609Z.parquet (shape: (3, 2))
+2025-10-05 20:56:09,693 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,694 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_check_data_freshness0/data
+2025-10-05 20:56:09,695 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,696 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_check_data_freshness0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,698 - src.data.freshness - INFO - No cache found for dataset: price:收盤價. Message: No cached data available
+2025-10-05 20:56:09,700 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,702 - src.data.freshness - INFO - Dataset price:收盤價 is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 20:56:09,707 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,708 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_list_available_datasets0/data
+2025-10-05 20:56:09,709 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,710 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_list_available_datasets0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,712 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,714 - src.data.cache - INFO - Successfully cached dataset: etl:broker:top15 → etl_broker_top15_20251005T125609Z.parquet
+2025-10-05 20:56:09,719 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,720 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_cleanup_old_cache0/data
+2025-10-05 20:56:09,721 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,721 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_cleanup_old_cache0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,725 - src.data - INFO - Cleaned up 1 cache file(s) older than 30 days
+2025-10-05 20:56:09,732 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,733 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_cleanup_old_cache_empty_d0/data
+2025-10-05 20:56:09,734 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,734 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_cleanup_old_cache_empty_d0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,739 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,740 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_datamanager_component_ini0/data
+2025-10-05 20:56:09,741 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 20:56:09,742 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/pytest-of-john/pytest-5/test_datamanager_component_ini0/data, max_retries=4, freshness_days=7
+2025-10-05 20:56:09,748 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_concurrent_cache_access0/data
+2025-10-05 20:56:09,749 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_concurrent_cache_access0/data
+2025-10-05 20:56:09,751 - src.data.cache - INFO - Successfully cached dataset: price:收盤價 → price_收盤價_20251005T125609Z.parquet
+2025-10-05 20:56:09,754 - src.data.cache - INFO - Successfully loaded cached dataset: price:收盤價 from price_收盤價_20251005T125609Z.parquet (shape: (1, 1))
+2025-10-05 20:56:09,762 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/pytest-of-john/pytest-5/test_unicode_dataset_names0/data
+2025-10-05 20:56:09,766 - src.data.cache - INFO - Successfully cached dataset: 價格:收盤價:台股 → 價格_收盤價_台股_20251005T125609Z.parquet
+2025-10-05 20:56:09,769 - src.data.cache - INFO - Successfully loaded cached dataset: 價格:收盤價:台股 from 價格_收盤價_台股_20251005T125609Z.parquet (shape: (1, 1))
+2025-10-05 20:56:09,773 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 20:56:09,775 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 20:56:09,776 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 5.0s (attempt 1/5)
+2025-10-05 20:56:14,782 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 10.0s (attempt 2/5)
+2025-10-05 20:56:25,853 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 20.0s (attempt 3/5)
+2025-10-05 20:56:45,872 - src.data.downloader - WARNING - Download failed for dataset: price:收盤價. Error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'. Retrying in 40.0s (attempt 4/5)
+2025-10-05 20:57:26,988 - src.data.downloader - ERROR - All 5 download attempts failed for dataset: price:收盤價. Final error: Failed to import finlab package. Ensure 'finlab' is installed: No module named 'finlab'
+2025-10-05 22:08:00,247 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmp1t47fqjn
+2025-10-05 22:08:14,620 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmp9in5opzp
+2025-10-05 22:08:29,498 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmpdz4g49jp/data
+2025-10-05 22:08:38,831 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmpjobhk4r6
+2025-10-05 22:08:46,652 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmpvdqczj_m
+2025-10-05 22:09:03,883 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmpl3i39es2
+2025-10-05 22:14:39,912 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmpl3o91yfm
+2025-10-05 22:14:52,194 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmp2gjnrxs1
+2025-10-05 22:16:08,529 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmps_pvztil
+2025-10-05 22:16:08,589 - src.data.cache - ERROR - Failed to load cached dataset 'test_dataset': Could not open Parquet input source '<Buffer>': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
+2025-10-05 22:18:10,223 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmpryjfcjij
+2025-10-05 22:18:10,307 - src.data.cache - ERROR - Failed to load cached dataset 'test': Could not open Parquet input source '<Buffer>': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
+2025-10-05 22:18:10,311 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmp4a5635p8
+2025-10-05 22:18:10,314 - src.data.cache - ERROR - Failed to parse cache timestamp for dataset 'test': time data 'invalid' does not match format '%Y%m%dT%H%M%SZ'
+2025-10-05 22:18:10,320 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmp6v30548w
+2025-10-05 22:18:10,322 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 22:18:10,442 - src.data.freshness - ERROR - Cache error checking freshness for dataset 'test': Test error
+2025-10-05 22:18:10,445 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s
+2025-10-05 22:18:10,446 - src.data.cache - INFO - Initialized DataCache: cache_dir=/tmp/tmpu6cddsjg
+2025-10-05 22:18:10,450 - src.data.freshness - INFO - Initialized FreshnessChecker: max_age_days=7, language=en-US
+2025-10-05 22:18:10,453 - src.data - INFO - Initialized DataManager: cache_dir=/tmp/tmpu6cddsjg, max_retries=4, freshness_days=7
+2025-10-05 22:18:10,579 - src.data.cache - INFO - Successfully cached dataset: test → test_20251005T141810Z.parquet
+2025-10-05 22:18:10,581 - src.data - INFO - Requesting dataset: test (force_refresh=False)
+2025-10-05 22:18:10,683 - src.data.cache - INFO - Successfully loaded cached dataset: test from test_20251005T141810Z.parquet (shape: (2, 1))
+2025-10-05 22:18:10,687 - src.data.freshness - INFO - Dataset test is fresh: 0 days old. Message: Data is fresh (0 days old)
+2025-10-05 22:18:10,689 - src.data - INFO - Using fresh cached data for test. Data is fresh (0 days old)
+2025-10-05 23:02:10,888 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:02:10,888 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s, queue_timeout=5.0s
+2025-10-05 23:02:24,719 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:02:24,719 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=2, base_delay=0.1s, max_delay=0.5s, queue_timeout=5.0s
+2025-10-05 23:02:24,721 - src.data.downloader - INFO - Starting download for dataset: test_dataset
+2025-10-05 23:02:24,722 - src.data.downloader - WARNING - Rate limit detected - activating queue mode. Subsequent requests will be queued.
+2025-10-05 23:02:24,723 - src.data.downloader - INFO - Request queued due to rate limit: test_dataset
+2025-10-05 23:02:24,723 - src.data.downloader - INFO - Processing queued request: test_dataset
+2025-10-05 23:02:24,825 - src.data.downloader - INFO - Internal download successful: test_dataset (shape: (3, 1), attempt: 1)
+2025-10-05 23:02:24,828 - src.data.downloader - INFO - Queued request completed: test_dataset
+2025-10-05 23:02:24,828 - src.data.downloader - INFO - Queued request completed: test_dataset
+2025-10-05 23:02:24,830 - src.data.downloader - INFO - Rate limit deactivated - queue empty, normal operations resumed
+2025-10-05 23:02:24,836 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:02:24,836 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=2, base_delay=0.1s, max_delay=0.5s, queue_timeout=10.0s
+2025-10-05 23:02:24,840 - src.data.downloader - INFO - Starting download for dataset: dataset_0
+2025-10-05 23:02:24,841 - src.data.downloader - INFO - Starting download for dataset: dataset_1
+2025-10-05 23:02:24,841 - src.data.downloader - INFO - Starting download for dataset: dataset_2
+2025-10-05 23:02:24,842 - src.data.downloader - WARNING - Rate limit detected - activating queue mode. Subsequent requests will be queued.
+2025-10-05 23:02:24,845 - src.data.downloader - INFO - Request queued due to rate limit: dataset_0
+2025-10-05 23:02:24,845 - src.data.downloader - INFO - Processing queued request: dataset_0
+2025-10-05 23:02:24,943 - src.data.downloader - INFO - Successfully downloaded dataset: dataset_1 (shape: (3, 1), attempt: 1)
+2025-10-05 23:02:24,945 - src.data.downloader - INFO - Successfully downloaded dataset: dataset_2 (shape: (3, 1), attempt: 1)
+2025-10-05 23:02:24,946 - src.data.downloader - INFO - Internal download successful: dataset_0 (shape: (3, 1), attempt: 1)
+2025-10-05 23:02:24,952 - src.data.downloader - INFO - Queued request completed: dataset_0
+2025-10-05 23:02:24,952 - src.data.downloader - INFO - Queued request completed: dataset_0
+2025-10-05 23:02:24,953 - src.data.downloader - INFO - Rate limit deactivated - queue empty, normal operations resumed
+2025-10-05 23:02:44,585 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:02:44,585 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s, queue_timeout=300.0s
+2025-10-05 23:11:01,886 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:11:01,886 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s, queue_timeout=300.0s
+2025-10-05 23:11:01,888 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 23:11:06,096 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (4541, 2648), attempt: 1)
+2025-10-05 23:12:25,036 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:12:25,036 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s, queue_timeout=300.0s
+2025-10-05 23:12:25,039 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 23:12:25,722 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (4541, 2648), attempt: 1)
+2025-10-05 23:12:25,723 - src.data.downloader - INFO - Starting download for dataset: fundamental_features:融資餘額
+2025-10-05 23:12:26,490 - src.data.downloader - WARNING - Download failed for dataset: fundamental_features:融資餘額. Error: **Error: fundamental_features:融資餘額 not exists. Retrying in 5.0s (attempt 1/5)
+2025-10-05 23:12:32,285 - src.data.downloader - WARNING - Download failed for dataset: fundamental_features:融資餘額. Error: **Error: fundamental_features:融資餘額 not exists. Retrying in 10.0s (attempt 2/5)
+2025-10-05 23:12:43,070 - src.data.downloader - WARNING - Download failed for dataset: fundamental_features:融資餘額. Error: **Error: fundamental_features:融資餘額 not exists. Retrying in 20.0s (attempt 3/5)
+2025-10-05 23:13:03,833 - src.data.downloader - WARNING - Download failed for dataset: fundamental_features:融資餘額. Error: **Error: fundamental_features:融資餘額 not exists. Retrying in 40.0s (attempt 4/5)
+2025-10-05 23:14:42,466 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:14:42,467 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s, queue_timeout=300.0s
+2025-10-05 23:14:42,468 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 23:14:43,104 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (4541, 2648), attempt: 1)
+2025-10-05 23:15:43,321 - src.data.downloader - INFO - Queue processor thread started
+2025-10-05 23:15:43,321 - src.data.downloader - INFO - Initialized FinlabDownloader: max_retries=4, base_delay=5.0s, max_delay=60.0s, queue_timeout=300.0s
+2025-10-05 23:15:43,323 - src.data.downloader - INFO - Starting download for dataset: price:收盤價
+2025-10-05 23:15:43,324 - src.data.downloader - INFO - Starting download for dataset: price:開盤價
+2025-10-05 23:15:43,324 - src.data.downloader - INFO - Starting download for dataset: price:最高價
+2025-10-05 23:15:44,471 - src.data.downloader - INFO - Successfully downloaded dataset: price:收盤價 (shape: (4541, 2648), attempt: 1)
+2025-10-05 23:15:52,202 - src.data.downloader - INFO - Successfully downloaded dataset: price:開盤價 (shape: (4541, 2648), attempt: 1)
+2025-10-05 23:15:52,318 - src.data.downloader - INFO - Successfully downloaded dataset: price:最高價 (shape: (4541, 2648), attempt: 1)
+2025-10-05 23:28:27,552 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmp6bi1yeot.db (schema version 1)
+2025-10-05 23:28:27,554 - src.storage.manager - INFO - StorageManager initialized with 3 connections at /tmp/tmp6bi1yeot.db
+2025-10-05 23:28:27,573 - src.storage.manager - INFO - Saved strategy version: 231f98e9-fcd0-410c-a916-f02ff000c758 (Test Strategy)
+2025-10-05 23:28:27,575 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:27,731 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmpslgvutzy.db (schema version 1)
+2025-10-05 23:28:27,733 - src.storage.manager - INFO - StorageManager initialized with 3 connections at /tmp/tmpslgvutzy.db
+2025-10-05 23:28:27,741 - src.storage.manager - INFO - Saved strategy version: 0743e0c5-d3be-4c1f-8f32-1d1d58d67c38 (Test Strategy)
+2025-10-05 23:28:27,752 - src.storage.manager - INFO - Saved iteration 1 (4e1bb8c2-61ce-4f61-86dc-987971eed5ba) with 1 trades and 1 suggestions
+2025-10-05 23:28:27,755 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:27,890 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmpbsy7ep3p/export.db (schema version 1)
+2025-10-05 23:28:27,892 - src.storage.manager - INFO - StorageManager initialized with 5 connections at /tmp/tmpbsy7ep3p/export.db
+2025-10-05 23:28:27,903 - src.storage.manager - INFO - Saved strategy version: e93af169-f2d0-46c3-905c-ee3fb1fbbfcd (Test)
+2025-10-05 23:28:27,914 - src.storage.manager - INFO - Saved iteration 1 (3ddf3d32-2619-4367-b83b-7e2f59a04749) with 0 trades and 0 suggestions
+2025-10-05 23:28:27,916 - src.storage.manager - INFO - Exported 1 iterations to /tmp/tmpbsy7ep3p/export.json
+2025-10-05 23:28:27,918 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:28,090 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmpbsy7ep3p/import.db (schema version 1)
+2025-10-05 23:28:28,092 - src.storage.manager - INFO - StorageManager initialized with 5 connections at /tmp/tmpbsy7ep3p/import.db
+2025-10-05 23:28:28,095 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:49,000 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmpnp8l38zs.db (schema version 1)
+2025-10-05 23:28:49,002 - src.storage.manager - INFO - StorageManager initialized with 3 connections at /tmp/tmpnp8l38zs.db
+2025-10-05 23:28:49,011 - src.storage.manager - INFO - Saved strategy version: f7873843-15b2-45dc-b495-0d5bb5f06238 (Test Strategy)
+2025-10-05 23:28:49,012 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:49,120 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmprc8xncws.db (schema version 1)
+2025-10-05 23:28:49,121 - src.storage.manager - INFO - StorageManager initialized with 3 connections at /tmp/tmprc8xncws.db
+2025-10-05 23:28:49,128 - src.storage.manager - INFO - Saved strategy version: 7a51a787-d7a9-413f-bcd4-7d1fcbae5515 (Test Strategy)
+2025-10-05 23:28:49,137 - src.storage.manager - INFO - Saved iteration 1 (2ef40abb-8cb2-4b97-8fbd-1118cc8b1dab) with 1 trades and 1 suggestions
+2025-10-05 23:28:49,138 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:49,245 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmp2m6f4w73/export.db (schema version 1)
+2025-10-05 23:28:49,248 - src.storage.manager - INFO - StorageManager initialized with 5 connections at /tmp/tmp2m6f4w73/export.db
+2025-10-05 23:28:49,259 - src.storage.manager - INFO - Saved strategy version: 38868b2d-a5d3-4839-864d-e9419e5ea49d (Test)
+2025-10-05 23:28:49,269 - src.storage.manager - INFO - Saved iteration 1 (0eda389c-43a7-48d5-85d1-1bb95674e115) with 0 trades and 0 suggestions
+2025-10-05 23:28:49,271 - src.storage.manager - INFO - Exported 1 iterations to /tmp/tmp2m6f4w73/export.json
+2025-10-05 23:28:49,272 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:49,401 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmp2m6f4w73/import.db (schema version 1)
+2025-10-05 23:28:49,402 - src.storage.manager - INFO - StorageManager initialized with 5 connections at /tmp/tmp2m6f4w73/import.db
+2025-10-05 23:28:49,410 - src.storage.manager - INFO - Saved strategy version: 2753f0f4-fc28-4b13-8e97-b5527507f477 (Imported Strategy (original: 38868b2d-a5d3-4839-864d-e9419e5ea49d))
+2025-10-05 23:28:49,419 - src.storage.manager - INFO - Saved iteration 1 (1aa53b34-897d-4c18-9f02-9649b3171149) with 0 trades and 0 suggestions
+2025-10-05 23:28:49,420 - src.storage.manager - INFO - Imported 1 iterations from /tmp/tmp2m6f4w73/export.json
+2025-10-05 23:28:49,422 - src.storage.manager - INFO - StorageManager closed
+2025-10-05 23:28:49,543 - src.utils.init_db - INFO - Database initialized successfully at /tmp/tmppkn0jw_b.db (schema version 1)
+2025-10-05 23:28:49,545 - src.storage.manager - INFO - StorageManager initialized with 3 connections at /tmp/tmppkn0jw_b.db
+2025-10-05 23:28:49,552 - src.storage.manager - INFO - Saved strategy version: 8384dd36-4845-4a4d-9837-f3723f9281f9 (Strategy 0)
+2025-10-05 23:28:49,558 - src.storage.manager - INFO - Saved strategy version: af7e3499-8649-4445-acdd-27135961e53f (Strategy 1)
+2025-10-05 23:28:49,569 - src.storage.manager - INFO - Saved strategy version: 8f6e880f-e6e5-49ad-95eb-6332672377ae (Strategy 2)
+2025-10-05 23:28:49,576 - src.storage.manager - INFO - Saved strategy version: 3028c5e9-ec9c-4ed0-9915-0f76ef333883 (Strategy 3)
+2025-10-05 23:28:49,584 - src.storage.manager - INFO - Saved strategy version: 3220c6b4-4277-4148-bd58-06520069ce54 (Strategy 4)
+2025-10-05 23:28:49,591 - src.storage.manager - INFO - Saved strategy version: 1441c5f3-cf66-4d26-ba61-2d7acac2b61e (Strategy 5)
+2025-10-05 23:28:49,600 - src.storage.manager - INFO - Saved strategy version: 51250a21-4654-426e-85ba-59905ca36c43 (Strategy 6)
+2025-10-05 23:28:49,611 - src.storage.manager - INFO - Saved strategy version: 2a039d9f-3cd3-40b5-8f5c-10eb2936d419 (Strategy 7)
+2025-10-05 23:28:49,622 - src.storage.manager - INFO - Saved strategy version: 94ef9208-7e03-4176-a6e5-11e08767f717 (Strategy 8)
+2025-10-05 23:28:49,630 - src.storage.manager - INFO - Saved strategy version: 3b1ec2c4-524b-42ca-bbb7-e03356d2421b (Strategy 9)
+2025-10-05 23:28:49,632 - src.storage.manager - INFO - StorageManager closed

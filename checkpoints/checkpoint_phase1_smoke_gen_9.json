@@ -1,0 +1,880 @@
+{
+  "test_name": "phase1_smoke",
+  "phase": "phase1",
+  "generation_number": 9,
+  "timestamp": "2025-10-28T13:49:41.177235",
+  "durations": [
+    74.35878014564514,
+    101.47064852714539,
+    128.5147421360016,
+    142.94873595237732,
+    83.10979986190796,
+    81.06998419761658,
+    90.74128222465515,
+    54.36303496360779,
+    46.09232831001282,
+    43.93862342834473
+  ],
+  "champion_updates": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "sharpes": [
+    0.792411288919061,
+    1.0812677313682286,
+    1.2633514060333062,
+    1.3046893356946796,
+    1.48263734962454,
+    1.48263734962454,
+    1.48263734962454,
+    1.48263734962454,
+    1.48263734962454,
+    1.48263734962454
+  ],
+  "restart_count": 0,
+  "evolution_summary": {
+    "total_generations": 10,
+    "champion_updates_count": 5,
+    "champion_update_rate": 0.5,
+    "best_fitness": 1.155839223781099,
+    "avg_fitness": 1.2957190935921568,
+    "final_diversity": 0.6333333333333333,
+    "avg_cache_hit_rate": 0.16334920634920636,
+    "avg_fitness_progression": [
+      0.061861735812401536,
+      0.2002512567984745,
+      0.5587791992124652,
+      0.856025306490608,
+      1.0435870468761852,
+      1.0740704040589737,
+      1.1264568579580236,
+      1.1980275928117807,
+      1.2742045891438796,
+      1.2957190935921568
+    ],
+    "diversity_progression": [
+      1.0,
+      0.9666666666666667,
+      0.9666666666666667,
+      0.9333333333333333,
+      0.8666666666666667,
+      0.9,
+      0.8666666666666667,
+      0.9,
+      0.7,
+      0.6333333333333333
+    ],
+    "cache_performance": {
+      "avg_hit_rate": 0.16334920634920636,
+      "final_cache_size": 214
+    },
+    "champion_lineage": [
+      [],
+      [
+        "40f48b4e"
+      ],
+      [
+        "66270b8c"
+      ],
+      [
+        "d3a9eac1"
+      ],
+      [
+        "e5469b00"
+      ]
+    ],
+    "final_champion": {
+      "id": "a8adb49f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.155839223781099,
+      "metrics": {
+        "annual_return": 0.5308345173689764,
+        "sharpe_ratio": 1.155839223781099,
+        "max_drawdown": -0.3083800224111015,
+        "success": false
+      },
+      "generation": 3,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    }
+  },
+  "population": [
+    {
+      "id": "a8adb49f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.155839223781099,
+      "metrics": {
+        "annual_return": 0.5308345173689764,
+        "sharpe_ratio": 1.155839223781099,
+        "max_drawdown": -0.3083800224111015,
+        "success": false
+      },
+      "generation": 3,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "a8adb49f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.48263734962454,
+      "metrics": {
+        "annual_return": 0.6929727494881595,
+        "sharpe_ratio": 1.48263734962454,
+        "max_drawdown": -0.3198323206191003,
+        "success": false
+      },
+      "generation": 4,
+      "parent_ids": [
+        "a8adb49f"
+      ]
+    },
+    {
+      "id": "a8adb49f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.48263734962454,
+      "metrics": {
+        "annual_return": 0.6929727494881595,
+        "sharpe_ratio": 1.48263734962454,
+        "max_drawdown": -0.3198323206191003,
+        "success": false
+      },
+      "generation": 5,
+      "parent_ids": [
+        "a8adb49f"
+      ]
+    },
+    {
+      "id": "ecefa06f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.15,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.5294880849674672,
+      "metrics": {
+        "annual_return": 0.7272303337377484,
+        "sharpe_ratio": 1.5294880849674672,
+        "max_drawdown": -0.32313586310921394,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "a8adb49f"
+      ]
+    },
+    {
+      "id": "a8adb49f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.48263734962454,
+      "metrics": {
+        "annual_return": 0.6929727494881595,
+        "sharpe_ratio": 1.48263734962454,
+        "max_drawdown": -0.3198323206191003,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "a8adb49f"
+      ]
+    },
+    {
+      "id": "e5469b00",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.4775187230652198,
+      "metrics": {
+        "annual_return": 0.6938114393398429,
+        "sharpe_ratio": 1.4775187230652198,
+        "max_drawdown": -0.3544514256395228,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "e5469b00",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.4775187230652198,
+      "metrics": {
+        "annual_return": 0.6938114393398429,
+        "sharpe_ratio": 1.4775187230652198,
+        "max_drawdown": -0.3544514256395228,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "e5469b00",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.4775187230652198,
+      "metrics": {
+        "annual_return": 0.6938114393398429,
+        "sharpe_ratio": 1.4775187230652198,
+        "max_drawdown": -0.3544514256395228,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "e5469b00",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.4775187230652198,
+      "metrics": {
+        "annual_return": 0.6938114393398429,
+        "sharpe_ratio": 1.4775187230652198,
+        "max_drawdown": -0.3544514256395228,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "ecd358f4",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 10,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.391848276291925,
+      "metrics": {
+        "annual_return": 0.5449088353584202,
+        "sharpe_ratio": 1.391848276291925,
+        "max_drawdown": -0.46345860458161614,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "ecd358f4"
+      ]
+    },
+    {
+      "id": "016a2ae3",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 120,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 15,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.3543641491826492,
+      "metrics": {
+        "annual_return": 0.4480443581465543,
+        "sharpe_ratio": 1.3543641491826492,
+        "max_drawdown": -0.358465280991892,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "016a2ae3"
+      ]
+    },
+    {
+      "id": "df9343ca",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 60,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.3164318170019043,
+      "metrics": {
+        "annual_return": 0.587889545133369,
+        "sharpe_ratio": 1.3164318170019043,
+        "max_drawdown": -0.35049571187717077,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "df9343ca"
+      ]
+    },
+    {
+      "id": "c4fc8236",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "earnings",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.296236357083634,
+      "metrics": {
+        "annual_return": 0.5721821177697706,
+        "sharpe_ratio": 1.296236357083634,
+        "max_drawdown": -0.36195456865878417,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "2b3b2f2d",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.15,
+        "resample": "W",
+        "resample_offset": 3
+      },
+      "fitness": 1.2929214734800007,
+      "metrics": {
+        "annual_return": 0.6000747790026408,
+        "sharpe_ratio": 1.2929214734800007,
+        "max_drawdown": -0.4069849758516396,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "2b3b2f2d"
+      ]
+    },
+    {
+      "id": "e61bf649",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 120,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 15,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.2828957825835832,
+      "metrics": {
+        "annual_return": 0.41284761229706257,
+        "sharpe_ratio": 1.2828957825835832,
+        "max_drawdown": -0.3275694531878074,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e61bf649"
+      ]
+    },
+    {
+      "id": "33d25fb7",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 20,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 10,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 3
+      },
+      "fitness": 1.274208620442786,
+      "metrics": {
+        "annual_return": 0.47764094589889416,
+        "sharpe_ratio": 1.274208620442786,
+        "max_drawdown": -0.46584049182451504,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "33d25fb7"
+      ]
+    },
+    {
+      "id": "d736f3ab",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 10,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.2619654219028074,
+      "metrics": {
+        "annual_return": 0.4586296110642454,
+        "sharpe_ratio": 1.2619654219028074,
+        "max_drawdown": -0.3306482762574604,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "d736f3ab",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 10,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.2619654219028074,
+      "metrics": {
+        "annual_return": 0.4586296110642454,
+        "sharpe_ratio": 1.2619654219028074,
+        "max_drawdown": -0.3306482762574604,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "d736f3ab"
+      ]
+    },
+    {
+      "id": "d736f3ab",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 10,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.2619654219028074,
+      "metrics": {
+        "annual_return": 0.4586296110642454,
+        "sharpe_ratio": 1.2619654219028074,
+        "max_drawdown": -0.3306482762574604,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "d736f3ab"
+      ]
+    },
+    {
+      "id": "21775f3a",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 15,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.2604848885386934,
+      "metrics": {
+        "annual_return": 0.4086196842957628,
+        "sharpe_ratio": 1.2604848885386934,
+        "max_drawdown": -0.35533323578720144,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "21775f3a"
+      ]
+    },
+    {
+      "id": "8b6614b0",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 10,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 3
+      },
+      "fitness": 1.2570195992563704,
+      "metrics": {
+        "annual_return": 0.4755685131842533,
+        "sharpe_ratio": 1.2570195992563704,
+        "max_drawdown": -0.41210194998133576,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "8b6614b0"
+      ]
+    },
+    {
+      "id": "b81a5853",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.2062066757299161,
+      "metrics": {
+        "annual_return": 0.533114761582687,
+        "sharpe_ratio": 1.2062066757299161,
+        "max_drawdown": -0.5553829047860631,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "b81a5853"
+      ]
+    },
+    {
+      "id": "b81a5853",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.2062066757299161,
+      "metrics": {
+        "annual_return": 0.533114761582687,
+        "sharpe_ratio": 1.2062066757299161,
+        "max_drawdown": -0.5553829047860631,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "b81a5853"
+      ]
+    },
+    {
+      "id": "655c33a9",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 3,
+        "n_stocks": 15,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.081434154873136,
+      "metrics": {
+        "annual_return": 0.3421664847855683,
+        "sharpe_ratio": 1.081434154873136,
+        "max_drawdown": -0.3708019540986611,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "655c33a9"
+      ]
+    },
+    {
+      "id": "25df20de",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "earnings",
+        "catalyst_lookback": 4,
+        "n_stocks": 15,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.062720292947631,
+      "metrics": {
+        "annual_return": 0.30936245401782014,
+        "sharpe_ratio": 1.062720292947631,
+        "max_drawdown": -0.3236521835527888,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "21775f3a"
+      ]
+    },
+    {
+      "id": "ae9b0450",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "earnings",
+        "catalyst_lookback": 3,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 1.0204245748065655,
+      "metrics": {
+        "annual_return": 0.40016765653392583,
+        "sharpe_ratio": 1.0204245748065655,
+        "max_drawdown": -0.5600061332909795,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "a8adb49f"
+      ]
+    },
+    {
+      "id": "05e16290",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 20,
+        "ma_periods": 60,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 0
+      },
+      "fitness": 0.9981779796051973,
+      "metrics": {
+        "annual_return": 0.41544710833303644,
+        "sharpe_ratio": 0.9981779796051973,
+        "max_drawdown": -0.47327821783478385,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "738fdd8c"
+      ]
+    },
+    {
+      "id": "b3043f21",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 10,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 1
+      },
+      "fitness": 0.7534184872218689,
+      "metrics": {
+        "annual_return": 0.2680428662657546,
+        "sharpe_ratio": 0.7534184872218689,
+        "max_drawdown": -0.40398840459063845,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    },
+    {
+      "id": "bac7439b",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 5,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 10,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 2
+      },
+      "fitness": 0.7397297187815701,
+      "metrics": {
+        "annual_return": 0.22228102319764065,
+        "sharpe_ratio": 0.7397297187815701,
+        "max_drawdown": -0.33218117380941414,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "d736f3ab"
+      ]
+    },
+    {
+      "id": "6aad853f",
+      "template_type": "Momentum",
+      "parameters": {
+        "momentum_period": 5,
+        "ma_periods": 90,
+        "catalyst_type": "revenue",
+        "catalyst_lookback": 2,
+        "n_stocks": 5,
+        "stop_loss": 0.12,
+        "resample": "W",
+        "resample_offset": 0
+      },
+      "fitness": 0.3010343410289633,
+      "metrics": {
+        "annual_return": 0.059576750072281026,
+        "sharpe_ratio": 0.3010343410289633,
+        "max_drawdown": -0.625392962363396,
+        "success": false
+      },
+      "generation": 9,
+      "parent_ids": [
+        "e5469b00"
+      ]
+    }
+  ],
+  "config": {
+    "population_size": 30,
+    "elite_size": 3,
+    "mutation_rate": 0.15,
+    "tournament_size": 2,
+    "is_period": "2015:2020",
+    "oos_period": "2021:2024"
+  }
+}
