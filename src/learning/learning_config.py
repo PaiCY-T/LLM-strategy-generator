@@ -171,8 +171,8 @@ class LearningConfig:
     def from_yaml(cls, config_path: str) -> "LearningConfig":
         """Load configuration from YAML file.
 
-        Supports environment variables for sensitive data (API keys).
-        Falls back to defaults if file not found.
+        Supports both nested structure (learning_system.yaml) and flat structure.
+        Maps nested keys to flat LearningConfig attributes.
 
         Args:
             config_path: Path to YAML config file
@@ -191,18 +191,24 @@ class LearningConfig:
 
         try:
             with open(config_path, 'r', encoding='utf-8') as f:
-                config_dict = yaml.safe_load(f)
+                raw_config = yaml.safe_load(f)
 
-            if not config_dict:
+            if not raw_config:
                 logger.warning(f"Empty config file: {config_path}, using defaults")
                 return cls()
 
+            # Map nested structure to flat config
+            config_dict = cls._map_nested_config(raw_config)
+
             # Environment variable override for API key
             if 'api_key' not in config_dict or not config_dict.get('api_key'):
-                env_key = os.getenv('GEMINI_API_KEY') or os.getenv('OPENAI_API_KEY')
+                env_key = os.getenv('GEMINI_API_KEY') or os.getenv('OPENAI_API_KEY') or os.getenv('OPENROUTER_API_KEY')
                 if env_key:
                     config_dict['api_key'] = env_key
                     logger.debug("Using API key from environment variable")
+
+            # Add config_file path
+            config_dict['config_file'] = config_path
 
             # Create instance with config
             return cls(**config_dict)
@@ -214,6 +220,82 @@ class LearningConfig:
         except Exception as e:
             logger.error(f"Failed to load config from {config_path}: {e}")
             raise
+
+    @staticmethod
+    def _map_nested_config(raw: dict) -> dict:
+        """Map nested YAML structure to flat config dict.
+
+        Handles both:
+        - Nested structure: learning_loop.max_iterations, llm.model, etc.
+        - Flat structure: max_iterations, llm_model, etc. (backward compat)
+
+        Args:
+            raw: Raw YAML dict
+
+        Returns:
+            Flat config dict with LearningConfig attribute names
+        """
+        config = {}
+
+        # === Loop Control ===
+        learning_loop = raw.get('learning_loop', {})
+        config['max_iterations'] = learning_loop.get('max_iterations', raw.get('max_iterations', 20))
+        config['continue_on_error'] = learning_loop.get('continue_on_error', raw.get('continue_on_error', False))
+
+        # === LLM Configuration ===
+        llm = raw.get('llm', {})
+        config['llm_model'] = llm.get('model', raw.get('llm_model', 'gemini-2.5-flash'))
+
+        # API key: try provider-specific keys, then generic
+        api_key = None
+        if 'openrouter' in llm and llm['openrouter'].get('api_key'):
+            api_key = llm['openrouter']['api_key']
+        elif 'gemini' in llm and llm['gemini'].get('api_key'):
+            api_key = llm['gemini']['api_key']
+        elif 'openai' in llm and llm['openai'].get('api_key'):
+            api_key = llm['openai']['api_key']
+        config['api_key'] = api_key or raw.get('api_key')
+
+        # LLM generation settings
+        generation = llm.get('generation', {})
+        config['llm_timeout'] = generation.get('timeout', raw.get('llm_timeout', 60))
+        config['llm_temperature'] = generation.get('temperature', raw.get('llm_temperature', 0.7))
+        config['llm_max_tokens'] = generation.get('max_tokens', raw.get('llm_max_tokens', 4000))
+
+        # === Innovation Mode ===
+        config['innovation_mode'] = llm.get('enabled', raw.get('innovation_mode', True))
+        config['innovation_rate'] = int(llm.get('innovation_rate', raw.get('innovation_rate', 1.0)) * 100)  # Convert 0.0-1.0 to 0-100
+        llm_retry = learning_loop.get('llm', {})
+        config['llm_retry_count'] = llm_retry.get('retry_count', raw.get('llm_retry_count', 3))
+
+        # === Backtest Configuration ===
+        backtest = raw.get('backtest', {})
+        config['timeout_seconds'] = learning_loop.get('backtest', {}).get('timeout_seconds', raw.get('timeout_seconds', 420))
+        config['start_date'] = backtest.get('default_start_date', raw.get('start_date', '2018-01-01'))
+        config['end_date'] = backtest.get('default_end_date', raw.get('end_date', '2024-12-31'))
+
+        transaction_costs = backtest.get('transaction_costs', {})
+        config['fee_ratio'] = transaction_costs.get('default_fee_ratio', raw.get('fee_ratio', 0.001425))
+        config['tax_ratio'] = transaction_costs.get('default_tax_ratio', raw.get('tax_ratio', 0.003))
+        config['resample'] = learning_loop.get('backtest', {}).get('resample', raw.get('resample', 'M'))
+
+        # === History & Files ===
+        history = learning_loop.get('history', {})
+        config['history_file'] = history.get('file', raw.get('history_file', 'artifacts/data/innovations.jsonl'))
+        config['history_window'] = history.get('window', raw.get('history_window', 5))
+
+        champion = learning_loop.get('champion', {})
+        config['champion_file'] = champion.get('file', raw.get('champion_file', 'artifacts/data/champion.json'))
+
+        logging_cfg = learning_loop.get('logging', {})
+        config['log_dir'] = logging_cfg.get('log_dir', raw.get('log_dir', 'logs'))
+
+        # === Logging ===
+        config['log_level'] = logging_cfg.get('log_level', raw.get('log_level', 'INFO'))
+        config['log_to_file'] = logging_cfg.get('log_to_file', raw.get('log_to_file', True))
+        config['log_to_console'] = logging_cfg.get('log_to_console', raw.get('log_to_console', True))
+
+        return config
 
     def to_dict(self) -> dict:
         """Convert config to dictionary.
