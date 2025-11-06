@@ -21,8 +21,8 @@ from datetime import datetime
 from typing import Any, Dict, Optional, Tuple
 
 from src.backtest.executor import BacktestExecutor, ExecutionResult
-from src.backtest.metrics import MetricsExtractor
-from src.backtest.error_classifier import ErrorClassifier
+from src.backtest.metrics import MetricsExtractor, StrategyMetrics
+from src.backtest.classifier import SuccessClassifier
 from src.learning.champion_tracker import ChampionTracker
 from src.learning.feedback_generator import FeedbackGenerator
 from src.learning.iteration_history import IterationHistory, IterationRecord
@@ -87,9 +87,41 @@ class IterationExecutor:
 
         # Initialize Phase 2 components
         self.metrics_extractor = MetricsExtractor()
-        self.error_classifier = ErrorClassifier()
+        self.success_classifier = SuccessClassifier()
+
+        # Initialize finlab data and sim (lazy loading)
+        self.data = None
+        self.sim = None
+        self._finlab_initialized = False
 
         logger.info("IterationExecutor initialized")
+
+    def _initialize_finlab(self) -> bool:
+        """Initialize finlab data and sim objects (lazy loading).
+
+        Returns:
+            True if initialization successful, False otherwise
+        """
+        if self._finlab_initialized:
+            return True
+
+        try:
+            from finlab import data
+            from finlab.backtest import sim
+
+            self.data = data
+            self.sim = sim
+            self._finlab_initialized = True
+            logger.info("✓ Finlab data and sim initialized")
+            return True
+
+        except ImportError as e:
+            logger.error(f"Failed to import finlab: {e}")
+            logger.error("Please ensure finlab is installed and authenticated")
+            return False
+        except Exception as e:
+            logger.error(f"Unexpected error initializing finlab: {e}")
+            return False
 
     def execute_iteration(
         self,
@@ -131,6 +163,13 @@ class IterationExecutor:
         start_time = datetime.now()
         logger.info(f"=== Starting iteration {iteration_num} ===")
 
+        # Step 0: Initialize finlab (lazy loading)
+        if not self._initialize_finlab():
+            logger.error("Failed to initialize finlab - cannot execute iteration")
+            return self._create_failure_record(
+                iteration_num, "unknown", "Finlab initialization failed", start_time
+            )
+
         # Step 1: Load recent history
         history_window = self.config.get("history_window", 5)
         recent_records = self._load_recent_history(history_window)
@@ -150,6 +189,10 @@ class IterationExecutor:
             strategy_code, strategy_id, strategy_generation = self._generate_with_llm(
                 feedback, iteration_num
             )
+            # If LLM fallback to Factor Graph, update generation_method
+            if strategy_code is None and strategy_id is not None:
+                generation_method = "factor_graph"
+                logger.info("LLM fallback to Factor Graph detected, updated generation_method")
         else:
             strategy_code, strategy_id, strategy_generation = self._generate_with_factor_graph(
                 iteration_num
@@ -233,9 +276,20 @@ class IterationExecutor:
             Feedback string for LLM
         """
         try:
-            feedback = self.feedback_generator.generate(
-                history=recent_records,
-                iteration_num=iteration_num
+            # For first iteration or no history, return default feedback
+            if not recent_records:
+                return "First iteration - no previous history. Generate a basic momentum strategy."
+
+            # Get last record for context
+            last_record = recent_records[-1]
+
+            # Generate feedback based on last iteration's results
+            feedback = self.feedback_generator.generate_feedback(
+                iteration_num=iteration_num,
+                metrics=last_record.metrics if hasattr(last_record, 'metrics') else None,
+                execution_result={'status': 'success' if hasattr(last_record, 'classification_level') else 'error'},
+                classification_level=last_record.classification_level if hasattr(last_record, 'classification_level') else None,
+                error_msg=None
             )
             return feedback
         except Exception as e:
@@ -344,9 +398,12 @@ class IterationExecutor:
         """
         try:
             if generation_method == "llm" and strategy_code:
-                # Execute code string
-                result = self.backtest_executor.execute_code(
-                    code=strategy_code,
+                # Execute code string using BacktestExecutor.execute()
+                # Note: BacktestExecutor requires data and sim to be passed in
+                result = self.backtest_executor.execute(
+                    strategy_code=strategy_code,
+                    data=self.data,
+                    sim=self.sim,
                     timeout=self.config.get("timeout_seconds", 420),
                     start_date=self.config.get("start_date"),
                     end_date=self.config.get("end_date"),
@@ -425,11 +482,26 @@ class IterationExecutor:
             Classification level string
         """
         try:
-            level = self.error_classifier.classify(
-                execution_result=execution_result,
-                metrics=metrics
+            # Convert to StrategyMetrics for classification
+            strategy_metrics = StrategyMetrics(
+                sharpe_ratio=metrics.get("sharpe_ratio"),
+                total_return=metrics.get("total_return"),
+                max_drawdown=metrics.get("max_drawdown"),
+                execution_success=execution_result.success
             )
-            return level
+
+            # Classify using SuccessClassifier
+            classification_result = self.success_classifier.classify_single(strategy_metrics)
+
+            # Convert level number to string format
+            level_map = {
+                0: "LEVEL_0",
+                1: "LEVEL_1",
+                2: "LEVEL_2",
+                3: "LEVEL_3"
+            }
+            return level_map.get(classification_result.level, "LEVEL_0")
+
         except Exception as e:
             logger.warning(f"Classification failed: {e}")
             return "LEVEL_0"  # Default to worst level on error

@@ -73,7 +73,7 @@ class LearningLoop:
         # Initialize components in dependency order
         try:
             # 1. History (no dependencies)
-            self.history = IterationHistory(file_path=config.history_file)
+            self.history = IterationHistory(filepath=config.history_file)
             logger.info(f"✓ IterationHistory: {config.history_file}")
 
             # 1.5. Hall of Fame Repository (no dependencies)
@@ -97,10 +97,10 @@ class LearningLoop:
             self.llm_client = LLMClient(config_path=config.config_file)
             logger.info(f"✓ LLMClient: enabled={self.llm_client.is_enabled()}")
 
-            # 4. Feedback Generator (depends on history, champion)
+            # 4. Feedback Generator (depends on history, champion_tracker)
             self.feedback_generator = FeedbackGenerator(
                 history=self.history,
-                champion=self.champion_tracker
+                champion_tracker=self.champion_tracker
             )
             logger.info("✓ FeedbackGenerator initialized")
 
@@ -180,10 +180,10 @@ class LearningLoop:
             finally:
                 # Always try to save record if it was completed
                 # Protects against race condition: if SIGINT arrives between
-                # execute_iteration() and save_record(), we still save
+                # execute_iteration() and save(), we still save
                 if record is not None:
                     try:
-                        self.history.save_record(record)
+                        self.history.save(record)
                         logger.debug(f"Saved iteration {iteration_num} to history")
 
                         # Show progress
