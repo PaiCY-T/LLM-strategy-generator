@@ -73,7 +73,7 @@ import json
 import logging
 import os
 import threading
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -85,6 +85,9 @@ logger = logging.getLogger(__name__)
 class IterationRecord:
     """Record of a single iteration in the learning loop.
 
+    Supports HYBRID architecture: can store either LLM-generated code strings
+    OR Factor Graph Strategy references (id + generation).
+
     This dataclass represents one complete iteration of the autonomous learning
     system, including the generated strategy, execution results, and metadata.
 
@@ -92,7 +95,11 @@ class IterationRecord:
 
     Attributes:
         iteration_num (int): Iteration number (0-indexed). Must be non-negative.
-        strategy_code (str): Generated strategy Python code. Cannot be empty.
+        generation_method (str): How strategy was generated ("llm" or "factor_graph").
+            Default: "llm" for backward compatibility.
+        strategy_code (str | None): Generated strategy Python code (for LLM strategies).
+        strategy_id (str | None): Strategy ID (for Factor Graph strategies).
+        strategy_generation (int | None): Strategy generation number (for Factor Graph).
         execution_result (dict): Result from BacktestExecutor containing:
             - success (bool): Whether execution succeeded
             - error_type (str | None): Type of error if failed
@@ -113,13 +120,19 @@ class IterationRecord:
         feedback_used (str | None): Feedback text provided to LLM for this iteration.
             Stored for post-hoc analysis of learning trajectory. Default: None
 
+    Validation:
+        - For LLM: strategy_code must be non-empty string
+        - For Factor Graph: strategy_id and strategy_generation must be set
+        - Exactly one generation method must be valid
+
     Raises:
         ValueError: If any field fails validation with actionable error message
 
-    Example:
+    Example (LLM):
         >>> from datetime import datetime
         >>> record = IterationRecord(
         ...     iteration_num=5,
+        ...     generation_method="llm",
         ...     strategy_code="data.get('price:收盤價').ewm(span=20).mean()",
         ...     execution_result={"success": True, "execution_time": 3.5},
         ...     metrics={"sharpe_ratio": 1.8, "total_return": 0.25, "max_drawdown": -0.10},
@@ -129,13 +142,28 @@ class IterationRecord:
         ... )
         >>> record.iteration_num
         5
+
+    Example (Factor Graph):
+        >>> record = IterationRecord(
+        ...     iteration_num=10,
+        ...     generation_method="factor_graph",
+        ...     strategy_id="momentum_v2",
+        ...     strategy_generation=2,
+        ...     execution_result={"success": True, "execution_time": 4.2},
+        ...     metrics={"sharpe_ratio": 2.1, "total_return": 0.30, "max_drawdown": -0.12},
+        ...     classification_level="LEVEL_3",
+        ...     timestamp=datetime.now().isoformat()
+        ... )
     """
     iteration_num: int
-    strategy_code: str
-    execution_result: Dict[str, Any]
-    metrics: Dict[str, float]
-    classification_level: str
-    timestamp: str
+    generation_method: str = "llm"  # "llm" or "factor_graph", default for compatibility
+    strategy_code: Optional[str] = None
+    strategy_id: Optional[str] = None
+    strategy_generation: Optional[int] = None
+    execution_result: Dict[str, Any] = field(default_factory=dict)
+    metrics: Dict[str, float] = field(default_factory=dict)
+    classification_level: str = ""
+    timestamp: str = ""
     champion_updated: bool = False
     feedback_used: Optional[str] = None
 
@@ -160,13 +188,42 @@ class IterationRecord:
                 f"iteration_num must be non-negative, got {self.iteration_num}"
             )
 
-        # Validate strategy_code
-        if not isinstance(self.strategy_code, str):
+        # Validate generation_method
+        if self.generation_method not in ("llm", "factor_graph"):
             raise ValueError(
-                f"strategy_code must be str, got {type(self.strategy_code).__name__}"
+                f"generation_method must be 'llm' or 'factor_graph', "
+                f"got '{self.generation_method}'"
             )
-        if not self.strategy_code.strip():
-            raise ValueError("strategy_code cannot be empty")
+
+        # Validate LLM strategy
+        if self.generation_method == "llm":
+            if not isinstance(self.strategy_code, str):
+                raise ValueError(
+                    f"LLM strategy must have strategy_code as str, "
+                    f"got {type(self.strategy_code).__name__}"
+                )
+            if not self.strategy_code.strip():
+                raise ValueError("LLM strategy_code cannot be empty")
+
+        # Validate Factor Graph strategy
+        if self.generation_method == "factor_graph":
+            if not self.strategy_id:
+                raise ValueError(
+                    "Factor Graph strategy must have non-empty strategy_id"
+                )
+            if not isinstance(self.strategy_id, str):
+                raise ValueError(
+                    f"strategy_id must be str, got {type(self.strategy_id).__name__}"
+                )
+            if self.strategy_generation is None:
+                raise ValueError(
+                    "Factor Graph strategy must have strategy_generation"
+                )
+            if not isinstance(self.strategy_generation, int):
+                raise ValueError(
+                    f"strategy_generation must be int, "
+                    f"got {type(self.strategy_generation).__name__}"
+                )
 
         # Validate execution_result
         if not isinstance(self.execution_result, dict):

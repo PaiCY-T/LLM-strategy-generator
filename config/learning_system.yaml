@@ -1,6 +1,83 @@
 # Learning System Configuration
 # Controls anti-churn behavior and champion update frequency
 
+# ============================================================================
+# PHASE 6: LEARNING LOOP CONFIGURATION
+# ============================================================================
+# Core parameters for autonomous learning loop (Phase 6)
+# Controls iteration count, error handling, file paths, and logging
+learning_loop:
+  # Maximum number of learning iterations (1-1000)
+  # Each iteration generates and tests one strategy
+  # Recommended: 20 for initial exploration, 100+ for production runs
+  max_iterations: ${MAX_ITERATIONS:20}
+
+  # Continue if iteration fails (error handling strategy)
+  # true: log error and continue to next iteration (recommended for production)
+  # false: stop on first error (useful for debugging)
+  continue_on_error: ${CONTINUE_ON_ERROR:false}
+
+  # History tracking configuration
+  history:
+    # JSONL file for iteration history persistence
+    # Each line stores one iteration's full record (JSON format)
+    # Format: artifacts/data/innovations.jsonl
+    file: ${HISTORY_FILE:artifacts/data/innovations.jsonl}
+
+    # Number of recent iterations to use for feedback generation
+    # Higher = more context for LLM, but slower and more expensive
+    # Lower = faster generation, but less historical context
+    # Recommended: 5 iterations provides good balance
+    window: ${HISTORY_WINDOW:5}
+
+  # Champion tracking configuration
+  champion:
+    # JSON file for current champion strategy persistence
+    # Stores best-performing strategy found so far
+    # Format: artifacts/data/champion.json
+    file: ${CHAMPION_FILE:artifacts/data/champion.json}
+
+  # Backtest execution configuration
+  backtest:
+    # Timeout for strategy execution (seconds, minimum 60)
+    # Strategies exceeding this timeout will be killed
+    # Recommended: 420 (7 minutes) for typical backtests
+    timeout_seconds: ${BACKTEST_TIMEOUT:420}
+
+    # Rebalancing frequency for portfolio strategies
+    # D = Daily, W = Weekly, M = Monthly
+    # Monthly is recommended for most strategies (reduces transaction costs)
+    resample: ${BACKTEST_RESAMPLE:M}
+
+  # Logging configuration
+  logging:
+    # Log directory for timestamped log files
+    # Created automatically if it doesn't exist
+    log_dir: ${LOG_DIR:logs}
+
+    # Logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+    # DEBUG: very verbose, shows all internal steps
+    # INFO: normal operation, shows iteration progress (recommended)
+    # WARNING: only warnings and errors
+    log_level: ${LOG_LEVEL:INFO}
+
+    # Write logs to timestamped file in log_dir
+    # Useful for debugging and audit trails
+    log_to_file: ${LOG_TO_FILE:true}
+
+    # Write logs to console (stdout)
+    # Set to false for daemon/background operation
+    log_to_console: ${LOG_TO_CONSOLE:true}
+
+  # LLM retry configuration (Phase 6 specific)
+  llm:
+    # Number of LLM retries before falling back to Factor Graph
+    # Applies when LLM generation fails (timeout, invalid code, API error)
+    # Recommended: 3 retries provides good balance
+    retry_count: ${LLM_RETRY_COUNT:3}
+
+# ============================================================================
+
 # === BACKTEST CONFIGURATION ===
 # Controls backtest date ranges and transaction costs
 # Part of phase2-validation-framework-integration spec (Tasks 1-2)
@@ -732,10 +809,11 @@ sandbox:
 #   - gemini: Set GOOGLE_API_KEY or GEMINI_API_KEY
 #   - openai: Set OPENAI_API_KEY
 #
-# BACKWARD COMPATIBILITY:
-#   - Default: llm.enabled = false (LLM disabled)
-#   - If LLM disabled, Factor Graph is used for 100% of iterations
-#   - Safe to upgrade without breaking existing workflows
+# DEFAULT CONFIGURATION (Updated 2025-11-05):
+#   - Default: llm.enabled = true (LLM is CORE capability)
+#   - If LLM disabled, Factor Graph is used for 100% of iterations (Stage 1 mode)
+#   - Stage 1 (no LLM): 70% success, 19-day plateau, diversity collapse
+#   - Stage 2 (with LLM): >80% success target, continuous innovation
 #
 # SECURITY:
 #   - NEVER hardcode API keys in this file
@@ -752,9 +830,11 @@ sandbox:
 # ============================================================================
 
 llm:
-  # Enable/disable LLM innovation (default: false for backward compatibility)
-  # Set to true to enable LLM-driven innovation
+  # Enable/disable LLM innovation (default: true - LLM is CORE capability)
+  # LLM innovation is the primary intelligence source for Stage 2 (>80% success, >2.5 Sharpe)
   # Requires API key configured via environment variable
+  # Without LLM: 19-day plateau, 10.4% diversity collapse → limited to 13 predefined factors
+  # With LLM: Continuous structural innovation, sustained diversity >40%, breakthrough potential
   enabled: true
 
   # Provider selection: openrouter, gemini, or openai

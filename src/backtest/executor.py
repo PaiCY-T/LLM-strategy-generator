@@ -335,6 +335,191 @@ class BacktestExecutor:
         # Pass result back to parent via Queue
         result_queue.put(result)
 
+    def execute_strategy(
+        self,
+        strategy: Any,  # Factor Graph Strategy object
+        data: Any,
+        sim: Any,
+        timeout: Optional[int] = None,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+        fee_ratio: Optional[float] = None,
+        tax_ratio: Optional[float] = None,
+        resample: str = "M",
+    ) -> ExecutionResult:
+        """Execute Factor Graph Strategy object in isolated process with timeout.
+
+        This method handles Factor Graph Strategy DAG objects (not code strings).
+        It calls strategy.to_pipeline() to get position signals, then passes them
+        to finlab.backtest.sim() to generate a backtest report.
+
+        Args:
+            strategy: Factor Graph Strategy object (from src.factor_graph.strategy)
+            data: finlab.data object for strategy to use
+            sim: finlab.backtest.sim function for backtesting
+            timeout: Execution timeout in seconds (overrides default)
+            start_date: Backtest start date (YYYY-MM-DD, default: 2018-01-01)
+            end_date: Backtest end date (YYYY-MM-DD, default: 2024-12-31)
+            fee_ratio: Transaction fee ratio (default: 0.001425 for Taiwan brokers)
+            tax_ratio: Transaction tax ratio (default: 0.003 for Taiwan securities tax)
+            resample: Rebalancing frequency (default: "M" for monthly, can be "W" for weekly, "D" for daily)
+
+        Returns:
+            ExecutionResult with execution status, metrics, and any errors
+
+        Example:
+            >>> from src.factor_graph.strategy import Strategy
+            >>> executor = BacktestExecutor(timeout=420)
+            >>> strategy = Strategy(id="momentum_v1", generation=1)
+            >>> # ... add factors to strategy ...
+            >>> result = executor.execute_strategy(
+            ...     strategy=strategy,
+            ...     data=data,
+            ...     sim=sim
+            ... )
+            >>> if result.success:
+            ...     print(f"Sharpe: {result.sharpe_ratio}")
+        """
+        execution_timeout = timeout if timeout is not None else self.timeout
+
+        # Create result queue for inter-process communication
+        result_queue = mp.Queue()  # type: mp.Queue
+
+        # Create process that will execute strategy in isolation
+        process = mp.Process(
+            target=self._execute_strategy_in_process,
+            args=(strategy, data, sim, result_queue, start_date, end_date, fee_ratio, tax_ratio, resample),
+        )
+
+        start_time = time.time()
+        process.start()
+
+        # Wait for process to complete or timeout
+        process.join(timeout=execution_timeout)
+        execution_time = time.time() - start_time
+
+        # Check if process completed or timed out
+        if process.is_alive():
+            # Process is still running - timeout occurred
+            process.terminate()
+            process.join(timeout=5)  # Give it 5 seconds to clean up
+
+            if process.is_alive():
+                # Still running after terminate, force kill
+                process.kill()
+                process.join(timeout=2)
+
+            return ExecutionResult(
+                success=False,
+                error_type="TimeoutError",
+                error_message=f"Strategy execution exceeded timeout of {execution_timeout} seconds",
+                execution_time=execution_time,
+                stack_trace=f"Process killed after timeout ({execution_timeout}s)",
+            )
+
+        # Process completed - check for result
+        try:
+            result = result_queue.get(timeout=2)
+            # Add final execution time if not already set
+            if result.execution_time <= 0:
+                result.execution_time = execution_time
+            return result
+        except Empty:
+            # Process completed but no result in queue (unexpected error)
+            return ExecutionResult(
+                success=False,
+                error_type="UnexpectedError",
+                error_message="Process completed but produced no result",
+                execution_time=execution_time,
+                stack_trace="Queue was empty after process completion",
+            )
+
+    @staticmethod
+    def _execute_strategy_in_process(
+        strategy: Any,  # Factor Graph Strategy object
+        data: Any,
+        sim: Any,
+        result_queue: Any,  # mp.Queue
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+        fee_ratio: Optional[float] = None,
+        tax_ratio: Optional[float] = None,
+        resample: str = "M",
+    ) -> None:
+        """Execute Factor Graph Strategy in isolated process.
+
+        This method runs in a separate process. It executes the strategy DAG
+        via to_pipeline() to get position signals, then calls sim() to backtest.
+
+        Args:
+            strategy: Factor Graph Strategy object
+            data: finlab.data object
+            sim: finlab.backtest.sim function
+            result_queue: Queue for passing ExecutionResult back to parent
+            start_date: Optional backtest start date
+            end_date: Optional backtest end date
+            fee_ratio: Optional transaction fee ratio
+            tax_ratio: Optional transaction tax ratio
+            resample: Rebalancing frequency (default: "M" for monthly)
+        """
+        start_time = time.time()
+
+        try:
+            # Step 1: Execute strategy DAG to get position signals
+            positions_df = strategy.to_pipeline(data)
+
+            # Step 2: Filter by date range
+            start = start_date or "2018-01-01"
+            end = end_date or "2024-12-31"
+            positions_df = positions_df.loc[start:end]
+
+            # Step 3: Run backtest via sim()
+            report = sim(
+                positions_df,
+                fee_ratio=fee_ratio if fee_ratio is not None else 0.001425,
+                tax_ratio=tax_ratio if tax_ratio is not None else 0.003,
+                resample=resample,  # Configurable rebalancing frequency
+            )
+
+            # Step 4: Extract metrics from report
+            sharpe_ratio = float("nan")
+            total_return = float("nan")
+            max_drawdown = float("nan")
+
+            try:
+                if hasattr(report, 'get_stats'):
+                    stats = report.get_stats()
+                    if stats and isinstance(stats, dict):
+                        sharpe_ratio = stats.get('daily_sharpe', float("nan"))
+                        total_return = stats.get('total_return', float("nan"))
+                        max_drawdown = stats.get('max_drawdown', float("nan"))
+            except Exception:
+                # If get_stats() fails, metrics remain as NaN
+                pass
+
+            # Create success result
+            result = ExecutionResult(
+                success=True,
+                sharpe_ratio=sharpe_ratio if not pd.isna(sharpe_ratio) else None,
+                total_return=total_return if not pd.isna(total_return) else None,
+                max_drawdown=max_drawdown if not pd.isna(max_drawdown) else None,
+                execution_time=time.time() - start_time,
+                report=report,  # Include report for further analysis
+            )
+
+        except Exception as e:
+            # Catch all exceptions with full stack trace
+            result = ExecutionResult(
+                success=False,
+                error_type=type(e).__name__,
+                error_message=str(e),
+                execution_time=time.time() - start_time,
+                stack_trace=traceback.format_exc(),
+            )
+
+        # Pass result back to parent via Queue
+        result_queue.put(result)
+
 
 def _extract_metric(
     report: Any,

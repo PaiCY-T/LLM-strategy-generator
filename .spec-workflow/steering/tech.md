@@ -76,56 +76,88 @@ Primary characteristics:
 
 ### Application Architecture
 
-**Layered Monolithic Architecture** with clear separation of concerns:
+**Three-Layer Architecture** - LLM-Driven Autonomous Learning System:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Autonomous Loop Layer                     │
-│         (iteration_engine.py, autonomous_loop.py)           │
-└──────────────────┬──────────────────────────────────────────┘
-                   │
-                   │ 20% innovation_rate
-                   ▼
-┌─────────────────────────────────────────────────────────────┐
-│            🤖 InnovationEngine (CORE CAPABILITY)            │
-│           (src/innovation/innovation_engine.py)             │
-│  • LLMProvider: OpenRouter/Gemini/OpenAI integration        │
-│  • PromptBuilder: Context-aware strategy generation         │
-│  • SecurityValidator: Code safety checks                    │
-│  • FeedbackProcessor: Learning from failures                │
-│  • YAMLSchemaValidator, YAMLToCodeGenerator                 │
-│  • 7-Layer Validation Framework                             │
-└──────────────────┬──────────────────────────────────────────┘
-                   │
-       ┌───────────┼───────────┐
-       │           │           │
-       │ 20% LLM   │ 80% Fallback
-       ▼           ▼           │
-  ┌────────┐  ┌────────┐      │
-  │Template│  │Evolution│      │
-  │ System │  │ System  │◄─────┘
-  └───┬────┘  └───┬────┘
-      │           │
-      └─────┬─────┴────┬────────┐
-            │          │        │
-       ┌────▼───┐  ┌──▼─────┐ ┌▼────────┐
-       │Factor  │  │Feedback│ │Validation│
-       │ Graph  │  │ System │ │ System   │
-       └────┬───┘  └────────┘ └┬─────────┘
-            │                   │
-            └────────┬──────────┘
-                     │
-                ┌────▼──────────┐
-                │  Backtest      │
-                │  Engine        │
-                │  (finlab)      │
-                └────┬───────────┘
-                     │
-                ┌────▼───────────┐
-                │ Data Layer     │
-                │ (Finlab API)   │
-                └────────────────┘
+┌───────────────────────────────────────────────────────────────────┐
+│  ⚙️ LEARNING LOOP LAYER (EXECUTION ENGINE)                       │
+│  src/learning/ - Phase 3-6 implementation (4,200 lines, 7 modules)│
+│  ────────────────────────────────────────────────────────────────│
+│  • learning_loop.py: Main orchestrator (10-step process)          │
+│  • iteration_executor.py: Step-by-step execution                  │
+│  • champion_tracker.py: Best strategy tracking                    │
+│  • iteration_history.py: JSONL persistence                        │
+│  • feedback_generator.py: Context generation for LLM              │
+│  • llm_client.py: Multi-provider LLM abstraction                  │
+│  • learning_config.py: 21-parameter configuration                 │
+│  ────────────────────────────────────────────────────────────────│
+│  Status: ✅ Complete (88% coverage, A grade, 86.7% complexity ↓)  │
+└────────────────────────┬──────────────────────────────────────────┘
+                         │
+                         │ Step 3: Decide innovation mode
+                         │ (20% LLM / 80% Factor Graph)
+                         ▼
+┌───────────────────────────────────────────────────────────────────┐
+│  🤖 LLM INNOVATION LAYER (CORE - Intelligence Source)            │
+│  src/innovation/ - Phase 2-3 implementation (~5000+ lines)        │
+│  ────────────────────────────────────────────────────────────────│
+│  • innovation_engine.py: LLM-driven strategy generation           │
+│  • llm_provider.py: OpenRouter/Gemini/OpenAI integration          │
+│  • prompt_builder.py: Context-aware prompts                       │
+│  • security_validator.py: Code safety checks                      │
+│  • validators/: 7-layer validation framework                      │
+│    - Syntax → Semantic → Security → Backtestability →            │
+│      Metrics → Multi-Objective → Baseline                         │
+│  ────────────────────────────────────────────────────────────────│
+│  Structured YAML Mode: 90%+ success (vs 60% full code)           │
+│  Status: ✅ Implemented, ⏳ Activation pending (llm.enabled=false)│
+└────────────────────────┬──────────────────────────────────────────┘
+                         │
+              ┌──────────┼──────────┐
+              │          │          │
+         20% LLM    80% Factor     Validation
+              │       Graph         Pipeline
+              ▼          ▼              │
+       ┌──────────┐ ┌──────────┐       │
+       │Templates │ │Evolution │       │
+       │ System   │ │ System   │       │
+       └────┬─────┘ └────┬─────┘       │
+            │            │             │
+            └──────┬─────┴────┬────────┘
+                   │          │
+                   ▼          ▼
+┌───────────────────────────────────────────────────────────────────┐
+│  📊 VALIDATION LAYER (QUALITY GATE - Safety Assurance)           │
+│  src/validation/ - v1.2 Production Ready                          │
+│  ────────────────────────────────────────────────────────────────│
+│  • Bootstrap confidence intervals (Politis & Romano 1994)         │
+│  • Walk-forward analysis (temporal stability)                     │
+│  • Baseline comparison (0050 ETF, Equal Weight, Risk Parity)     │
+│  • Bonferroni correction (multiple comparison adjustment)         │
+│  • Out-of-sample validation (train/val/test 2018-2024)           │
+│  ────────────────────────────────────────────────────────────────│
+│  Status: ✅ Integrated with iteration_executor.py (Step 5-7)      │
+└────────────────────────┬──────────────────────────────────────────┘
+                         │
+                    ┌────▼──────────┐
+                    │  Backtest      │
+                    │  Engine        │
+                    │  (finlab)      │
+                    └────┬───────────┘
+                         │
+                    ┌────▼───────────┐
+                    │ Data Layer     │
+                    │ (Finlab API)   │
+                    └────────────────┘
 ```
+
+**Why This Architecture**:
+- **Learning Loop** (⚙️): Orchestrates the entire autonomous iteration process, managing state and workflow
+- **LLM Innovation** (🤖): Provides structural intelligence to break framework limitations (20% innovation rate)
+- **Validation** (📊): Ensures statistical robustness and quality through multi-layer validation
+
+**Without LLM (Stage 1)**: 70% success, 1.15 Sharpe, 19-day plateau → limited to 13 predefined factors
+**With LLM (Stage 2 Target)**: >80% success, >2.5 Sharpe → continuous structural innovation
 
 **Key Architectural Patterns**:
 1. **Repository Pattern**: Hall of Fame, Iteration History
@@ -769,8 +801,12 @@ pip install -r requirements-dev.txt  # For testing/linting
 
 ---
 
-**Document Version**: 1.2
-**Last Updated**: 2025-11-02
+**Document Version**: 1.3
+**Last Updated**: 2025-11-05
 **Status**: Production
 **Technical Reviewer**: N/A (personal project)
-**Latest Changes**: Validation framework v1.2 integration complete (9/9 tasks), integration testing framework v1.0, dataset key validation complete
+**Latest Changes**:
+- Application Architecture updated to three-layer model (Learning Loop → LLM Innovation → Validation)
+- Added src/learning/ module documentation (Phase 3-6 implementation complete)
+- Clarified architectural roles: ENGINE (⚙️) orchestrates CORE (🤖) with GATE (📊) validation
+- Updated status: Phase 1-6 100% complete, 88% test coverage, A grade quality
