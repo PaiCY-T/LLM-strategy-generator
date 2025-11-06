@@ -470,11 +470,8 @@ class IterationExecutor:
             # Update champion using hybrid architecture
             updated = self.champion_tracker.update_champion(
                 iteration_num=iteration_num,
-                metrics=metrics,
-                generation_method=generation_method,
                 code=strategy_code,
-                strategy_id=strategy_id,
-                strategy_generation=strategy_generation,
+                metrics=metrics
             )
 
             if updated:

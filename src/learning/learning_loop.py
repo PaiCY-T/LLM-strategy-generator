@@ -18,12 +18,14 @@ from datetime import datetime
 from typing import Optional
 
 from src.backtest.executor import BacktestExecutor
+from src.config.anti_churn_manager import AntiChurnManager
 from src.learning.champion_tracker import ChampionTracker
 from src.learning.feedback_generator import FeedbackGenerator
 from src.learning.iteration_executor import IterationExecutor
 from src.learning.iteration_history import IterationHistory
 from src.learning.learning_config import LearningConfig
 from src.learning.llm_client import LLMClient
+from src.repository.hall_of_fame import HallOfFameRepository
 
 logger = logging.getLogger(__name__)
 
@@ -74,10 +76,20 @@ class LearningLoop:
             self.history = IterationHistory(file_path=config.history_file)
             logger.info(f"✓ IterationHistory: {config.history_file}")
 
-            # 2. Champion Tracker (depends on history)
+            # 1.5. Hall of Fame Repository (no dependencies)
+            self.hall_of_fame = HallOfFameRepository()
+            logger.info("✓ HallOfFameRepository initialized")
+
+            # 1.6. Anti-Churn Manager (no dependencies)
+            self.anti_churn = AntiChurnManager(config_path=config.config_file)
+            logger.info("✓ AntiChurnManager initialized")
+
+            # 2. Champion Tracker (depends on history, hall_of_fame, anti_churn)
             self.champion_tracker = ChampionTracker(
-                champion_file=config.champion_file,
-                history=self.history
+                hall_of_fame=self.hall_of_fame,
+                history=self.history,
+                anti_churn=self.anti_churn,
+                champion_file=config.champion_file
             )
             logger.info(f"✓ ChampionTracker: {config.champion_file}")
 
