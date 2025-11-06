@@ -59,6 +59,8 @@ class IterationExecutor:
         champion_tracker: ChampionTracker,
         history: IterationHistory,
         config: Dict[str, Any],
+        data: Optional[Any] = None,
+        sim: Optional[Any] = None,
     ):
         """Initialize iteration executor with all required components.
 
@@ -77,6 +79,8 @@ class IterationExecutor:
                 - fee_ratio: Transaction fee ratio
                 - tax_ratio: Transaction tax ratio
                 - resample: Rebalancing frequency (M/W/D)
+            data: finlab.data object for backtesting (optional, required for LLM execution)
+            sim: finlab.backtest.sim function (optional, required for LLM execution)
         """
         self.llm_client = llm_client
         self.feedback_generator = feedback_generator
@@ -84,6 +88,8 @@ class IterationExecutor:
         self.champion_tracker = champion_tracker
         self.history = history
         self.config = config
+        self.data = data
+        self.sim = sim
 
         # Initialize Phase 2 components
         self.metrics_extractor = MetricsExtractor()
@@ -233,7 +239,7 @@ class IterationExecutor:
             Feedback string for LLM
         """
         try:
-            feedback = self.feedback_generator.generate(
+            feedback = self.feedback_generator.generate_feedback(
                 history=recent_records,
                 iteration_num=iteration_num
             )
@@ -286,7 +292,7 @@ class IterationExecutor:
 
             # Generate strategy
             logger.info("Calling LLM for strategy generation...")
-            response = engine.generate_strategy(feedback)
+            response = engine.generate_innovation(feedback)
 
             if not response or not response.get("code"):
                 logger.warning("LLM returned empty response")
@@ -345,8 +351,19 @@ class IterationExecutor:
         try:
             if generation_method == "llm" and strategy_code:
                 # Execute code string
-                result = self.backtest_executor.execute_code(
-                    code=strategy_code,
+                if not self.data or not self.sim:
+                    logger.error("data and sim are required for LLM execution but not provided")
+                    return ExecutionResult(
+                        success=False,
+                        error_type="ConfigurationError",
+                        error_message="data and sim must be provided to IterationExecutor for LLM execution",
+                        execution_time=0.0,
+                    )
+
+                result = self.backtest_executor.execute(
+                    strategy_code=strategy_code,
+                    data=self.data,
+                    sim=self.sim,
                     timeout=self.config.get("timeout_seconds", 420),
                     start_date=self.config.get("start_date"),
                     end_date=self.config.get("end_date"),
@@ -399,7 +416,7 @@ class IterationExecutor:
                 return {}
 
             # Use MetricsExtractor
-            metrics = self.metrics_extractor.extract(execution_result.report)
+            metrics = self.metrics_extractor.extract_metrics(execution_result.report)
             return metrics
 
         except Exception as e:
@@ -425,7 +442,7 @@ class IterationExecutor:
             Classification level string
         """
         try:
-            level = self.error_classifier.classify(
+            level = self.error_classifier.classify_error(
                 execution_result=execution_result,
                 metrics=metrics
             )
@@ -467,20 +484,25 @@ class IterationExecutor:
             if not metrics or "sharpe_ratio" not in metrics:
                 return False
 
-            # Update champion using hybrid architecture
-            updated = self.champion_tracker.update_champion(
-                iteration_num=iteration_num,
-                metrics=metrics,
-                generation_method=generation_method,
-                code=strategy_code,
-                strategy_id=strategy_id,
-                strategy_generation=strategy_generation,
-            )
+            # Champion tracker currently only supports LLM code strings
+            # TODO: Add Factor Graph support to ChampionTracker (Task 5.2.4)
+            if generation_method == "llm" and strategy_code:
+                updated = self.champion_tracker.update_champion(
+                    iteration_num=iteration_num,
+                    code=strategy_code,
+                    metrics=metrics,
+                )
 
-            if updated:
-                logger.info(f"🏆 New champion! Sharpe: {metrics['sharpe_ratio']:.2f}")
+                if updated:
+                    logger.info(f"🏆 New champion! Sharpe: {metrics['sharpe_ratio']:.2f}")
 
-            return updated
+                return updated
+            elif generation_method == "factor_graph":
+                logger.warning("Factor Graph champion tracking not yet implemented")
+                return False
+            else:
+                logger.warning(f"Invalid generation_method or missing code: {generation_method}")
+                return False
 
         except Exception as e:
             logger.error(f"Champion update failed: {e}", exc_info=True)
