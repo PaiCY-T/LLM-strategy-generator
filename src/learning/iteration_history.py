@@ -324,7 +324,8 @@ class IterationRecord:
         """
         # Forward compatibility: filter to known fields only
         known_fields = {
-            'iteration_num', 'strategy_code', 'execution_result', 'metrics',
+            'iteration_num', 'generation_method', 'strategy_code', 'strategy_id',
+            'strategy_generation', 'execution_result', 'metrics',
             'classification_level', 'timestamp', 'champion_updated', 'feedback_used'
         }
         filtered_data = {k: v for k, v in data.items() if k in known_fields}
