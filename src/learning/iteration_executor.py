@@ -17,12 +17,13 @@ This refactored from autonomous_loop.py (~800 lines extracted).
 
 import logging
 import random
+from dataclasses import asdict
 from datetime import datetime
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from src.backtest.executor import BacktestExecutor, ExecutionResult
-from src.backtest.metrics import MetricsExtractor, StrategyMetrics
-from src.backtest.classifier import SuccessClassifier
+from src.backtest.metrics import MetricsExtractor
+from src.backtest.error_classifier import ErrorClassifier
 from src.learning.champion_tracker import ChampionTracker
 from src.learning.feedback_generator import FeedbackGenerator
 from src.learning.iteration_history import IterationHistory, IterationRecord
@@ -59,6 +60,8 @@ class IterationExecutor:
         champion_tracker: ChampionTracker,
         history: IterationHistory,
         config: Dict[str, Any],
+        data: Optional[Any] = None,  # ISSUE #3: Could use finlab.data.Data if available
+        sim: Optional[Callable] = None,  # ISSUE #3 FIX: Use Callable instead of Any
     ):
         """Initialize iteration executor with all required components.
 
@@ -77,6 +80,11 @@ class IterationExecutor:
                 - fee_ratio: Transaction fee ratio
                 - tax_ratio: Transaction tax ratio
                 - resample: Rebalancing frequency (M/W/D)
+            data: finlab.data object for backtesting (optional, required for LLM execution)
+            sim: finlab.backtest.sim function (optional, required for LLM execution)
+
+        Raises:
+            ValueError: If LLM is enabled but data/sim not provided
         """
         self.llm_client = llm_client
         self.feedback_generator = feedback_generator
@@ -84,44 +92,22 @@ class IterationExecutor:
         self.champion_tracker = champion_tracker
         self.history = history
         self.config = config
+        self.data = data
+        self.sim = sim
 
         # Initialize Phase 2 components
         self.metrics_extractor = MetricsExtractor()
-        self.success_classifier = SuccessClassifier()
+        self.error_classifier = ErrorClassifier()
 
-        # Initialize finlab data and sim (lazy loading)
-        self.data = None
-        self.sim = None
-        self._finlab_initialized = False
+        # ISSUE #4 FIX: Early validation - check data/sim if LLM is enabled
+        if self.llm_client.is_enabled():
+            if not self.data or not self.sim:
+                raise ValueError(
+                    "data and sim are required when LLM client is enabled. "
+                    "Provide them to IterationExecutor.__init__(data=..., sim=...)"
+                )
 
         logger.info("IterationExecutor initialized")
-
-    def _initialize_finlab(self) -> bool:
-        """Initialize finlab data and sim objects (lazy loading).
-
-        Returns:
-            True if initialization successful, False otherwise
-        """
-        if self._finlab_initialized:
-            return True
-
-        try:
-            from finlab import data
-            from finlab.backtest import sim
-
-            self.data = data
-            self.sim = sim
-            self._finlab_initialized = True
-            logger.info("✓ Finlab data and sim initialized")
-            return True
-
-        except ImportError as e:
-            logger.error(f"Failed to import finlab: {e}")
-            logger.error("Please ensure finlab is installed and authenticated")
-            return False
-        except Exception as e:
-            logger.error(f"Unexpected error initializing finlab: {e}")
-            return False
 
     def execute_iteration(
         self,
@@ -163,13 +149,6 @@ class IterationExecutor:
         start_time = datetime.now()
         logger.info(f"=== Starting iteration {iteration_num} ===")
 
-        # Step 0: Initialize finlab (lazy loading)
-        if not self._initialize_finlab():
-            logger.error("Failed to initialize finlab - cannot execute iteration")
-            return self._create_failure_record(
-                iteration_num, "unknown", "Finlab initialization failed", start_time
-            )
-
         # Step 1: Load recent history
         history_window = self.config.get("history_window", 5)
         recent_records = self._load_recent_history(history_window)
@@ -189,10 +168,6 @@ class IterationExecutor:
             strategy_code, strategy_id, strategy_generation = self._generate_with_llm(
                 feedback, iteration_num
             )
-            # If LLM fallback to Factor Graph, update generation_method
-            if strategy_code is None and strategy_id is not None:
-                generation_method = "factor_graph"
-                logger.info("LLM fallback to Factor Graph detected, updated generation_method")
         else:
             strategy_code, strategy_id, strategy_generation = self._generate_with_factor_graph(
                 iteration_num
@@ -244,7 +219,7 @@ class IterationExecutor:
         # Step 10: Return record
         return record
 
-    def _load_recent_history(self, window: int) -> list:
+    def _load_recent_history(self, window: int) -> List[IterationRecord]:
         """Load recent N iterations from history.
 
         Args:
@@ -276,20 +251,9 @@ class IterationExecutor:
             Feedback string for LLM
         """
         try:
-            # For first iteration or no history, return default feedback
-            if not recent_records:
-                return "First iteration - no previous history. Generate a basic momentum strategy."
-
-            # Get last record for context
-            last_record = recent_records[-1]
-
-            # Generate feedback based on last iteration's results
             feedback = self.feedback_generator.generate_feedback(
-                iteration_num=iteration_num,
-                metrics=last_record.metrics if hasattr(last_record, 'metrics') else None,
-                execution_result={'status': 'success' if hasattr(last_record, 'classification_level') else 'error'},
-                classification_level=last_record.classification_level if hasattr(last_record, 'classification_level') else None,
-                error_msg=None
+                history=recent_records,
+                iteration_num=iteration_num
             )
             return feedback
         except Exception as e:
@@ -340,7 +304,7 @@ class IterationExecutor:
 
             # Generate strategy
             logger.info("Calling LLM for strategy generation...")
-            response = engine.generate_strategy(feedback)
+            response = engine.generate_innovation(feedback)
 
             if not response or not response.get("code"):
                 logger.warning("LLM returned empty response")
@@ -398,8 +362,16 @@ class IterationExecutor:
         """
         try:
             if generation_method == "llm" and strategy_code:
-                # Execute code string using BacktestExecutor.execute()
-                # Note: BacktestExecutor requires data and sim to be passed in
+                # Execute code string
+                if not self.data or not self.sim:
+                    logger.error("data and sim are required for LLM execution but not provided")
+                    return ExecutionResult(
+                        success=False,
+                        error_type="ConfigurationError",
+                        error_message="data and sim must be provided to IterationExecutor for LLM execution",
+                        execution_time=0.0,
+                    )
+
                 result = self.backtest_executor.execute(
                     strategy_code=strategy_code,
                     data=self.data,
@@ -455,9 +427,10 @@ class IterationExecutor:
                 # Return empty metrics for failures
                 return {}
 
-            # Use MetricsExtractor
-            metrics = self.metrics_extractor.extract(execution_result.report)
-            return metrics
+            # Use MetricsExtractor (returns StrategyMetrics dataclass)
+            metrics_obj = self.metrics_extractor.extract_metrics(execution_result.report)
+            # Convert StrategyMetrics to dict for compatibility
+            return asdict(metrics_obj)
 
         except Exception as e:
             logger.warning(f"Metrics extraction failed: {e}")
@@ -482,25 +455,31 @@ class IterationExecutor:
             Classification level string
         """
         try:
-            # Convert to StrategyMetrics for classification
-            strategy_metrics = StrategyMetrics(
-                sharpe_ratio=metrics.get("sharpe_ratio"),
-                total_return=metrics.get("total_return"),
-                max_drawdown=metrics.get("max_drawdown"),
-                execution_success=execution_result.success
-            )
+            # Check if execution was successful
+            if not execution_result.success:
+                # Use ErrorClassifier for failure categorization
+                if execution_result.error_type:
+                    category = self.error_classifier.classify_error(
+                        error_type=execution_result.error_type,
+                        error_message=execution_result.error_message or ""
+                    )
+                    # Map ErrorCategory to LEVEL
+                    return "LEVEL_0"  # All errors are LEVEL_0 (critical failure)
+                else:
+                    return "LEVEL_0"
 
-            # Classify using SuccessClassifier
-            classification_result = self.success_classifier.classify_single(strategy_metrics)
+            # Execution successful - classify by performance
+            sharpe = metrics.get("sharpe_ratio", 0)
 
-            # Convert level number to string format
-            level_map = {
-                0: "LEVEL_0",
-                1: "LEVEL_1",
-                2: "LEVEL_2",
-                3: "LEVEL_3"
-            }
-            return level_map.get(classification_result.level, "LEVEL_0")
+            # LEVEL_3: Good performance (Sharpe >= 1.0)
+            if sharpe >= 1.0:
+                return "LEVEL_3"
+            # LEVEL_2: Weak performance (0 < Sharpe < 1.0)
+            elif sharpe > 0:
+                return "LEVEL_2"
+            # LEVEL_1: Execution success but poor/negative performance
+            else:
+                return "LEVEL_1"
 
         except Exception as e:
             logger.warning(f"Classification failed: {e}")
@@ -539,17 +518,29 @@ class IterationExecutor:
             if not metrics or "sharpe_ratio" not in metrics:
                 return False
 
-            # Update champion using hybrid architecture
-            updated = self.champion_tracker.update_champion(
-                iteration_num=iteration_num,
-                code=strategy_code,
-                metrics=metrics
-            )
+            # Champion tracker currently only supports LLM code strings
+            # TODO: Add Factor Graph support to ChampionTracker (Task 5.2.4)
+            if generation_method == "llm" and strategy_code:
+                updated = self.champion_tracker.update_champion(
+                    iteration_num=iteration_num,
+                    code=strategy_code,
+                    metrics=metrics,
+                )
 
-            if updated:
-                logger.info(f"🏆 New champion! Sharpe: {metrics['sharpe_ratio']:.2f}")
+                if updated:
+                    logger.info(f"🏆 New champion! Sharpe: {metrics['sharpe_ratio']:.2f}")
 
-            return updated
+                return updated
+            elif generation_method == "factor_graph":
+                logger.warning("Factor Graph champion tracking not yet implemented")
+                return False
+            else:
+                # ISSUE #5 FIX: More specific error messages
+                if generation_method == "llm" and not strategy_code:
+                    logger.warning("Cannot update champion: strategy_code is None for LLM generation method")
+                else:
+                    logger.warning(f"Cannot update champion: unknown generation_method '{generation_method}'")
+                return False
 
         except Exception as e:
             logger.error(f"Champion update failed: {e}", exc_info=True)
