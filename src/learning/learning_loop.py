@@ -18,14 +18,12 @@ from datetime import datetime
 from typing import Optional
 
 from src.backtest.executor import BacktestExecutor
-from src.config.anti_churn_manager import AntiChurnManager
 from src.learning.champion_tracker import ChampionTracker
 from src.learning.feedback_generator import FeedbackGenerator
 from src.learning.iteration_executor import IterationExecutor
 from src.learning.iteration_history import IterationHistory
 from src.learning.learning_config import LearningConfig
 from src.learning.llm_client import LLMClient
-from src.repository.hall_of_fame import HallOfFameRepository
 
 logger = logging.getLogger(__name__)
 
@@ -73,23 +71,13 @@ class LearningLoop:
         # Initialize components in dependency order
         try:
             # 1. History (no dependencies)
-            self.history = IterationHistory(filepath=config.history_file)
+            self.history = IterationHistory(file_path=config.history_file)
             logger.info(f"✓ IterationHistory: {config.history_file}")
 
-            # 1.5. Hall of Fame Repository (no dependencies)
-            self.hall_of_fame = HallOfFameRepository()
-            logger.info("✓ HallOfFameRepository initialized")
-
-            # 1.6. Anti-Churn Manager (no dependencies)
-            self.anti_churn = AntiChurnManager(config_path=config.config_file)
-            logger.info("✓ AntiChurnManager initialized")
-
-            # 2. Champion Tracker (depends on history, hall_of_fame, anti_churn)
+            # 2. Champion Tracker (depends on history)
             self.champion_tracker = ChampionTracker(
-                hall_of_fame=self.hall_of_fame,
-                history=self.history,
-                anti_churn=self.anti_churn,
-                champion_file=config.champion_file
+                champion_file=config.champion_file,
+                history=self.history
             )
             logger.info(f"✓ ChampionTracker: {config.champion_file}")
 
@@ -97,10 +85,10 @@ class LearningLoop:
             self.llm_client = LLMClient(config_path=config.config_file)
             logger.info(f"✓ LLMClient: enabled={self.llm_client.is_enabled()}")
 
-            # 4. Feedback Generator (depends on history, champion_tracker)
+            # 4. Feedback Generator (depends on history, champion)
             self.feedback_generator = FeedbackGenerator(
                 history=self.history,
-                champion_tracker=self.champion_tracker
+                champion=self.champion_tracker
             )
             logger.info("✓ FeedbackGenerator initialized")
 
@@ -180,10 +168,10 @@ class LearningLoop:
             finally:
                 # Always try to save record if it was completed
                 # Protects against race condition: if SIGINT arrives between
-                # execute_iteration() and save(), we still save
+                # execute_iteration() and save_record(), we still save
                 if record is not None:
                     try:
-                        self.history.save(record)
+                        self.history.save_record(record)
                         logger.debug(f"Saved iteration {iteration_num} to history")
 
                         # Show progress

@@ -7,7 +7,7 @@ Executes a single iteration of the autonomous learning loop with 10-step process
 4. Generate strategy (call LLM or Factor Graph)
 5. Execute strategy (Phase 2 BacktestExecutor)
 6. Extract metrics (Phase 2 MetricsExtractor)
-7. Classify success (Phase 2 SuccessClassifier)
+7. Classify success (Phase 2 ErrorClassifier)
 8. Update champion if better
 9. Create IterationRecord
 10. Return record
@@ -17,12 +17,13 @@ This refactored from autonomous_loop.py (~800 lines extracted).
 
 import logging
 import random
+from dataclasses import asdict
 from datetime import datetime
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from src.backtest.executor import BacktestExecutor, ExecutionResult
 from src.backtest.metrics import MetricsExtractor, StrategyMetrics
-from src.backtest.classifier import SuccessClassifier
+from src.backtest.error_classifier import ErrorClassifier
 from src.learning.champion_tracker import ChampionTracker
 from src.learning.feedback_generator import FeedbackGenerator
 from src.learning.iteration_history import IterationHistory, IterationRecord
@@ -59,6 +60,8 @@ class IterationExecutor:
         champion_tracker: ChampionTracker,
         history: IterationHistory,
         config: Dict[str, Any],
+        data: Any = None,
+        sim: Any = None,
     ):
         """Initialize iteration executor with all required components.
 
@@ -77,6 +80,11 @@ class IterationExecutor:
                 - fee_ratio: Transaction fee ratio
                 - tax_ratio: Transaction tax ratio
                 - resample: Rebalancing frequency (M/W/D)
+            data: finlab data object (optional for Factor Graph)
+            sim: finlab sim function (optional for Factor Graph)
+
+        Raises:
+            ValueError: If LLM is enabled but data/sim not provided
         """
         self.llm_client = llm_client
         self.feedback_generator = feedback_generator
@@ -84,14 +92,14 @@ class IterationExecutor:
         self.champion_tracker = champion_tracker
         self.history = history
         self.config = config
+        self.data = data
+        self.sim = sim
 
         # Initialize Phase 2 components
         self.metrics_extractor = MetricsExtractor()
-        self.success_classifier = SuccessClassifier()
+        self.error_classifier = ErrorClassifier()
 
-        # Initialize finlab data and sim (lazy loading)
-        self.data = None
-        self.sim = None
+        # Finlab initialization flag (lazy loading)
         self._finlab_initialized = False
 
         # === Factor Graph Support ===
@@ -102,6 +110,14 @@ class IterationExecutor:
         # Factor logic registry (maps factor_id -> logic Callable)
         # Used for Strategy serialization/deserialization (future feature)
         self._factor_logic_registry: Dict[str, Callable] = {}
+
+        # ISSUE #4 FIX: Early validation - check data/sim if LLM is enabled
+        if self.llm_client.is_enabled():
+            if not self.data or not self.sim:
+                raise ValueError(
+                    "data and sim are required when LLM client is enabled. "
+                    "Provide them to IterationExecutor.__init__(data=..., sim=...)"
+                )
 
         logger.info("IterationExecutor initialized")
 
@@ -735,8 +751,8 @@ class IterationExecutor:
                 execution_success=execution_result.success
             )
 
-            # Classify using SuccessClassifier
-            classification_result = self.success_classifier.classify_single(strategy_metrics)
+            # Classify using ErrorClassifier
+            classification_result = self.error_classifier.classify_single(strategy_metrics)
 
             # Convert level number to string format
             level_map = {
