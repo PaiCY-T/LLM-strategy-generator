@@ -599,6 +599,217 @@ class Strategy:
         # All validation checks passed
         return True
 
+    def to_dict(self) -> Dict:
+        """
+        Serialize strategy to dictionary (metadata-only, no logic functions).
+
+        This method creates a JSON-serializable dictionary containing all strategy
+        metadata except Factor logic functions (which are Callables and cannot be
+        serialized to JSON). The serialized format is suitable for:
+        - Saving champion strategies to Hall of Fame
+        - Transmitting strategies over network
+        - Storing strategies in databases
+        - Logging and debugging
+
+        To reconstruct a Strategy from this dict, use from_dict() with a factor_registry
+        that maps factor IDs to their logic functions.
+
+        Returns:
+            Dictionary with strategy metadata:
+            {
+                "id": str,
+                "generation": int,
+                "parent_ids": List[str],
+                "factors": List[Dict] - factor metadata without logic
+                "dag_edges": List[Tuple[str, str]] - DAG structure
+            }
+
+        Example:
+            >>> strategy = Strategy(id="momentum_v1", generation=5)
+            >>> strategy.add_factor(rsi_factor)
+            >>> strategy.add_factor(signal_factor, depends_on=["rsi_14"])
+            >>>
+            >>> # Serialize to dict
+            >>> metadata = strategy.to_dict()
+            >>> metadata.keys()
+            dict_keys(['id', 'generation', 'parent_ids', 'factors', 'dag_edges'])
+            >>>
+            >>> # Can be serialized to JSON
+            >>> import json
+            >>> json_str = json.dumps(metadata)
+
+        Design Notes:
+            - Factor logic functions are NOT serialized (Callables cannot be JSON-encoded)
+            - FactorCategory enums are serialized as strings (e.g., "MOMENTUM")
+            - DAG edges are serialized as list of [source, target] pairs
+            - Empty parameters dict is preserved (for consistency)
+            - Reconstruction requires factor_registry with logic functions
+        """
+        from typing import Dict, List, Any
+
+        # Serialize factors (metadata only, no logic)
+        factors_metadata = []
+        for factor_id, factor in self.factors.items():
+            factor_dict = {
+                "id": factor.id,
+                "name": factor.name,
+                "category": factor.category.name,  # Enum to string
+                "inputs": factor.inputs,
+                "outputs": factor.outputs,
+                "parameters": factor.parameters,
+                "description": factor.description
+                # NOTE: logic is NOT serialized (Callable cannot be JSON-encoded)
+            }
+            factors_metadata.append(factor_dict)
+
+        # Serialize DAG edges
+        dag_edges = list(self.dag.edges())
+
+        return {
+            "id": self.id,
+            "generation": self.generation,
+            "parent_ids": self.parent_ids,
+            "factors": factors_metadata,
+            "dag_edges": dag_edges
+        }
+
+    @classmethod
+    def from_dict(
+        cls,
+        data: Dict,
+        factor_registry: Dict[str, Callable]
+    ) -> "Strategy":
+        """
+        Reconstruct strategy from dictionary using factor_registry for logic.
+
+        This method deserializes a strategy from a metadata dictionary (created by
+        to_dict()) and reconstructs all Factors using logic functions from the
+        provided factor_registry.
+
+        The factor_registry maps factor IDs to their logic functions. This is necessary
+        because logic functions (Callables) cannot be serialized to JSON. The registry
+        must contain all logic functions needed by the strategy's factors.
+
+        Args:
+            data: Dictionary with strategy metadata (from to_dict())
+                Required keys: id, generation, parent_ids, factors, dag_edges
+            factor_registry: Dictionary mapping factor IDs to logic functions
+                Example: {"rsi_14": calculate_rsi, "signal": generate_signal}
+                Must contain logic for ALL factors in the strategy
+
+        Returns:
+            Reconstructed Strategy instance with all factors and DAG structure
+
+        Raises:
+            KeyError: If factor_registry is missing logic for any factor
+            ValueError: If data is malformed or DAG validation fails
+            TypeError: If data types are incorrect
+
+        Example:
+            >>> # Define logic functions
+            >>> def calculate_rsi(data, params):
+            ...     # RSI calculation logic
+            ...     return data
+            >>>
+            >>> def generate_signal(data, params):
+            ...     # Signal generation logic
+            ...     return data
+            >>>
+            >>> # Create factor registry
+            >>> factor_registry = {
+            ...     "rsi_14": calculate_rsi,
+            ...     "signal": generate_signal
+            ... }
+            >>>
+            >>> # Serialize strategy
+            >>> original = Strategy(id="test", generation=1)
+            >>> # ... add factors ...
+            >>> metadata = original.to_dict()
+            >>>
+            >>> # Reconstruct strategy
+            >>> reconstructed = Strategy.from_dict(metadata, factor_registry)
+            >>> reconstructed.id == original.id
+            True
+            >>> len(reconstructed.factors) == len(original.factors)
+            True
+
+        Design Notes:
+            - factor_registry is required (logic cannot be serialized)
+            - FactorCategory is reconstructed from string names
+            - DAG structure is fully reconstructed from edges
+            - Validation is performed during reconstruction (add_factor checks)
+            - Missing registry entries raise KeyError with helpful message
+        """
+        from .factor_category import FactorCategory
+
+        # Create strategy with basic metadata
+        strategy = cls(
+            id=data["id"],
+            generation=data["generation"],
+            parent_ids=data["parent_ids"]
+        )
+
+        # Build factor_id to dependencies mapping from DAG edges
+        # This is needed to add factors in correct order
+        factor_dependencies = {factor["id"]: [] for factor in data["factors"]}
+        for source, target in data["dag_edges"]:
+            factor_dependencies[target].append(source)
+
+        # Reconstruct factors using topological order
+        # We need to add factors in dependency order to avoid errors
+        factors_to_add = data["factors"].copy()
+        added_factors = set()
+
+        while factors_to_add:
+            # Find factors whose dependencies are all added
+            ready_factors = [
+                factor_dict for factor_dict in factors_to_add
+                if all(dep in added_factors for dep in factor_dependencies[factor_dict["id"]])
+            ]
+
+            if not ready_factors:
+                # No progress possible - circular dependency or malformed data
+                remaining_ids = [f["id"] for f in factors_to_add]
+                raise ValueError(
+                    f"Cannot reconstruct strategy: circular dependencies or malformed data. "
+                    f"Remaining factors: {remaining_ids}"
+                )
+
+            # Add ready factors
+            for factor_dict in ready_factors:
+                factor_id = factor_dict["id"]
+
+                # Get logic from registry
+                if factor_id not in factor_registry:
+                    raise KeyError(
+                        f"factor_registry is missing logic for factor '{factor_id}'. "
+                        f"Available registry keys: {list(factor_registry.keys())}"
+                    )
+
+                logic = factor_registry[factor_id]
+
+                # Reconstruct Factor
+                factor = Factor(
+                    id=factor_dict["id"],
+                    name=factor_dict["name"],
+                    category=FactorCategory[factor_dict["category"]],  # String to enum
+                    inputs=factor_dict["inputs"],
+                    outputs=factor_dict["outputs"],
+                    logic=logic,
+                    parameters=factor_dict["parameters"],
+                    description=factor_dict.get("description", "")
+                )
+
+                # Add factor to strategy with dependencies
+                dependencies = factor_dependencies[factor_id]
+                strategy.add_factor(factor, depends_on=dependencies)
+
+                # Mark as added
+                added_factors.add(factor_id)
+                factors_to_add.remove(factor_dict)
+
+        return strategy
+
     def __repr__(self) -> str:
         """Developer-friendly representation."""
         return (

@@ -73,9 +73,9 @@ Example:
     ...             tracker.promote_to_champion(best_cohort)
 """
 
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List, Union
 from pathlib import Path
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from datetime import datetime
 import json
 import os
@@ -86,46 +86,180 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ChampionStrategy:
-    """Best-performing strategy across all iterations.
+    """Best-performing strategy across all iterations (Hybrid Architecture).
+
+    Supports both LLM-generated code strings and Factor Graph Strategy DAG objects.
+    The generation_method field determines which type of champion this represents.
 
     Tracks the highest-performing strategy to enable:
     - Performance attribution (comparing current vs. champion)
     - Success pattern extraction (identifying what works)
     - Evolutionary constraints (preserving proven patterns)
+    - Hybrid generation (LLM ↔ Factor Graph transitions)
 
     Attributes:
         iteration_num: Which iteration produced this champion
-        code: Complete strategy code that achieved these metrics
-        parameters: Extracted parameter values from the code
-        metrics: Performance metrics (sharpe_ratio, annual_return, etc.)
-        success_patterns: List of patterns that contributed to success
+        generation_method: "llm" or "factor_graph"
+        metrics: Performance metrics (sharpe_ratio, max_drawdown, etc.)
         timestamp: When this champion was established (ISO format)
+
+        LLM-specific fields (None for factor_graph):
+            code: Complete Python strategy code
+
+        Factor Graph-specific fields (None for llm):
+            strategy_id: Unique identifier for the Strategy DAG
+            strategy_generation: Generation number (for evolution tracking)
+
+        Optional fields (may be empty for either method):
+            parameters: Extracted parameter values (from code or DAG)
+            success_patterns: List of patterns that contributed to success
+
+    Examples:
+        LLM Champion:
+            >>> champion = ChampionStrategy(
+            ...     iteration_num=10,
+            ...     generation_method="llm",
+            ...     code="# strategy code",
+            ...     metrics={"sharpe_ratio": 1.5},
+            ...     timestamp="2025-11-08T10:00:00",
+            ...     parameters={"dataset": "price:收盤價"},
+            ...     success_patterns=["momentum", "volume_filter"]
+            ... )
+
+        Factor Graph Champion:
+            >>> champion = ChampionStrategy(
+            ...     iteration_num=15,
+            ...     generation_method="factor_graph",
+            ...     strategy_id="momentum_v2",
+            ...     strategy_generation=2,
+            ...     metrics={"sharpe_ratio": 2.0},
+            ...     timestamp="2025-11-08T11:00:00",
+            ...     parameters={"rsi_14": {"period": 14}},
+            ...     success_patterns=["RSI", "Signal"]
+            ... )
     """
+    # Required fields (common to both methods)
     iteration_num: int
-    code: str
-    parameters: Dict[str, Any]
+    generation_method: str  # "llm" or "factor_graph"
     metrics: Dict[str, float]
-    success_patterns: list
     timestamp: str
+
+    # LLM-specific (None for factor_graph)
+    code: Optional[str] = None
+
+    # Factor Graph-specific (None for llm)
+    strategy_id: Optional[str] = None
+    strategy_generation: Optional[int] = None
+
+    # Optional fields (may be empty for either method)
+    parameters: Dict[str, Any] = field(default_factory=dict)
+    success_patterns: List[str] = field(default_factory=list)
+
+    def __post_init__(self):
+        """Validate field consistency based on generation_method.
+
+        Ensures that:
+        - generation_method is valid ("llm" or "factor_graph")
+        - LLM champions have code (and no DAG fields)
+        - Factor Graph champions have strategy_id + strategy_generation (and no code)
+
+        Raises:
+            ValueError: If validation fails with descriptive error message
+        """
+        # Validate generation_method
+        if self.generation_method not in ["llm", "factor_graph"]:
+            raise ValueError(
+                f"generation_method must be 'llm' or 'factor_graph', "
+                f"got '{self.generation_method}'"
+            )
+
+        # Validate LLM-specific fields
+        if self.generation_method == "llm":
+            if not self.code:
+                raise ValueError(
+                    "LLM champion must have code. "
+                    "Provide code parameter when generation_method='llm'"
+                )
+            if self.strategy_id or self.strategy_generation is not None:
+                raise ValueError(
+                    "LLM champion should not have strategy_id or strategy_generation. "
+                    "These fields are for factor_graph champions only"
+                )
+
+        # Validate Factor Graph-specific fields
+        elif self.generation_method == "factor_graph":
+            if not self.strategy_id or self.strategy_generation is None:
+                raise ValueError(
+                    "Factor Graph champion must have both strategy_id and strategy_generation. "
+                    f"Got strategy_id={self.strategy_id}, strategy_generation={self.strategy_generation}"
+                )
+            if self.code:
+                raise ValueError(
+                    "Factor Graph champion should not have code. "
+                    "code field is for llm champions only"
+                )
 
     def to_dict(self) -> Dict:
         """Convert to dictionary for JSON serialization.
 
         Returns:
-            Dictionary containing all champion data
+            Dictionary containing all champion data with None values preserved
         """
         return asdict(self)
 
     @staticmethod
     def from_dict(data: Dict) -> 'ChampionStrategy':
-        """Create ChampionStrategy from dictionary.
+        """Create ChampionStrategy from dictionary (with backward compatibility).
+
+        Handles old format LLM champions that don't have generation_method field.
+        Automatically infers generation_method="llm" and adds missing fields.
 
         Args:
-            data: Dictionary with all required fields
+            data: Dictionary with champion data
 
         Returns:
             ChampionStrategy instance
+
+        Examples:
+            Old LLM format (backward compatible):
+                >>> data = {
+                ...     "iteration_num": 5,
+                ...     "code": "# old format",
+                ...     "metrics": {"sharpe_ratio": 1.5},
+                ...     "timestamp": "2025-11-08T10:00:00",
+                ...     "parameters": {},
+                ...     "success_patterns": []
+                ... }
+                >>> champion = ChampionStrategy.from_dict(data)
+                >>> champion.generation_method  # Automatically inferred
+                'llm'
+
+            New format (explicit generation_method):
+                >>> data = {
+                ...     "iteration_num": 10,
+                ...     "generation_method": "factor_graph",
+                ...     "strategy_id": "momentum_v1",
+                ...     "strategy_generation": 1,
+                ...     "metrics": {"sharpe_ratio": 2.0},
+                ...     "timestamp": "2025-11-08T11:00:00"
+                ... }
+                >>> champion = ChampionStrategy.from_dict(data)
         """
+        # Backward compatibility: old format doesn't have generation_method
+        if 'generation_method' not in data:
+            logger.info("Loading old format champion, inferring generation_method='llm'")
+            data['generation_method'] = 'llm'
+            data.setdefault('strategy_id', None)
+            data.setdefault('strategy_generation', None)
+
+        # Backward compatibility: ensure default values for optional fields
+        data.setdefault('parameters', {})
+        data.setdefault('success_patterns', [])
+
+        # Backward compatibility: success_patterns might be None in old format
+        if data['success_patterns'] is None:
+            data['success_patterns'] = []
+
         return ChampionStrategy(**data)
 
 
@@ -219,25 +353,64 @@ class ChampionTracker:
         # Try Hall of Fame first (unified persistence)
         genome = self.hall_of_fame.get_current_champion()
         if genome:
-            # Convert StrategyGenome → ChampionStrategy
-            # Extract iteration_num from parameters (stored during save)
+            # Convert StrategyGenome → ChampionStrategy (supports hybrid architecture)
+            # Extract metadata from parameters (stored during save)
             iteration_num = genome.parameters.get('__iteration_num__', 0)
+            generation_method = genome.parameters.get('__generation_method__', 'llm')  # Default to 'llm' for backward compatibility
 
             # Remove metadata from parameters
             clean_params = {k: v for k, v in genome.parameters.items() if not k.startswith('__')}
 
-            self.champion = ChampionStrategy(
-                iteration_num=iteration_num,
-                code=genome.strategy_code,
-                parameters=clean_params,
-                metrics=genome.metrics,
-                success_patterns=genome.success_patterns,
-                timestamp=genome.created_at
-            )
-            logger.info(
-                f"Loaded champion from Hall of Fame: Iteration {iteration_num}, "
-                f"Sharpe {genome.metrics.get('sharpe_ratio', 0):.4f}"
-            )
+            # Build ChampionStrategy based on generation_method
+            if generation_method == "llm":
+                self.champion = ChampionStrategy(
+                    iteration_num=iteration_num,
+                    generation_method="llm",
+                    code=genome.strategy_code,
+                    parameters=clean_params,
+                    metrics=genome.metrics,
+                    success_patterns=genome.success_patterns,
+                    timestamp=genome.created_at
+                )
+                logger.info(
+                    f"Loaded LLM champion from Hall of Fame: Iteration {iteration_num}, "
+                    f"Sharpe {genome.metrics.get('sharpe_ratio', 0):.4f}"
+                )
+
+            elif generation_method == "factor_graph":
+                # Extract Factor Graph-specific metadata
+                strategy_id = genome.parameters.get('__strategy_id__')
+                strategy_generation = genome.parameters.get('__strategy_generation__')
+
+                if not strategy_id or strategy_generation is None:
+                    logger.error(
+                        f"Factor Graph champion missing strategy_id or strategy_generation. "
+                        f"Cannot load champion from Hall of Fame."
+                    )
+                    self.champion = None
+                    return
+
+                self.champion = ChampionStrategy(
+                    iteration_num=iteration_num,
+                    generation_method="factor_graph",
+                    strategy_id=strategy_id,
+                    strategy_generation=strategy_generation,
+                    parameters=clean_params,
+                    metrics=genome.metrics,
+                    success_patterns=genome.success_patterns,
+                    timestamp=genome.created_at
+                )
+                logger.info(
+                    f"Loaded Factor Graph champion from Hall of Fame: Iteration {iteration_num}, "
+                    f"Sharpe {genome.metrics.get('sharpe_ratio', 0):.4f}, "
+                    f"Strategy '{strategy_id}' generation {strategy_generation}"
+                )
+
+            else:
+                logger.error(f"Unknown generation_method '{generation_method}' in Hall of Fame champion")
+                self.champion = None
+                return
+
             return
 
         # Fallback: Legacy champion_strategy.json (migration support)
@@ -266,11 +439,16 @@ class ChampionTracker:
     def update_champion(
         self,
         iteration_num: int,
-        code: str,
-        metrics: Dict[str, float]
+        metrics: Dict[str, float],
+        generation_method: str = "llm",
+        code: Optional[str] = None,
+        strategy: Optional[Any] = None,
+        strategy_id: Optional[str] = None,
+        strategy_generation: Optional[int] = None
     ) -> bool:
         """Update champion with dynamic probation period and multi-objective validation.
 
+        Supports both LLM-generated code strings and Factor Graph Strategy DAG objects.
         Uses AntiChurnManager for dynamic improvement thresholds based on probation period.
         Applies multi-objective validation to prevent brittle strategy selection.
         Tracks champion updates for frequency analysis.
@@ -286,29 +464,71 @@ class ChampionTracker:
 
         Args:
             iteration_num: Current iteration number
-            code: Strategy code that was executed
             metrics: Performance metrics dict with at least 'sharpe_ratio' key
+            generation_method: "llm" or "factor_graph" (default: "llm")
+            code: Strategy code (required for LLM, None for Factor Graph)
+            strategy: Strategy DAG object (required for Factor Graph, None for LLM)
+            strategy_id: Strategy ID (required for Factor Graph, None for LLM)
+            strategy_generation: Generation number (required for Factor Graph, None for LLM)
 
         Returns:
             True if champion was updated, False otherwise
 
-        Example:
-            >>> tracker = ChampionTracker(hall_of_fame, history, anti_churn)
-            >>> metrics = {
-            ...     'sharpe_ratio': 2.5,
-            ...     'max_drawdown': -0.15,
-            ...     'calmar_ratio': 1.2,
-            ...     'annual_return': 0.35
-            ... }
-            >>> updated = tracker.update_champion(
-            ...     iteration_num=10,
-            ...     code="# strategy code",
-            ...     metrics=metrics
-            ... )
-            >>> if updated:
-            ...     print("Champion updated!")
+        Raises:
+            ValueError: If required parameters are missing for the specified generation_method
+
+        Examples:
+            LLM Update:
+                >>> tracker = ChampionTracker(hall_of_fame, history, anti_churn)
+                >>> metrics = {
+                ...     'sharpe_ratio': 2.5,
+                ...     'max_drawdown': -0.15,
+                ...     'calmar_ratio': 1.2
+                ... }
+                >>> updated = tracker.update_champion(
+                ...     iteration_num=10,
+                ...     generation_method="llm",
+                ...     code="# strategy code",
+                ...     metrics=metrics
+                ... )
+
+            Factor Graph Update:
+                >>> updated = tracker.update_champion(
+                ...     iteration_num=15,
+                ...     generation_method="factor_graph",
+                ...     strategy=strategy_dag_object,
+                ...     strategy_id="momentum_v2",
+                ...     strategy_generation=2,
+                ...     metrics=metrics
+                ... )
         """
         from src.constants import METRIC_SHARPE
+
+        # Validate generation_method
+        if generation_method not in ["llm", "factor_graph"]:
+            raise ValueError(
+                f"generation_method must be 'llm' or 'factor_graph', "
+                f"got '{generation_method}'"
+            )
+
+        # Validate generation_method-specific parameters
+        if generation_method == "llm":
+            if not code:
+                raise ValueError(
+                    "LLM champion update requires 'code' parameter. "
+                    "Provide strategy code when generation_method='llm'"
+                )
+        elif generation_method == "factor_graph":
+            if not strategy:
+                raise ValueError(
+                    "Factor Graph champion update requires 'strategy' parameter. "
+                    "Provide Strategy DAG object when generation_method='factor_graph'"
+                )
+            if not strategy_id or strategy_generation is None:
+                raise ValueError(
+                    "Factor Graph champion update requires 'strategy_id' and 'strategy_generation'. "
+                    f"Got strategy_id={strategy_id}, strategy_generation={strategy_generation}"
+                )
 
         # Validate required metrics are present
         required_keys = [METRIC_SHARPE]
@@ -334,7 +554,15 @@ class ChampionTracker:
         # First valid strategy becomes champion
         if self.champion is None:
             if current_sharpe > self.anti_churn.min_sharpe_for_champion:
-                self._create_champion(iteration_num, code, metrics)
+                self._create_champion(
+                    iteration_num=iteration_num,
+                    generation_method=generation_method,
+                    metrics=metrics,
+                    code=code,
+                    strategy=strategy,
+                    strategy_id=strategy_id,
+                    strategy_generation=strategy_generation
+                )
                 # Track initial champion creation
                 self.anti_churn.track_champion_update(
                     iteration_num=iteration_num,
@@ -414,7 +642,15 @@ class ChampionTracker:
                 threshold_used=required_improvement_pct
             )
 
-            self._create_champion(iteration_num, code, metrics)
+            self._create_champion(
+                iteration_num=iteration_num,
+                generation_method=generation_method,
+                metrics=metrics,
+                code=code,
+                strategy=strategy,
+                strategy_id=strategy_id,
+                strategy_generation=strategy_generation
+            )
             logger.info(
                 f"Champion updated via {threshold_type} threshold: "
                 f"{champion_sharpe:.4f} → {current_sharpe:.4f} "
@@ -448,7 +684,15 @@ class ChampionTracker:
                     threshold_used=0.0  # No threshold needed for tie-breaking
                 )
 
-                self._create_champion(iteration_num, code, metrics)
+                self._create_champion(
+                    iteration_num=iteration_num,
+                    generation_method=generation_method,
+                    metrics=metrics,
+                    code=code,
+                    strategy=strategy,
+                    strategy_id=strategy_id,
+                    strategy_generation=strategy_generation
+                )
 
                 logger.info(
                     f"Champion updated via TIE-BREAKING: "
@@ -480,37 +724,119 @@ class ChampionTracker:
     def _create_champion(
         self,
         iteration_num: int,
-        code: str,
-        metrics: Dict[str, float]
+        generation_method: str,
+        metrics: Dict[str, float],
+        code: Optional[str] = None,
+        strategy: Optional[Any] = None,
+        strategy_id: Optional[str] = None,
+        strategy_generation: Optional[int] = None
     ) -> None:
-        """Create new champion strategy.
+        """Create new champion strategy (supports both LLM and Factor Graph).
 
-        Extracts parameters and success patterns from the code, creates
-        a ChampionStrategy instance, and persists it to disk via Hall of Fame.
+        Extracts parameters and success patterns based on generation_method,
+        creates a ChampionStrategy instance, and persists it to disk via Hall of Fame.
+
+        This method supports both LLM-generated code strings and Factor Graph
+        Strategy DAG objects, enabling seamless transitions between generation methods.
 
         Args:
             iteration_num: Iteration number that produced this champion
-            code: Strategy code
+            generation_method: "llm" or "factor_graph"
             metrics: Performance metrics dict
+            code: Strategy code (required for LLM, None for Factor Graph)
+            strategy: Strategy DAG object (required for Factor Graph, None for LLM)
+            strategy_id: Strategy ID (required for Factor Graph, None for LLM)
+            strategy_generation: Generation number (required for Factor Graph, None for LLM)
+
+        Raises:
+            ValueError: If required parameters are missing for the specified generation_method
+
+        Examples:
+            LLM Champion:
+                >>> tracker._create_champion(
+                ...     iteration_num=10,
+                ...     generation_method="llm",
+                ...     code="# strategy code",
+                ...     metrics={"sharpe_ratio": 1.5}
+                ... )
+
+            Factor Graph Champion:
+                >>> tracker._create_champion(
+                ...     iteration_num=15,
+                ...     generation_method="factor_graph",
+                ...     strategy=strategy_dag_object,
+                ...     strategy_id="momentum_v2",
+                ...     strategy_generation=2,
+                ...     metrics={"sharpe_ratio": 2.0}
+                ... )
         """
-        from performance_attributor import extract_strategy_params, extract_success_patterns
         from src.constants import METRIC_SHARPE
 
-        parameters = extract_strategy_params(code)
-        success_patterns = extract_success_patterns(code, parameters)
+        # Validate generation_method
+        if generation_method not in ["llm", "factor_graph"]:
+            raise ValueError(
+                f"generation_method must be 'llm' or 'factor_graph', "
+                f"got '{generation_method}'"
+            )
 
-        self.champion = ChampionStrategy(
-            iteration_num=iteration_num,
-            code=code,
-            parameters=parameters,
-            metrics=metrics,
-            success_patterns=success_patterns,
-            timestamp=datetime.now().isoformat()
-        )
+        # Extract parameters and patterns based on generation method
+        if generation_method == "llm":
+            # Validate LLM-specific parameters
+            if not code:
+                raise ValueError(
+                    "LLM champion requires 'code' parameter. "
+                    "Provide strategy code when generation_method='llm'"
+                )
+
+            # Extract from code
+            from performance_attributor import extract_strategy_params, extract_success_patterns
+            parameters = extract_strategy_params(code)
+            success_patterns = extract_success_patterns(code, parameters)
+
+            # Create LLM champion
+            self.champion = ChampionStrategy(
+                iteration_num=iteration_num,
+                generation_method="llm",
+                code=code,
+                parameters=parameters,
+                metrics=metrics,
+                success_patterns=success_patterns,
+                timestamp=datetime.now().isoformat()
+            )
+
+        elif generation_method == "factor_graph":
+            # Validate Factor Graph-specific parameters
+            if not strategy:
+                raise ValueError(
+                    "Factor Graph champion requires 'strategy' parameter. "
+                    "Provide Strategy DAG object when generation_method='factor_graph'"
+                )
+            if not strategy_id or strategy_generation is None:
+                raise ValueError(
+                    "Factor Graph champion requires 'strategy_id' and 'strategy_generation'. "
+                    f"Got strategy_id={strategy_id}, strategy_generation={strategy_generation}"
+                )
+
+            # Extract from Strategy DAG
+            from src.learning.strategy_metadata import extract_dag_parameters, extract_dag_patterns
+            parameters = extract_dag_parameters(strategy)
+            success_patterns = extract_dag_patterns(strategy)
+
+            # Create Factor Graph champion
+            self.champion = ChampionStrategy(
+                iteration_num=iteration_num,
+                generation_method="factor_graph",
+                strategy_id=strategy_id,
+                strategy_generation=strategy_generation,
+                parameters=parameters,
+                metrics=metrics,
+                success_patterns=success_patterns,
+                timestamp=datetime.now().isoformat()
+            )
 
         self._save_champion()
         logger.info(
-            f"New champion: Iteration {iteration_num}, "
+            f"New {generation_method} champion: Iteration {iteration_num}, "
             f"Sharpe {metrics.get(METRIC_SHARPE, 0):.4f}"
         )
 
@@ -526,25 +852,36 @@ class ChampionTracker:
         self._save_champion_to_hall_of_fame(self.champion)
 
     def _save_champion_to_hall_of_fame(self, champion: ChampionStrategy) -> None:
-        """Save champion to Hall of Fame repository.
+        """Save champion to Hall of Fame repository (supports hybrid architecture).
 
         Helper method to convert ChampionStrategy format and persist to Hall of Fame.
         Used both for new champions and legacy migrations.
 
+        Stores metadata for both LLM and Factor Graph champions:
+        - LLM: code as strategy_code, generation_method in parameters
+        - Factor Graph: strategy_id and strategy_generation in parameters
+
         Args:
             champion: ChampionStrategy to save
         """
-        # Add iteration_num to parameters for later retrieval
-        # Use __iteration_num__ prefix to distinguish from strategy parameters
+        # Add metadata to parameters for later retrieval
+        # Use __prefix__ to distinguish from strategy parameters
         params_with_metadata = champion.parameters.copy()
         params_with_metadata['__iteration_num__'] = champion.iteration_num
+        params_with_metadata['__generation_method__'] = champion.generation_method
+
+        # Add Factor Graph-specific metadata if applicable
+        if champion.generation_method == "factor_graph":
+            params_with_metadata['__strategy_id__'] = champion.strategy_id
+            params_with_metadata['__strategy_generation__'] = champion.strategy_generation
 
         # Save to Hall of Fame (automatic tier classification)
+        # Note: strategy_code will be None for Factor Graph champions
         self.hall_of_fame.add_strategy(
             template_name='autonomous_generated',  # Autonomous loop strategies
             parameters=params_with_metadata,
             metrics=champion.metrics,
-            strategy_code=champion.code,
+            strategy_code=champion.code,  # None for Factor Graph
             success_patterns=champion.success_patterns
         )
 
@@ -882,20 +1219,60 @@ class ChampionTracker:
             f"Sharpe {best_sharpe:.4f}"
         )
 
-        # Convert IterationRecord to ChampionStrategy
-        from performance_attributor import extract_strategy_params, extract_success_patterns
+        # Convert IterationRecord to ChampionStrategy (supports both LLM and Factor Graph)
+        generation_method = getattr(best_record, 'generation_method', 'llm')  # Default to 'llm' for backward compatibility
 
-        parameters = extract_strategy_params(best_record.code)
-        success_patterns = extract_success_patterns(best_record.code, parameters)
+        if generation_method == "llm":
+            # Extract from LLM code
+            from performance_attributor import extract_strategy_params, extract_success_patterns
 
-        return ChampionStrategy(
-            iteration_num=best_record.iteration_num,
-            code=best_record.code,
-            parameters=parameters,
-            metrics=best_record.metrics,
-            success_patterns=success_patterns,
-            timestamp=datetime.now().isoformat()
-        )
+            parameters = extract_strategy_params(best_record.code)
+            success_patterns = extract_success_patterns(best_record.code, parameters)
+
+            return ChampionStrategy(
+                iteration_num=best_record.iteration_num,
+                generation_method="llm",
+                code=best_record.code,
+                parameters=parameters,
+                metrics=best_record.metrics,
+                success_patterns=success_patterns,
+                timestamp=datetime.now().isoformat()
+            )
+
+        elif generation_method == "factor_graph":
+            # Extract from Factor Graph (note: actual Strategy object not stored in IterationRecord)
+            # For Factor Graph records, we use strategy_id and strategy_generation
+            # Parameters and patterns would need to be stored in IterationRecord or reconstructed
+
+            # For Phase 3, we use basic metadata from IterationRecord
+            # In future phases, consider storing full metadata in IterationRecord
+            strategy_id = getattr(best_record, 'strategy_id', None)
+            strategy_generation = getattr(best_record, 'strategy_generation', None)
+
+            if not strategy_id or strategy_generation is None:
+                logger.warning(
+                    f"Factor Graph record (iteration {best_record.iteration_num}) missing "
+                    f"strategy_id or strategy_generation. Cannot create ChampionStrategy."
+                )
+                return None
+
+            # Note: Parameters and success_patterns not available from IterationRecord alone
+            # This is acceptable for cohort selection - the Strategy DAG would need to be
+            # reconstructed from storage if detailed metadata is needed
+            return ChampionStrategy(
+                iteration_num=best_record.iteration_num,
+                generation_method="factor_graph",
+                strategy_id=strategy_id,
+                strategy_generation=strategy_generation,
+                parameters={},  # Empty for now - would need Strategy DAG to extract
+                metrics=best_record.metrics,
+                success_patterns=[],  # Empty for now - would need Strategy DAG to extract
+                timestamp=datetime.now().isoformat()
+            )
+
+        else:
+            logger.error(f"Unknown generation_method '{generation_method}' in IterationRecord")
+            return None
 
     def demote_champion_to_hall_of_fame(self) -> None:
         """Demote current champion by saving to Hall of Fame (if not already there).
@@ -923,17 +1300,43 @@ class ChampionTracker:
             f"Sharpe {self.champion.metrics.get(METRIC_SHARPE, 0):.4f}"
         )
 
-    def promote_to_champion(self, strategy: ChampionStrategy) -> None:
-        """Promote a cohort strategy to new champion.
+    def promote_to_champion(
+        self,
+        strategy: Union[ChampionStrategy, Any],
+        iteration_num: Optional[int] = None,
+        metrics: Optional[Dict[str, float]] = None
+    ) -> None:
+        """Promote a cohort strategy to new champion (supports ChampionStrategy or Strategy DAG).
+
+        This method accepts either:
+        1. ChampionStrategy object (from get_best_cohort_strategy or manual creation)
+        2. Strategy DAG object (Factor Graph strategy requiring metadata extraction)
+
+        For Strategy DAG objects, iteration_num and metrics must be provided.
 
         Args:
-            strategy: ChampionStrategy instance to promote
+            strategy: ChampionStrategy instance or Strategy DAG object
+            iteration_num: Required for Strategy DAG, ignored for ChampionStrategy
+            metrics: Required for Strategy DAG, ignored for ChampionStrategy
 
-        Example:
-            >>> best_cohort = tracker.get_best_cohort_strategy()
-            >>> if best_cohort:
-            ...     tracker.promote_to_champion(best_cohort)
-            >>> # Champion promoted: Iteration 75, Sharpe 2.6123
+        Raises:
+            ValueError: If Strategy DAG is provided without iteration_num/metrics
+            TypeError: If strategy is not ChampionStrategy or Strategy DAG
+
+        Examples:
+            Promote ChampionStrategy (from cohort):
+                >>> best_cohort = tracker.get_best_cohort_strategy()
+                >>> if best_cohort:
+                ...     tracker.promote_to_champion(best_cohort)
+                >>> # Champion promoted: Iteration 75, Sharpe 2.6123
+
+            Promote Strategy DAG:
+                >>> tracker.promote_to_champion(
+                ...     strategy=strategy_dag_object,
+                ...     iteration_num=80,
+                ...     metrics={"sharpe_ratio": 2.8, "max_drawdown": -0.10}
+                ... )
+                >>> # Champion promoted: Iteration 80, Sharpe 2.8000
         """
         from src.constants import METRIC_SHARPE
 
@@ -941,16 +1344,67 @@ class ChampionTracker:
             logger.error("Cannot promote None strategy to champion")
             return
 
-        # Set as new champion
-        self.champion = strategy
+        # Check if strategy is ChampionStrategy
+        if isinstance(strategy, ChampionStrategy):
+            # Direct promotion path (current behavior)
+            self.champion = strategy
+            self._save_champion()
 
-        # Persist to Hall of Fame
-        self._save_champion()
+            logger.info(
+                f"Champion promoted (ChampionStrategy): Iteration {strategy.iteration_num}, "
+                f"Sharpe {strategy.metrics.get(METRIC_SHARPE, 0):.4f}"
+            )
 
-        logger.info(
-            f"Champion promoted: Iteration {strategy.iteration_num}, "
-            f"Sharpe {strategy.metrics.get(METRIC_SHARPE, 0):.4f}"
-        )
+        else:
+            # Strategy DAG object path (new behavior)
+            # Validate required parameters
+            if iteration_num is None:
+                raise ValueError(
+                    "iteration_num is required when promoting Strategy DAG object. "
+                    "Provide iteration_num parameter"
+                )
+            if metrics is None:
+                raise ValueError(
+                    "metrics is required when promoting Strategy DAG object. "
+                    "Provide metrics parameter"
+                )
+
+            # Extract strategy_id and strategy_generation from Strategy object
+            if not hasattr(strategy, 'id') or not hasattr(strategy, 'generation'):
+                raise TypeError(
+                    "Strategy object must have 'id' and 'generation' attributes. "
+                    f"Got object of type {type(strategy).__name__}"
+                )
+
+            strategy_id = strategy.id
+            strategy_generation = strategy.generation
+
+            # Extract metadata from Strategy DAG
+            from src.learning.strategy_metadata import extract_dag_parameters, extract_dag_patterns
+
+            parameters = extract_dag_parameters(strategy)
+            success_patterns = extract_dag_patterns(strategy)
+
+            # Create ChampionStrategy from Strategy DAG
+            self.champion = ChampionStrategy(
+                iteration_num=iteration_num,
+                generation_method="factor_graph",
+                strategy_id=strategy_id,
+                strategy_generation=strategy_generation,
+                parameters=parameters,
+                metrics=metrics,
+                success_patterns=success_patterns,
+                timestamp=datetime.now().isoformat()
+            )
+
+            # Persist to Hall of Fame
+            self._save_champion()
+
+            logger.info(
+                f"Champion promoted (Strategy DAG): Iteration {iteration_num}, "
+                f"Sharpe {metrics.get(METRIC_SHARPE, 0):.4f}, "
+                f"Strategy ID '{strategy_id}' generation {strategy_generation}"
+            )
 
     def check_champion_staleness(self) -> Dict[str, Any]:
         """Check if champion is stale by comparing against recent strategy cohort.
