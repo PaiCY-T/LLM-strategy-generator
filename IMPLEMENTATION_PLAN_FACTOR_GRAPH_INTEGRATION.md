@@ -14,6 +14,37 @@ This implementation plan completes the Factor Graph integration in `iteration_ex
 
 ---
 
+## 🔴 CRITICAL ISSUES FOUND AND FIXED
+
+### Issue #1: Champion Update Bug (BLOCKER)
+
+**Location**: `_update_champion_if_better()` line 543-547
+
+**Problem**: Missing Factor Graph parameters in `champion_tracker.update_champion()` call:
+- ❌ Current: Only passes `iteration_num`, `code`, `metrics`
+- ✅ Required: Must also pass `generation_method`, `strategy_id`, `strategy_generation`
+
+**Impact**:
+- Factor Graph champions **cannot be saved or tracked**
+- Evolution chain breaks (no champion to mutate from)
+- System falls back to template creation every iteration
+- **This defeats the entire purpose of Factor Graph evolution!**
+
+**Fix**: See **Change #5** below (5 lines modified)
+
+### Issue #2: Registry Memory Leak (Medium Priority)
+
+**Location**: `_strategy_registry` in `_generate_with_factor_graph()`
+
+**Problem**: Strategies added but never cleaned up
+- 5000 iterations × ~5-10KB = 25-50MB growth
+
+**Impact**: Memory bloat in long runs
+
+**Fix**: See **Change #6** below (optional but recommended)
+
+---
+
 ## Problem Statement
 
 ### Current State (Lines 370-379)
@@ -374,6 +405,70 @@ elif generation_method == "factor_graph" and strategy_id:
 
 ---
 
+### Change 5: Fix Champion Update Bug 🔴 CRITICAL (Lines 509-556)
+
+**Location**: `_update_champion_if_better()` method (line 509-556)
+
+**Problem**: Current implementation only passes `iteration_num`, `code`, `metrics` to `champion_tracker.update_champion()`, but **missing Factor Graph parameters** (`generation_method`, `strategy_id`, `strategy_generation`).
+
+**Impact**: Factor Graph champions cannot be saved/tracked → evolution chain breaks!
+
+**Current Code (Buggy)**:
+```python
+# Line 543-547
+updated = self.champion_tracker.update_champion(
+    iteration_num=iteration_num,
+    code=strategy_code,
+    metrics=metrics
+)  # ❌ Missing: generation_method, strategy_id, strategy_generation
+```
+
+**Fixed Code**:
+```python
+# Pass ALL parameters for hybrid architecture support
+updated = self.champion_tracker.update_champion(
+    iteration_num=iteration_num,
+    metrics=metrics,
+    generation_method=generation_method,  # ✅ ADD: "llm" or "factor_graph"
+    code=strategy_code,                   # For LLM (None for Factor Graph)
+    strategy_id=strategy_id,              # ✅ ADD: For Factor Graph (None for LLM)
+    strategy_generation=strategy_generation  # ✅ ADD: For Factor Graph (None for LLM)
+)
+```
+
+**ChampionTracker.update_champion() Signature** (from `champion_tracker.py:439`):
+```python
+def update_champion(
+    self,
+    iteration_num: int,
+    metrics: Dict[str, float],
+    generation_method: str = "llm",
+    code: Optional[str] = None,
+    strategy: Optional[Any] = None,           # Not used by iteration_executor
+    strategy_id: Optional[str] = None,        # ← Required for Factor Graph
+    strategy_generation: Optional[int] = None # ← Required for Factor Graph
+) -> bool:
+```
+
+**Test Case** (verify fix):
+```python
+def test_update_champion_factor_graph():
+    """Verify Factor Graph champions are saved with all metadata."""
+    executor = IterationExecutor(...)
+
+    # Execute Factor Graph iteration
+    record = executor.execute_iteration(iteration_num=1)
+
+    # Verify champion updated with Factor Graph metadata
+    champion = executor.champion_tracker.get_champion()
+    assert champion.generation_method == "factor_graph"
+    assert champion.strategy_id is not None
+    assert champion.strategy_generation == 0
+    assert champion.code is None
+```
+
+---
+
 ## Import Dependencies
 
 **Add to top of file (after existing imports, around line 29)**:
@@ -383,6 +478,115 @@ from typing import Any, Dict, Optional, Tuple, Callable  # Add Callable to exist
 ```
 
 **Note**: Most imports are already present. Only need to add `Callable` to typing imports.
+
+---
+
+### Change 6: Add Registry Cleanup (Optional but Recommended)
+
+**Location**: After `_create_template_strategy()` method
+
+**Problem**: `_strategy_registry` grows unbounded (one strategy per iteration)
+- 5000 iterations × ~5-10KB = 25-50MB memory growth
+- Not critical for short runs, but impacts long runs
+
+**Solution**: Add cleanup method to keep only recent strategies
+
+**Implementation**:
+
+```python
+def _cleanup_old_strategies(self, keep_last_n: int = 100) -> None:
+    """Clean up old strategies from registry to prevent memory bloat.
+
+    Keeps only the most recent N strategies and the current champion.
+    This prevents unbounded memory growth during long runs.
+
+    Args:
+        keep_last_n: Number of recent strategies to keep (default: 100)
+
+    Note:
+        - Champion strategy is always preserved (never deleted)
+        - Strategies are identified by their numeric suffix (iteration number)
+        - This is safe to call periodically (e.g., every 100 iterations)
+    """
+    if len(self._strategy_registry) <= keep_last_n:
+        # Registry is small enough, no cleanup needed
+        return
+
+    # Get current champion ID (never delete champion)
+    champion = self.champion_tracker.get_champion()
+    champion_id = champion.strategy_id if (champion and champion.generation_method == "factor_graph") else None
+
+    # Sort strategies by iteration number (extract from ID)
+    # ID format: "fg_{iteration}_{generation}" or "template_{iteration}"
+    strategy_items = list(self._strategy_registry.items())
+
+    def extract_iteration(strategy_id: str) -> int:
+        """Extract iteration number from strategy ID."""
+        try:
+            if strategy_id.startswith("fg_"):
+                # Format: "fg_123_1" -> extract 123
+                return int(strategy_id.split("_")[1])
+            elif strategy_id.startswith("template_"):
+                # Format: "template_123" -> extract 123
+                return int(strategy_id.split("_")[1])
+            else:
+                return 0  # Unknown format, keep at beginning
+        except (IndexError, ValueError):
+            return 0
+
+    # Sort by iteration number (newest last)
+    strategy_items.sort(key=lambda item: extract_iteration(item[0]))
+
+    # Keep only last N strategies + champion
+    strategies_to_keep = set()
+
+    # Add champion
+    if champion_id:
+        strategies_to_keep.add(champion_id)
+
+    # Add last N strategies
+    for strategy_id, _ in strategy_items[-keep_last_n:]:
+        strategies_to_keep.add(strategy_id)
+
+    # Remove old strategies
+    strategies_to_remove = [
+        sid for sid in self._strategy_registry.keys()
+        if sid not in strategies_to_keep
+    ]
+
+    for strategy_id in strategies_to_remove:
+        del self._strategy_registry[strategy_id]
+
+    if strategies_to_remove:
+        logger.debug(
+            f"Cleaned up {len(strategies_to_remove)} old strategies, "
+            f"kept {len(self._strategy_registry)} (including champion)"
+        )
+```
+
+**Usage** (add to `execute_iteration()` after creating IterationRecord, around line 241):
+
+```python
+# Step 9: Create IterationRecord
+record = IterationRecord(...)
+
+# Periodic cleanup (every 100 iterations)
+if iteration_num > 0 and iteration_num % 100 == 0:
+    self._cleanup_old_strategies(keep_last_n=100)
+
+elapsed = (datetime.now() - start_time).total_seconds()
+```
+
+**Benefits**:
+- ✅ Prevents memory bloat in long runs (>1000 iterations)
+- ✅ Always preserves champion (safe)
+- ✅ Keeps recent strategies (100 iterations = ~500KB-1MB)
+- ✅ Minimal overhead (runs every 100 iterations)
+
+**Alternative** (if memory is not a concern):
+- Skip this change for now
+- Monitor memory usage in production
+- Add later if needed
 
 ---
 
@@ -622,13 +826,20 @@ This implementation:
 
 **Total Changes**:
 - **1 file modified**: `src/learning/iteration_executor.py`
-- **Lines added**: ~150 lines (implementation + docstrings)
-- **Lines modified**: ~5 lines (import, __init__)
-- **New tests**: ~300 lines
+- **6 changes implemented**:
+  1. ✅ Add internal registries to `__init__` (~10 lines)
+  2. ✅ Implement `_generate_with_factor_graph()` (~80 lines)
+  3. ✅ Add `_create_template_strategy()` helper (~40 lines)
+  4. ✅ Implement Factor Graph execution path (~20 lines)
+  5. 🔴 **Fix `_update_champion_if_better()` bug** (~5 lines) - **CRITICAL**
+  6. ✅ Add `_cleanup_old_strategies()` method (~50 lines) - **OPTIONAL**
+- **Total lines added**: ~200 lines (with cleanup) or ~150 lines (without cleanup)
+- **Lines modified**: ~10 lines (import, __init__, champion update)
+- **New tests**: ~350 lines (including champion persistence tests)
 
-**Estimated Implementation Time**: 2-3 hours
+**Estimated Implementation Time**: 3-4 hours (including Change #5 fix)
 **Estimated Testing Time**: 1-2 hours
-**Total**: 3-5 hours
+**Total**: 4-6 hours
 
 ---
 

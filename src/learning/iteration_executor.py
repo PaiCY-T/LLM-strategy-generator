@@ -18,7 +18,7 @@ This refactored from autonomous_loop.py (~800 lines extracted).
 import logging
 import random
 from datetime import datetime
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, Optional, Tuple
 
 from src.backtest.executor import BacktestExecutor, ExecutionResult
 from src.backtest.metrics import MetricsExtractor, StrategyMetrics
@@ -93,6 +93,15 @@ class IterationExecutor:
         self.data = None
         self.sim = None
         self._finlab_initialized = False
+
+        # === Factor Graph Support ===
+        # Strategy DAG registry (maps strategy_id -> Strategy object)
+        # Stores strategies created during iterations for execution
+        self._strategy_registry: Dict[str, Any] = {}
+
+        # Factor logic registry (maps factor_id -> logic Callable)
+        # Used for Strategy serialization/deserialization (future feature)
+        self._factor_logic_registry: Dict[str, Callable] = {}
 
         logger.info("IterationExecutor initialized")
 
@@ -238,6 +247,10 @@ class IterationExecutor:
             feedback_used=feedback[:500] if feedback else None,  # Store first 500 chars
         )
 
+        # Periodic cleanup of strategy registry (prevent memory bloat)
+        if iteration_num > 0 and iteration_num % 100 == 0:
+            self._cleanup_old_strategies(keep_last_n=100)
+
         elapsed = (datetime.now() - start_time).total_seconds()
         logger.info(f"=== Iteration {iteration_num} complete in {elapsed:.1f}s ===")
 
@@ -361,22 +374,230 @@ class IterationExecutor:
     ) -> Tuple[Optional[str], Optional[str], Optional[int]]:
         """Generate strategy using Factor Graph mutation.
 
+        Implementation:
+        1. Check if Factor Graph champion exists
+        2. If exists: Mutate champion using add_factor()
+        3. If not: Create template strategy (momentum + breakout + exit)
+        4. Register strategy to internal registry
+        5. Return (None, strategy_id, strategy_generation)
+
         Args:
             iteration_num: Current iteration number
 
         Returns:
             (None, strategy_id, strategy_generation) for Factor Graph
+            - code: Always None (Factor Graph doesn't use code strings)
+            - strategy_id: Unique ID for Strategy DAG object
+            - strategy_generation: Generation number (0 for templates, N+1 for mutated)
         """
-        # TODO: Implement Factor Graph integration (Task 5.2.1)
-        # For now, return a simple placeholder
-        logger.warning("Factor Graph not yet integrated, returning placeholder")
+        from src.factor_graph.strategy import Strategy
+        from src.factor_graph.mutations import add_factor
+        from src.factor_library.registry import FactorRegistry
+        from src.factor_graph.factor_category import FactorCategory
 
-        # Placeholder: Simple momentum strategy
-        strategy_id = f"momentum_fallback_{iteration_num}"
-        strategy_generation = 0
+        registry = FactorRegistry.get_instance()
+
+        # Check if we have a Factor Graph champion
+        champion = self.champion_tracker.get_champion()
+
+        if champion and champion.generation_method == "factor_graph":
+            # Mutate existing champion
+            logger.info(f"Mutating Factor Graph champion: {champion.strategy_id}")
+
+            # Get champion strategy from registry
+            parent_strategy = self._strategy_registry.get(champion.strategy_id)
+
+            if parent_strategy is None:
+                # Champion not in registry (loaded from Hall of Fame or fresh session)
+                # Create template and mutate from there
+                logger.warning(f"Champion {champion.strategy_id} not in registry, creating template")
+                parent_strategy = self._create_template_strategy(iteration_num)
+
+            # Select random factor to add (mutation)
+            available_categories = [
+                FactorCategory.MOMENTUM,
+                FactorCategory.EXIT,
+                FactorCategory.ENTRY,
+                FactorCategory.RISK
+            ]
+
+            # Randomly select category
+            category = random.choice(available_categories)
+            factors_in_category = registry.list_by_category(category)
+
+            if not factors_in_category:
+                # No factors in category, try MOMENTUM as fallback
+                factors_in_category = registry.get_momentum_factors()
+
+            # Randomly select factor from category
+            factor_name = random.choice(factors_in_category)
+
+            # Get default parameters from registry
+            metadata = registry.get_metadata(factor_name)
+            parameters = metadata['parameters'].copy() if metadata else {}
+
+            # Mutate strategy (add factor)
+            try:
+                mutated_strategy = add_factor(
+                    strategy=parent_strategy,
+                    factor_name=factor_name,
+                    parameters=parameters,
+                    insert_point="smart"  # Smart insertion based on category
+                )
+
+                # Generate new ID and increment generation
+                strategy_id = f"fg_{iteration_num}_{champion.strategy_generation + 1}"
+                strategy_generation = champion.strategy_generation + 1
+                mutated_strategy.id = strategy_id
+                mutated_strategy.generation = strategy_generation
+                mutated_strategy.parent_ids = [champion.strategy_id]
+
+                logger.info(
+                    f"Mutated strategy: added {factor_name} "
+                    f"(gen {strategy_generation}, parent: {champion.strategy_id})"
+                )
+
+            except Exception as e:
+                logger.error(f"Mutation failed: {e}, creating template instead")
+                # Fallback: create template
+                mutated_strategy = self._create_template_strategy(iteration_num)
+                strategy_id = mutated_strategy.id
+                strategy_generation = mutated_strategy.generation
+
+        else:
+            # No Factor Graph champion, create template strategy
+            logger.info("No Factor Graph champion, creating template strategy")
+            mutated_strategy = self._create_template_strategy(iteration_num)
+            strategy_id = mutated_strategy.id
+            strategy_generation = mutated_strategy.generation
+
+        # Register strategy to internal registry
+        self._strategy_registry[strategy_id] = mutated_strategy
 
         # Return None for code (Factor Graph doesn't use code strings)
         return (None, strategy_id, strategy_generation)
+
+    def _create_template_strategy(self, iteration_num: int) -> Any:
+        """Create template Factor Graph strategy (momentum + breakout + trailing stop).
+
+        Template Strategy Composition:
+        1. Momentum Factor (MOMENTUM): Price momentum using rolling mean
+        2. Breakout Factor (ENTRY): N-day high/low breakout detection
+        3. Trailing Stop Factor (EXIT): Trailing stop loss for risk management
+
+        This provides a baseline strategy for Factor Graph evolution when no champion exists.
+
+        Args:
+            iteration_num: Current iteration number (used for unique ID)
+
+        Returns:
+            Strategy: Template strategy with 3 factors
+        """
+        from src.factor_graph.strategy import Strategy
+        from src.factor_library.registry import FactorRegistry
+
+        registry = FactorRegistry.get_instance()
+
+        # Create strategy
+        strategy_id = f"template_{iteration_num}"
+        strategy = Strategy(id=strategy_id, generation=0)
+
+        # Add momentum factor (root)
+        momentum_factor = registry.create_factor(
+            "momentum_factor",
+            parameters={"momentum_period": 20}
+        )
+        strategy.add_factor(momentum_factor, depends_on=[])
+
+        # Add breakout factor (entry signal)
+        breakout_factor = registry.create_factor(
+            "breakout_factor",
+            parameters={"entry_window": 20}
+        )
+        strategy.add_factor(breakout_factor, depends_on=[])
+
+        # Add trailing stop factor (exit)
+        trailing_stop_factor = registry.create_factor(
+            "trailing_stop_factor",
+            parameters={"trail_percent": 0.10, "activation_profit": 0.05}
+        )
+        strategy.add_factor(
+            trailing_stop_factor,
+            depends_on=[momentum_factor.id, breakout_factor.id]
+        )
+
+        logger.info(f"Created template strategy: {strategy_id} with 3 factors")
+
+        return strategy
+
+    def _cleanup_old_strategies(self, keep_last_n: int = 100) -> None:
+        """Clean up old strategies from registry to prevent memory bloat.
+
+        Keeps only the most recent N strategies and the current champion.
+        This prevents unbounded memory growth during long runs.
+
+        Args:
+            keep_last_n: Number of recent strategies to keep (default: 100)
+
+        Note:
+            - Champion strategy is always preserved (never deleted)
+            - Strategies are identified by their numeric suffix (iteration number)
+            - This is safe to call periodically (e.g., every 100 iterations)
+        """
+        if len(self._strategy_registry) <= keep_last_n:
+            # Registry is small enough, no cleanup needed
+            return
+
+        # Get current champion ID (never delete champion)
+        champion = self.champion_tracker.get_champion()
+        champion_id = champion.strategy_id if (champion and champion.generation_method == "factor_graph") else None
+
+        # Sort strategies by iteration number (extract from ID)
+        # ID format: "fg_{iteration}_{generation}" or "template_{iteration}"
+        strategy_items = list(self._strategy_registry.items())
+
+        def extract_iteration(strategy_id: str) -> int:
+            """Extract iteration number from strategy ID."""
+            try:
+                if strategy_id.startswith("fg_"):
+                    # Format: "fg_123_1" -> extract 123
+                    return int(strategy_id.split("_")[1])
+                elif strategy_id.startswith("template_"):
+                    # Format: "template_123" -> extract 123
+                    return int(strategy_id.split("_")[1])
+                else:
+                    return 0  # Unknown format, keep at beginning
+            except (IndexError, ValueError):
+                return 0
+
+        # Sort by iteration number (newest last)
+        strategy_items.sort(key=lambda item: extract_iteration(item[0]))
+
+        # Keep only last N strategies + champion
+        strategies_to_keep = set()
+
+        # Add champion
+        if champion_id:
+            strategies_to_keep.add(champion_id)
+
+        # Add last N strategies
+        for strategy_id, _ in strategy_items[-keep_last_n:]:
+            strategies_to_keep.add(strategy_id)
+
+        # Remove old strategies
+        strategies_to_remove = [
+            sid for sid in self._strategy_registry.keys()
+            if sid not in strategies_to_keep
+        ]
+
+        for strategy_id in strategies_to_remove:
+            del self._strategy_registry[strategy_id]
+
+        if strategies_to_remove:
+            logger.debug(
+                f"Cleaned up {len(strategies_to_remove)} old strategies, "
+                f"kept {len(self._strategy_registry)} (including champion)"
+            )
 
     def _execute_strategy(
         self,
@@ -412,15 +633,39 @@ class IterationExecutor:
                 )
 
             elif generation_method == "factor_graph" and strategy_id:
-                # TODO: Execute Factor Graph Strategy object (Task 5.2.3)
-                # For now, return failure
-                logger.warning("Factor Graph execution not yet implemented")
-                result = ExecutionResult(
-                    success=False,
-                    error_type="NotImplementedError",
-                    error_message="Factor Graph execution not yet integrated",
-                    execution_time=0.0,
-                )
+                # Execute Factor Graph Strategy object
+                logger.info(f"Executing Factor Graph strategy: {strategy_id}")
+
+                # Get strategy from registry
+                strategy = self._strategy_registry.get(strategy_id)
+
+                if strategy is None:
+                    # Strategy not found in registry (shouldn't happen)
+                    logger.error(f"Strategy {strategy_id} not found in registry")
+                    result = ExecutionResult(
+                        success=False,
+                        error_type="ValueError",
+                        error_message=f"Strategy {strategy_id} not found in internal registry",
+                        execution_time=0.0,
+                    )
+                else:
+                    # Execute Strategy DAG using BacktestExecutor.execute_strategy()
+                    result = self.backtest_executor.execute_strategy(
+                        strategy=strategy,
+                        data=self.data,
+                        sim=self.sim,
+                        timeout=self.config.get("timeout_seconds", 420),
+                        start_date=self.config.get("start_date"),
+                        end_date=self.config.get("end_date"),
+                        fee_ratio=self.config.get("fee_ratio"),
+                        tax_ratio=self.config.get("tax_ratio"),
+                        resample=self.config.get("resample", "M"),
+                    )
+
+                    logger.info(
+                        f"Factor Graph execution complete: "
+                        f"success={result.success}, time={result.execution_time:.1f}s"
+                    )
             else:
                 # Invalid state
                 result = ExecutionResult(
@@ -540,10 +785,14 @@ class IterationExecutor:
                 return False
 
             # Update champion using hybrid architecture
+            # Pass ALL parameters for both LLM and Factor Graph support
             updated = self.champion_tracker.update_champion(
                 iteration_num=iteration_num,
-                code=strategy_code,
-                metrics=metrics
+                metrics=metrics,
+                generation_method=generation_method,  # "llm" or "factor_graph"
+                code=strategy_code,                   # For LLM (None for Factor Graph)
+                strategy_id=strategy_id,              # For Factor Graph (None for LLM)
+                strategy_generation=strategy_generation  # For Factor Graph (None for LLM)
             )
 
             if updated:
