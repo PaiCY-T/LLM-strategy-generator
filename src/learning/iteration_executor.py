@@ -7,7 +7,7 @@ Executes a single iteration of the autonomous learning loop with 10-step process
 4. Generate strategy (call LLM or Factor Graph)
 5. Execute strategy (Phase 2 BacktestExecutor)
 6. Extract metrics (Phase 2 MetricsExtractor)
-7. Classify success (Phase 2 SuccessClassifier)
+7. Classify success (Phase 2 ErrorClassifier)
 8. Update champion if better
 9. Create IterationRecord
 10. Return record
@@ -22,7 +22,7 @@ from datetime import datetime
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from src.backtest.executor import BacktestExecutor, ExecutionResult
-from src.backtest.metrics import MetricsExtractor
+from src.backtest.metrics import MetricsExtractor, StrategyMetrics
 from src.backtest.error_classifier import ErrorClassifier
 from src.learning.champion_tracker import ChampionTracker
 from src.learning.feedback_generator import FeedbackGenerator
@@ -60,8 +60,8 @@ class IterationExecutor:
         champion_tracker: ChampionTracker,
         history: IterationHistory,
         config: Dict[str, Any],
-        data: Optional[Any] = None,  # ISSUE #3: Could use finlab.data.Data if available
-        sim: Optional[Callable] = None,  # ISSUE #3 FIX: Use Callable instead of Any
+        data: Any = None,
+        sim: Any = None,
     ):
         """Initialize iteration executor with all required components.
 
@@ -80,8 +80,8 @@ class IterationExecutor:
                 - fee_ratio: Transaction fee ratio
                 - tax_ratio: Transaction tax ratio
                 - resample: Rebalancing frequency (M/W/D)
-            data: finlab.data object for backtesting (optional, required for LLM execution)
-            sim: finlab.backtest.sim function (optional, required for LLM execution)
+            data: finlab data object (optional for Factor Graph)
+            sim: finlab sim function (optional for Factor Graph)
 
         Raises:
             ValueError: If LLM is enabled but data/sim not provided
@@ -99,6 +99,18 @@ class IterationExecutor:
         self.metrics_extractor = MetricsExtractor()
         self.error_classifier = ErrorClassifier()
 
+        # Finlab initialization flag (lazy loading)
+        self._finlab_initialized = False
+
+        # === Factor Graph Support ===
+        # Strategy DAG registry (maps strategy_id -> Strategy object)
+        # Stores strategies created during iterations for execution
+        self._strategy_registry: Dict[str, Any] = {}
+
+        # Factor logic registry (maps factor_id -> logic Callable)
+        # Used for Strategy serialization/deserialization (future feature)
+        self._factor_logic_registry: Dict[str, Callable] = {}
+
         # ISSUE #4 FIX: Early validation - check data/sim if LLM is enabled
         if self.llm_client.is_enabled():
             if not self.data or not self.sim:
@@ -108,6 +120,33 @@ class IterationExecutor:
                 )
 
         logger.info("IterationExecutor initialized")
+
+    def _initialize_finlab(self) -> bool:
+        """Initialize finlab data and sim objects (lazy loading).
+
+        Returns:
+            True if initialization successful, False otherwise
+        """
+        if self._finlab_initialized:
+            return True
+
+        try:
+            from finlab import data
+            from finlab.backtest import sim
+
+            self.data = data
+            self.sim = sim
+            self._finlab_initialized = True
+            logger.info("✓ Finlab data and sim initialized")
+            return True
+
+        except ImportError as e:
+            logger.error(f"Failed to import finlab: {e}")
+            logger.error("Please ensure finlab is installed and authenticated")
+            return False
+        except Exception as e:
+            logger.error(f"Unexpected error initializing finlab: {e}")
+            return False
 
     def execute_iteration(
         self,
@@ -149,6 +188,13 @@ class IterationExecutor:
         start_time = datetime.now()
         logger.info(f"=== Starting iteration {iteration_num} ===")
 
+        # Step 0: Initialize finlab (lazy loading)
+        if not self._initialize_finlab():
+            logger.error("Failed to initialize finlab - cannot execute iteration")
+            return self._create_failure_record(
+                iteration_num, "unknown", "Finlab initialization failed", start_time
+            )
+
         # Step 1: Load recent history
         history_window = self.config.get("history_window", 5)
         recent_records = self._load_recent_history(history_window)
@@ -168,6 +214,10 @@ class IterationExecutor:
             strategy_code, strategy_id, strategy_generation = self._generate_with_llm(
                 feedback, iteration_num
             )
+            # If LLM fallback to Factor Graph, update generation_method
+            if strategy_code is None and strategy_id is not None:
+                generation_method = "factor_graph"
+                logger.info("LLM fallback to Factor Graph detected, updated generation_method")
         else:
             strategy_code, strategy_id, strategy_generation = self._generate_with_factor_graph(
                 iteration_num
@@ -213,13 +263,17 @@ class IterationExecutor:
             feedback_used=feedback[:500] if feedback else None,  # Store first 500 chars
         )
 
+        # Periodic cleanup of strategy registry (prevent memory bloat)
+        if iteration_num > 0 and iteration_num % 100 == 0:
+            self._cleanup_old_strategies(keep_last_n=100)
+
         elapsed = (datetime.now() - start_time).total_seconds()
         logger.info(f"=== Iteration {iteration_num} complete in {elapsed:.1f}s ===")
 
         # Step 10: Return record
         return record
 
-    def _load_recent_history(self, window: int) -> List[IterationRecord]:
+    def _load_recent_history(self, window: int) -> list:
         """Load recent N iterations from history.
 
         Args:
@@ -251,9 +305,20 @@ class IterationExecutor:
             Feedback string for LLM
         """
         try:
+            # For first iteration or no history, return default feedback
+            if not recent_records:
+                return "First iteration - no previous history. Generate a basic momentum strategy."
+
+            # Get last record for context
+            last_record = recent_records[-1]
+
+            # Generate feedback based on last iteration's results
             feedback = self.feedback_generator.generate_feedback(
-                history=recent_records,
-                iteration_num=iteration_num
+                iteration_num=iteration_num,
+                metrics=last_record.metrics if hasattr(last_record, 'metrics') else None,
+                execution_result={'status': 'success' if hasattr(last_record, 'classification_level') else 'error'},
+                classification_level=last_record.classification_level if hasattr(last_record, 'classification_level') else None,
+                error_msg=None
             )
             return feedback
         except Exception as e:
@@ -304,7 +369,7 @@ class IterationExecutor:
 
             # Generate strategy
             logger.info("Calling LLM for strategy generation...")
-            response = engine.generate_innovation(feedback)
+            response = engine.generate_strategy(feedback)
 
             if not response or not response.get("code"):
                 logger.warning("LLM returned empty response")
@@ -325,22 +390,230 @@ class IterationExecutor:
     ) -> Tuple[Optional[str], Optional[str], Optional[int]]:
         """Generate strategy using Factor Graph mutation.
 
+        Implementation:
+        1. Check if Factor Graph champion exists
+        2. If exists: Mutate champion using add_factor()
+        3. If not: Create template strategy (momentum + breakout + exit)
+        4. Register strategy to internal registry
+        5. Return (None, strategy_id, strategy_generation)
+
         Args:
             iteration_num: Current iteration number
 
         Returns:
             (None, strategy_id, strategy_generation) for Factor Graph
+            - code: Always None (Factor Graph doesn't use code strings)
+            - strategy_id: Unique ID for Strategy DAG object
+            - strategy_generation: Generation number (0 for templates, N+1 for mutated)
         """
-        # TODO: Implement Factor Graph integration (Task 5.2.1)
-        # For now, return a simple placeholder
-        logger.warning("Factor Graph not yet integrated, returning placeholder")
+        from src.factor_graph.strategy import Strategy
+        from src.factor_graph.mutations import add_factor
+        from src.factor_library.registry import FactorRegistry
+        from src.factor_graph.factor_category import FactorCategory
 
-        # Placeholder: Simple momentum strategy
-        strategy_id = f"momentum_fallback_{iteration_num}"
-        strategy_generation = 0
+        registry = FactorRegistry.get_instance()
+
+        # Check if we have a Factor Graph champion
+        champion = self.champion_tracker.get_champion()
+
+        if champion and champion.generation_method == "factor_graph":
+            # Mutate existing champion
+            logger.info(f"Mutating Factor Graph champion: {champion.strategy_id}")
+
+            # Get champion strategy from registry
+            parent_strategy = self._strategy_registry.get(champion.strategy_id)
+
+            if parent_strategy is None:
+                # Champion not in registry (loaded from Hall of Fame or fresh session)
+                # Create template and mutate from there
+                logger.warning(f"Champion {champion.strategy_id} not in registry, creating template")
+                parent_strategy = self._create_template_strategy(iteration_num)
+
+            # Select random factor to add (mutation)
+            available_categories = [
+                FactorCategory.MOMENTUM,
+                FactorCategory.EXIT,
+                FactorCategory.ENTRY,
+                FactorCategory.RISK
+            ]
+
+            # Randomly select category
+            category = random.choice(available_categories)
+            factors_in_category = registry.list_by_category(category)
+
+            if not factors_in_category:
+                # No factors in category, try MOMENTUM as fallback
+                factors_in_category = registry.get_momentum_factors()
+
+            # Randomly select factor from category
+            factor_name = random.choice(factors_in_category)
+
+            # Get default parameters from registry
+            metadata = registry.get_metadata(factor_name)
+            parameters = metadata['parameters'].copy() if metadata else {}
+
+            # Mutate strategy (add factor)
+            try:
+                mutated_strategy = add_factor(
+                    strategy=parent_strategy,
+                    factor_name=factor_name,
+                    parameters=parameters,
+                    insert_point="smart"  # Smart insertion based on category
+                )
+
+                # Generate new ID and increment generation
+                strategy_id = f"fg_{iteration_num}_{champion.strategy_generation + 1}"
+                strategy_generation = champion.strategy_generation + 1
+                mutated_strategy.id = strategy_id
+                mutated_strategy.generation = strategy_generation
+                mutated_strategy.parent_ids = [champion.strategy_id]
+
+                logger.info(
+                    f"Mutated strategy: added {factor_name} "
+                    f"(gen {strategy_generation}, parent: {champion.strategy_id})"
+                )
+
+            except Exception as e:
+                logger.error(f"Mutation failed: {e}, creating template instead")
+                # Fallback: create template
+                mutated_strategy = self._create_template_strategy(iteration_num)
+                strategy_id = mutated_strategy.id
+                strategy_generation = mutated_strategy.generation
+
+        else:
+            # No Factor Graph champion, create template strategy
+            logger.info("No Factor Graph champion, creating template strategy")
+            mutated_strategy = self._create_template_strategy(iteration_num)
+            strategy_id = mutated_strategy.id
+            strategy_generation = mutated_strategy.generation
+
+        # Register strategy to internal registry
+        self._strategy_registry[strategy_id] = mutated_strategy
 
         # Return None for code (Factor Graph doesn't use code strings)
         return (None, strategy_id, strategy_generation)
+
+    def _create_template_strategy(self, iteration_num: int) -> Any:
+        """Create template Factor Graph strategy (momentum + breakout + trailing stop).
+
+        Template Strategy Composition:
+        1. Momentum Factor (MOMENTUM): Price momentum using rolling mean
+        2. Breakout Factor (ENTRY): N-day high/low breakout detection
+        3. Trailing Stop Factor (EXIT): Trailing stop loss for risk management
+
+        This provides a baseline strategy for Factor Graph evolution when no champion exists.
+
+        Args:
+            iteration_num: Current iteration number (used for unique ID)
+
+        Returns:
+            Strategy: Template strategy with 3 factors
+        """
+        from src.factor_graph.strategy import Strategy
+        from src.factor_library.registry import FactorRegistry
+
+        registry = FactorRegistry.get_instance()
+
+        # Create strategy
+        strategy_id = f"template_{iteration_num}"
+        strategy = Strategy(id=strategy_id, generation=0)
+
+        # Add momentum factor (root)
+        momentum_factor = registry.create_factor(
+            "momentum_factor",
+            parameters={"momentum_period": 20}
+        )
+        strategy.add_factor(momentum_factor, depends_on=[])
+
+        # Add breakout factor (entry signal)
+        breakout_factor = registry.create_factor(
+            "breakout_factor",
+            parameters={"entry_window": 20}
+        )
+        strategy.add_factor(breakout_factor, depends_on=[])
+
+        # Add trailing stop factor (exit)
+        trailing_stop_factor = registry.create_factor(
+            "trailing_stop_factor",
+            parameters={"trail_percent": 0.10, "activation_profit": 0.05}
+        )
+        strategy.add_factor(
+            trailing_stop_factor,
+            depends_on=[momentum_factor.id, breakout_factor.id]
+        )
+
+        logger.info(f"Created template strategy: {strategy_id} with 3 factors")
+
+        return strategy
+
+    def _cleanup_old_strategies(self, keep_last_n: int = 100) -> None:
+        """Clean up old strategies from registry to prevent memory bloat.
+
+        Keeps only the most recent N strategies and the current champion.
+        This prevents unbounded memory growth during long runs.
+
+        Args:
+            keep_last_n: Number of recent strategies to keep (default: 100)
+
+        Note:
+            - Champion strategy is always preserved (never deleted)
+            - Strategies are identified by their numeric suffix (iteration number)
+            - This is safe to call periodically (e.g., every 100 iterations)
+        """
+        if len(self._strategy_registry) <= keep_last_n:
+            # Registry is small enough, no cleanup needed
+            return
+
+        # Get current champion ID (never delete champion)
+        champion = self.champion_tracker.get_champion()
+        champion_id = champion.strategy_id if (champion and champion.generation_method == "factor_graph") else None
+
+        # Sort strategies by iteration number (extract from ID)
+        # ID format: "fg_{iteration}_{generation}" or "template_{iteration}"
+        strategy_items = list(self._strategy_registry.items())
+
+        def extract_iteration(strategy_id: str) -> int:
+            """Extract iteration number from strategy ID."""
+            try:
+                if strategy_id.startswith("fg_"):
+                    # Format: "fg_123_1" -> extract 123
+                    return int(strategy_id.split("_")[1])
+                elif strategy_id.startswith("template_"):
+                    # Format: "template_123" -> extract 123
+                    return int(strategy_id.split("_")[1])
+                else:
+                    return 0  # Unknown format, keep at beginning
+            except (IndexError, ValueError):
+                return 0
+
+        # Sort by iteration number (newest last)
+        strategy_items.sort(key=lambda item: extract_iteration(item[0]))
+
+        # Keep only last N strategies + champion
+        strategies_to_keep = set()
+
+        # Add champion
+        if champion_id:
+            strategies_to_keep.add(champion_id)
+
+        # Add last N strategies
+        for strategy_id, _ in strategy_items[-keep_last_n:]:
+            strategies_to_keep.add(strategy_id)
+
+        # Remove old strategies
+        strategies_to_remove = [
+            sid for sid in self._strategy_registry.keys()
+            if sid not in strategies_to_keep
+        ]
+
+        for strategy_id in strategies_to_remove:
+            del self._strategy_registry[strategy_id]
+
+        if strategies_to_remove:
+            logger.debug(
+                f"Cleaned up {len(strategies_to_remove)} old strategies, "
+                f"kept {len(self._strategy_registry)} (including champion)"
+            )
 
     def _execute_strategy(
         self,
@@ -362,16 +635,8 @@ class IterationExecutor:
         """
         try:
             if generation_method == "llm" and strategy_code:
-                # Execute code string
-                if not self.data or not self.sim:
-                    logger.error("data and sim are required for LLM execution but not provided")
-                    return ExecutionResult(
-                        success=False,
-                        error_type="ConfigurationError",
-                        error_message="data and sim must be provided to IterationExecutor for LLM execution",
-                        execution_time=0.0,
-                    )
-
+                # Execute code string using BacktestExecutor.execute()
+                # Note: BacktestExecutor requires data and sim to be passed in
                 result = self.backtest_executor.execute(
                     strategy_code=strategy_code,
                     data=self.data,
@@ -384,15 +649,39 @@ class IterationExecutor:
                 )
 
             elif generation_method == "factor_graph" and strategy_id:
-                # TODO: Execute Factor Graph Strategy object (Task 5.2.3)
-                # For now, return failure
-                logger.warning("Factor Graph execution not yet implemented")
-                result = ExecutionResult(
-                    success=False,
-                    error_type="NotImplementedError",
-                    error_message="Factor Graph execution not yet integrated",
-                    execution_time=0.0,
-                )
+                # Execute Factor Graph Strategy object
+                logger.info(f"Executing Factor Graph strategy: {strategy_id}")
+
+                # Get strategy from registry
+                strategy = self._strategy_registry.get(strategy_id)
+
+                if strategy is None:
+                    # Strategy not found in registry (shouldn't happen)
+                    logger.error(f"Strategy {strategy_id} not found in registry")
+                    result = ExecutionResult(
+                        success=False,
+                        error_type="ValueError",
+                        error_message=f"Strategy {strategy_id} not found in internal registry",
+                        execution_time=0.0,
+                    )
+                else:
+                    # Execute Strategy DAG using BacktestExecutor.execute_strategy()
+                    result = self.backtest_executor.execute_strategy(
+                        strategy=strategy,
+                        data=self.data,
+                        sim=self.sim,
+                        timeout=self.config.get("timeout_seconds", 420),
+                        start_date=self.config.get("start_date"),
+                        end_date=self.config.get("end_date"),
+                        fee_ratio=self.config.get("fee_ratio"),
+                        tax_ratio=self.config.get("tax_ratio"),
+                        resample=self.config.get("resample", "M"),
+                    )
+
+                    logger.info(
+                        f"Factor Graph execution complete: "
+                        f"success={result.success}, time={result.execution_time:.1f}s"
+                    )
             else:
                 # Invalid state
                 result = ExecutionResult(
@@ -427,10 +716,9 @@ class IterationExecutor:
                 # Return empty metrics for failures
                 return {}
 
-            # Use MetricsExtractor (returns StrategyMetrics dataclass)
-            metrics_obj = self.metrics_extractor.extract_metrics(execution_result.report)
-            # Convert StrategyMetrics to dict for compatibility
-            return asdict(metrics_obj)
+            # Use MetricsExtractor
+            metrics = self.metrics_extractor.extract(execution_result.report)
+            return metrics
 
         except Exception as e:
             logger.warning(f"Metrics extraction failed: {e}")
@@ -455,31 +743,25 @@ class IterationExecutor:
             Classification level string
         """
         try:
-            # Check if execution was successful
-            if not execution_result.success:
-                # Use ErrorClassifier for failure categorization
-                if execution_result.error_type:
-                    category = self.error_classifier.classify_error(
-                        error_type=execution_result.error_type,
-                        error_message=execution_result.error_message or ""
-                    )
-                    # Map ErrorCategory to LEVEL
-                    return "LEVEL_0"  # All errors are LEVEL_0 (critical failure)
-                else:
-                    return "LEVEL_0"
+            # Convert to StrategyMetrics for classification
+            strategy_metrics = StrategyMetrics(
+                sharpe_ratio=metrics.get("sharpe_ratio"),
+                total_return=metrics.get("total_return"),
+                max_drawdown=metrics.get("max_drawdown"),
+                execution_success=execution_result.success
+            )
 
-            # Execution successful - classify by performance
-            sharpe = metrics.get("sharpe_ratio", 0)
+            # Classify using ErrorClassifier
+            classification_result = self.error_classifier.classify_single(strategy_metrics)
 
-            # LEVEL_3: Good performance (Sharpe >= 1.0)
-            if sharpe >= 1.0:
-                return "LEVEL_3"
-            # LEVEL_2: Weak performance (0 < Sharpe < 1.0)
-            elif sharpe > 0:
-                return "LEVEL_2"
-            # LEVEL_1: Execution success but poor/negative performance
-            else:
-                return "LEVEL_1"
+            # Convert level number to string format
+            level_map = {
+                0: "LEVEL_0",
+                1: "LEVEL_1",
+                2: "LEVEL_2",
+                3: "LEVEL_3"
+            }
+            return level_map.get(classification_result.level, "LEVEL_0")
 
         except Exception as e:
             logger.warning(f"Classification failed: {e}")
@@ -518,29 +800,21 @@ class IterationExecutor:
             if not metrics or "sharpe_ratio" not in metrics:
                 return False
 
-            # Champion tracker currently only supports LLM code strings
-            # TODO: Add Factor Graph support to ChampionTracker (Task 5.2.4)
-            if generation_method == "llm" and strategy_code:
-                updated = self.champion_tracker.update_champion(
-                    iteration_num=iteration_num,
-                    code=strategy_code,
-                    metrics=metrics,
-                )
+            # Update champion using hybrid architecture
+            # Pass ALL parameters for both LLM and Factor Graph support
+            updated = self.champion_tracker.update_champion(
+                iteration_num=iteration_num,
+                metrics=metrics,
+                generation_method=generation_method,  # "llm" or "factor_graph"
+                code=strategy_code,                   # For LLM (None for Factor Graph)
+                strategy_id=strategy_id,              # For Factor Graph (None for LLM)
+                strategy_generation=strategy_generation  # For Factor Graph (None for LLM)
+            )
 
-                if updated:
-                    logger.info(f"🏆 New champion! Sharpe: {metrics['sharpe_ratio']:.2f}")
+            if updated:
+                logger.info(f"🏆 New champion! Sharpe: {metrics['sharpe_ratio']:.2f}")
 
-                return updated
-            elif generation_method == "factor_graph":
-                logger.warning("Factor Graph champion tracking not yet implemented")
-                return False
-            else:
-                # ISSUE #5 FIX: More specific error messages
-                if generation_method == "llm" and not strategy_code:
-                    logger.warning("Cannot update champion: strategy_code is None for LLM generation method")
-                else:
-                    logger.warning(f"Cannot update champion: unknown generation_method '{generation_method}'")
-                return False
+            return updated
 
         except Exception as e:
             logger.error(f"Champion update failed: {e}", exc_info=True)
