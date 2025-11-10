@@ -381,6 +381,160 @@ class Strategy:
 
         return new_strategy
 
+    def validate_structure(self) -> bool:
+        """Validate static strategy structure without data availability checks.
+
+        Checks:
+        - At least one factor exists
+        - DAG is acyclic (no circular dependencies)
+        - No orphaned factors (all factors connected)
+        - No duplicate output columns
+
+        Raises:
+            ValueError: If any structural validation fails
+
+        Returns:
+            bool: True if all checks pass
+
+        Note:
+            This method only validates structure. Use validate_data(container)
+            to validate data availability at runtime.
+
+        Example:
+            >>> strategy = Strategy(id='my_strategy')
+            >>> strategy.add_factor(momentum_factor)
+            >>> strategy.add_factor(position_factor, depends_on=['momentum'])
+            >>> strategy.validate_structure()  # Check DAG integrity
+            True
+        """
+        import networkx as nx
+
+        # Check 0: At least one factor (from lines 520-522)
+        if not self.factors:
+            raise ValueError(
+                "Strategy must contain at least one factor"
+            )
+
+        # Check 1: DAG is acyclic (from lines 524-527)
+        if not nx.is_directed_acyclic_graph(self.dag):
+            cycles = list(nx.simple_cycles(self.dag))
+            raise ValueError(
+                f"Strategy DAG contains cycles: {cycles}. "
+                "Factors must form a directed acyclic graph."
+            )
+
+        # Check 4: No orphaned factors (from lines 578-591)
+        if not nx.is_weakly_connected(self.dag):
+            components = list(nx.weakly_connected_components(self.dag))
+            if len(components) > 1:
+                orphaned_factors = [sorted(comp) for comp in components[1:]]
+                raise ValueError(
+                    f"Found orphaned factors (not reachable from base data): {orphaned_factors}. "
+                    "All factors must be connected through dependencies."
+                )
+
+        # Check 5: No duplicate outputs (from lines 593-607)
+        all_outputs = []
+        for factor in self.factors.values():
+            all_outputs.extend(factor.outputs)
+
+        duplicates = [out for out in set(all_outputs) if all_outputs.count(out) > 1]
+        if duplicates:
+            duplicate_info = []
+            for dup in duplicates:
+                producers = [f_id for f_id, f in self.factors.items() if dup in f.outputs]
+                duplicate_info.append(f"{dup} produced by {producers}")
+            raise ValueError(
+                f"Found duplicate output columns: {', '.join(duplicate_info)}. "
+                "Each output column must be produced by exactly one factor."
+            )
+
+        return True
+
+    def validate_data(self, container: 'FinLabDataFrame') -> bool:
+        """Validate data availability in populated container.
+
+        Args:
+            container: Populated FinLabDataFrame with lazy-loaded data
+
+        Checks:
+        - All factor inputs available in container
+        - At least one position signal factor exists
+
+        Raises:
+            ValueError: If any data validation fails
+            TypeError: If container is not FinLabDataFrame
+
+        Returns:
+            bool: True if all checks pass
+
+        Note:
+            Call this after container populated with data. Validation checks
+            actual container state, not assumed base columns.
+
+        Example:
+            >>> strategy = Strategy(id='my_strategy')
+            >>> # ... add factors ...
+            >>> container = FinLabDataFrame(data_module=data_module)
+            >>> # ... execute factors ...
+            >>> strategy.validate_data(container)  # Check data availability
+            True
+        """
+        import networkx as nx
+        from src.factor_graph.finlab_dataframe import FinLabDataFrame
+
+        # Type check
+        if not isinstance(container, FinLabDataFrame):
+            raise TypeError(
+                f"container must be FinLabDataFrame, got {type(container).__name__}"
+            )
+
+        # Check 2: All factor inputs available (from lines 534-560)
+        # Start with matrices already in container
+        available_columns = set(container.list_matrices())
+
+        # Verify inputs for each factor in topological order
+        try:
+            topo_order = list(nx.topological_sort(self.dag))
+        except nx.NetworkXError as e:
+            raise ValueError(f"Cannot compute topological sort: {str(e)}") from e
+
+        for factor_id in topo_order:
+            factor = self.factors[factor_id]
+
+            # Check if all inputs are available
+            missing_inputs = [inp for inp in factor.inputs if inp not in available_columns]
+
+            if missing_inputs:
+                raise ValueError(
+                    f"Factor '{factor_id}' requires inputs {missing_inputs} "
+                    f"which are not available in container. "
+                    f"Available matrices: {sorted(available_columns)}."
+                )
+
+            # Add this factor's outputs to available columns for next factor
+            available_columns.update(factor.outputs)
+
+        # Check 3: At least one position signal factor (from lines 562-576)
+        position_signal_names = ["position", "positions", "signal", "signals"]
+        all_outputs = []
+        for factor in self.factors.values():
+            all_outputs.extend(factor.outputs)
+
+        has_position_signal = any(
+            output in position_signal_names
+            for output in all_outputs
+        )
+
+        if not has_position_signal:
+            raise ValueError(
+                f"Strategy must have at least one factor producing position signals "
+                f"(columns: {position_signal_names}). "
+                f"Current outputs: {sorted(all_outputs)}."
+            )
+
+        return True
+
     def to_pipeline(self, data_module, skip_validation: bool = False) -> pd.DataFrame:
         """
         Compile strategy DAG to executable data pipeline (Matrix-Native V2).
@@ -439,9 +593,9 @@ class Strategy:
             - Factors receive container instead of DataFrame
             - Returns 'position' matrix instead of accumulated DataFrame
         """
-        # Ensure strategy is valid before execution (unless skip_validation=True)
+        # Static validation (before container creation)
         if not skip_validation:
-            self.validate()
+            self.validate_structure()
 
         # Phase 2: Create FinLabDataFrame container
         from src.factor_graph.finlab_dataframe import FinLabDataFrame
@@ -465,6 +619,10 @@ class Strategy:
                     f"Pipeline execution failed at factor '{factor_id}' ({factor.name}): {str(e)}"
                 ) from e
 
+        # Runtime validation (after container populated)
+        if not skip_validation:
+            self.validate_data(container)
+
         # Phase 2: Extract final 'position' matrix from container
         if not container.has_matrix('position'):
             raise KeyError(
@@ -475,146 +633,39 @@ class Strategy:
         return container.get_matrix('position')
 
     def validate(self) -> bool:
-        """
-        Validate strategy DAG integrity.
+        """Validate strategy structure (backward compatible).
 
-        Performs comprehensive validation of the strategy DAG to ensure it represents
-        a valid, executable trading strategy. All checks must pass for the strategy
-        to be considered valid.
+        .. deprecated:: 2.0
+            Use :func:`validate_structure` for static checks and
+            :func:`validate_data` for runtime checks instead.
 
-        Validation Checks:
-        1. DAG is acyclic (topological sorting possible)
-        2. All factor input dependencies are satisfied
-        3. At least one factor produces position signals
-        4. No orphaned factors (all factors reachable from base data)
-        5. No duplicate output columns across factors
+        This method now only performs static structure validation.
+        For runtime data validation, use validate_data(container) after
+        container population.
 
         Returns:
-            True if strategy is valid
+            bool: True if structure validation passes
 
         Raises:
-            ValueError: If any validation check fails, with detailed error message
-                explaining which check failed and why
+            ValueError: If structure validation fails
 
         Example:
-            >>> strategy = Strategy(id="momentum")
-            >>> strategy.add_factor(rsi_factor)
-            >>> strategy.add_factor(signal_factor, depends_on=["rsi_14"])
-            >>> strategy.validate()  # Returns True if valid
+            >>> strategy = Strategy(id='my_strategy')
+            >>> # ... add factors ...
+            >>> strategy.validate()  # Triggers DeprecationWarning
             True
-            >>>
-            >>> # Invalid strategy (no position signals)
-            >>> bad_strategy = Strategy(id="bad")
-            >>> bad_strategy.add_factor(rsi_factor)  # Only produces "rsi", not "positions"
-            >>> try:
-            ...     bad_strategy.validate()
-            ... except ValueError as e:
-            ...     print(f"Validation failed: {e}")
-            Validation failed: Strategy must have at least one factor producing position signals...
-
-        Design Notes:
-            - Empty strategies are invalid (must have at least one factor)
-            - Position signal columns: "positions", "position", "signal", "signals"
-            - Base data columns assumed: OHLCV (open, high, low, close, volume)
-            - Orphan detection uses weak connectivity (ignoring edge direction)
         """
-        # Check 0: Strategy must have at least one factor
-        if not self.factors:
-            raise ValueError(
-                "Strategy validation failed: Strategy must contain at least one factor"
-            )
+        import warnings
 
-        # Check 1: DAG is acyclic (topological sorting possible)
-        if not nx.is_directed_acyclic_graph(self.dag):
-            raise ValueError(
-                "Strategy validation failed: DAG contains cycles. "
-                "A valid strategy must be a Directed Acyclic Graph (DAG) where "
-                "topological sorting is possible. Cycles prevent deterministic execution order."
-            )
+        warnings.warn(
+            "validate() is deprecated and will be removed in version 3.0. "
+            "Use validate_structure() for static DAG checks and "
+            "validate_data(container) for runtime data validation.",
+            DeprecationWarning,
+            stacklevel=2
+        )
 
-        # Check 2: All factor input dependencies satisfied
-        # Track available columns as we traverse DAG in topological order
-        # Start with base OHLCV data columns
-        available_columns = {"open", "high", "low", "close", "volume"}
-
-        try:
-            topo_order = list(nx.topological_sort(self.dag))
-        except nx.NetworkXError as e:
-            raise ValueError(
-                f"Strategy validation failed: Cannot compute topological sort: {str(e)}"
-            ) from e
-
-        for factor_id in topo_order:
-            factor = self.factors[factor_id]
-
-            # Check if all inputs are available
-            if not factor.validate_inputs(list(available_columns)):
-                missing_inputs = [inp for inp in factor.inputs if inp not in available_columns]
-                raise ValueError(
-                    f"Strategy validation failed: Factor '{factor_id}' requires inputs "
-                    f"{missing_inputs} which are not available. "
-                    f"Available columns at this point: {sorted(available_columns)}. "
-                    f"Ensure all dependencies are added before this factor."
-                )
-
-            # Add this factor's outputs to available columns
-            available_columns.update(factor.outputs)
-
-        # Check 3: At least one factor produces position signals
-        # Position signal columns: "positions", "position", "signal", "signals"
-        position_columns = {"positions", "position", "signal", "signals"}
-
-        has_position_signal = False
-        for factor in self.factors.values():
-            if any(output in position_columns for output in factor.outputs):
-                has_position_signal = True
-                break
-
-        if not has_position_signal:
-            raise ValueError(
-                "Strategy validation failed: Strategy must have at least one factor "
-                f"producing position signals (columns: {sorted(position_columns)}). "
-                f"Current outputs: {sorted(available_columns)}. "
-                "Add a signal or position factor to make this a valid trading strategy."
-            )
-
-        # Check 4: No orphaned factors (all factors reachable from base data)
-        # Multiple root factors (in_degree=0) are allowed since they all depend on base OHLCV data
-        # Only non-root isolated factors are considered true orphans
-        if not nx.is_weakly_connected(self.dag):
-            # Find isolated components
-            components = list(nx.weakly_connected_components(self.dag))
-            if len(components) > 1:
-                # Check if all isolated components are root factors
-                true_orphans = []
-                for comp in components:
-                    # A component is NOT orphaned if all its nodes are root factors (in_degree=0)
-                    is_root_component = all(self.dag.in_degree(node) == 0 for node in comp)
-                    if not is_root_component:
-                        true_orphans.append(sorted(comp))
-
-                if true_orphans:
-                    raise ValueError(
-                        f"Strategy validation failed: Found orphaned factors (not reachable from base data): "
-                        f"{true_orphans}. All factors must be connected through dependencies. "
-                        "Ensure all factors have a dependency path from base OHLCV data or other factors."
-                    )
-
-        # Check 5: No duplicate output columns across factors
-        output_to_factors = {}
-        for factor_id, factor in self.factors.items():
-            for output in factor.outputs:
-                if output in output_to_factors:
-                    raise ValueError(
-                        f"Strategy validation failed: Duplicate output column '{output}' "
-                        f"produced by factors '{output_to_factors[output]}' and '{factor_id}'. "
-                        "Each output column must be produced by exactly one factor. "
-                        "Rename outputs or consolidate logic into a single factor."
-                    )
-                output_to_factors[output] = factor_id
-
-        # All validation checks passed
-        return True
+        return self.validate_structure()
 
     def to_dict(self) -> Dict:
         """

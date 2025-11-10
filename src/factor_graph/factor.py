@@ -218,8 +218,16 @@ class Factor:
             - Logic function modifies container (doesn't return DataFrame)
             - Returns container for method chaining
         """
-        # Phase 2: Validate input matrices are available
-        missing = [inp for inp in self.inputs if not container.has_matrix(inp)]
+        # Phase 2: Validate input matrices are available (trigger lazy loading)
+        missing = []
+        for inp in self.inputs:
+            try:
+                # Try to get matrix - this triggers lazy loading if needed
+                container.get_matrix(inp)
+            except KeyError:
+                # Matrix truly doesn't exist (not in cache, not lazy loadable)
+                missing.append(inp)
+
         if missing:
             raise KeyError(
                 f"Factor '{self.id}' requires matrices {self.inputs}, "
