@@ -5,7 +5,7 @@ Turtle Strategy Factors Module
 Turtle strategy-related factors extracted from TurtleTemplate.
 Provides reusable ATR calculation, breakout detection, dual MA filtering, and ATR-based stop-loss.
 
-Architecture: Phase 2.0+ Factor Graph System
+Architecture: Phase 2.0+ Factor Graph System (Matrix-Native)
 Source: Extracted from src/templates/turtle_template.py
 
 Available Factors:
@@ -15,14 +15,16 @@ Available Factors:
 3. DualMAFilterFactor: Dual moving average filter for trend confirmation
 4. ATRStopLossFactor: ATR-based stop loss calculation for risk management
 
-Usage Example:
--------------
+Usage Example (Phase 2.0):
+--------------------------
     from src.factor_library.turtle_factors import (
         create_atr_factor,
         create_breakout_factor,
         create_dual_ma_filter_factor,
         create_atr_stop_loss_factor
     )
+    from src.factor_graph.finlab_dataframe import FinLabDataFrame
+    from finlab import data
 
     # Create factors with custom parameters
     atr = create_atr_factor(atr_period=20)
@@ -30,12 +32,12 @@ Usage Example:
     ma_filter = create_dual_ma_filter_factor(short_ma=20, long_ma=60)
     stop_loss = create_atr_stop_loss_factor(atr_multiplier=2.0)
 
-    # Execute factors on data
-    data = pd.DataFrame({"high": [...], "low": [...], "close": [...]})
-    result = atr.execute(data)
-    result = breakout.execute(result)
-    result = ma_filter.execute(result)
-    result = stop_loss.execute(result)
+    # Execute factors on FinLabDataFrame container
+    container = FinLabDataFrame(data_module=data)
+    container = atr.execute(container)
+    container = breakout.execute(container)
+    container = ma_filter.execute(container)
+    container = stop_loss.execute(container)
 """
 
 from typing import Dict, Any
@@ -44,15 +46,16 @@ import numpy as np
 
 from src.factor_graph.factor import Factor
 from src.factor_graph.factor_category import FactorCategory
+from src.factor_graph.finlab_dataframe import FinLabDataFrame
 
 
 # ============================================================================
 # Factor Logic Functions
 # ============================================================================
 
-def _atr_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _atr_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Calculate Average True Range (ATR) for volatility measurement.
+    Calculate Average True Range (ATR) for volatility measurement (Matrix-Native Phase 2.0).
 
     ATR measures market volatility by computing the average of true ranges
     over a specified period. True Range is the maximum of:
@@ -61,123 +64,159 @@ def _atr_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
     - Abs(Current low - Previous close)
 
     Args:
-        data: DataFrame containing 'high', 'low', 'close' columns
+        container: FinLabDataFrame container with 'high', 'low', 'close' matrices
         parameters: Dictionary with 'atr_period' (int)
 
-    Returns:
-        DataFrame with new 'atr' column added
+    Modifies:
+        Adds 'atr' matrix to container (Dates×Symbols)
 
     Implementation:
-        1. Calculate true range for each period
-        2. Apply rolling mean over atr_period
-        3. Result: average volatility over the window
+        1. Get high, low, close matrices from container
+        2. Calculate true range for each period
+        3. Apply rolling mean over atr_period
+        4. Add ATR matrix to container
 
     Example:
         atr_period=20, TR=[2.5, 3.0, 2.0, 2.8, 3.2]
         → atr = mean(last 20 TR values) = 2.7
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Works with Dates×Symbols matrices (not columns)
+        - Modifies container in-place (no return)
     """
     atr_period = parameters['atr_period']
 
+    # Get price matrices from container
+    high = container.get_matrix('high')
+    low = container.get_matrix('low')
+    close = container.get_matrix('close')
+
     # Calculate previous close for true range calculation
-    prev_close = data['close'].shift(1)
+    prev_close = close.shift(1)
 
     # Calculate three components of true range
-    high_low = data['high'] - data['low']
-    high_prev_close = np.abs(data['high'] - prev_close)
-    low_prev_close = np.abs(data['low'] - prev_close)
+    high_low = high - low
+    high_prev_close = np.abs(high - prev_close)
+    low_prev_close = np.abs(low - prev_close)
 
     # True range is the maximum of the three components
     true_range = pd.concat([high_low, high_prev_close, low_prev_close], axis=1).max(axis=1)
 
     # ATR is the rolling mean of true range
-    data['atr'] = true_range.rolling(window=atr_period).mean()
+    atr = true_range.rolling(window=atr_period).mean()
 
-    return data
+    # Add ATR matrix to container
+    container.add_matrix('atr', atr)
 
 
-def _breakout_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _breakout_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Detect N-day high/low breakout signals for entry.
+    Detect N-day high/low breakout signals for entry (Matrix-Native Phase 2.0).
 
     A breakout occurs when:
     - Long signal: Current close > highest high of previous N days
     - Short signal: Current close < lowest low of previous N days
 
     Args:
-        data: DataFrame containing 'high', 'low', 'close' columns
+        container: FinLabDataFrame container with 'high', 'low', 'close' matrices
         parameters: Dictionary with 'entry_window' (int)
 
-    Returns:
-        DataFrame with new 'breakout_signal' column added (1=long, -1=short, 0=none)
+    Modifies:
+        Adds 'breakout_signal' matrix to container (Dates×Symbols, values: 1=long, -1=short, 0=none)
 
     Implementation:
-        1. Calculate N-day highest high: high.rolling(entry_window).max()
-        2. Calculate N-day lowest low: low.rolling(entry_window).min()
-        3. Long breakout: close > N-day high
-        4. Short breakout: close < N-day low
-        5. Signal: 1 for long, -1 for short, 0 for no signal
+        1. Get high, low, close matrices from container
+        2. Calculate N-day highest high: high.rolling(entry_window).max()
+        3. Calculate N-day lowest low: low.rolling(entry_window).min()
+        4. Long breakout: close > N-day high
+        5. Short breakout: close < N-day low
+        6. Signal: 1 for long, -1 for short, 0 for no signal
+        7. Add breakout_signal matrix to container
 
     Example:
         entry_window=20, close=105, 20-day high=103, 20-day low=95
         → breakout_signal=1 (long breakout)
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Works with Dates×Symbols matrices (not columns)
+        - Modifies container in-place (no return)
     """
     entry_window = parameters['entry_window']
 
+    # Get price matrices from container
+    high = container.get_matrix('high')
+    low = container.get_matrix('low')
+    close = container.get_matrix('close')
+
     # Calculate N-day highest high and lowest low
-    n_day_high = data['high'].rolling(window=entry_window).max()
-    n_day_low = data['low'].rolling(window=entry_window).min()
+    n_day_high = high.rolling(window=entry_window).max()
+    n_day_low = low.rolling(window=entry_window).min()
 
     # Detect breakouts
-    long_breakout = data['close'] > n_day_high.shift(1)  # Current close > previous N-day high
-    short_breakout = data['close'] < n_day_low.shift(1)  # Current close < previous N-day low
+    long_breakout = close > n_day_high.shift(1)  # Current close > previous N-day high
+    short_breakout = close < n_day_low.shift(1)  # Current close < previous N-day low
 
-    # Create signal: 1 for long, -1 for short, 0 for none
-    data['breakout_signal'] = 0
-    data.loc[long_breakout, 'breakout_signal'] = 1
-    data.loc[short_breakout, 'breakout_signal'] = -1
+    # Create signal matrix: 1 for long, -1 for short, 0 for none
+    breakout_signal = pd.DataFrame(0, index=close.index, columns=close.columns)
+    breakout_signal[long_breakout] = 1
+    breakout_signal[short_breakout] = -1
 
-    return data
+    # Add breakout_signal matrix to container
+    container.add_matrix('breakout_signal', breakout_signal)
 
 
-def _dual_ma_filter_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _dual_ma_filter_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Apply dual moving average filter for trend confirmation.
+    Apply dual moving average filter for trend confirmation (Matrix-Native Phase 2.0).
 
     Creates a boolean filter that is True when price is above both
     short-term and long-term moving averages, indicating a strong uptrend.
 
     Args:
-        data: DataFrame containing 'close' column
+        container: FinLabDataFrame container with 'close' matrix
         parameters: Dictionary with 'short_ma' (int) and 'long_ma' (int)
 
-    Returns:
-        DataFrame with new 'dual_ma_filter' column added (boolean)
+    Modifies:
+        Adds 'dual_ma_filter' matrix to container (Dates×Symbols, boolean)
 
     Implementation:
-        1. Calculate short-term MA: close.rolling(short_ma).mean()
-        2. Calculate long-term MA: close.rolling(long_ma).mean()
-        3. Filter: (close > short_ma) & (close > long_ma)
+        1. Get close price matrix from container
+        2. Calculate short-term MA: close.rolling(short_ma).mean()
+        3. Calculate long-term MA: close.rolling(long_ma).mean()
+        4. Filter: (close > short_ma) & (close > long_ma)
+        5. Add dual_ma_filter matrix to container
 
     Example:
         short_ma=20, long_ma=60, close=105, MA(20)=102, MA(60)=100
         → dual_ma_filter=True (price above both MAs)
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Works with Dates×Symbols matrices (not columns)
+        - Modifies container in-place (no return)
     """
     short_ma = parameters['short_ma']
     long_ma = parameters['long_ma']
 
+    # Get close price matrix from container
+    close = container.get_matrix('close')
+
     # Calculate short-term and long-term moving averages
-    ma_short = data['close'].rolling(window=short_ma).mean()
-    ma_long = data['close'].rolling(window=long_ma).mean()
+    ma_short = close.rolling(window=short_ma).mean()
+    ma_long = close.rolling(window=long_ma).mean()
 
     # Create filter: price must be above both MAs
-    data['dual_ma_filter'] = (data['close'] > ma_short) & (data['close'] > ma_long)
+    dual_ma_filter = (close > ma_short) & (close > ma_long)
 
-    return data
+    # Add dual_ma_filter matrix to container
+    container.add_matrix('dual_ma_filter', dual_ma_filter)
 
 
-def _atr_stop_loss_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _atr_stop_loss_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Calculate ATR-based stop loss levels for risk management.
+    Calculate ATR-based stop loss levels for risk management (Matrix-Native Phase 2.0).
 
     Stop loss is calculated as:
     - Long position: entry_price - (ATR * atr_multiplier)
@@ -187,40 +226,53 @@ def _atr_stop_loss_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.D
     tighter stops in low volatility and wider stops in high volatility.
 
     Args:
-        data: DataFrame containing 'close', 'atr', 'positions' columns
+        container: FinLabDataFrame container with 'close', 'atr', 'positions' matrices
         parameters: Dictionary with 'atr_multiplier' (float)
 
-    Returns:
-        DataFrame with new 'stop_loss_level' column added
+    Modifies:
+        Adds 'stop_loss_level' matrix to container (Dates×Symbols)
 
     Implementation:
-        1. Identify position direction from 'positions' column (1=long, -1=short, 0=none)
-        2. Calculate stop distance: ATR * atr_multiplier
-        3. Long stop: close - stop_distance
-        4. Short stop: close + stop_distance
-        5. No position: NaN
+        1. Get close, atr, positions matrices from container
+        2. Identify position direction from 'positions' matrix (1=long, -1=short, 0=none)
+        3. Calculate stop distance: ATR * atr_multiplier
+        4. Long stop: close - stop_distance
+        5. Short stop: close + stop_distance
+        6. No position: NaN
+        7. Add stop_loss_level matrix to container
 
     Example:
         atr_multiplier=2.0, close=100, atr=2.5, position=1 (long)
         → stop_loss_level = 100 - (2.5 * 2.0) = 95.0
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Works with Dates×Symbols matrices (not columns)
+        - Modifies container in-place (no return)
     """
     atr_multiplier = parameters['atr_multiplier']
 
-    # Calculate stop distance based on ATR
-    stop_distance = data['atr'] * atr_multiplier
+    # Get matrices from container
+    close = container.get_matrix('close')
+    atr = container.get_matrix('atr')
+    positions = container.get_matrix('positions')
 
-    # Initialize stop loss column with NaN
-    data['stop_loss_level'] = np.nan
+    # Calculate stop distance based on ATR
+    stop_distance = atr * atr_multiplier
+
+    # Initialize stop loss matrix with NaN
+    stop_loss_level = pd.DataFrame(np.nan, index=close.index, columns=close.columns)
 
     # Calculate stop loss for long positions (position > 0)
-    long_positions = data['positions'] > 0
-    data.loc[long_positions, 'stop_loss_level'] = data.loc[long_positions, 'close'] - stop_distance[long_positions]
+    long_positions = positions > 0
+    stop_loss_level[long_positions] = close[long_positions] - stop_distance[long_positions]
 
     # Calculate stop loss for short positions (position < 0)
-    short_positions = data['positions'] < 0
-    data.loc[short_positions, 'stop_loss_level'] = data.loc[short_positions, 'close'] + stop_distance[short_positions]
+    short_positions = positions < 0
+    stop_loss_level[short_positions] = close[short_positions] + stop_distance[short_positions]
 
-    return data
+    # Add stop_loss_level matrix to container
+    container.add_matrix('stop_loss_level', stop_loss_level)
 
 
 # ============================================================================

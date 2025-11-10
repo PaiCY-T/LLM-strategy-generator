@@ -864,19 +864,19 @@ llm:
     # Max tokens in LLM response
     # Strategy generation requires substantial output
     # Recommended: 2000-4000 tokens
-    max_tokens: ${LLM_MAX_TOKENS:2000}
+    max_tokens: 2000
 
     # Temperature for generation (0.0 = deterministic, 1.0 = creative)
     # Higher temperature = more creative but potentially less reliable
     # 0.0 = deterministic (less creative)
     # 0.7 = balanced (recommended)
     # 1.0+ = creative (more random)
-    temperature: ${LLM_TEMPERATURE:0.7}
+    temperature: 0.7
 
     # Timeout for LLM API calls (seconds)
     # LLM generation can be slow, allow sufficient time
     # Recommended: 60-120 seconds
-    timeout: ${LLM_TIMEOUT:60}
+    timeout: 60
 
   # Model name for the selected provider
   # OpenRouter: anthropic/claude-3.5-sonnet, openai/gpt-4o, google/gemini-2.5-flash, etc.
