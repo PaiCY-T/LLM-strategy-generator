@@ -5,7 +5,7 @@ Momentum Factors Module
 Momentum-related factors extracted from MomentumTemplate.
 Provides reusable momentum calculation, trend filtering, and catalyst detection.
 
-Architecture: Phase 2.0+ Factor Graph System
+Architecture: Phase 2.0+ Factor Graph System (Matrix-Native)
 Source: Extracted from src/templates/momentum_template.py
 
 Available Factors:
@@ -15,21 +15,23 @@ Available Factors:
 3. RevenueCatalystFactor: Revenue acceleration catalyst detection
 4. EarningsCatalystFactor: Earnings momentum catalyst (ROE improvement)
 
-Usage Example:
--------------
+Usage Example (Phase 2.0):
+--------------------------
     from src.factor_library.momentum_factors import (
         create_momentum_factor,
         create_ma_filter_factor
     )
+    from src.factor_graph.finlab_dataframe import FinLabDataFrame
+    from finlab import data
 
     # Create factors with custom parameters
     momentum = create_momentum_factor(momentum_period=20)
     ma_filter = create_ma_filter_factor(ma_periods=60)
 
-    # Execute factors on data
-    data = pd.DataFrame({"close": [100, 102, 101, 103, 105]})
-    result = momentum.execute(data)
-    result = ma_filter.execute(result)
+    # Execute factors on FinLabDataFrame container
+    container = FinLabDataFrame(data_module=data)
+    container = momentum.execute(container)
+    container = ma_filter.execute(container)
 """
 
 from typing import Dict, Any
@@ -37,6 +39,7 @@ import pandas as pd
 
 from src.factor_graph.factor import Factor
 from src.factor_graph.factor_category import FactorCategory
+from src.factor_graph.finlab_dataframe import FinLabDataFrame
 from src.templates.data_cache import DataCache
 
 
@@ -44,91 +47,113 @@ from src.templates.data_cache import DataCache
 # Factor Logic Functions
 # ============================================================================
 
-def _momentum_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _momentum_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Calculate price momentum using rolling mean of returns.
+    Calculate price momentum using rolling mean of returns (Matrix-Native Phase 2.0).
 
     This logic computes momentum score as the rolling mean of daily
     percentage price changes over a specified lookback window.
 
     Args:
-        data: DataFrame containing 'close' column
+        container: FinLabDataFrame container with 'close' matrix
         parameters: Dictionary with 'momentum_period' (int)
 
-    Returns:
-        DataFrame with new 'momentum' column added
+    Modifies:
+        Adds 'momentum' matrix to container (Dates×Symbols)
 
     Implementation:
-        1. Calculate daily returns: close / close.shift() - 1
-        2. Apply rolling mean: .rolling(momentum_period).mean()
-        3. Result: average daily return over momentum window
+        1. Get close price matrix from container
+        2. Calculate daily returns: close / close.shift() - 1
+        3. Apply rolling mean: .rolling(momentum_period).mean()
+        4. Add momentum matrix to container
 
     Example:
         momentum_period=5, returns=[0.02, 0.01, -0.01, 0.03, 0.02]
         → momentum = mean([0.02, 0.01, -0.01, 0.03, 0.02]) = 0.014
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Works with Dates×Symbols matrices (not columns)
+        - Modifies container in-place (no return)
     """
     momentum_period = parameters['momentum_period']
 
+    # Get close price matrix from container
+    close = container.get_matrix('close')
+
     # Calculate daily percentage changes
-    daily_returns = data['close'] / data['close'].shift(1) - 1
+    daily_returns = close / close.shift(1) - 1
 
     # Apply rolling mean to calculate momentum score
-    data['momentum'] = daily_returns.rolling(window=momentum_period).mean()
+    momentum = daily_returns.rolling(window=momentum_period).mean()
 
-    return data
+    # Add momentum matrix to container
+    container.add_matrix('momentum', momentum)
 
 
-def _ma_filter_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _ma_filter_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Apply moving average filter for trend confirmation.
+    Apply moving average filter for trend confirmation (Matrix-Native Phase 2.0).
 
     Creates a boolean filter that is True when price is above its moving average,
     indicating an uptrend.
 
     Args:
-        data: DataFrame containing 'close' column
+        container: FinLabDataFrame container with 'close' matrix
         parameters: Dictionary with 'ma_periods' (int)
 
-    Returns:
-        DataFrame with new 'ma_filter' column added (boolean)
+    Modifies:
+        Adds 'ma_filter' matrix to container (Dates×Symbols, boolean)
 
     Implementation:
-        1. Calculate MA: close.rolling(ma_periods).mean()
-        2. Filter: close > MA (boolean)
+        1. Get close price matrix from container
+        2. Calculate MA: close.rolling(ma_periods).mean()
+        3. Filter: close > MA (boolean matrix)
+        4. Add ma_filter matrix to container
 
     Example:
         ma_periods=60, close=105, MA(60)=100 → ma_filter=True (uptrend)
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Works with Dates×Symbols matrices (not columns)
+        - Modifies container in-place (no return)
     """
     ma_periods = parameters['ma_periods']
 
+    # Get close price matrix from container
+    close = container.get_matrix('close')
+
     # Calculate moving average
-    ma = data['close'].rolling(window=ma_periods).mean()
+    ma = close.rolling(window=ma_periods).mean()
 
     # Create filter: price above MA indicates uptrend
-    data['ma_filter'] = data['close'] > ma
+    ma_filter = close > ma
 
-    return data
+    # Add ma_filter matrix to container
+    container.add_matrix('ma_filter', ma_filter)
 
 
-def _revenue_catalyst_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _revenue_catalyst_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Apply revenue acceleration catalyst filter.
+    Apply revenue acceleration catalyst filter (Matrix-Native Phase 2.0).
 
     Detects stocks showing revenue acceleration: short-term revenue MA
     greater than long-term revenue MA (12-month baseline).
 
     Args:
-        data: DataFrame (not used, loads from DataCache internally)
+        container: FinLabDataFrame container (revenue loaded from DataCache)
         parameters: Dictionary with 'catalyst_lookback' (int) in months
 
-    Returns:
-        DataFrame with new 'revenue_catalyst' column added (boolean)
+    Modifies:
+        Adds 'revenue_catalyst' matrix to container (Dates×Symbols, boolean)
 
     Implementation:
         1. Load monthly revenue data from DataCache
         2. Calculate short-term MA: revenue.average(catalyst_lookback)
         3. Calculate long-term MA: revenue.average(12) as baseline
         4. Condition: short_ma > long_ma (acceleration)
+        5. Add revenue_catalyst matrix to container
 
     Note:
         Uses DataCache to avoid redundant data loading.
@@ -137,6 +162,10 @@ def _revenue_catalyst_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> p
     Example:
         catalyst_lookback=3, 3M_MA=500M, 12M_MA=450M
         → revenue_catalyst=True (accelerating)
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Modifies container in-place (no return)
     """
     catalyst_lookback = parameters['catalyst_lookback']
 
@@ -151,32 +180,30 @@ def _revenue_catalyst_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> p
     # Revenue acceleration: short-term > long-term
     revenue_catalyst = revenue_short_ma > revenue_long_ma
 
-    # Convert to DataFrame-compatible format (finlab data structures are special)
-    # Store the condition in data for compatibility
-    data['revenue_catalyst'] = revenue_catalyst
-
-    return data
+    # Add revenue_catalyst matrix to container
+    container.add_matrix('revenue_catalyst', revenue_catalyst)
 
 
-def _earnings_catalyst_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+def _earnings_catalyst_logic(container: FinLabDataFrame, parameters: Dict[str, Any]) -> None:
     """
-    Apply earnings momentum catalyst filter using ROE.
+    Apply earnings momentum catalyst filter using ROE (Matrix-Native Phase 2.0).
 
     Detects stocks showing earnings momentum: current ROE improving
     compared to 8-quarter (2-year) baseline.
 
     Args:
-        data: DataFrame (not used, loads from DataCache internally)
+        container: FinLabDataFrame container (ROE loaded from DataCache)
         parameters: Dictionary with 'catalyst_lookback' (int) in quarters
 
-    Returns:
-        DataFrame with new 'earnings_catalyst' column added (boolean)
+    Modifies:
+        Adds 'earnings_catalyst' matrix to container (Dates×Symbols, boolean)
 
     Implementation:
         1. Load ROE data from DataCache
         2. Calculate short-term ROE MA: roe.average(catalyst_lookback)
         3. Calculate long-term ROE MA: roe.average(8) as baseline
         4. Condition: short_ma > long_ma (improving)
+        5. Add earnings_catalyst matrix to container
 
     Note:
         Uses DataCache to avoid redundant data loading.
@@ -185,6 +212,10 @@ def _earnings_catalyst_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> 
     Example:
         catalyst_lookback=3, 3Q_ROE=15%, 8Q_ROE=12%
         → earnings_catalyst=True (improving profitability)
+
+    Phase 2.0 Changes:
+        - Input: FinLabDataFrame container (not DataFrame)
+        - Modifies container in-place (no return)
     """
     catalyst_lookback = parameters['catalyst_lookback']
 
@@ -199,10 +230,8 @@ def _earnings_catalyst_logic(data: pd.DataFrame, parameters: Dict[str, Any]) -> 
     # Earnings momentum: short-term ROE > long-term ROE
     earnings_catalyst = roe_short_ma > roe_long_ma
 
-    # Convert to DataFrame-compatible format
-    data['earnings_catalyst'] = earnings_catalyst
-
-    return data
+    # Add earnings_catalyst matrix to container
+    container.add_matrix('earnings_catalyst', earnings_catalyst)
 
 
 # ============================================================================
