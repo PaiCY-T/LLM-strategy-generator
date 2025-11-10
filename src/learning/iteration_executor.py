@@ -367,15 +367,38 @@ class IterationExecutor:
                 logger.warning("LLM engine not available")
                 return self._generate_with_factor_graph(iteration_num)
 
-            # Generate strategy
-            logger.info("Calling LLM for strategy generation...")
-            response = engine.generate_strategy(feedback)
+            # Get champion information for InnovationEngine
+            champion = self.champion_tracker.get_champion()
 
-            if not response or not response.get("code"):
-                logger.warning("LLM returned empty response")
+            # Extract champion_code and champion_metrics
+            if champion:
+                # For LLM champions, use code directly
+                if champion.generation_method == "llm":
+                    champion_code = champion.code or ""
+                    champion_metrics = champion.metrics
+                # For Factor Graph champions, we don't have code
+                # Use empty string and let InnovationEngine handle it
+                else:
+                    champion_code = ""
+                    champion_metrics = champion.metrics
+            else:
+                # No champion yet, use defaults
+                champion_code = ""
+                champion_metrics = {"sharpe_ratio": 0.0}
+
+            # Generate strategy using InnovationEngine API
+            logger.info("Calling LLM for strategy generation...")
+            strategy_code = engine.generate_innovation(
+                champion_code=champion_code,
+                champion_metrics=champion_metrics,
+                failure_history=None,  # TODO: Extract from history in future iteration
+                target_metric="sharpe_ratio"
+            )
+
+            if not strategy_code:
+                logger.warning("LLM returned empty code")
                 return self._generate_with_factor_graph(iteration_num)
 
-            strategy_code = response["code"]
             logger.info(f"LLM generated {len(strategy_code)} chars of code")
 
             return (strategy_code, None, None)

@@ -119,7 +119,7 @@ class TestBasicPipelineExecution:
 
     def test_single_factor_pipeline(self, mock_data_module, simple_factor, position_factor):
         """Test pipeline with single factor chain."""
-        strategy = Strategy(name='Test Strategy')
+        strategy = Strategy(id='test_strategy')
         strategy.add_factor(simple_factor)
         strategy.add_factor(position_factor, depends_on=['momentum_10'])
 
@@ -171,7 +171,7 @@ class TestBasicPipelineExecution:
         )
 
         # Create strategy
-        strategy = Strategy(name='Multi-Factor')
+        strategy = Strategy(id='multi_factor')
         strategy.add_factor(momentum_factor)
         strategy.add_factor(filter_factor)
         strategy.add_factor(position_factor, depends_on=['momentum', 'filter'])
@@ -184,7 +184,7 @@ class TestBasicPipelineExecution:
 
     def test_empty_strategy_raises_error(self, mock_data_module):
         """Test that empty strategy raises validation error."""
-        strategy = Strategy(name='Empty')
+        strategy = Strategy(id='empty')
 
         with pytest.raises(ValueError, match="must contain at least one factor"):
             strategy.to_pipeline(mock_data_module)
@@ -199,7 +199,7 @@ class TestContainerIntegration:
 
     def test_container_creation_from_data_module(self, mock_data_module, simple_factor, position_factor):
         """Test that container is created correctly from data module."""
-        strategy = Strategy(name='Test')
+        strategy = Strategy(id='test')
         strategy.add_factor(simple_factor)
         strategy.add_factor(position_factor, depends_on=['momentum_10'])
 
@@ -255,7 +255,7 @@ class TestContainerIntegration:
             for i in range(1, 4)
         ]
 
-        strategy = Strategy(name='Tracking')
+        strategy = Strategy(id='tracking')
         strategy.add_factor(factors[0])  # factor1
         strategy.add_factor(factors[1], depends_on=['factor1'])  # factor2
         strategy.add_factor(factors[2], depends_on=['factor2'])  # factor3
@@ -270,7 +270,7 @@ class TestContainerIntegration:
 
     def test_position_matrix_extraction(self, mock_data_module, simple_factor, position_factor):
         """Test that position matrix is correctly extracted."""
-        strategy = Strategy(name='Test')
+        strategy = Strategy(id='test')
         strategy.add_factor(simple_factor)
         strategy.add_factor(position_factor, depends_on=['momentum_10'])
 
@@ -291,7 +291,7 @@ class TestErrorHandling:
 
     def test_missing_position_matrix_raises_error(self, mock_data_module, simple_factor):
         """Test that missing position matrix raises KeyError."""
-        strategy = Strategy(name='No Position')
+        strategy = Strategy(id='no_position')
         strategy.add_factor(simple_factor)  # Doesn't produce 'position'
 
         with pytest.raises(KeyError, match="did not produce 'position' matrix"):
@@ -310,7 +310,7 @@ class TestErrorHandling:
             logic=bad_logic, parameters={}
         )
 
-        strategy = Strategy(name='Bad')
+        strategy = Strategy(id='bad')
         strategy.add_factor(bad_factor)
 
         with pytest.raises((KeyError, RuntimeError)):
@@ -327,7 +327,7 @@ class TestErrorHandling:
             logic=error_logic, parameters={}
         )
 
-        strategy = Strategy(name='Error')
+        strategy = Strategy(id='error')
         strategy.add_factor(error_factor)
 
         with pytest.raises(ValueError, match="Intentional error"):
@@ -335,7 +335,7 @@ class TestErrorHandling:
 
     def test_invalid_data_module_raises_error(self, simple_factor, position_factor):
         """Test that invalid data module raises error."""
-        strategy = Strategy(name='Test')
+        strategy = Strategy(id='test')
         strategy.add_factor(simple_factor)
         strategy.add_factor(position_factor, depends_on=['momentum_10'])
 
@@ -391,7 +391,7 @@ class TestDAGExecution:
             logic=tracking_logic('C'), parameters={}
         )
 
-        strategy = Strategy(name='DAG Test')
+        strategy = Strategy(id='dag_test')
         # Add in random order with explicit dependencies
         strategy.add_factor(factor_C, depends_on=['B'])
         strategy.add_factor(factor_A)  # Root factor
@@ -437,7 +437,7 @@ class TestDAGExecution:
             logic=position_logic, parameters={}
         )
 
-        strategy = Strategy(name='Parallel')
+        strategy = Strategy(id='parallel')
         for factor in parallel_factors:
             strategy.add_factor(factor)  # Root factors (no dependencies)
         # Position factor depends on all parallel factors
@@ -472,7 +472,7 @@ class TestEdgeCases:
             logic=constant_logic, parameters={}
         )
 
-        strategy = Strategy(name='Constant')
+        strategy = Strategy(id='constant')
         strategy.add_factor(constant_factor)
 
         positions = strategy.to_pipeline(mock_data_module)
@@ -493,7 +493,7 @@ class TestEdgeCases:
             logic=multi_output_logic, parameters={}
         )
 
-        strategy = Strategy(name='Multi Output')
+        strategy = Strategy(id='multi_output')
         strategy.add_factor(multi_factor)
 
         positions = strategy.to_pipeline(mock_data_module)

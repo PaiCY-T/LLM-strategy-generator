@@ -8,7 +8,7 @@ where edges represent data dependencies.
 Architecture: Phase 2.0+ Factor Graph System
 """
 
-from typing import Dict, List, Optional, Set
+from typing import Callable, Dict, List, Optional, Set
 import networkx as nx
 import pandas as pd
 import copy
