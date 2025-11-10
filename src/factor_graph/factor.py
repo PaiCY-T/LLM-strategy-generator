@@ -164,72 +164,86 @@ class Factor:
         """
         return all(inp in available_columns for inp in self.inputs)
 
-    def execute(self, data: pd.DataFrame) -> pd.DataFrame:
+    def execute(self, container):
         """
-        Execute factor logic and return data with new columns.
+        Execute factor logic on FinLabDataFrame container (Matrix-Native V2).
 
-        This method applies the factor's logic function to the input data,
-        producing the specified output columns.
+        Phase 2.0 redesign: Applies the factor's logic function to the matrix
+        container, validating that required matrices exist and outputs are produced.
 
         Args:
-            data: Input DataFrame with required input columns
-                Must contain all columns specified in self.inputs
+            container: FinLabDataFrame container with required input matrices
+                      Must contain all matrices specified in self.inputs
 
         Returns:
-            DataFrame with new columns added (specified in self.outputs)
-            Original data is preserved, new columns are appended
+            FinLabDataFrame container with new matrices added (self.outputs)
+            Original container is modified in-place by logic function
 
         Raises:
-            KeyError: If required input columns are missing
-            Exception: Any exception raised by the logic function
+            KeyError: If required input matrices are missing
+            RuntimeError: If logic execution fails or outputs not produced
 
         Example:
-            >>> def add_sma(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame:
-            ...     period = params["period"]
-            ...     data["sma"] = data["close"].rolling(window=period).mean()
-            ...     return data
+            >>> from src.factor_graph.finlab_dataframe import FinLabDataFrame
+            >>> from finlab import data
+            >>>
+            >>> def momentum_logic(container, params):
+            ...     close = container.get_matrix('close')
+            ...     period = params['period']
+            ...     momentum = (close / close.shift(period)) - 1
+            ...     container.add_matrix('momentum', momentum)
             >>>
             >>> factor = Factor(
-            ...     id="sma_20", name="SMA 20", category=FactorCategory.MOMENTUM,
-            ...     inputs=["close"], outputs=["sma"],
-            ...     logic=add_sma, parameters={"period": 20}
+            ...     id="momentum_20", name="Momentum 20",
+            ...     category=FactorCategory.MOMENTUM,
+            ...     inputs=["close"], outputs=["momentum"],
+            ...     logic=momentum_logic, parameters={"period": 20}
             ... )
             >>>
-            >>> data = pd.DataFrame({"close": [100, 102, 101, 103, 105]})
-            >>> result = factor.execute(data)
-            >>> "sma" in result.columns
+            >>> container = FinLabDataFrame(data_module=data)
+            >>> container.add_matrix('close', data.get('price:收盤價'))
+            >>> container = factor.execute(container)
+            >>> container.has_matrix('momentum')
             True
 
         Design Notes:
-            - Logic functions should not modify input data in-place
-            - Output columns should be added to a copy of the input data
-            - Exceptions from logic functions are propagated to the caller
-            - Validation of input availability should be done before calling execute()
+            - Logic functions modify container in-place (add matrices)
+            - Container passed and returned (for method chaining)
+            - Exceptions from logic functions are propagated with context
+            - Input/output validation ensures DAG integrity
+
+        Phase 2 Changes:
+            - Input changed from DataFrame to FinLabDataFrame
+            - Validates matrices (not columns)
+            - Logic function modifies container (doesn't return DataFrame)
+            - Returns container for method chaining
         """
-        # Validate inputs are available
-        missing = [inp for inp in self.inputs if inp not in data.columns]
+        # Phase 2: Validate input matrices are available
+        missing = [inp for inp in self.inputs if not container.has_matrix(inp)]
         if missing:
             raise KeyError(
-                f"Factor '{self.id}' requires columns {self.inputs}, "
-                f"but {missing} are missing from data"
+                f"Factor '{self.id}' requires matrices {self.inputs}, "
+                f"but {missing} are missing from container. "
+                f"Available: {container.list_matrices()}"
             )
 
-        # Execute logic function
+        # Execute logic function (modifies container in-place)
         try:
-            result = self.logic(data.copy(), self.parameters)
+            self.logic(container, self.parameters)
         except Exception as e:
             raise RuntimeError(
                 f"Factor '{self.id}' execution failed: {str(e)}"
             ) from e
 
-        # Validate outputs are produced
-        missing_outputs = [out for out in self.outputs if out not in result.columns]
+        # Phase 2: Validate output matrices were produced
+        missing_outputs = [out for out in self.outputs if not container.has_matrix(out)]
         if missing_outputs:
             raise RuntimeError(
-                f"Factor '{self.id}' logic did not produce expected outputs: {missing_outputs}"
+                f"Factor '{self.id}' logic did not produce expected matrices: {missing_outputs}. "
+                f"Available: {container.list_matrices()}"
             )
 
-        return result
+        return container
 
     def __repr__(self) -> str:
         """Developer-friendly representation."""

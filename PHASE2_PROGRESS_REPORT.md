@@ -1,17 +1,17 @@
 # Phase 2 Factor Graph V2 - Progress Report
 
-**Feature Branch**: `feature/factor-graph-v2-matrix-native`
+**Feature Branch**: `claude/factor-graph-v2-011CUpBUu4tdZFSVjXTHTWP9`
 **Started**: 2025-11-10
-**Status**: 🟡 IN PROGRESS (Phase 1 Complete)
+**Status**: 🟡 IN PROGRESS (Phase 2 Complete)
 
 ---
 
-## 📊 Overall Progress: 25% (Phase 1/4)
+## 📊 Overall Progress: 50% (Phase 2/4)
 
 ```
 Phase 1: Foundation    ████████████████████ 100% ✅ COMPLETE
-Phase 2: Core          ████░░░░░░░░░░░░░░░░  20% 🟡 IN PROGRESS
-Phase 3: Migration     ░░░░░░░░░░░░░░░░░░░░   0% ⏸️  PENDING
+Phase 2: Core          ████████████████████ 100% ✅ COMPLETE
+Phase 3: Migration     ░░░░░░░░░░░░░░░░░░░░   0% 🟡 NEXT
 Phase 4: Testing       ░░░░░░░░░░░░░░░░░░░░   0% ⏸️  PENDING
 ```
 
@@ -72,33 +72,74 @@ close = container.get_matrix('close')  # Auto-loads price:收盤價
 
 ---
 
-## 🟡 Phase 2: Core (IN PROGRESS - 20%)
+## ✅ Phase 2: Core (COMPLETE)
 
-### Completed
+### Deliverables
 
-1. **Feature Branch Created**
-   - ✅ Branch: `feature/factor-graph-v2-matrix-native`
-   - ✅ Clean checkout from `claude/hybrid-architecture-phase1`
+**Phase 2.1: Modify Strategy.to_pipeline** ✅ COMPLETE
+- ✅ Changed signature: `to_pipeline(data_module)` (not `DataFrame`)
+- ✅ Create `FinLabDataFrame` container from data module
+- ✅ Execute Factor DAG with container (method chaining)
+- ✅ Extract 'position' matrix as return value
+- ✅ Updated comprehensive docstring with Phase 2.0 examples
 
-### Next Steps
+**Phase 2.2: Modify Factor.execute** ✅ COMPLETE
+- ✅ Changed signature: `execute(container: FinLabDataFrame)`
+- ✅ Validate matrices exist (not columns)
+- ✅ Logic function modifies container in-place
+- ✅ Validate output matrices produced
+- ✅ Return container for method chaining
 
-**Phase 2.1: Modify Strategy.to_pipeline** (NEXT)
-- [ ] Change signature: `to_pipeline(data_module)` (not `DataFrame`)
-- [ ] Create `FinLabDataFrame` container
-- [ ] Execute Factor DAG with container
-- [ ] Extract 'position' matrix as return value
-- [ ] Update docstring
+**Phase 2.3: Update BacktestExecutor** ✅ COMPLETE
+- ✅ Docstring updated to document Phase 2.0 compatibility
+- ✅ Code already passes `data_module` correctly
+- ✅ Handles `position` matrix return
 
-**Phase 2.2: Modify Factor.execute**
-- [ ] Change signature: `execute(container: FinLabDataFrame)`
-- [ ] Validate matrices exist (not columns)
-- [ ] Pass container to logic function
-- [ ] Validate output matrices produced
+### Key Changes Made
 
-**Phase 2.3: Update BacktestExecutor**
-- [ ] Pass `data_module` to `Strategy.to_pipeline`
-- [ ] Handle `position` matrix return
-- [ ] Update integration logic
+#### Strategy.to_pipeline (src/factor_graph/strategy.py:384-472)
+```python
+# BEFORE (Phase 1):
+def to_pipeline(self, data: pd.DataFrame) -> pd.DataFrame:
+    result = data.copy()
+    for factor in factors:
+        result = factor.execute(result)  # DataFrame → DataFrame
+    return result
+
+# AFTER (Phase 2):
+def to_pipeline(self, data_module) -> pd.DataFrame:
+    container = FinLabDataFrame(data_module=data_module)
+    for factor in factors:
+        container = factor.execute(container)  # Container → Container
+    return container.get_matrix('position')  # Extract position matrix
+```
+
+#### Factor.execute (src/factor_graph/factor.py:167-246)
+```python
+# BEFORE (Phase 1):
+def execute(self, data: pd.DataFrame) -> pd.DataFrame:
+    # Validate columns
+    missing = [inp for inp in self.inputs if inp not in data.columns]
+    result = self.logic(data.copy(), self.parameters)
+    return result
+
+# AFTER (Phase 2):
+def execute(self, container):
+    # Validate matrices
+    missing = [inp for inp in self.inputs if not container.has_matrix(inp)]
+    self.logic(container, self.parameters)  # Modifies in-place
+    return container  # Method chaining
+```
+
+#### BacktestExecutor (src/backtest/executor.py:437-475)
+- Updated docstring to document Phase 2.0 changes
+- Code already compatible (passes data module, receives position matrix)
+
+### Quality Metrics
+- ✅ All syntax validated with `python3 -m py_compile`
+- ✅ Type hints preserved
+- ✅ Comprehensive docstrings with examples
+- ✅ Backward compatibility documented
 
 ---
 
@@ -164,10 +205,10 @@ def _momentum_logic(container: FinLabDataFrame, parameters) -> None:
 - `tests/factor_graph/test_finlab_dataframe.py` (360 lines)
 - `PHASE2_PROGRESS_REPORT.md` (this file)
 
-### Files To Modify (Phase 2)
-- `src/factor_graph/strategy.py` (to_pipeline method)
-- `src/factor_graph/factor.py` (execute method)
-- `src/backtest/executor.py` (integration)
+### Modified Files (Phase 2) ✅
+- ✅ `src/factor_graph/strategy.py` (to_pipeline method, lines 384-472)
+- ✅ `src/factor_graph/factor.py` (execute method, lines 167-246)
+- ✅ `src/backtest/executor.py` (docstring update, lines 437-475)
 
 ### Files To Modify (Phase 3)
 - `src/factor_library/momentum_factors.py` (3 factors)
@@ -183,10 +224,10 @@ def _momentum_logic(container: FinLabDataFrame, parameters) -> None:
 | Phase | Tasks Remaining | Estimated Hours | Status |
 |-------|----------------|-----------------|--------|
 | Phase 1 | 0 | 0h | ✅ Complete |
-| Phase 2 | 3 tasks | 5h | 🟡 20% done |
-| Phase 3 | 13 factors | 16h | ⏸️ Pending |
+| Phase 2 | 0 | 0h | ✅ Complete |
+| Phase 3 | 13 factors | 16h | 🟡 Next |
 | Phase 4 | 50 tests | 10h | ⏸️ Pending |
-| **Total** | **66 tasks** | **31h** | **25% done** |
+| **Total** | **63 tasks** | **26h** | **50% done** |
 
 ---
 
@@ -194,13 +235,15 @@ def _momentum_logic(container: FinLabDataFrame, parameters) -> None:
 
 ### Immediate (Today)
 1. ✅ Commit Phase 1 foundation
-2. ⏸️ Modify `Strategy.to_pipeline` (Phase 2.1)
-3. ⏸️ Modify `Factor.execute` (Phase 2.2)
+2. ✅ Modify `Strategy.to_pipeline` (Phase 2.1)
+3. ✅ Modify `Factor.execute` (Phase 2.2)
+4. ✅ Update BacktestExecutor integration (Phase 2.3)
+5. ⏸️ Commit Phase 2 core changes
+6. 🟡 Start refactoring momentum factors (Phase 3.1)
 
 ### Short-term (This Week)
-4. ⏸️ Update BacktestExecutor integration
-5. ⏸️ Start refactoring momentum factors
-6. ⏸️ Write component tests
+7. ⏸️ Refactor all 13 factor logic functions
+8. ⏸️ Write component tests for factors
 
 ### Medium-term (Next Week)
 7. ⏸️ Complete all 13 factor refactorings
@@ -286,5 +329,5 @@ None yet - Phase 1 foundation is solid.
 
 ---
 
-**Last Updated**: 2025-11-10 (Phase 1 Complete)
-**Next Milestone**: Phase 2 Core Architecture (ETA: +5 hours)
+**Last Updated**: 2025-11-10 (Phase 2 Complete)
+**Next Milestone**: Phase 3 Factor Migration (ETA: +16 hours)

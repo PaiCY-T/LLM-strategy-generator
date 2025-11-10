@@ -446,14 +446,19 @@ class BacktestExecutor:
         tax_ratio: Optional[float] = None,
         resample: str = "M",
     ) -> None:
-        """Execute Factor Graph Strategy in isolated process.
+        """Execute Factor Graph Strategy in isolated process (Phase 2.0 Compatible).
 
         This method runs in a separate process. It executes the strategy DAG
         via to_pipeline() to get position signals, then calls sim() to backtest.
 
+        Phase 2.0 Changes:
+            - Strategy.to_pipeline() now accepts data module (not DataFrame)
+            - Returns Dates×Symbols position matrix directly
+            - Uses FinLabDataFrame container internally
+
         Args:
-            strategy: Factor Graph Strategy object
-            data: finlab.data object
+            strategy: Factor Graph Strategy object (Phase 2.0 matrix-native)
+            data: finlab.data module (passed to strategy.to_pipeline())
             sim: finlab.backtest.sim function
             result_queue: Queue for passing ExecutionResult back to parent
             start_date: Optional backtest start date
@@ -465,7 +470,8 @@ class BacktestExecutor:
         start_time = time.time()
 
         try:
-            # Step 1: Execute strategy DAG to get position signals
+            # Step 1: Execute strategy DAG to get position signals (Phase 2.0)
+            # to_pipeline() now accepts data module and returns position matrix
             positions_df = strategy.to_pipeline(data)
 
             # Step 2: Filter by date range
