@@ -381,7 +381,7 @@ class Strategy:
 
         return new_strategy
 
-    def to_pipeline(self, data_module) -> pd.DataFrame:
+    def to_pipeline(self, data_module, skip_validation: bool = False) -> pd.DataFrame:
         """
         Compile strategy DAG to executable data pipeline (Matrix-Native V2).
 
@@ -394,6 +394,8 @@ class Strategy:
         Args:
             data_module: finlab.data module for matrix data access
                         Used to create FinLabDataFrame container with lazy loading
+            skip_validation: If True, skip validation checks before execution.
+                           Useful for testing error conditions. Default: False
 
         Returns:
             DataFrame (Dates×Symbols) containing final position signals
@@ -437,8 +439,9 @@ class Strategy:
             - Factors receive container instead of DataFrame
             - Returns 'position' matrix instead of accumulated DataFrame
         """
-        # Ensure strategy is valid before execution
-        self.validate()
+        # Ensure strategy is valid before execution (unless skip_validation=True)
+        if not skip_validation:
+            self.validate()
 
         # Phase 2: Create FinLabDataFrame container
         from src.factor_graph.finlab_dataframe import FinLabDataFrame
@@ -576,19 +579,26 @@ class Strategy:
             )
 
         # Check 4: No orphaned factors (all factors reachable from base data)
-        # Use weak connectivity (ignoring edge direction) to check if all nodes are connected
+        # Multiple root factors (in_degree=0) are allowed since they all depend on base OHLCV data
+        # Only non-root isolated factors are considered true orphans
         if not nx.is_weakly_connected(self.dag):
             # Find isolated components
             components = list(nx.weakly_connected_components(self.dag))
             if len(components) > 1:
-                orphaned_factors = [
-                    sorted(comp) for comp in components[1:]  # Skip the main component
-                ]
-                raise ValueError(
-                    f"Strategy validation failed: Found orphaned factors (not reachable from base data): "
-                    f"{orphaned_factors}. All factors must be connected through dependencies. "
-                    "Ensure all factors have a dependency path from base OHLCV data."
-                )
+                # Check if all isolated components are root factors
+                true_orphans = []
+                for comp in components:
+                    # A component is NOT orphaned if all its nodes are root factors (in_degree=0)
+                    is_root_component = all(self.dag.in_degree(node) == 0 for node in comp)
+                    if not is_root_component:
+                        true_orphans.append(sorted(comp))
+
+                if true_orphans:
+                    raise ValueError(
+                        f"Strategy validation failed: Found orphaned factors (not reachable from base data): "
+                        f"{true_orphans}. All factors must be connected through dependencies. "
+                        "Ensure all factors have a dependency path from base OHLCV data or other factors."
+                    )
 
         # Check 5: No duplicate output columns across factors
         output_to_factors = {}
