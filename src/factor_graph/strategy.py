@@ -381,68 +381,68 @@ class Strategy:
 
         return new_strategy
 
-    def to_pipeline(self, data: pd.DataFrame) -> pd.DataFrame:
+    def to_pipeline(self, data_module) -> pd.DataFrame:
         """
-        Compile strategy DAG to executable data pipeline.
+        Compile strategy DAG to executable data pipeline (Matrix-Native V2).
 
-        This method compiles the strategy DAG into an executable data pipeline
-        that transforms input OHLCV data into a DataFrame with all factor outputs.
-        Factors are executed in topological order, respecting all dependencies.
+        Phase 2.0 redesign: Executes all factors in topological order using
+        FinLabDataFrame container for native Dates×Symbols matrix operations.
 
-        The method performs automatic validation before execution to ensure the
-        strategy is valid and executable.
+        This method creates a matrix container, executes the Factor DAG, and
+        extracts the final 'position' matrix as output.
 
         Args:
-            data: Input DataFrame with OHLCV data (open, high, low, close, volume)
-                Must contain all base columns required by the strategy's factors
+            data_module: finlab.data module for matrix data access
+                        Used to create FinLabDataFrame container with lazy loading
 
         Returns:
-            DataFrame with all factor outputs computed in dependency order
-            Original data columns are preserved, factor outputs are added
+            DataFrame (Dates×Symbols) containing final position signals
 
         Raises:
-            ValueError: If strategy validation fails (invalid DAG structure)
-            KeyError: If required input columns are missing from data
-            RuntimeError: If factor execution fails during pipeline execution
+            ValueError: If DAG cannot be topologically sorted (contains cycles)
+            RuntimeError: If any factor execution fails
+            KeyError: If 'position' matrix not produced by strategy
 
         Example:
+            >>> from finlab import data
+            >>> from src.factor_graph.strategy import Strategy
             >>> strategy = Strategy(id="momentum")
-            >>> strategy.add_factor(rsi_factor)  # Produces "rsi"
-            >>> strategy.add_factor(signal_factor, depends_on=["rsi_14"])  # Produces "positions"
+            >>> strategy.add_factor(momentum_factor)
+            >>> strategy.add_factor(position_factor, depends_on=["momentum"])
             >>>
-            >>> # Execute pipeline
-            >>> data = pd.DataFrame({
-            ...     "open": [100, 101, 102],
-            ...     "high": [101, 102, 103],
-            ...     "low": [99, 100, 101],
-            ...     "close": [100.5, 101.5, 102.5],
-            ...     "volume": [1000, 1100, 1200]
-            ... })
-            >>> result = strategy.to_pipeline(data)
+            >>> # Execute pipeline on FinLab data
+            >>> position = strategy.to_pipeline(data)
             >>>
-            >>> # Result contains all factor outputs
-            >>> "rsi" in result.columns
-            True
-            >>> "positions" in result.columns
-            True
+            >>> # Result is Dates×Symbols position matrix
+            >>> position.shape
+            (4563, 2661)
 
         Performance:
-            - <1 second for typical strategies (5-10 factors) on 1000 rows
-            - Execution time scales linearly with number of factors and data size
+            - <1 second for typical strategies (5-10 factors) on FinLab data
+            - Execution time scales linearly with number of factors
+            - Matrix operations are vectorized for performance
             - No parallel execution (factors executed sequentially)
 
         Design Notes:
             - Automatically calls validate() before execution
+            - Creates FinLabDataFrame container with data_module
             - Factors executed in topological order (dependencies first)
-            - Each factor receives cumulative output from all previous factors
-            - Original data is copied to avoid modifying input DataFrame
+            - Each factor modifies container (adds matrices)
+            - Final 'position' matrix extracted and returned
             - Graceful error handling with context about which factor failed
+
+        Phase 2 Changes:
+            - Input changed from DataFrame to data_module
+            - Uses FinLabDataFrame container instead of DataFrame
+            - Factors receive container instead of DataFrame
+            - Returns 'position' matrix instead of accumulated DataFrame
         """
         # Ensure strategy is valid before execution
         self.validate()
 
-        # Start with a copy of input data to avoid modifying original
-        result = data.copy()
+        # Phase 2: Create FinLabDataFrame container
+        from src.factor_graph.finlab_dataframe import FinLabDataFrame
+        container = FinLabDataFrame(data_module=data_module)
 
         # Execute factors in topological order
         try:
@@ -452,17 +452,24 @@ class Strategy:
                 f"Cannot compute topological sort for strategy '{self.id}': {str(e)}"
             ) from e
 
-        # Execute each factor sequentially, accumulating outputs
+        # Execute each factor sequentially, container passed and returned
         for factor_id in topo_order:
             factor = self.factors[factor_id]
             try:
-                result = factor.execute(result)
+                container = factor.execute(container)
             except Exception as e:
                 raise RuntimeError(
                     f"Pipeline execution failed at factor '{factor_id}' ({factor.name}): {str(e)}"
                 ) from e
 
-        return result
+        # Phase 2: Extract final 'position' matrix from container
+        if not container.has_matrix('position'):
+            raise KeyError(
+                f"Strategy '{self.id}' did not produce 'position' matrix. "
+                f"Available matrices: {container.list_matrices()}"
+            )
+
+        return container.get_matrix('position')
 
     def validate(self) -> bool:
         """
