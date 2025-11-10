@@ -1,5 +1,5 @@
-# 比較兩個目錄的差異腳本
-# 用途：找出 finlab/ 和 LLM-strategy-generator/ 之間的所有差異
+# Directory Comparison Tool
+# Purpose: Find all differences between finlab/ and LLM-strategy-generator/
 
 param(
     [string]$ParentDir = "C:\Users\jnpi\Documents\finlab",
@@ -7,37 +7,37 @@ param(
 )
 
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "目錄差異分析工具" -ForegroundColor Cyan
+Write-Host "Directory Comparison Tool" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "父目錄: $ParentDir" -ForegroundColor Yellow
-Write-Host "子目錄: $RepoDir" -ForegroundColor Yellow
+Write-Host "Parent Directory: $ParentDir" -ForegroundColor Yellow
+Write-Host "Repository Directory: $RepoDir" -ForegroundColor Yellow
 Write-Host ""
 
-# 創建輸出目錄
+# Create output directory
 $reportDir = Join-Path $RepoDir "directory_comparison_report"
 if (-not (Test-Path $reportDir)) {
     New-Item -ItemType Directory -Path $reportDir | Out-Null
 }
 
-# 輸出文件
+# Output files
 $reportFile = Join-Path $reportDir "comparison_report_$(Get-Date -Format 'yyyyMMdd_HHmmss').txt"
 $copyScriptFile = Join-Path $reportDir "sync_script.ps1"
 
-# 開始報告
+# Start report
 $report = @()
 $report += "=" * 80
-$report += "目錄差異分析報告"
-$report += "生成時間: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+$report += "Directory Comparison Report"
+$report += "Generated: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
 $report += "=" * 80
 $report += ""
-$report += "父目錄: $ParentDir"
-$report += "子目錄: $RepoDir"
+$report += "Parent Directory: $ParentDir"
+$report += "Repository Directory: $RepoDir"
 $report += ""
 
-# 排除的目錄和文件模式
+# Exclude patterns
 $excludePatterns = @(
-    "LLM-strategy-generator",  # 避免遞歸
+    "LLM-strategy-generator",  # Avoid recursion
     ".git",
     "__pycache__",
     "*.pyc",
@@ -49,14 +49,14 @@ $excludePatterns = @(
     ".vscode"
 )
 
-Write-Host "🔍 掃描目錄中..." -ForegroundColor Green
+Write-Host "Scanning directories..." -ForegroundColor Green
 
-# 獲取父目錄的所有文件（排除子目錄）
+# Get all files from parent directory (excluding subdirectory)
 $parentFiles = Get-ChildItem -Path $ParentDir -Recurse -File | Where-Object {
     $file = $_
     $relativePath = $file.FullName.Substring($ParentDir.Length + 1)
 
-    # 排除特定模式
+    # Check if should be excluded
     $shouldExclude = $false
     foreach ($pattern in $excludePatterns) {
         if ($relativePath -like "*$pattern*") {
@@ -67,12 +67,12 @@ $parentFiles = Get-ChildItem -Path $ParentDir -Recurse -File | Where-Object {
     -not $shouldExclude
 }
 
-# 獲取子目錄的所有文件
+# Get all files from repository directory
 $repoFiles = Get-ChildItem -Path $RepoDir -Recurse -File | Where-Object {
     $file = $_
     $relativePath = $file.FullName.Substring($RepoDir.Length + 1)
 
-    # 排除特定模式
+    # Check if should be excluded
     $shouldExclude = $false
     foreach ($pattern in $excludePatterns) {
         if ($relativePath -like "*$pattern*") {
@@ -83,24 +83,24 @@ $repoFiles = Get-ChildItem -Path $RepoDir -Recurse -File | Where-Object {
     -not $shouldExclude
 }
 
-Write-Host "✓ 父目錄文件數: $($parentFiles.Count)" -ForegroundColor Green
-Write-Host "✓ 子目錄文件數: $($repoFiles.Count)" -ForegroundColor Green
+Write-Host "Parent directory files: $($parentFiles.Count)" -ForegroundColor Green
+Write-Host "Repository directory files: $($repoFiles.Count)" -ForegroundColor Green
 Write-Host ""
 
-# 分析差異
-$onlyInParent = @()      # 只存在於父目錄
-$onlyInRepo = @()        # 只存在於子目錄
-$different = @()         # 兩邊都有但內容不同
-$identical = @()         # 兩邊都有且內容相同
+# Analyze differences
+$onlyInParent = @()      # Only in parent directory
+$onlyInRepo = @()        # Only in repository
+$different = @()         # Different content
+$identical = @()         # Identical
 
-Write-Host "📊 分析文件差異..." -ForegroundColor Green
+Write-Host "Analyzing file differences..." -ForegroundColor Green
 
 foreach ($parentFile in $parentFiles) {
     $relativePath = $parentFile.FullName.Substring($ParentDir.Length + 1)
     $repoFilePath = Join-Path $RepoDir $relativePath
 
     if (Test-Path $repoFilePath) {
-        # 文件存在於兩邊，比較內容
+        # File exists in both, compare content
         $parentHash = (Get-FileHash $parentFile.FullName -Algorithm SHA256).Hash
         $repoHash = (Get-FileHash $repoFilePath -Algorithm SHA256).Hash
 
@@ -116,7 +116,7 @@ foreach ($parentFile in $parentFiles) {
             $identical += $relativePath
         }
     } else {
-        # 只存在於父目錄
+        # Only in parent directory
         $onlyInParent += @{
             Path = $relativePath
             Size = $parentFile.Length
@@ -130,7 +130,7 @@ foreach ($repoFile in $repoFiles) {
     $parentFilePath = Join-Path $ParentDir $relativePath
 
     if (-not (Test-Path $parentFilePath)) {
-        # 只存在於子目錄
+        # Only in repository
         $onlyInRepo += @{
             Path = $relativePath
             Size = $repoFile.Length
@@ -139,98 +139,98 @@ foreach ($repoFile in $repoFiles) {
     }
 }
 
-# 生成報告
+# Generate report
 $report += "=" * 80
-$report += "分析結果摘要"
+$report += "Summary"
 $report += "=" * 80
 $report += ""
-$report += "1. 只在父目錄存在的文件: $($onlyInParent.Count) 個"
-$report += "2. 只在子目錄存在的文件: $($onlyInRepo.Count) 個"
-$report += "3. 兩邊都有但內容不同: $($different.Count) 個"
-$report += "4. 兩邊都有且內容相同: $($identical.Count) 個"
+$report += "1. Only in parent directory: $($onlyInParent.Count) files"
+$report += "2. Only in repository: $($onlyInRepo.Count) files"
+$report += "3. Different content: $($different.Count) files"
+$report += "4. Identical: $($identical.Count) files"
 $report += ""
 
-# 詳細列表：只在父目錄存在（需要複製）
+# List: Only in parent (need to copy)
 if ($onlyInParent.Count -gt 0) {
     $report += "=" * 80
-    $report += "📁 只在父目錄存在的文件（需要複製到子目錄）"
+    $report += "Only in Parent Directory (need to copy to repository)"
     $report += "=" * 80
     $report += ""
     foreach ($file in $onlyInParent | Sort-Object -Property Path) {
-        $report += "  ✓ $($file.Path)"
-        $report += "     大小: $([math]::Round($file.Size/1KB, 2)) KB"
-        $report += "     修改時間: $($file.Modified)"
+        $report += "  > $($file.Path)"
+        $report += "     Size: $([math]::Round($file.Size/1KB, 2)) KB"
+        $report += "     Modified: $($file.Modified)"
         $report += ""
     }
 }
 
-# 詳細列表：內容不同
+# List: Different content
 if ($different.Count -gt 0) {
     $report += "=" * 80
-    $report += "⚠️  兩邊都有但內容不同（需要手動檢查）"
+    $report += "Different Content (need manual review)"
     $report += "=" * 80
     $report += ""
     foreach ($file in $different | Sort-Object -Property Path) {
-        $report += "  ⚠️  $($file.Path)"
-        $report += "     父目錄: $([math]::Round($file.ParentSize/1KB, 2)) KB (修改: $($file.ParentModified))"
-        $report += "     子目錄: $([math]::Round($file.RepoSize/1KB, 2)) KB (修改: $($file.RepoModified))"
+        $report += "  ! $($file.Path)"
+        $report += "     Parent: $([math]::Round($file.ParentSize/1KB, 2)) KB (modified: $($file.ParentModified))"
+        $report += "     Repository: $([math]::Round($file.RepoSize/1KB, 2)) KB (modified: $($file.RepoModified))"
 
-        # 判斷哪個比較新
+        # Determine which is newer
         if ($file.ParentModified -gt $file.RepoModified) {
-            $report += "     → 父目錄版本較新 ✓"
+            $report += "     -> Parent version is newer"
         } elseif ($file.ParentModified -lt $file.RepoModified) {
-            $report += "     → 子目錄版本較新 ✓"
+            $report += "     -> Repository version is newer"
         } else {
-            $report += "     → 修改時間相同但內容不同"
+            $report += "     -> Same modification time but different content"
         }
         $report += ""
     }
 }
 
-# 詳細列表：只在子目錄存在
+# List: Only in repository
 if ($onlyInRepo.Count -gt 0) {
     $report += "=" * 80
-    $report += "📦 只在子目錄存在的文件（新文件或 Git 專用）"
+    $report += "Only in Repository (new files or Git-specific)"
     $report += "=" * 80
     $report += ""
     foreach ($file in $onlyInRepo | Sort-Object -Property Path) {
-        $report += "  📦 $($file.Path)"
-        $report += "     大小: $([math]::Round($file.Size/1KB, 2)) KB"
+        $report += "  + $($file.Path)"
+        $report += "     Size: $([math]::Round($file.Size/1KB, 2)) KB"
         $report += ""
     }
 }
 
-# 保存報告
+# Save report
 $report | Out-File -FilePath $reportFile -Encoding UTF8
 
 Write-Host ""
 Write-Host "=" * 80 -ForegroundColor Cyan
-Write-Host "分析完成！" -ForegroundColor Green
+Write-Host "Analysis Complete!" -ForegroundColor Green
 Write-Host "=" * 80 -ForegroundColor Cyan
 Write-Host ""
-Write-Host "📊 結果摘要:" -ForegroundColor Yellow
-Write-Host "  • 只在父目錄: $($onlyInParent.Count) 個文件" -ForegroundColor Cyan
-Write-Host "  • 只在子目錄: $($onlyInRepo.Count) 個文件" -ForegroundColor Cyan
-Write-Host "  • 內容不同: $($different.Count) 個文件" -ForegroundColor Yellow
-Write-Host "  • 內容相同: $($identical.Count) 個文件" -ForegroundColor Green
+Write-Host "Summary:" -ForegroundColor Yellow
+Write-Host "  - Only in parent: $($onlyInParent.Count) files" -ForegroundColor Cyan
+Write-Host "  - Only in repository: $($onlyInRepo.Count) files" -ForegroundColor Cyan
+Write-Host "  - Different content: $($different.Count) files" -ForegroundColor Yellow
+Write-Host "  - Identical: $($identical.Count) files" -ForegroundColor Green
 Write-Host ""
-Write-Host "📄 詳細報告已保存: $reportFile" -ForegroundColor Green
+Write-Host "Report saved: $reportFile" -ForegroundColor Green
 Write-Host ""
 
-# 生成同步腳本
+# Generate sync script
 $syncScript = @()
-$syncScript += "# 自動生成的同步腳本"
-$syncScript += "# 生成時間: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+$syncScript += "# Auto-generated sync script"
+$syncScript += "# Generated: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
 $syncScript += ""
 $syncScript += "`$ParentDir = `"$ParentDir`""
 $syncScript += "`$RepoDir = `"$RepoDir`""
 $syncScript += ""
-$syncScript += "Write-Host '開始同步文件...' -ForegroundColor Green"
+$syncScript += "Write-Host 'Starting file synchronization...' -ForegroundColor Green"
 $syncScript += ""
 
 if ($onlyInParent.Count -gt 0) {
-    $syncScript += "# 複製只在父目錄存在的文件"
-    $syncScript += "Write-Host '複製 $($onlyInParent.Count) 個文件...' -ForegroundColor Cyan"
+    $syncScript += "# Copy files that only exist in parent directory"
+    $syncScript += "Write-Host 'Copying $($onlyInParent.Count) files...' -ForegroundColor Cyan"
     foreach ($file in $onlyInParent) {
         $sourcePath = "`$ParentDir\$($file.Path)"
         $destPath = "`$RepoDir\$($file.Path)"
@@ -242,15 +242,15 @@ if ($onlyInParent.Count -gt 0) {
         $syncScript += "    New-Item -ItemType Directory -Path `"$destDir`" -Force | Out-Null"
         $syncScript += "}"
         $syncScript += "Copy-Item `"$sourcePath`" `"$destPath`" -Force"
-        $syncScript += "Write-Host '  ✓ $($file.Path)' -ForegroundColor Green"
+        $syncScript += "Write-Host '  > $($file.Path)' -ForegroundColor Green"
     }
 }
 
 if ($different.Count -gt 0) {
     $syncScript += ""
-    $syncScript += "# 內容不同的文件（需要手動檢查）"
+    $syncScript += "# Files with different content (need manual review)"
     $syncScript += "Write-Host '' -ForegroundColor Yellow"
-    $syncScript += "Write-Host '⚠️  以下文件兩邊都有但內容不同，需要手動處理:' -ForegroundColor Yellow"
+    $syncScript += "Write-Host 'WARNING: The following files have different content:' -ForegroundColor Yellow"
     foreach ($file in $different) {
         $syncScript += "Write-Host '  $($file.Path)' -ForegroundColor Yellow"
     }
@@ -258,15 +258,15 @@ if ($different.Count -gt 0) {
 
 $syncScript += ""
 $syncScript += "Write-Host '' -ForegroundColor Green"
-$syncScript += "Write-Host '同步完成！' -ForegroundColor Green"
-$syncScript += "Write-Host '請檢查 Git 狀態: git status' -ForegroundColor Cyan"
+$syncScript += "Write-Host 'Synchronization complete!' -ForegroundColor Green"
+$syncScript += "Write-Host 'Check Git status: git status' -ForegroundColor Cyan"
 
 $syncScript | Out-File -FilePath $copyScriptFile -Encoding UTF8
 
-Write-Host "🚀 同步腳本已生成: $copyScriptFile" -ForegroundColor Green
+Write-Host "Sync script generated: $copyScriptFile" -ForegroundColor Green
 Write-Host ""
-Write-Host "下一步:" -ForegroundColor Yellow
-Write-Host "  1. 查看報告: notepad `"$reportFile`"" -ForegroundColor Cyan
-Write-Host "  2. 執行同步: powershell -ExecutionPolicy Bypass -File `"$copyScriptFile`"" -ForegroundColor Cyan
-Write-Host "  3. 檢查差異: cd `"$RepoDir`" && git status" -ForegroundColor Cyan
+Write-Host "Next steps:" -ForegroundColor Yellow
+Write-Host "  1. Review report: notepad `"$reportFile`"" -ForegroundColor Cyan
+Write-Host "  2. Run sync: powershell -ExecutionPolicy Bypass -File `"$copyScriptFile`"" -ForegroundColor Cyan
+Write-Host "  3. Check changes: cd `"$RepoDir`" && git status" -ForegroundColor Cyan
 Write-Host ""
