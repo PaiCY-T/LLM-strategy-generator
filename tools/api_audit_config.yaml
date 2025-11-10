@@ -1,0 +1,101 @@
+# API Audit Tool Configuration
+# =============================
+
+# Known API issues from API_FIXES_DEBUG_HISTORY.md
+known_issues:
+  - class: IterationHistory
+    wrong_method: save_record
+    correct_method: save
+    description: "Error #9: Method renamed from save_record() to save()"
+
+  - class: IterationHistory
+    wrong_param: file_path
+    correct_param: filepath
+    description: "Linter reverted fix: Parameter name mismatch"
+
+  - class: ChampionTracker
+    wrong_method: get_champion
+    correct_property: champion
+    description: "Should use property instead of method"
+
+  - class: FeedbackGenerator
+    wrong_param: champion
+    correct_param: champion_tracker
+    description: "Parameter name mismatch"
+
+  - class: InnovationEngine
+    wrong_method: generate_strategy
+    correct_method: generate_innovation
+    description: "Error #11: Method renamed"
+
+# API classes to audit
+api_classes:
+  IterationHistory:
+    module: src.learning.iteration_history
+    methods:
+      save:
+        params: [record]
+        description: Save iteration record to history file
+      get_recent:
+        params: [limit]
+        defaults: {limit: 10}
+        description: Get recent iteration records
+
+  ChampionTracker:
+    module: src.learning.champion_tracker
+    properties:
+      - champion
+    methods:
+      update:
+        params: [strategy, metrics, iteration_num]
+        description: Update champion if strategy is better
+
+  SuccessClassifier:
+    module: src.backtest.classifier
+    methods:
+      classify_single:
+        params: [metrics]
+        description: Classify single strategy by metrics
+
+  ErrorClassifier:
+    module: src.backtest.error_classifier
+    methods:
+      classify_error:
+        params: [error_type, error_msg]
+        description: Classify execution error type
+    note: "Should NOT be used for strategy performance classification"
+
+  InnovationEngine:
+    module: src.innovation.innovation_engine
+    methods:
+      generate_innovation:
+        params: [champion_code, champion_metrics, failure_history, target_metric]
+        required: [champion_code, champion_metrics]
+        defaults: {failure_history: null, target_metric: "sharpe_ratio"}
+        description: Generate new strategy based on champion
+
+  FeedbackGenerator:
+    module: src.learning.feedback_generator
+    init_params:
+      - history
+      - champion_tracker
+    note: "Parameter is champion_tracker, not champion"
+
+# Files to scan
+scan_paths:
+  - src/learning
+  - src/backtest
+  - src/innovation
+
+# Files to exclude
+exclude_patterns:
+  - "**/test_*.py"
+  - "**/__pycache__/**"
+  - "**/.*"
+
+# Report settings
+report:
+  format: text  # text, json, html
+  output_dir: tools/reports
+  include_suggestions: true
+  group_by_file: true
