@@ -26,7 +26,13 @@
       "mcp__zen__tracer",
       "mcp__zen__analyze",
       "mcp__zen__testgen",
-      "Bash(pytest:*)"
+      "Bash(pytest:*)",
+      "Bash(PYTHONPATH=/mnt/c/Users/jnpi/documents/finlab python3:*)",
+      "Bash(readlink:*)",
+      "Bash(ln:*)",
+      "Bash(find:*)",
+      "Bash(timeout 600 python3:*)",
+      "SlashCommand(/sc:workflow)"
     ],
     "deny": [],
     "ask": []
