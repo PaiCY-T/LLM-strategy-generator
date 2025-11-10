@@ -101,19 +101,24 @@ foreach ($parentFile in $parentFiles) {
 
     if (Test-Path $repoFilePath) {
         # File exists in both, compare content
-        $parentHash = (Get-FileHash $parentFile.FullName -Algorithm SHA256).Hash
-        $repoHash = (Get-FileHash $repoFilePath -Algorithm SHA256).Hash
+        try {
+            $parentHash = (Get-FileHash $parentFile.FullName -Algorithm SHA256).Hash
+            $repoHash = (Get-FileHash $repoFilePath -Algorithm SHA256).Hash
 
-        if ($parentHash -ne $repoHash) {
-            $different += @{
-                Path = $relativePath
-                ParentSize = $parentFile.Length
-                RepoSize = (Get-Item $repoFilePath).Length
-                ParentModified = $parentFile.LastWriteTime
-                RepoModified = (Get-Item $repoFilePath).LastWriteTime
+            if ($parentHash -ne $repoHash) {
+                $different += @{
+                    Path = $relativePath
+                    ParentSize = $parentFile.Length
+                    RepoSize = (Get-Item $repoFilePath).Length
+                    ParentModified = $parentFile.LastWriteTime
+                    RepoModified = (Get-Item $repoFilePath).LastWriteTime
+                }
+            } else {
+                $identical += $relativePath
             }
-        } else {
-            $identical += $relativePath
+        } catch {
+            Write-Host "Warning: Cannot access file: $relativePath" -ForegroundColor Yellow
+            # Skip this file
         }
     } else {
         # Only in parent directory
@@ -238,11 +243,15 @@ if ($onlyInParent.Count -gt 0) {
 
         $syncScript += ""
         $syncScript += "# $($file.Path)"
-        $syncScript += "if (-not (Test-Path `"$destDir`")) {"
-        $syncScript += "    New-Item -ItemType Directory -Path `"$destDir`" -Force | Out-Null"
+        $syncScript += "try {"
+        $syncScript += "    if (-not (Test-Path `"$destDir`")) {"
+        $syncScript += "        New-Item -ItemType Directory -Path `"$destDir`" -Force | Out-Null"
+        $syncScript += "    }"
+        $syncScript += "    Copy-Item `"$sourcePath`" `"$destPath`" -Force -ErrorAction Stop"
+        $syncScript += "    Write-Host '  > $($file.Path)' -ForegroundColor Green"
+        $syncScript += "} catch {"
+        $syncScript += "    Write-Host '  x $($file.Path) (Error: Cannot access file)' -ForegroundColor Red"
         $syncScript += "}"
-        $syncScript += "Copy-Item `"$sourcePath`" `"$destPath`" -Force"
-        $syncScript += "Write-Host '  > $($file.Path)' -ForegroundColor Green"
     }
 }
 
