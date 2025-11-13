@@ -222,3 +222,193 @@ def validate_sharpe_ratio(value: Optional[float]) -> Optional[str]:
         return f"sharpe_ratio {value} is out of valid range [-10, 10]"
 
     return None
+
+
+def validate_total_return(value: Optional[float]) -> Optional[str]:
+    """Validate total_return is within acceptable range [-1, 10].
+
+    Args:
+        value: Total return to validate (None is valid)
+
+    Returns:
+        Error message if invalid, None if valid
+    """
+    if value is None:
+        return None
+
+    if math.isnan(value):
+        return "total_return must be a valid number, got NaN"
+
+    if math.isinf(value):
+        return "total_return must be finite, got inf"
+
+    if value < -1.0 or value > 10.0:
+        return f"total_return {value} is out of valid range [-1, 10]"
+
+    return None
+
+
+# =============================================================================
+# ExecutionResult Metric Validators - Phase 3.2 Schema Validation
+# =============================================================================
+
+def validate_sharpe_ratio(value):
+    """Validate sharpe_ratio field is within expected range [-10, 10].
+
+    Args:
+        value: Sharpe ratio to validate (None is valid)
+
+    Returns:
+        Error message if invalid, None if valid
+    """
+    if value is None:
+        return None
+
+    if math.isnan(value):
+        return f"sharpe_ratio is NaN (not a number)"
+
+    if math.isinf(value):
+        return f"sharpe_ratio is infinite ({value})"
+
+    if value < -10.0 or value > 10.0:
+        return f"sharpe_ratio {value} is out of valid range [-10, 10]"
+
+    return None
+
+
+def validate_total_return(value):
+    """Validate total_return field is within acceptable range [-1, 10].
+
+    Total return represents cumulative performance from -100% (total loss)
+    to +1000% (10x gain). Values outside this range indicate anomalies.
+
+    Args:
+        value: Total return value to validate (None is valid for optional field)
+
+    Returns:
+        Error message if invalid, None if valid
+
+    Examples:
+        >>> validate_total_return(0.25)
+        None
+        >>> validate_total_return(-1.0)
+        None
+        >>> validate_total_return(-1.5)
+        'total_return -1.5 is out of valid range [-1, 10]. Expected: -1 <= total_return <= 10.'
+    """
+    # None is valid (optional field)
+    if value is None:
+        return None
+
+    # Check for NaN
+    if math.isnan(value):
+        return (
+            "total_return must be a valid number, got NaN. "
+            "Suggestion: Check for invalid calculations in return computation."
+        )
+
+    # Check for infinity
+    if math.isinf(value):
+        inf_str = 'inf' if value > 0 else '-inf'
+        return (
+            f"total_return must be finite, got {inf_str}. "
+            f"Suggestion: Check for division by zero in return calculation."
+        )
+
+    # Check range [-1, 10] (allows -100% loss to +1000% gain)
+    if value < -1.0 or value > 10.0:
+        return (
+            f"total_return {value} is out of valid range [-1, 10]. "
+            f"Expected: -1 <= total_return <= 10. "
+            f"Suggestion: Verify backtest logic and check for data corruption."
+        )
+
+    return None
+
+
+def validate_max_drawdown(value):
+    """Validate max_drawdown field is non-positive (drawdown <= 0).
+
+    Args:
+        value: Max drawdown to validate (None is valid)
+
+    Returns:
+        Error message if invalid, None if valid
+    """
+    if value is None:
+        return None
+
+    if math.isnan(value):
+        return f"max_drawdown is NaN (not a number)"
+
+    if math.isinf(value):
+        return f"max_drawdown is infinite ({value})"
+
+    if value > 0:
+        return f"max_drawdown {value} must be <= 0 (drawdown cannot be positive)"
+
+    return None
+
+
+def log_validation_error(field_name: str, value, error_message: str) -> None:
+    """Log validation error with field, value, and constraint details.
+
+    Args:
+        field_name: Name of the field that failed validation (e.g., 'sharpe_ratio')
+        value: Actual value that failed validation (can be any type including None, NaN, Inf)
+        error_message: Detailed error message from the validator function
+
+    Examples:
+        >>> log_validation_error("sharpe_ratio", 15.0, "sharpe_ratio 15.0 is out of valid range [-10, 10]")
+        # Logs: WARNING - Validation failed for sharpe_ratio: sharpe_ratio 15.0 is out of valid range [-10, 10] (value=15.0)
+    """
+    import logging
+    logger = logging.getLogger(__name__)
+
+    # Format special float values for clarity
+    if isinstance(value, float):
+        if math.isnan(value):
+            value_str = "NaN"
+        elif math.isinf(value):
+            value_str = "inf" if value > 0 else "-inf"
+        else:
+            value_str = str(value)
+    else:
+        value_str = str(value)
+
+    logger.warning(
+        f"Validation failed for {field_name}: {error_message} (value={value_str})"
+    )
+
+
+def validate_execution_result(result):
+    """Validate all metrics in ExecutionResult.
+
+    Args:
+        result: ExecutionResult to validate
+
+    Returns:
+        List of error messages (empty if all valid)
+    """
+    # Skip validation for failed executions
+    if not result.success:
+        return []
+
+    errors = []
+
+    # Validate sharpe_ratio
+    sharpe_error = validate_sharpe_ratio(result.sharpe_ratio)
+    if sharpe_error:
+        errors.append(sharpe_error)
+
+    # Validate total_return
+    return_error = validate_total_return(result.total_return)
+    if return_error:
+        errors.append(return_error)
+
+    # Validate max_drawdown
+    drawdown_error = validate_max_drawdown(result.max_drawdown)
+    if drawdown_error:
+        errors.append(drawdown_error)
+
+    return errors
