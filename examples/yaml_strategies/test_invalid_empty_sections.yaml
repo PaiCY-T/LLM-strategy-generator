@@ -1,0 +1,15 @@
+# Invalid Strategy - Empty Required Sections
+# ===========================================
+# This spec is INTENTIONALLY INVALID for testing validation
+# Contains: empty indicators section, empty entry_conditions section
+# Expected: ValidationError
+
+metadata:
+  name: "Invalid Empty Sections"
+  description: "This strategy has empty required sections"
+  strategy_type: "momentum"
+  rebalancing_frequency: "M"
+
+indicators: {}  # INVALID: empty (violates minProperties: 1)
+
+entry_conditions: {}  # INVALID: empty (violates minProperties: 1)

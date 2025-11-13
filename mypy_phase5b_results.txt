@@ -1,0 +1,1799 @@
+src/innovation/__init__.py:25: note: In module imported here:
+src/innovation/llm_config.py: note: In member "__post_init__" of class "LLMConfig":
+src/innovation/llm_config.py:68:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def __post_init__(self):
+        ^
+src/innovation/llm_config.py:68:5: note: Use "-> None" if function does not return a value
+src/innovation/llm_config.py: note: In member "to_dict" of class "LLMConfig":
+src/innovation/llm_config.py:257:26: error: Missing type parameters for generic
+type "Dict"  [type-arg]
+        def to_dict(self) -> Dict:
+                             ^
+src/learning/strategy_metadata.py: note: In function "extract_dag_parameters":
+src/learning/strategy_metadata.py:52:5: error: Need type annotation for
+"parameters" (hint: "parameters: dict[<type>, <type>] = ...")  [var-annotated]
+        parameters = {}
+        ^~~~~~~~~~
+src/learning/exceptions.py: note: In member "__init__" of class "GenerationError":
+src/learning/exceptions.py:30:56: error: Missing type parameters for generic
+type "dict"  [type-arg]
+        def __init__(self, message: str, context: Optional[dict] = None):
+                                                           ^
+src/learning/exceptions.py: note: In member "__str__" of class "GenerationError":
+src/learning/exceptions.py:35:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def __str__(self):
+        ^
+src/learning/exceptions.py: note: In member "__init__" of class "ConfigurationConflictError":
+src/learning/exceptions.py:73:58: error: Missing type parameters for generic
+type "list"  [type-arg]
+    ...__init__(self, message: str, conflicts: Optional[list] = None, suggest...
+                                                        ^
+src/learning/exceptions.py:73:127: error: Missing type parameters for generic
+type "dict"  [type-arg]
+    ... suggested_fix: Optional[str] = None, context: Optional[dict] = None):
+                                                               ^
+src/learning/exceptions.py: note: In member "__str__" of class "ConfigurationConflictError":
+src/learning/exceptions.py:78:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def __str__(self):
+        ^
+src/learning/exceptions.py:79:20: error: Call to untyped function "__str__" in
+typed context  [no-untyped-call]
+            base_msg = super().__str__()
+                       ^~~~~~~~~~~~~~~~~
+src/learning/exceptions.py: note: In member "__init__" of class "LLMUnavailableError":
+src/learning/exceptions.py:119:118: error: Missing type parameters for generic
+type "dict"  [type-arg]
+    ...= None, retry_possible: bool = False, context: Optional[dict] = None):
+                                                               ^
+src/learning/exceptions.py: note: In member "__str__" of class "LLMUnavailableError":
+src/learning/exceptions.py:124:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def __str__(self):
+        ^
+src/learning/exceptions.py:125:20: error: Call to untyped function "__str__" in
+typed context  [no-untyped-call]
+            base_msg = super().__str__()
+                       ^~~~~~~~~~~~~~~~~
+src/learning/exceptions.py: note: In member "__init__" of class "LLMEmptyResponseError":
+src/learning/exceptions.py:151:96: error: Missing type parameters for generic
+type "dict"  [type-arg]
+    ...nse: Optional[str] = None, prompt_info: Optional[dict] = None, context...
+                                                        ^
+src/learning/exceptions.py: note: In member "__str__" of class "LLMEmptyResponseError":
+src/learning/exceptions.py:156:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def __str__(self):
+        ^
+src/learning/exceptions.py:157:20: error: Call to untyped function "__str__" in
+typed context  [no-untyped-call]
+            base_msg = super().__str__()
+                       ^~~~~~~~~~~~~~~~~
+src/factor_library/momentum_factors.py:43: note: In module imported here,
+src/factor_library/registry.py:483: note: ... from here,
+src/learning/iteration_executor.py:619: note: ... from here:
+src/templates/data_cache.py: note: In member "__init__" of class "DataCache":
+src/templates/data_cache.py:75:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def __init__(self):
+        ^
+src/templates/data_cache.py:75:5: note: Use "-> None" if function does not return a value
+src/templates/data_cache.py: note: In member "clear" of class "DataCache":
+src/templates/data_cache.py:228:36: error: Missing type parameters for generic
+type "list"  [type-arg]
+        def clear(self, keys: Optional[list] = None) -> None:
+                                       ^
+src/innovation/innovation_engine.py:21: note: In module imported here,
+src/learning/llm_client.py:53: note: ... from here:
+src/sandbox/security_validator.py: note: In member "__init__" of class "SecurityValidator":
+src/sandbox/security_validator.py:79:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def __init__(self):
+        ^
+src/sandbox/security_validator.py:79:5: note: Use "-> None" if function does not return a value
+src/sandbox/security_validator.py: note: In member "get_validation_report" of class "SecurityValidator":
+src/sandbox/security_validator.py:324:51: error: Missing type parameters for
+generic type "dict"  [type-arg]
+        def get_validation_report(self, code: str) -> dict:
+                                                      ^
+src/innovation/innovation_engine.py:18: note: In module imported here,
+src/learning/llm_client.py:53: note: ... from here:
+src/innovation/llm_providers.py:16:1: error: Library stubs not installed for
+"requests"  [import-untyped]
+    import requests
+    ^
+src/innovation/llm_providers.py:16:1: note: Hint: "python3 -m pip install types-requests"
+src/innovation/llm_providers.py: note: In member "__init__" of class "LLMProviderInterface":
+src/innovation/llm_providers.py:63:68: error: Incompatible default for argument
+"model" (default has type "None", argument has type "str")  [assignment]
+    ...elf, api_key: Optional[str] = None, model: str = None, timeout: int = ...
+                                                        ^~~~
+src/innovation/llm_providers.py:63:68: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True
+src/innovation/llm_providers.py:63:68: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase
+src/innovation/llm_providers.py:75:9: error: Call to untyped function
+"_validate_api_key" in typed context  [no-untyped-call]
+            self._validate_api_key()
+            ^~~~~~~~~~~~~~~~~~~~~~~~
+src/innovation/llm_providers.py: note: In member "_validate_api_key" of class "LLMProviderInterface":
+src/innovation/llm_providers.py:92:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def _validate_api_key(self):
+        ^
+src/innovation/llm_providers.py:92:5: note: Use "-> None" if function does not return a value
+src/innovation/llm_providers.py: note: In member "_exponential_backoff" of class "LLMProviderInterface":
+src/innovation/llm_providers.py:195:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def _exponential_backoff(self, attempt: int):
+        ^
+src/innovation/llm_providers.py: note: In member "_make_api_call" of class "OpenRouterProvider":
+src/innovation/llm_providers.py:275:9: error: Returning Any from function
+declared to return "dict[str, Any]"  [no-any-return]
+            return response.json()
+            ^~~~~~~~~~~~~~~~~~~~~~
+src/innovation/llm_providers.py: note: In member "_make_api_call" of class "GeminiProvider":
+src/innovation/llm_providers.py:344:9: error: Returning Any from function
+declared to return "dict[str, Any]"  [no-any-return]
+            return response.json()
+            ^~~~~~~~~~~~~~~~~~~~~~
+src/innovation/llm_providers.py: note: In member "_make_api_call" of class "OpenAIProvider":
+src/innovation/llm_providers.py:437:9: error: Returning Any from function
+declared to return "dict[str, Any]"  [no-any-return]
+            return response.json()
+            ^~~~~~~~~~~~~~~~~~~~~~
+src/innovation/llm_providers.py: note: In function "create_provider":
+src/innovation/llm_providers.py:491:12: error: Cannot instantiate abstract
+class "LLMProviderInterface" with abstract attributes "_get_api_key_from_env",
+"_get_default_model", "_get_provider_name", "_make_api_call" and
+"_parse_response"  [abstract]
+        return provider_class(api_key=api_key, model=model, timeout=timeou...
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/innovation/llm_providers.py:491:50: error: Argument "model" has
+incompatible type "str | None"; expected "str"  [arg-type]
+        return provider_class(api_key=api_key, model=model, timeout=timeou...
+                                                     ^~~~~
+src/templates/__init__.py:31: note: In module imported here:
+src/templates/base_template.py: note: In member "PARAM_GRID" of class "BaseTemplate":
+src/templates/base_template.py:65:39: error: Missing type parameters for
+generic type "List"  [type-arg]
+        def PARAM_GRID(self) -> Dict[str, List]:
+                                          ^
+src/templates/base_template.py: note: In member "generate_strategy" of class "BaseTemplate":
+src/templates/base_template.py:110:41: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def generate_strategy(self, params: Dict) -> Tuple[object, Dict]:
+                                            ^
+src/templates/base_template.py: note: In member "_validate_range" of class "BaseTemplate":
+src/templates/base_template.py:199:76: error: Missing type parameters for
+generic type "List"  [type-arg]
+    ...elf, param_name: str, value: Any, allowed_values: List) -> str | None:
+                                                         ^
+src/templates/base_template.py: note: In member "_validate_interdependency" of class "BaseTemplate":
+src/templates/base_template.py:224:49: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _validate_interdependency(self, params: Dict, rules: List[Tupl...
+                                                    ^
+src/templates/base_template.py: note: In member "validate_params" of class "BaseTemplate":
+src/templates/base_template.py:285:39: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def validate_params(self, params: Dict) -> Tuple[bool, List[str]]:
+                                          ^
+src/templates/base_template.py: note: In member "get_default_params" of class "BaseTemplate":
+src/templates/base_template.py:347:37: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def get_default_params(self) -> Dict:
+                                        ^
+src/templates/base_template.py:365:25: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+            default_params: Dict = {}
+                            ^
+src/innovation/innovation_engine.py:20: note: In module imported here,
+src/learning/llm_client.py:53: note: ... from here:
+src/innovation/structured_prompt_builder.py: note: In member "_load_schema" of class "StructuredPromptBuilder":
+src/innovation/structured_prompt_builder.py:69:50: error: Missing type
+parameters for generic type "Dict"  [type-arg]
+        def _load_schema(self, schema_path: Path) -> Dict:
+                                                     ^
+src/innovation/structured_prompt_builder.py:83:13: error: Returning Any from
+function declared to return "dict[Any, Any]"  [no-any-return]
+                return json.load(f)
+                ^~~~~~~~~~~~~~~~~~~
+src/innovation/structured_prompt_builder.py: note: In member "build_yaml_generation_prompt" of class "StructuredPromptBuilder":
+src/innovation/structured_prompt_builder.py:191:36: error: Missing type
+parameters for generic type "Dict"  [type-arg]
+            champion_metrics: Optional[Dict] = None,
+                                       ^
+src/innovation/structured_prompt_builder.py: note: In member "build_compact_prompt" of class "StructuredPromptBuilder":
+src/innovation/structured_prompt_builder.py:294:36: error: Missing type
+parameters for generic type "Dict"  [type-arg]
+            champion_metrics: Optional[Dict] = None,
+                                       ^
+src/innovation/structured_prompt_builder.py: note: In member "validate_extracted_yaml" of class "StructuredPromptBuilder":
+src/innovation/structured_prompt_builder.py:481:75: error: Missing type
+parameters for generic type "Dict"  [type-arg]
+    ...cted_yaml(self, yaml_string: str) -> Tuple[Optional[Dict], List[str]]:
+                                                           ^
+src/innovation/structured_prompt_builder.py: note: In member "get_retry_prompt" of class "StructuredPromptBuilder":
+src/innovation/structured_prompt_builder.py:526:36: error: Missing type
+parameters for generic type "Dict"  [type-arg]
+            champion_metrics: Optional[Dict] = None,
+                                       ^
+src/innovation/innovation_engine.py:19: note: In module imported here,
+src/learning/llm_client.py:53: note: ... from here:
+src/innovation/prompt_builder.py: note: In member "extract_failure_patterns" of class "PromptBuilder":
+src/innovation/prompt_builder.py:258:13: error: Returning Any from function
+declared to return "list[dict[str, Any]]"  [no-any-return]
+                return patterns
+                ^~~~~~~~~~~~~~~
+src/learning/learning_loop.py:21: note: In module imported here:
+src/config/anti_churn_manager.py: note: In member "_load_config" of class "AntiChurnManager":
+src/config/anti_churn_manager.py:82:31: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _load_config(self) -> Dict:
+                                  ^
+src/config/anti_churn_manager.py: note: In member "get_required_improvement" of class "AntiChurnManager":
+src/config/anti_churn_manager.py:139:13: error: Returning Any from function
+declared to return "float"  [no-any-return]
+                return self.probation_threshold
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/anti_churn_manager.py:141:13: error: Returning Any from function
+declared to return "float"  [no-any-return]
+                return self.post_probation_threshold
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/anti_churn_manager.py: note: In member "get_additive_threshold" of class "AntiChurnManager":
+src/config/anti_churn_manager.py:159:9: error: Returning Any from function
+declared to return "float"  [no-any-return]
+            return self.additive_threshold
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/audit_trail.py: note: In class "GenerationDecision":
+src/learning/audit_trail.py:63:22: error: Missing type parameters for generic
+type "dict"  [type-arg]
+        config_snapshot: dict
+                         ^
+src/learning/audit_trail.py: note: In member "to_dict" of class "GenerationDecision":
+src/learning/audit_trail.py:69:26: error: Missing type parameters for generic
+type "dict"  [type-arg]
+        def to_dict(self) -> dict:
+                             ^
+src/learning/audit_trail.py: note: In member "log_decision" of class "AuditLogger":
+src/learning/audit_trail.py:145:17: error: Missing type parameters for generic
+type "dict"  [type-arg]
+            config: dict,
+                    ^
+src/learning/audit_trail.py: note: In function "_generate_html_template":
+src/learning/audit_trail.py:280:17: error: Statement is unreachable 
+[unreachable]
+                    return ""
+                    ^~~~~~~~~
+src/templates/__init__.py:36: note: In module imported here:
+src/templates/momentum_template.py: note: In member "PARAM_GRID" of class "MomentumTemplate":
+src/templates/momentum_template.py:133:39: error: Missing type parameters for
+generic type "List"  [type-arg]
+        def PARAM_GRID(self) -> Dict[str, List]:
+                                          ^
+src/templates/momentum_template.py: note: In member "_get_cached_data" of class "MomentumTemplate":
+src/templates/momentum_template.py:278:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/momentum_template.py:278:5: error: Signature of
+"_get_cached_data" incompatible with supertype
+"src.templates.base_template.BaseTemplate"  [override]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/momentum_template.py:278:5: note:      Superclass:
+src/templates/momentum_template.py:278:5: note:          @staticmethod
+src/templates/momentum_template.py:278:5: note:          def _get_cached_data(key: str) -> Any
+src/templates/momentum_template.py:278:5: note:      Subclass:
+src/templates/momentum_template.py:278:5: note:          def _get_cached_data(self, key: str, verbose: bool = ...) -> Any
+src/templates/momentum_template.py: note: In member "_calculate_momentum" of class "MomentumTemplate":
+src/templates/momentum_template.py:299:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _calculate_momentum(self, params: Dict):
+        ^
+src/templates/momentum_template.py:299:43: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _calculate_momentum(self, params: Dict):
+                                              ^
+src/templates/momentum_template.py: note: In member "_apply_revenue_catalyst" of class "MomentumTemplate":
+src/templates/momentum_template.py:343:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _apply_revenue_catalyst(self, params: Dict):
+        ^
+src/templates/momentum_template.py:343:47: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _apply_revenue_catalyst(self, params: Dict):
+                                                  ^
+src/templates/momentum_template.py: note: In member "_apply_earnings_catalyst" of class "MomentumTemplate":
+src/templates/momentum_template.py:395:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _apply_earnings_catalyst(self, params: Dict):
+        ^
+src/templates/momentum_template.py:395:48: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _apply_earnings_catalyst(self, params: Dict):
+                                                   ^
+src/templates/momentum_template.py: note: In member "generate_strategy" of class "MomentumTemplate":
+src/templates/momentum_template.py:447:41: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def generate_strategy(self, params: Dict) -> Tuple[object, Dict]:
+                                            ^
+src/templates/momentum_template.py: note: In member "_extract_metrics" of class "MomentumTemplate":
+src/templates/momentum_template.py:598:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def _extract_metrics(self, report) -> Dict:
+        ^
+src/templates/momentum_template.py:598:43: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _extract_metrics(self, report) -> Dict:
+                                              ^
+src/templates/momentum_template.py: note: In member "_validate_performance" of class "MomentumTemplate":
+src/templates/momentum_template.py:630:46: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _validate_performance(self, metrics: Dict) -> bool:
+                                                 ^
+src/templates/momentum_template.py:652:9: error: Returning Any from function
+declared to return "bool"  [no-any-return]
+            return sharpe_ok and return_ok and mdd_ok
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/templates/__init__.py:35: note: In module imported here:
+src/templates/factor_template.py: note: In member "PARAM_GRID" of class "FactorTemplate":
+src/templates/factor_template.py:121:39: error: Missing type parameters for
+generic type "List"  [type-arg]
+        def PARAM_GRID(self) -> Dict[str, List]:
+                                          ^
+src/templates/factor_template.py: note: In member "_get_cached_data" of class "FactorTemplate":
+src/templates/factor_template.py:248:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/factor_template.py:248:5: error: Signature of "_get_cached_data"
+incompatible with supertype "src.templates.base_template.BaseTemplate" 
+[override]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/factor_template.py:248:5: note:      Superclass:
+src/templates/factor_template.py:248:5: note:          @staticmethod
+src/templates/factor_template.py:248:5: note:          def _get_cached_data(key: str) -> Any
+src/templates/factor_template.py:248:5: note:      Subclass:
+src/templates/factor_template.py:248:5: note:          def _get_cached_data(self, key: str, verbose: bool = ...) -> Any
+src/templates/factor_template.py: note: In member "_calculate_factor_score" of class "FactorTemplate":
+src/templates/factor_template.py:269:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _calculate_factor_score(self, factor_type: str):
+        ^
+src/templates/factor_template.py: note: In member "_apply_cross_sectional_rank" of class "FactorTemplate":
+src/templates/factor_template.py:353:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _apply_cross_sectional_rank(self, factor_data, ranking_directi...
+        ^
+src/templates/factor_template.py:353:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def _apply_cross_sectional_rank(self, factor_data, ranking_directi...
+        ^
+src/templates/factor_template.py: note: In member "_apply_quality_filters" of class "FactorTemplate":
+src/templates/factor_template.py:430:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _apply_quality_filters(self, ranked_data, params: Dict):
+        ^
+src/templates/factor_template.py:430:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def _apply_quality_filters(self, ranked_data, params: Dict):
+        ^
+src/templates/factor_template.py:430:59: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _apply_quality_filters(self, ranked_data, params: Dict):
+                                                              ^
+src/templates/factor_template.py: note: In member "generate_strategy" of class "FactorTemplate":
+src/templates/factor_template.py:489:41: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def generate_strategy(self, params: Dict) -> Tuple[object, Dict]:
+                                            ^
+src/templates/factor_template.py: note: In member "_extract_metrics" of class "FactorTemplate":
+src/templates/factor_template.py:610:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def _extract_metrics(self, report) -> Dict:
+        ^
+src/templates/factor_template.py:610:43: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _extract_metrics(self, report) -> Dict:
+                                              ^
+src/templates/factor_template.py: note: In member "_validate_performance" of class "FactorTemplate":
+src/templates/factor_template.py:642:46: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _validate_performance(self, metrics: Dict) -> bool:
+                                                 ^
+src/templates/factor_template.py:664:9: error: Returning Any from function
+declared to return "bool"  [no-any-return]
+            return sharpe_ok and return_ok and mdd_ok
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/templates/__init__.py:34: note: In module imported here:
+src/templates/mastiff_template.py: note: In member "PARAM_GRID" of class "MastiffTemplate":
+src/templates/mastiff_template.py:100:39: error: Missing type parameters for
+generic type "List"  [type-arg]
+        def PARAM_GRID(self) -> Dict[str, List]:
+                                          ^
+src/templates/mastiff_template.py: note: In member "_get_cached_data" of class "MastiffTemplate":
+src/templates/mastiff_template.py:178:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/mastiff_template.py:178:5: error: Signature of "_get_cached_data"
+incompatible with supertype "src.templates.base_template.BaseTemplate" 
+[override]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/mastiff_template.py:178:5: note:      Superclass:
+src/templates/mastiff_template.py:178:5: note:          @staticmethod
+src/templates/mastiff_template.py:178:5: note:          def _get_cached_data(key: str) -> Any
+src/templates/mastiff_template.py:178:5: note:      Subclass:
+src/templates/mastiff_template.py:178:5: note:          def _get_cached_data(self, key: str, verbose: bool = ...) -> Any
+src/templates/mastiff_template.py: note: In member "_create_contrarian_conditions" of class "MastiffTemplate":
+src/templates/mastiff_template.py:199:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _create_contrarian_conditions(self, params: Dict):
+        ^
+src/templates/mastiff_template.py:199:53: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _create_contrarian_conditions(self, params: Dict):
+                                                        ^
+src/templates/mastiff_template.py: note: In member "_apply_volume_weighting" of class "MastiffTemplate":
+src/templates/mastiff_template.py:303:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _apply_volume_weighting(self, conditions, params: Dict):
+        ^
+src/templates/mastiff_template.py:303:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def _apply_volume_weighting(self, conditions, params: Dict):
+        ^
+src/templates/mastiff_template.py:303:59: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _apply_volume_weighting(self, conditions, params: Dict):
+                                                              ^
+src/templates/mastiff_template.py: note: In member "generate_strategy" of class "MastiffTemplate":
+src/templates/mastiff_template.py:386:41: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def generate_strategy(self, params: Dict) -> Tuple[object, Dict]:
+                                            ^
+src/templates/__init__.py:33: note: In module imported here:
+src/templates/turtle_template.py: note: In member "PARAM_GRID" of class "TurtleTemplate":
+src/templates/turtle_template.py:106:39: error: Missing type parameters for
+generic type "List"  [type-arg]
+        def PARAM_GRID(self) -> Dict[str, List]:
+                                          ^
+src/templates/turtle_template.py: note: In member "_get_cached_data" of class "TurtleTemplate":
+src/templates/turtle_template.py:200:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/turtle_template.py:200:5: error: Signature of "_get_cached_data"
+incompatible with supertype "src.templates.base_template.BaseTemplate" 
+[override]
+        def _get_cached_data(self, key: str, verbose: bool = False):
+        ^
+src/templates/turtle_template.py:200:5: note:      Superclass:
+src/templates/turtle_template.py:200:5: note:          @staticmethod
+src/templates/turtle_template.py:200:5: note:          def _get_cached_data(key: str) -> Any
+src/templates/turtle_template.py:200:5: note:      Subclass:
+src/templates/turtle_template.py:200:5: note:          def _get_cached_data(self, key: str, verbose: bool = ...) -> Any
+src/templates/turtle_template.py: note: In member "_create_6_layer_filter" of class "TurtleTemplate":
+src/templates/turtle_template.py:221:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _create_6_layer_filter(self, params: Dict):
+        ^
+src/templates/turtle_template.py:221:46: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _create_6_layer_filter(self, params: Dict):
+                                                 ^
+src/templates/turtle_template.py: note: In member "_apply_revenue_weighting" of class "TurtleTemplate":
+src/templates/turtle_template.py:318:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _apply_revenue_weighting(self, conditions, params: Dict):
+        ^
+src/templates/turtle_template.py:318:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def _apply_revenue_weighting(self, conditions, params: Dict):
+        ^
+src/templates/turtle_template.py:318:60: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def _apply_revenue_weighting(self, conditions, params: Dict):
+                                                               ^
+src/templates/turtle_template.py: note: In member "generate_strategy" of class "TurtleTemplate":
+src/templates/turtle_template.py:378:41: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def generate_strategy(self, params: Dict) -> Tuple[object, Dict]:
+                                            ^
+src/generators/yaml_schema_validator.py:153: note: In module imported here,
+src/innovation/innovation_engine.py:23: note: ... from here,
+src/learning/llm_client.py:53: note: ... from here:
+src/generators/yaml_normalizer.py: note: In function "_normalize_indicators":
+src/generators/yaml_normalizer.py:291:5: error: Returning Any from function
+declared to return "dict[str, Any]"  [no-any-return]
+        return indicators
+        ^~~~~~~~~~~~~~~~~
+src/repository/__init__.py:40: note: In module imported here,
+src/learning/learning_loop.py:22: note: ... from here:
+src/repository/pattern_search.py: note: In member "__init__" of class "PatternSearch":
+src/repository/pattern_search.py:65:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def __init__(
+        ^
+src/repository/pattern_search.py: note: In member "search_by_pattern" of class "PatternSearch":
+src/repository/pattern_search.py:88:15: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        ) -> List[Dict]:
+                  ^
+src/repository/pattern_search.py: note: In member "get_common_patterns" of class "PatternSearch":
+src/repository/pattern_search.py:173:15: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        ) -> List[Dict]:
+                  ^
+src/repository/pattern_search.py:211:9: error: Need type annotation for
+"pattern_data" (hint: "pattern_data: dict[<type>, <type>] = ...") 
+[var-annotated]
+            pattern_data = {}  # pattern → {'sharpes': [], 'genome_ids': [...
+            ^~~~~~~~~~~~
+src/repository/pattern_search.py: note: In member "get_pattern_statistics" of class "PatternSearch":
+src/repository/pattern_search.py:264:20: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        ) -> Dict[str, Dict]:
+                       ^
+src/repository/pattern_search.py:329:21: error: Unsupported operand types for +
+("object" and "int")  [operator]
+                        pattern_stats[pattern]['total'] += 1
+                        ^
+src/repository/pattern_search.py:330:21: error: Unsupported operand types for +
+("object" and "int")  [operator]
+                        pattern_stats[pattern][tier_name] += 1
+                        ^
+src/repository/pattern_search.py:331:21: error: "object" has no attribute
+"append"  [attr-defined]
+                        pattern_stats[pattern]['sharpes'].append(sharpe)
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/repository/pattern_search.py:345:33: error: Unsupported left operand type
+for / ("object")  [operator]
+                    'success_rate': data['champions'] / total if total > 0...
+                                    ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/repository/pattern_search.py:345:62: error: Unsupported operand types for <
+("int" and "object")  [operator]
+    ...      'success_rate': data['champions'] / total if total > 0 else 0.0,
+                                                          ^
+src/repository/pattern_search.py:346:31: error: No overload variant of "sum"
+matches argument type "object"  [call-overload]
+                    'avg_sharpe': sum(sharpes) / len(sharpes) if sharpes e...
+                                  ^~~~~~~~~~~~
+src/repository/pattern_search.py:346:31: note: Possible overload variants:
+src/repository/pattern_search.py:346:31: note:     def sum(Iterable[bool], /, start: int = ...) -> int
+src/repository/pattern_search.py:346:31: note:     def [_SupportsSumNoDefaultT: _SupportsSumWithNoDefaultGiven] sum(Iterable[_SupportsSumNoDefaultT], /) -> _SupportsSumNoDefaultT | Literal[0]
+src/repository/pattern_search.py:346:31: note:     def [_AddableT1: SupportsAdd[Any, Any], _AddableT2: SupportsAdd[Any, Any]] sum(Iterable[_AddableT1], /, start: _AddableT2) -> _AddableT1 | _AddableT2
+src/repository/pattern_search.py:346:50: error: Argument 1 to "len" has
+incompatible type "object"; expected "Sized"  [arg-type]
+                    'avg_sharpe': sum(sharpes) / len(sharpes) if sharpes e...
+                                                     ^~~~~~~
+src/repository/pattern_search.py:347:31: error: No overload variant of "max"
+matches argument type "object"  [call-overload]
+                    'max_sharpe': max(sharpes) if sharpes else 0.0
+                                  ^~~~~~~~~~~~
+src/repository/pattern_search.py:347:31: note: Possible overload variants:
+src/repository/pattern_search.py:347:31: note:     def [SupportsRichComparisonT: SupportsDunderLT[Any] | SupportsDunderGT[Any]] max(SupportsRichComparisonT, SupportsRichComparisonT, /, *_args: SupportsRichComparisonT, key: None = ...) -> SupportsRichComparisonT
+src/repository/pattern_search.py:347:31: note:     def [_T] max(_T, _T, /, *_args: _T, key: Callable[[_T], SupportsDunderLT[Any] | SupportsDunderGT[Any]]) -> _T
+src/repository/pattern_search.py:347:31: note:     def [SupportsRichComparisonT: SupportsDunderLT[Any] | SupportsDunderGT[Any]] max(Iterable[SupportsRichComparisonT], /, *, key: None = ...) -> SupportsRichComparisonT
+src/repository/pattern_search.py:347:31: note:     def [_T] max(Iterable[_T], /, *, key: Callable[[_T], SupportsDunderLT[Any] | SupportsDunderGT[Any]]) -> _T
+src/repository/pattern_search.py:347:31: note:     def [SupportsRichComparisonT: SupportsDunderLT[Any] | SupportsDunderGT[Any], _T] max(Iterable[SupportsRichComparisonT], /, *, key: None = ..., default: _T) -> SupportsRichComparisonT | _T
+src/repository/pattern_search.py:347:31: note:     def [_T1, _T2] max(Iterable[_T1], /, *, key: Callable[[_T1], SupportsDunderLT[Any] | SupportsDunderGT[Any]], default: _T2) -> _T1 | _T2
+src/repository/pattern_search.py: note: In member "analyze_pattern_combinations" of class "PatternSearch":
+src/repository/pattern_search.py:427:15: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        ) -> List[Dict]:
+                  ^
+src/repository/pattern_search.py:469:9: error: Need type annotation for
+"combination_data" (hint: "combination_data: dict[<type>, <type>] = ...") 
+[var-annotated]
+            combination_data = {}  # frozenset(patterns) → {'sharpes': [],...
+            ^~~~~~~~~~~~~~~~
+src/repository/__init__.py:39: note: In module imported here,
+src/learning/learning_loop.py:22: note: ... from here:
+src/repository/maintenance.py: note: In function "_load_maintenance_config":
+src/repository/maintenance.py:49:83: error: Missing type parameters for generic
+type "Dict"  [type-arg]
+    ...ance_config(config_path: str = 'config/learning_system.yaml') -> Dict:
+                                                                        ^
+src/repository/maintenance.py:73:9: error: Returning Any from function declared
+to return "dict[Any, Any]"  [no-any-return]
+            return config_data.get('maintenance', {})
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/repository/maintenance.py: note: In member "__init__" of class "MaintenanceManager":
+src/repository/maintenance.py:111:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def __init__(
+        ^
+src/repository/maintenance.py: note: In member "validate_integrity" of class "MaintenanceManager":
+src/repository/maintenance.py:320:42: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def validate_integrity(self) -> List[Dict]:
+                                             ^
+src/repository/__init__.py:38: note: In module imported here,
+src/learning/learning_loop.py:22: note: ... from here:
+src/repository/index_manager.py: note: In member "get_index_statistics" of class "IndexManager":
+src/repository/index_manager.py:412:9: error: Need type annotation for
+"by_tier" (hint: "by_tier: dict[<type>, <type>] = ...")  [var-annotated]
+            by_tier = {}
+            ^~~~~~~
+src/repository/index_manager.py:413:9: error: Need type annotation for
+"by_template" (hint: "by_template: dict[<type>, <type>] = ...")  [var-annotated]
+            by_template = {}
+            ^~~~~~~~~~~
+src/repository/index_manager.py:414:9: error: Need type annotation for
+"sharpe_by_tier" (hint: "sharpe_by_tier: dict[<type>, <type>] = ...") 
+[var-annotated]
+            sharpe_by_tier = {}
+            ^~~~~~~~~~~~~~
+src/learning/learning_config.py: note: In member "__post_init__" of class "LearningConfig":
+src/learning/learning_config.py:98:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def __post_init__(self):
+        ^
+src/learning/learning_config.py:98:5: note: Use "-> None" if function does not return a value
+src/learning/learning_config.py:100:9: error: Call to untyped function
+"_validate" in typed context  [no-untyped-call]
+            self._validate()
+            ^~~~~~~~~~~~~~~~
+src/learning/learning_config.py: note: In member "_validate" of class "LearningConfig":
+src/learning/learning_config.py:102:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def _validate(self):
+        ^
+src/learning/learning_config.py:102:5: note: Use "-> None" if function does not return a value
+src/learning/learning_config.py: note: In member "_resolve_env_var" of class "LearningConfig":
+src/learning/learning_config.py:231:5: error: Function is missing a type
+annotation  [no-untyped-def]
+        def _resolve_env_var(value, default, value_type=str):
+        ^
+src/learning/learning_config.py:250:28: error: Incompatible types in assignment
+(expression has type "str | None", variable has type "str")  [assignment]
+                    resolved = os.getenv(env_name)
+                               ^~~~~~~~~~~~~~~~~~~
+src/learning/learning_config.py:253:17: error: Statement is unreachable 
+[unreachable]
+                    return default
+                    ^~~~~~~~~~~~~~
+src/learning/learning_config.py: note: In member "_map_nested_config" of class "LearningConfig":
+src/learning/learning_config.py:280:33: error: Missing type parameters for
+generic type "dict"  [type-arg]
+        def _map_nested_config(raw: dict) -> dict:
+                                    ^
+src/learning/learning_config.py:299:36: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['max_iterations'] = resolve(
+                                       ^
+src/learning/learning_config.py:303:39: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['continue_on_error'] = resolve(
+                                          ^
+src/learning/learning_config.py:324:33: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['llm_timeout'] = resolve(
+                                    ^
+src/learning/learning_config.py:328:37: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['llm_temperature'] = resolve(
+                                        ^
+src/learning/learning_config.py:332:36: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['llm_max_tokens'] = resolve(
+                                       ^
+src/learning/learning_config.py:358:37: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['llm_retry_count'] = resolve(
+                                        ^
+src/learning/learning_config.py:365:37: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['timeout_seconds'] = resolve(
+                                        ^
+src/learning/learning_config.py:373:31: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['fee_ratio'] = resolve(
+                                  ^
+src/learning/learning_config.py:377:31: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['tax_ratio'] = resolve(
+                                  ^
+src/learning/learning_config.py:381:30: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['resample'] = resolve(
+                                 ^
+src/learning/learning_config.py:389:36: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['history_window'] = resolve(
+                                       ^
+src/learning/learning_config.py:401:31: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['log_level'] = resolve(
+                                  ^
+src/learning/learning_config.py:405:33: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['log_to_file'] = resolve(
+                                    ^
+src/learning/learning_config.py:409:36: error: Call to untyped function
+(unknown) in typed context  [no-untyped-call]
+            config['log_to_console'] = resolve(
+                                       ^
+src/learning/learning_config.py: note: In member "to_dict" of class "LearningConfig":
+src/learning/learning_config.py:416:26: error: Missing type parameters for
+generic type "dict"  [type-arg]
+        def to_dict(self) -> dict:
+                             ^
+src/learning/generation_strategies.py: note: In class "GenerationContext":
+src/learning/generation_strategies.py:48:13: error: Missing type parameters for
+generic type "dict"  [type-arg]
+        config: dict
+                ^
+src/learning/generation_strategies.py: note: In member "generate" of class "FactorGraphStrategy":
+src/learning/generation_strategies.py:202:9: error: Returning Any from function
+declared to return "tuple[str | None, str | None, int | None]"  [no-any-return]
+            return self.generator.generate(context.iteration_num)
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/generation_strategies.py: note: In member "create_strategy" of class "StrategyFactory":
+src/learning/generation_strategies.py:297:17: error: Missing type parameters
+for generic type "dict"  [type-arg]
+            config: dict,
+                    ^
+src/learning/feedback_generator.py: note: In member "__init__" of class "FeedbackGenerator":
+src/learning/feedback_generator.py:174:5: error: Function is missing a type
+annotation  [no-untyped-def]
+        def __init__(self, history, champion_tracker):
+        ^
+src/learning/feedback_generator.py: note: In member "_analyze_trend" of class "FeedbackGenerator":
+src/learning/feedback_generator.py:324:46: error: Missing type parameters for
+generic type "List"  [type-arg]
+        def _analyze_trend(self, recent_records: List) -> str:
+                                                 ^
+src/learning/feedback_generator.py: note: In member "_find_last_success" of class "FeedbackGenerator":
+src/learning/feedback_generator.py:380:50: error: Missing type parameters for
+generic type "List"  [type-arg]
+        def _find_last_success(self, recent_records: List) -> Optional[Any...
+                                                     ^
+src/generators/yaml_to_code_generator.py:87: note: In module imported here,
+src/innovation/innovation_engine.py:22: note: ... from here,
+src/learning/llm_client.py:53: note: ... from here:
+src/generators/yaml_to_code_template.py: note: In member "__init__" of class "YAMLToCodeTemplate":
+src/generators/yaml_to_code_template.py:77:5: error: Function is missing a
+return type annotation  [no-untyped-def]
+        def __init__(self):
+        ^
+src/generators/yaml_to_code_template.py:77:5: note: Use "-> None" if function does not return a value
+src/generators/yaml_to_code_template.py: note: In member "_prepare_indicators" of class "YAMLToCodeTemplate":
+src/generators/yaml_to_code_template.py:193:57: error: Missing type parameters
+for generic type "List"  [type-arg]
+    ... _prepare_indicators(self, indicators: Dict[str, List]) -> Dict[str, A...
+                                                        ^
+src/generators/yaml_to_code_template.py:203:18: error: Need type annotation for
+"result"  [var-annotated]
+            result = {
+                     ^
+src/innovation/__init__.py:24: note: In module imported here:
+src/innovation/baseline_metrics.py: note: In member "validate_innovation" of class "BaselineMetrics":
+src/innovation/baseline_metrics.py:269:9: error: Returning Any from function
+declared to return "bool"  [no-any-return]
+            return all_pass
+            ^~~~~~~~~~~~~~~
+src/innovation/baseline_metrics.py: note: In member "_load_baseline" of class "BaselineMetrics":
+src/innovation/baseline_metrics.py:300:33: error: Missing type parameters for
+generic type "dict"  [type-arg]
+        def _load_baseline(self) -> dict:
+                                    ^
+src/innovation/baseline_metrics.py:310:9: error: Returning Any from function
+declared to return "dict[Any, Any]"  [no-any-return]
+            return config
+            ^~~~~~~~~~~~~
+src/repository/__init__.py:37: note: In module imported here,
+src/learning/learning_loop.py:22: note: ... from here:
+src/repository/novelty_scorer.py: note: In member "__init__" of class "NoveltyScorer":
+src/repository/novelty_scorer.py:48:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def __init__(self):
+        ^
+src/repository/novelty_scorer.py:48:5: note: Use "-> None" if function does not return a value
+src/repository/novelty_scorer.py: note: In member "calculate_novelty_score_with_cache" of class "NoveltyScorer":
+src/repository/novelty_scorer.py:246:32: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        ) -> Tuple[float, Optional[Dict]]:
+                                   ^
+src/repository/novelty_scorer.py: note: In member "calculate_novelty_score" of class "NoveltyScorer":
+src/repository/novelty_scorer.py:308:32: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        ) -> Tuple[float, Optional[Dict]]:
+                                   ^
+src/repository/__init__.py:36: note: In module imported here,
+src/learning/learning_loop.py:22: note: ... from here:
+src/repository/hall_of_fame.py: note: In class "StrategyGenome":
+src/repository/hall_of_fame.py:56:17: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        parameters: Dict
+                    ^
+src/repository/hall_of_fame.py:57:14: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        metrics: Dict
+                 ^
+src/repository/hall_of_fame.py:60:32: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        success_patterns: Optional[Dict] = None
+                                   ^
+src/repository/hall_of_fame.py: note: In member "__post_init__" of class "StrategyGenome":
+src/repository/hall_of_fame.py:63:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def __post_init__(self):
+        ^
+src/repository/hall_of_fame.py:63:5: note: Use "-> None" if function does not return a value
+src/repository/hall_of_fame.py: note: In member "to_dict" of class "StrategyGenome":
+src/repository/hall_of_fame.py:71:26: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def to_dict(self) -> Dict:
+                             ^
+src/repository/hall_of_fame.py: note: In member "__init__" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:266:31: error: Call to untyped function
+"NoveltyScorer" in typed context  [no-untyped-call]
+            self.novelty_scorer = NoveltyScorer()
+                                  ^~~~~~~~~~~~~~~
+src/repository/hall_of_fame.py: note: In member "add_strategy" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:423:21: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+            parameters: Dict,
+                        ^
+src/repository/hall_of_fame.py:424:18: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+            metrics: Dict,
+                     ^
+src/repository/hall_of_fame.py:426:36: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+            success_patterns: Optional[Dict] = None
+                                       ^
+src/repository/hall_of_fame.py:489:55: error: Value of type
+"dict[Any, Any] | None" is not indexable  [index]
+    ...           similar_genome_id = genome_id_mapping[similarity_info['inde...
+                                                        ^~~~~~~~~~~~~~~~~~~~~~~~
+src/repository/hall_of_fame.py:491:21: error: Value of type
+"dict[Any, Any] | None" is not indexable  [index]
+                        f"Duplicate strategy rejected (novelty: {novelty_s...
+                        ^
+src/repository/hall_of_fame.py: note: In member "query_similar" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:738:15: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        ) -> List[Dict]:
+                  ^
+src/repository/hall_of_fame.py:811:26: error: Argument "key" to "sort" of
+"list" has incompatible type "Callable[[dict[str, object]], object]"; expected
+"Callable[[dict[str, object]], SupportsDunderLT[Any] | SupportsDunderGT[Any]]" 
+[arg-type]
+            results.sort(key=lambda x: x['distance'])
+                             ^
+src/repository/hall_of_fame.py: note: In function "query_similar":
+src/repository/hall_of_fame.py:811:36: error: Incompatible return value type
+(got "object", expected "SupportsDunderLT[Any] | SupportsDunderGT[Any]") 
+[return-value]
+            results.sort(key=lambda x: x['distance'])
+                                       ^~~~~~~~~~~~~
+src/repository/hall_of_fame.py: note: In member "get_statistics" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:815:33: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def get_statistics(self) -> Dict:
+                                    ^
+src/repository/hall_of_fame.py:868:30: error: Incompatible types in assignment
+(expression has type "dict[str, int]", target has type "int")  [assignment]
+            stats['templates'] = template_counts
+                                 ^~~~~~~~~~~~~~~
+src/repository/hall_of_fame.py: note: In member "query_by_parameters" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:1036:38: error: Function "builtins.any" is not
+valid as a type  [valid-type]
+            parameter_filters: Dict[str, any],
+                                         ^
+src/repository/hall_of_fame.py:1036:38: note: Perhaps you meant "typing.Any" instead of "any"?
+src/repository/hall_of_fame.py:1090:44: error: any? object is not iterable 
+[misc]
+                            min_val, max_val = param_value
+                                               ^~~~~~~~~~~
+src/repository/hall_of_fame.py:1091:33: error: Cannot determine type of
+"min_val"  [has-type]
+                            if not (min_val <= genome_value <= max_val):
+                                    ^~~~~~~
+src/repository/hall_of_fame.py:1091:60: error: Cannot determine type of
+"max_val"  [has-type]
+                            if not (min_val <= genome_value <= max_val):
+                                                               ^~~~~~~
+src/repository/hall_of_fame.py: note: In member "query_advanced" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:1235:47: error: Function "builtins.any" is not
+valid as a type  [valid-type]
+            parameter_filters: Optional[Dict[str, any]] = None,
+                                                  ^
+src/repository/hall_of_fame.py:1235:47: note: Perhaps you meant "typing.Any" instead of "any"?
+src/repository/hall_of_fame.py:1322:44: error: any? object is not iterable 
+[misc]
+                            min_val, max_val = param_value
+                                               ^~~~~~~~~~~
+src/repository/hall_of_fame.py: note: In member "list_backup_failures" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:1617:44: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def list_backup_failures(self) -> List[Dict]:
+                                               ^
+src/repository/hall_of_fame.py: note: In member "verify_backup_recovery" of class "HallOfFameRepository":
+src/repository/hall_of_fame.py:1719:51: error: Function "builtins.any" is not
+valid as a type  [valid-type]
+        def verify_backup_recovery(self) -> Dict[str, any]:
+                                                      ^
+src/repository/hall_of_fame.py:1719:51: note: Perhaps you meant "typing.Any" instead of "any"?
+src/generators/pydantic_validator.py:21: note: In module imported here,
+src/generators/yaml_schema_validator.py:82: note: ... from here,
+src/innovation/innovation_engine.py:23: note: ... from here,
+src/learning/llm_client.py:53: note: ... from here:
+src/models/strategy_models.py: note: In member "uppercase_type" of class "TechnicalIndicator":
+src/models/strategy_models.py:68:9: error: Returning Any from function declared
+to return "str"  [no-any-return]
+            return v
+            ^~~~~~~~
+src/models/strategy_models.py: note: In member "validate_indicator_references" of class "StrategySpecification":
+src/models/strategy_models.py:317:13: error: Incompatible types in assignment
+(expression has type "IndicatorArrayItem", variable has type
+"TechnicalIndicator")  [assignment]
+                for ind in self.indicators:
+                ^
+src/generators/yaml_schema_validator.py:82: note: In module imported here,
+src/innovation/innovation_engine.py:23: note: ... from here,
+src/learning/llm_client.py:53: note: ... from here:
+src/generators/pydantic_validator.py: note: In member "__init__" of class "PydanticValidator":
+src/generators/pydantic_validator.py:51:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def __init__(self):
+        ^
+src/generators/pydantic_validator.py:51:5: note: Use "-> None" if function does not return a value
+src/generators/pydantic_validator.py: note: In member "validate" of class "PydanticValidator":
+src/generators/pydantic_validator.py:96:13: error: Statement is unreachable 
+[unreachable]
+                error_msg = "YAML specification must be a dictionary/objec...
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/pydantic_validator.py: note: In member "_build_field_path" of class "PydanticValidator":
+src/generators/pydantic_validator.py:147:43: error: Missing type parameters for
+generic type "tuple"  [type-arg]
+        def _build_field_path(self, location: tuple) -> str:
+                                              ^
+src/generators/pydantic_validator.py: note: In member "_format_error_by_type" of class "PydanticValidator":
+src/generators/pydantic_validator.py:179:5: error: Missing return statement 
+[return]
+        def _format_error_by_type(
+        ^
+src/generators/pydantic_validator.py: note: In function "validate_yaml_with_pydantic":
+src/generators/pydantic_validator.py:320:17: error: Call to untyped function
+"PydanticValidator" in typed context  [no-untyped-call]
+        validator = PydanticValidator()
+                    ^~~~~~~~~~~~~~~~~~~
+src/innovation/innovation_engine.py:23: note: In module imported here,
+src/learning/llm_client.py:53: note: ... from here:
+src/generators/yaml_schema_validator.py:18:1: error: Library stubs not
+installed for "jsonschema"  [import-untyped]
+        from jsonschema import Draft7Validator, ValidationError as JSONSch...
+    ^
+src/generators/yaml_schema_validator.py:19:1: error: Library stubs not
+installed for "jsonschema.exceptions"  [import-untyped]
+        from jsonschema.exceptions import best_match
+    ^
+src/generators/yaml_schema_validator.py:19:1: note: Hint: "python3 -m pip install types-jsonschema"
+src/generators/yaml_schema_validator.py: note: In member "__init__" of class "YAMLSchemaValidator":
+src/generators/yaml_schema_validator.py:63:32: error: Missing type parameters
+for generic type "Dict"  [type-arg]
+            self._schema: Optional[Dict] = None
+                                   ^
+src/generators/yaml_schema_validator.py:83:44: error: Call to untyped function
+"PydanticValidator" in typed context  [no-untyped-call]
+                    self._pydantic_validator = PydanticValidator()
+                                               ^~~~~~~~~~~~~~~~~~~
+src/generators/yaml_schema_validator.py: note: In member "validate" of class "YAMLSchemaValidator":
+src/generators/yaml_schema_validator.py:189:13: error: Statement is unreachable
+ [unreachable]
+                return False, ["YAML specification must be a dictionary/ob...
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/generators/yaml_schema_validator.py: note: In member "load_and_validate" of class "YAMLSchemaValidator":
+src/generators/yaml_schema_validator.py:231:21: error: Incompatible types in
+assignment (expression has type "Path", variable has type "str")  [assignment]
+            yaml_path = Path(yaml_path)
+                        ^~~~~~~~~~~~~~~
+src/generators/yaml_schema_validator.py:234:16: error: "str" has no attribute
+"exists"  [attr-defined]
+            if not yaml_path.exists():
+                   ^~~~~~~~~~~~~~~~
+src/generators/yaml_schema_validator.py: note: In member "_format_error" of class "YAMLSchemaValidator":
+src/generators/yaml_schema_validator.py:352:17: error: Returning Any from
+function declared to return "str"  [no-any-return]
+                    return error_message
+                    ^~~~~~~~~~~~~~~~~~~~
+src/generators/yaml_schema_validator.py: note: In member "schema" of class "YAMLSchemaValidator":
+src/generators/yaml_schema_validator.py:436:25: error: Missing type parameters
+for generic type "Dict"  [type-arg]
+        def schema(self) -> Dict:
+                            ^
+src/generators/yaml_schema_validator.py:438:16: error: Incompatible return
+value type (got "dict[Any, Any] | None", expected "dict[Any, Any]") 
+[return-value]
+            return self._schema
+                   ^~~~~~~~~~~~
+src/generators/yaml_schema_validator.py: note: In member "schema_version" of class "YAMLSchemaValidator":
+src/generators/yaml_schema_validator.py:443:9: error: Returning Any from
+function declared to return "str"  [no-any-return]
+            return self._schema.get("version", "unknown")
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/yaml_schema_validator.py:443:16: error: Item "None" of
+"dict[Any, Any] | None" has no attribute "get"  [union-attr]
+            return self._schema.get("version", "unknown")
+                   ^~~~~~~~~~~~~~~~
+src/innovation/innovation_engine.py:22: note: In module imported here,
+src/learning/llm_client.py:53: note: ... from here:
+src/generators/yaml_to_code_generator.py: note: In member "__init__" of class "YAMLToCodeGenerator":
+src/generators/yaml_to_code_generator.py:135:25: error: Call to untyped
+function "YAMLToCodeTemplate" in typed context  [no-untyped-call]
+            self.template = YAMLToCodeTemplate()
+                            ^~~~~~~~~~~~~~~~~~~~
+src/generators/yaml_to_code_generator.py: note: In member "generate" of class "YAMLToCodeGenerator":
+src/generators/yaml_to_code_generator.py:179:9: error: Need type annotation for
+"errors" (hint: "errors: list[<type>] = ...")  [var-annotated]
+            errors = []
+            ^~~~~~
+src/generators/yaml_to_code_generator.py: note: In member "generate_from_file" of class "YAMLToCodeGenerator":
+src/generators/yaml_to_code_generator.py:258:21: error: Incompatible types in
+assignment (expression has type "Path", variable has type "str")  [assignment]
+            yaml_path = Path(yaml_path)
+                        ^~~~~~~~~~~~~~~
+src/generators/yaml_to_code_generator.py:261:16: error: "str" has no attribute
+"exists"  [attr-defined]
+            if not yaml_path.exists():
+                   ^~~~~~~~~~~~~~~~
+src/generators/yaml_to_code_generator.py:273:26: error: "str" has no attribute
+"name"  [attr-defined]
+                logger.debug(f"YAML file loaded successfully: {yaml_path.n...
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/yaml_to_code_generator.py:276:25: error: "str" has no attribute
+"name"  [attr-defined]
+                error_msg = f"YAML parsing error in {yaml_path.name}: {str...
+                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/yaml_to_code_generator.py:281:25: error: "str" has no attribute
+"name"  [attr-defined]
+                error_msg = f"Error reading file {yaml_path.name}: {str(e)...
+                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/yaml_to_code_generator.py: note: In member "get_generation_stats" of class "YAMLToCodeGenerator":
+src/generators/yaml_to_code_generator.py:441:9: error: Need type annotation for
+"error_types" (hint: "error_types: dict[<type>, <type>] = ...")  [var-annotated]
+            error_types = {}
+            ^~~~~~~~~~~
+src/innovation/__init__.py:23: note: In module imported here:
+src/innovation/data_guardian.py: note: In member "__init__" of class "DataGuardian":
+src/innovation/data_guardian.py:73:26: error: Missing type parameters for
+generic type "list"  [type-arg]
+            self.access_log: list = []
+                             ^
+src/innovation/data_guardian.py: note: In member "lock_holdout" of class "DataGuardian":
+src/innovation/data_guardian.py:136:15: error: Value of type "object" is not
+indexable  [index]
+            print(f"   Date Range: {lock_record['date_range']['start']} to...
+                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/innovation/data_guardian.py: note: In member "access_holdout" of class "DataGuardian":
+src/innovation/data_guardian.py:216:13: error: Call to untyped function
+"_save_log" in typed context  [no-untyped-call]
+                self._save_log()
+                ^~~~~~~~~~~~~~~~
+src/innovation/data_guardian.py:222:9: error: Call to untyped function
+"_save_log" in typed context  [no-untyped-call]
+            self._save_log()
+            ^~~~~~~~~~~~~~~~
+src/innovation/data_guardian.py: note: In member "get_access_log" of class "DataGuardian":
+src/innovation/data_guardian.py:296:33: error: Missing type parameters for
+generic type "list"  [type-arg]
+        def get_access_log(self) -> list:
+                                    ^
+src/innovation/data_guardian.py: note: In member "_load_lock" of class "DataGuardian":
+src/innovation/data_guardian.py:325:29: error: Missing type parameters for
+generic type "dict"  [type-arg]
+        def _load_lock(self) -> dict:
+                                ^
+src/innovation/data_guardian.py:335:9: error: Returning Any from function
+declared to return "dict[Any, Any]"  [no-any-return]
+            return config
+            ^~~~~~~~~~~~~
+src/innovation/data_guardian.py: note: In member "_save_log" of class "DataGuardian":
+src/innovation/data_guardian.py:337:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def _save_log(self):
+        ^
+src/innovation/data_guardian.py:337:5: note: Use "-> None" if function does not return a value
+src/config/__init__.py:3: note: In module imported here:
+src/config/experiment_config_manager.py: note: In member "compute_config_diff" of class "ExperimentConfigManager":
+src/config/experiment_config_manager.py:800:23: error: Incompatible types in
+assignment (expression has type "ExperimentConfig | None", variable has type
+"int | ExperimentConfig")  [assignment]
+                config1 = self.load_config(iter1)
+                          ^~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:802:17: error: Statement is unreachable
+ [unreachable]
+                    return {
+                    ^
+src/config/experiment_config_manager.py:811:21: error: Incompatible types in
+assignment (expression has type "int | None", variable has type "int") 
+[assignment]
+                iter1 = config1.iteration_num if config1 else None
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:815:23: error: Incompatible types in
+assignment (expression has type "ExperimentConfig | None", variable has type
+"int | ExperimentConfig")  [assignment]
+                config2 = self.load_config(iter2)
+                          ^~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:817:17: error: Statement is unreachable
+ [unreachable]
+                    return {
+                    ^
+src/config/experiment_config_manager.py:826:21: error: Incompatible types in
+assignment (expression has type "int | None", variable has type "int") 
+[assignment]
+                iter2 = config2.iteration_num if config2 else None
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:830:13: error: Statement is unreachable
+ [unreachable]
+                return {
+                ^
+src/config/experiment_config_manager.py:846:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "model_config"  [union-attr]
+                config1.model_config,
+                ^~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:847:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "model_config"  [union-attr]
+                config2.model_config,
+                ^~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:864:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "prompt_config"  [union-attr]
+                config1.prompt_config,
+                ^~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:865:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "prompt_config"  [union-attr]
+                config2.prompt_config,
+                ^~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:881:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "system_thresholds"  [union-attr]
+                config1.system_thresholds,
+                ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:882:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "system_thresholds"  [union-attr]
+                config2.system_thresholds,
+                ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:898:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "environment_state"  [union-attr]
+                config1.environment_state,
+                ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py:899:13: error: Item "int" of
+"int | ExperimentConfig" has no attribute "environment_state"  [union-attr]
+                config2.environment_state,
+                ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/config/experiment_config_manager.py: note: In function "main":
+src/config/experiment_config_manager.py:964:1: error: Function is missing a
+return type annotation  [no-untyped-def]
+    def main():
+    ^
+src/config/experiment_config_manager.py:964:1: note: Use "-> None" if function does not return a value
+src/config/experiment_config_manager.py: note: At top level:
+src/config/experiment_config_manager.py:1125:5: error: Call to untyped function
+"main" in typed context  [no-untyped-call]
+        main()
+        ^~~~~~
+src/factor_graph/strategy.py:484: note: In module imported here,
+src/learning/iteration_executor.py:617: note: ... from here:
+src/factor_graph/finlab_dataframe.py: note: In member "_lazy_load_matrix" of class "FinLabDataFrame":
+src/factor_graph/finlab_dataframe.py:357:13: error: Returning Any from function
+declared to return "DataFrame | None"  [no-any-return]
+                return matrix
+                ^~~~~~~~~~~~~
+src/factor_graph/strategy.py:16: note: In module imported here,
+src/learning/iteration_executor.py:617: note: ... from here:
+src/factor_graph/factor.py: note: In member "__post_init__" of class "Factor":
+src/factor_graph/factor.py:99:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def __post_init__(self):
+        ^
+src/factor_graph/factor.py:99:5: note: Use "-> None" if function does not return a value
+src/factor_graph/factor.py: note: In member "execute" of class "Factor":
+src/factor_graph/factor.py:167:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def execute(self, container):
+        ^
+src/learning/llm_client.py:53: note: In module imported here:
+src/innovation/innovation_engine.py: note: In member "__init__" of class "InnovationEngine":
+src/innovation/innovation_engine.py:101:29: error: Incompatible types in
+assignment (expression has type "None", variable has type
+"LLMProviderInterface")  [assignment]
+                self.provider = None
+                                ^~~~
+src/innovation/innovation_engine.py:108:26: error: Call to untyped function
+"SecurityValidator" in typed context  [no-untyped-call]
+            self.validator = SecurityValidator()
+                             ^~~~~~~~~~~~~~~~~~~
+src/innovation/innovation_engine.py:119:46: error: Incompatible types in
+assignment (expression has type "None", variable has type
+"StructuredPromptBuilder")  [assignment]
+                self.structured_prompt_builder = None
+                                                 ^~~~
+src/innovation/innovation_engine.py:120:35: error: Incompatible types in
+assignment (expression has type "None", variable has type "YAMLToCodeGenerator")
+ [assignment]
+                self.yaml_generator = None
+                                      ^~~~
+src/innovation/innovation_engine.py: note: In member "reset_statistics" of class "InnovationEngine":
+src/innovation/innovation_engine.py:742:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def reset_statistics(self):
+        ^
+src/innovation/innovation_engine.py:742:5: note: Use "-> None" if function does not return a value
+src/innovation/innovation_engine.py: note: In member "_extract_code" of class "InnovationEngine":
+src/innovation/innovation_engine.py:779:13: error: Returning Any from function
+declared to return "str | None"  [no-any-return]
+                return matches[0].strip()
+                ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/innovation/innovation_engine.py:789:21: error: Returning Any from function
+declared to return "str | None"  [no-any-return]
+                        return match.strip()
+                        ^~~~~~~~~~~~~~~~~~~~
+src/innovation/innovation_engine.py: note: In member "_exponential_backoff" of class "InnovationEngine":
+src/innovation/innovation_engine.py:917:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _exponential_backoff(self, attempt: int):
+        ^
+src/innovation/innovation_engine.py: note: In member "_record_failure" of class "InnovationEngine":
+src/innovation/innovation_engine.py:922:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def _record_failure(
+        ^
+src/learning/iteration_executor.py:25: note: In module imported here:
+src/backtest/executor.py: note: In member "execute" of class "BacktestExecutor":
+src/backtest/executor.py:160:1: error: Missing type parameters for generic type
+"Queue"  [type-arg]
+            result_queue = mp.Queue()  # type: mp.Queue
+    ^
+src/backtest/executor.py:200:13: error: Returning Any from function declared to
+return "ExecutionResult"  [no-any-return]
+                return result
+                ^~~~~~~~~~~~~
+src/backtest/executor.py: note: In member "execute_strategy" of class "BacktestExecutor":
+src/backtest/executor.py:386:1: error: Missing type parameters for generic type
+"Queue"  [type-arg]
+            result_queue = mp.Queue()  # type: mp.Queue
+    ^
+src/backtest/executor.py:426:13: error: Returning Any from function declared to
+return "ExecutionResult"  [no-any-return]
+                return result
+                ^~~~~~~~~~~~~
+src/backtest/executor.py: note: In member "_execute_strategy_in_process" of class "BacktestExecutor":
+src/backtest/executor.py:480:45: error: Slice index must be an integer,
+SupportsIndex or None  [misc]
+                positions_df = positions_df.loc[start:end]
+                                                ^~~~~
+src/factor_library/registry.py:495: note: In module imported here,
+src/learning/iteration_executor.py:619: note: ... from here:
+src/factor_library/exit_factors.py: note: In function "_time_based_exit_logic":
+src/factor_library/exit_factors.py:197:13: error: No overload variant of
+"__setitem__" of "_LocIndexerFrame" matches argument types "Timestamp", "Any" 
+[call-overload]
+                time_exit_signal.loc[date_idx] = positions.loc[date_idx] &...
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/factor_library/exit_factors.py:197:13: note: Possible overload variants:
+src/factor_library/exit_factors.py:197:13: note:     def [ScalarT: str | bytes | date | datetime | timedelta | <7 more items> | complex | integer[Any] | floating[Any] | complexfloating[Any, Any]] __setitem__(self, Series[builtins.bool] | ndarray[tuple[int, ...], dtype[numpy.bool[builtins.bool]]] | list[builtins.bool] | str | str_ | <9 more items>, str | bytes | date | datetime | timedelta | <19 more items> | None, /) -> None
+src/factor_library/exit_factors.py:197:13: note:     def __setitem__(self, tuple[tuple[Index[Any] | Series[builtins.bool] | ndarray[tuple[int, ...], dtype[numpy.bool[builtins.bool]]] | list[builtins.bool] | str | bytes | date | datetime | timedelta | <7 more items> | complex | integer[Any] | floating[Any] | complexfloating[Any, Any] | list[Any] | slice[Any, Any, Any] | tuple[str | bytes | date | datetime | timedelta | <7 more items> | complex | integer[Any] | floating[Any] | complexfloating[Any, Any], ...], ...], Hashable], str | bytes | date | datetime | timedelta | <18 more items> | None, /) -> None
+src/factor_library/exit_factors.py: note: In member "__init__" of class "TrailingStopFactor":
+src/factor_library/exit_factors.py:425:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_trailing_stop_logic,
+                      ^~~~~~~~~~~~~~~~~~~~
+src/factor_library/exit_factors.py: note: In member "__init__" of class "TimeBasedExitFactor":
+src/factor_library/exit_factors.py:468:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_time_based_exit_logic,
+                      ^~~~~~~~~~~~~~~~~~~~~~
+src/factor_library/exit_factors.py: note: In member "__init__" of class "VolatilityStopFactor":
+src/factor_library/exit_factors.py:515:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_volatility_stop_logic,
+                      ^~~~~~~~~~~~~~~~~~~~~~
+src/factor_library/exit_factors.py: note: In member "__init__" of class "ProfitTargetFactor":
+src/factor_library/exit_factors.py:559:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_profit_target_logic,
+                      ^~~~~~~~~~~~~~~~~~~~
+src/factor_library/exit_factors.py: note: In member "__init__" of class "CompositeExitFactor":
+src/factor_library/exit_factors.py:609:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_composite_exit_logic,
+                      ^~~~~~~~~~~~~~~~~~~~~
+src/factor_library/registry.py:489: note: In module imported here,
+src/learning/iteration_executor.py:619: note: ... from here:
+src/factor_library/turtle_factors.py: note: In function "_atr_logic":
+src/factor_library/turtle_factors.py:104:18: error: No overload variant of
+"concat" matches argument types "list[object]", "int"  [call-overload]
+        true_range = pd.concat([high_low, high_prev_close, low_prev_close]...
+                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/factor_library/turtle_factors.py:104:18: note: Possible overload variants:
+src/factor_library/turtle_factors.py:104:18: note:     def [HashableT1: Hashable, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[DataFrame] | Mapping[HashableT1, DataFrame], *, axis: Literal['index', 0] | Literal['columns', 1] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> DataFrame
+src/factor_library/turtle_factors.py:104:18: note:     def [S2: str | bytes | date | time | bool | <11 more items>, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[Series[S2]], *, axis: Literal['index', 0] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> Series[S2]
+src/factor_library/turtle_factors.py:104:18: note:     def [HashableT1: Hashable, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[Series[Any]] | Mapping[HashableT1, Series[Any]], *, axis: Literal['index', 0] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> Series[Any]
+src/factor_library/turtle_factors.py:104:18: note:     def [HashableT1: Hashable, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[Series[Any] | DataFrame] | Mapping[HashableT1, Series[Any] | DataFrame], *, axis: Literal['index', 0] | Literal['columns', 1] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> DataFrame
+src/factor_library/turtle_factors.py:104:18: note:     def [HashableT1: Hashable, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[None] | Mapping[HashableT1, None], *, axis: Literal['index', 0] | Literal['columns', 1] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> Never
+src/factor_library/turtle_factors.py:104:18: note:     def [HashableT1: Hashable, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[DataFrame | None] | Mapping[HashableT1, DataFrame | None], *, axis: Literal['index', 0] | Literal['columns', 1] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> DataFrame
+src/factor_library/turtle_factors.py:104:18: note:     def [HashableT1: Hashable, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[Series[Any] | None] | Mapping[HashableT1, Series[Any] | None], *, axis: Literal['index', 0] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> Series[Any]
+src/factor_library/turtle_factors.py:104:18: note:     def [HashableT1: Hashable, HashableT2: Hashable, HashableT3: Hashable, HashableT4: Hashable] concat(objs: Iterable[Series[Any] | DataFrame | None] | Mapping[HashableT1, Series[Any] | DataFrame | None], *, axis: Literal['index', 0] | Literal['columns', 1] = ..., join: Literal['inner', 'outer'] = ..., ignore_index: bool = ..., keys: Iterable[HashableT2] | None = ..., levels: Sequence[list[HashableT3] | tuple[HashableT3, ...]] | None = ..., names: list[HashableT4] | None = ..., verify_integrity: bool = ..., sort: bool = ..., copy: bool = ...) -> DataFrame
+src/factor_library/turtle_factors.py: note: In member "__init__" of class "ATRFactor":
+src/factor_library/turtle_factors.py:322:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_atr_logic,
+                      ^~~~~~~~~~
+src/factor_library/turtle_factors.py: note: In member "__init__" of class "BreakoutFactor":
+src/factor_library/turtle_factors.py:371:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_breakout_logic,
+                      ^~~~~~~~~~~~~~~
+src/factor_library/turtle_factors.py: note: In member "__init__" of class "DualMAFilterFactor":
+src/factor_library/turtle_factors.py:416:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_dual_ma_filter_logic,
+                      ^~~~~~~~~~~~~~~~~~~~~
+src/factor_library/turtle_factors.py: note: In member "__init__" of class "ATRStopLossFactor":
+src/factor_library/turtle_factors.py:472:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_atr_stop_loss_logic,
+                      ^~~~~~~~~~~~~~~~~~~~
+src/factor_library/registry.py:483: note: In module imported here,
+src/learning/iteration_executor.py:619: note: ... from here:
+src/factor_library/momentum_factors.py: note: In member "__init__" of class "MomentumFactor":
+src/factor_library/momentum_factors.py:277:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_momentum_logic,
+                      ^~~~~~~~~~~~~~~
+src/factor_library/momentum_factors.py: note: In member "__init__" of class "MAFilterFactor":
+src/factor_library/momentum_factors.py:318:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_ma_filter_logic,
+                      ^~~~~~~~~~~~~~~~
+src/factor_library/momentum_factors.py: note: In member "__init__" of class "RevenueCatalystFactor":
+src/factor_library/momentum_factors.py:366:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_revenue_catalyst_logic,
+                      ^~~~~~~~~~~~~~~~~~~~~~~
+src/factor_library/momentum_factors.py: note: In member "__init__" of class "EarningsCatalystFactor":
+src/factor_library/momentum_factors.py:414:19: error: Argument "logic" to
+"__init__" of "Factor" has incompatible type
+"Callable[[FinLabDataFrame, dict[str, Any]], None]"; expected
+"Callable[[DataFrame, dict[str, Any]], DataFrame]"  [arg-type]
+                logic=_earnings_catalyst_logic,
+                      ^~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/iteration_executor.py:617: note: In module imported here:
+src/factor_graph/strategy.py:12:1: error: Library stubs not installed for
+"networkx"  [import-untyped]
+    import networkx as nx
+    ^
+src/factor_graph/strategy.py:12:1: note: Hint: "python3 -m pip install types-networkx"
+src/factor_graph/strategy.py:12:1: note: (or run "mypy --install-types" to install all missing stub packages)
+src/factor_graph/strategy.py: note: In member "validate_data" of class "Strategy":
+src/factor_graph/strategy.py:454:40: error: Name "FinLabDataFrame" is not
+defined  [name-defined]
+        def validate_data(self, container: 'FinLabDataFrame') -> bool:
+                                           ^
+src/factor_graph/strategy.py: note: In member "to_pipeline" of class "Strategy":
+src/factor_graph/strategy.py:538:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def to_pipeline(self, data_module, skip_validation: bool = False) ...
+        ^
+src/factor_graph/strategy.py:616:29: error: Call to untyped function "execute"
+in typed context  [no-untyped-call]
+                    container = factor.execute(container)
+                                ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/factor_graph/strategy.py: note: In member "to_dict" of class "Strategy":
+src/factor_graph/strategy.py:670:26: error: Missing type parameters for generic
+type "Dict"  [type-arg]
+        def to_dict(self) -> Dict:
+                             ^
+src/factor_graph/strategy.py: note: In member "from_dict" of class "Strategy":
+src/factor_graph/strategy.py:747:15: error: Missing type parameters for generic
+type "Dict"  [type-arg]
+            data: Dict,
+                  ^
+src/factor_graph/strategy.py:748:36: error: Missing type parameters for generic
+type "Callable"  [type-arg]
+            factor_registry: Dict[str, Callable]
+                                       ^
+src/factor_graph/strategy.py:822:31: error: Need type annotation for
+"factor_dependencies"  [var-annotated]
+            factor_dependencies = {factor["id"]: [] for factor in data["fa...
+                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/learning/error_classifier.py:21: note: In module imported here:
+src/backtest/error_classifier.py:28:5: error: Statement is unreachable 
+[unreachable]
+        from .executor import ExecutionResult
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/backtest/error_classifier.py: note: In class "ErrorPattern":
+src/backtest/error_classifier.py:64:29: error: Missing type parameters for
+generic type "Pattern"  [type-arg]
+        compiled_patterns: List[re.Pattern] = field(default_factory=list, ...
+                                ^
+src/learning/llm_client.py: note: In member "extract_python_code" of class "LLMClient":
+src/learning/llm_client.py:368:17: error: Returning Any from function declared
+to return "str | None"  [no-any-return]
+                    return code
+                    ^~~~~~~~~~~
+src/learning/iteration_executor.py:619: note: In module imported here:
+src/factor_library/registry.py: note: In member "__init__" of class "FactorRegistry":
+src/factor_library/registry.py:142:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def __init__(self):
+        ^
+src/factor_library/registry.py:142:5: note: Use "-> None" if function does not return a value
+src/factor_library/registry.py: note: In member "get_instance" of class "FactorRegistry":
+src/factor_library/registry.py:167:13: error: Call to untyped function
+"_register_all_factors" in typed context  [no-untyped-call]
+                cls._instance._register_all_factors()
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/factor_library/registry.py: note: In member "reset" of class "FactorRegistry":
+src/factor_library/registry.py:173:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def reset(cls):
+        ^
+src/factor_library/registry.py:173:5: note: Use "-> None" if function does not return a value
+src/factor_library/registry.py: note: In member "_register_all_factors" of class "FactorRegistry":
+src/factor_library/registry.py:472:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def _register_all_factors(self):
+        ^
+src/factor_library/registry.py:472:5: note: Use "-> None" if function does not return a value
+src/learning/champion_tracker.py:1003: note: In module imported here:
+src/backtest/metrics.py: note: In function "calculate_max_drawdown":
+src/backtest/metrics.py:68:42: error: Missing type parameters for generic type
+"list"  [type-arg]
+    def calculate_max_drawdown(equity_curve: list) -> float:
+                                             ^
+src/backtest/metrics.py: note: In function "calculate_calmar_ratio":
+src/backtest/metrics.py:161:9: error: Statement is unreachable  [unreachable]
+            return None
+            ^~~~~~~~~~~
+src/backtest/metrics.py: note: In member "_extract_attribute" of class "MetricsExtractor":
+src/backtest/metrics.py:730:26: error: Missing type parameters for generic type
+"list"  [type-arg]
+            attribute_names: list
+                             ^
+src/backtest/metrics.py: note: In member "_extract_from_dict" of class "MetricsExtractor":
+src/backtest/metrics.py:807:20: error: Missing type parameters for generic type
+"dict"  [type-arg]
+            data_dict: dict,
+                       ^
+src/backtest/metrics.py:808:20: error: Missing type parameters for generic type
+"list"  [type-arg]
+            key_names: list
+                       ^
+src/backtest/metrics.py:835:13: error: Statement is unreachable  [unreachable]
+                return None
+                ^~~~~~~~~~~
+src/backtest/__init__.py:77: note: In module imported here:
+src/backtest/reporter.py: note: In member "_aggregate_errors" of class "ResultsReporter":
+src/backtest/reporter.py:466:31: error: Missing type parameters for generic
+type "tuple"  [type-arg]
+            error_frequency: Dict[tuple, int] = {}
+                                  ^
+src/backtest/__init__.py:20:1: error: Skipping analyzing "plotly.graph_objs":
+module is installed, but missing library stubs or py.typed marker 
+[import-untyped]
+        from plotly.graph_objs import Figure  # type: ignore[import-not-fo...
+    ^
+src/backtest/__init__.py:20:1: note: Error code "import-untyped" not covered by "type: ignore" comment
+src/learning/iteration_executor.py:618: note: In module imported here:
+src/factor_graph/mutations.py:597:1: error: Library stubs not installed for
+"networkx"  [import-untyped]
+        import networkx as nx
+    ^
+src/learning/champion_tracker.py: note: In member "__post_init__" of class "ChampionStrategy":
+src/learning/champion_tracker.py:169:5: error: Function is missing a return
+type annotation  [no-untyped-def]
+        def __post_init__(self):
+        ^
+src/learning/champion_tracker.py:169:5: note: Use "-> None" if function does not return a value
+src/learning/champion_tracker.py: note: In member "to_dict" of class "ChampionStrategy":
+src/learning/champion_tracker.py:213:26: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def to_dict(self) -> Dict:
+                             ^
+src/learning/champion_tracker.py: note: In member "from_dict" of class "ChampionStrategy":
+src/learning/champion_tracker.py:222:25: error: Missing type parameters for
+generic type "Dict"  [type-arg]
+        def from_dict(data: Dict) -> 'ChampionStrategy':
+                            ^
+src/learning/champion_tracker.py: note: In member "__init__" of class "ChampionTracker":
+src/learning/champion_tracker.py:316:23: error: Name "HallOfFameRepository" is
+not defined  [name-defined]
+            hall_of_fame: 'HallOfFameRepository',
+                          ^
+src/learning/champion_tracker.py:317:18: error: Name "IterationHistory" is not
+defined  [name-defined]
+            history: 'IterationHistory',
+                     ^
+src/learning/champion_tracker.py:318:21: error: Name "AntiChurnManager" is not
+defined  [name-defined]
+            anti_churn: 'AntiChurnManager',
+                        ^
+src/learning/champion_tracker.py: note: At top level:
+src/learning/champion_tracker.py:826:1: error: Cannot find implementation or
+library stub for module named "performance_attributor"  [import-not-found]
+                from performance_attributor import extract_strategy_params...
+    ^
+src/learning/champion_tracker.py:826:1: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+src/learning/champion_tracker.py: note: In member "compare_with_champion" of class "ChampionTracker":
+src/learning/champion_tracker.py:955:13: error: Returning Any from function
+declared to return "dict[str, Any] | None"  [no-any-return]
+                return compare_strategies(
+                ^
+src/learning/champion_tracker.py: note: In member "_validate_multi_objective" of class "ChampionTracker":
+src/learning/champion_tracker.py:1016:13: error: Unsupported target for indexed
+assignment ("object")  [index]
+                validation_result['details']['disabled'] = True
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/champion_tracker.py:1083:17: error: "object" has no attribute
+"append"  [attr-defined]
+                    validation_result['failed_criteria'].append('calmar_ra...
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/champion_tracker.py:1093:9: error: Unsupported target for indexed
+assignment ("object")  [index]
+            validation_result['details']['calmar_check'] = calmar_check
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/champion_tracker.py:1138:17: error: "object" has no attribute
+"append"  [attr-defined]
+                    validation_result['failed_criteria'].append('max_drawd...
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/champion_tracker.py:1148:9: error: Unsupported target for indexed
+assignment ("object")  [index]
+            validation_result['details']['drawdown_check'] = drawdown_chec...
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/champion_tracker.py:1166:65: error: Argument 1 to "join" of "str"
+has incompatible type "object"; expected "Iterable[str]"  [arg-type]
+    ... f"Multi-objective validation FAILED: {', '.join(validation_result['fa...
+                                                        ^~~~~~~~~~~~~~~~~~~~~...
+src/learning/champion_tracker.py:1171:30: error: "object" has no attribute
+"__iter__"; maybe "__dir__" or "__str__"? (not iterable)  [attr-defined]
+                for criterion in validation_result['failed_criteria']:
+                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/champion_tracker.py:1172:26: error: "object" has no attribute
+"get"  [attr-defined]
+                    detail = validation_result['details'].get(f"{criterion...
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/iteration_executor.py: note: In member "__init__" of class "IterationExecutor":
+src/learning/iteration_executor.py:153:42: error: Incompatible types in
+assignment (expression has type "None", variable has type "StrategyFactory") 
+[assignment]
+                    self._strategy_factory = None
+                                             ^~~~
+src/learning/iteration_executor.py:176:48: error: Missing type parameters for
+generic type "Callable"  [type-arg]
+            self._factor_logic_registry: Dict[str, Callable] = {}
+                                                   ^
+src/learning/iteration_executor.py: note: In member "execute_iteration" of class "IterationExecutor":
+src/learning/iteration_executor.py:396:30: error: Argument "execution_result"
+to "IterationRecord" has incompatible type "dict[str, Any] | ExecutionResult";
+expected "dict[str, Any]"  [arg-type]
+                execution_result=execution_result.__dict__ if hasattr(exec...
+                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/learning/iteration_executor.py: note: In member "_load_recent_history" of class "IterationExecutor":
+src/learning/iteration_executor.py:414:52: error: Missing type parameters for
+generic type "list"  [type-arg]
+        def _load_recent_history(self, window: int) -> list:
+                                                       ^
+src/learning/iteration_executor.py: note: In member "_generate_feedback" of class "IterationExecutor":
+src/learning/iteration_executor.py:435:50: error: Missing type parameters for
+generic type "list"  [type-arg]
+        def _generate_feedback(self, recent_records: list, iteration_num: ...
+                                                     ^
+src/learning/iteration_executor.py: note: In member "_decide_generation_method" of class "IterationExecutor":
+src/learning/iteration_executor.py:483:13: error: Returning Any from function
+declared to return "bool"  [no-any-return]
+                return self.validated_config.should_use_llm()
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/iteration_executor.py:508:9: error: Returning Any from function
+declared to return "bool"  [no-any-return]
+            return use_llm
+            ^~~~~~~~~~~~~~
+src/learning/iteration_executor.py: note: In member "_decide_generation_method_legacy" of class "IterationExecutor":
+src/learning/iteration_executor.py:529:9: error: Returning Any from function
+declared to return "bool"  [no-any-return]
+            return use_llm
+            ^~~~~~~~~~~~~~
+src/learning/iteration_executor.py: note: In member "_generate_with_factor_graph" of class "IterationExecutor":
+src/learning/iteration_executor.py:632:59: error: Argument 1 to "get" of "dict"
+has incompatible type "str | None"; expected "str"  [arg-type]
+    ...   parent_strategy = self._strategy_registry.get(champion.strategy_id)
+                                                        ^~~~~~~~~~~~~~~~~~~~
+src/learning/iteration_executor.py:673:31: error: Unsupported operand types for
++ ("None" and "int")  [operator]
+                    strategy_id = f"fg_{iteration_num}_{champion.strategy_...
+                                  ^
+src/learning/iteration_executor.py:673:31: note: Left operand is of type "int | None"
+src/learning/iteration_executor.py:674:39: error: Unsupported operand types for
++ ("None" and "int")  [operator]
+                    strategy_generation = champion.strategy_generation + 1
+                                          ^
+src/learning/iteration_executor.py:674:39: note: Left operand is of type "int | None"
+src/learning/iteration_executor.py:677:48: error: List item 0 has incompatible
+type "str | None"; expected "str"  [list-item]
+                    mutated_strategy.parent_ids = [champion.strategy_id]
+                                                   ^~~~~~~~~~~~~~~~~~~~
+src/learning/iteration_executor.py: note: In member "_extract_metrics" of class "IterationExecutor":
+src/learning/iteration_executor.py:928:23: error: "MetricsExtractor" has no
+attribute "extract"  [attr-defined]
+                metrics = self.metrics_extractor.extract(execution_result....
+                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/iteration_executor.py:929:13: error: Returning Any from function
+declared to return "dict[str, float]"  [no-any-return]
+                return metrics
+                ^~~~~~~~~~~~~~
+src/learning/iteration_executor.py: note: In member "_classify_result" of class "IterationExecutor":
+src/learning/iteration_executor.py:963:74: error: Argument 1 to
+"classify_error" of "ErrorClassifier" has incompatible type "StrategyMetrics";
+expected "str"  [arg-type]
+    ...cation_result = self.error_classifier.classify_error(strategy_metrics)
+                                                            ^~~~~~~~~~~~~~~~
+src/learning/iteration_executor.py:972:34: error: "ErrorCategory" has no
+attribute "level"  [attr-defined]
+                return level_map.get(classification_result.level, "LEVEL_0...
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/learning/learning_loop.py: note: In member "__init__" of class "LearningLoop":
+src/learning/learning_loop.py:119:39: error: Call to untyped function
+"FeedbackGenerator" in typed context  [no-untyped-call]
+                self.feedback_generator = FeedbackGenerator(
+                                          ^
+src/learning/learning_loop.py: note: In function "_setup_signal_handlers":
+src/learning/learning_loop.py:265:9: error: Function is missing a type
+annotation  [no-untyped-def]
+            def sigint_handler(signum, frame):
+            ^
+src/learning/learning_loop.py: note: In member "_show_progress" of class "LearningLoop":
+src/learning/learning_loop.py:335:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def _show_progress(self, iteration_num: int, record) -> None:
+        ^
+src/generators/__init__.py:3: note: In module imported here:
+src/generators/template_parameter_generator.py: note: In member "__init__" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:63:5: error: Function is missing
+a type annotation  [no-untyped-def]
+        def __init__(self, template_name="Momentum", model="gemini-2.5-fla...
+        ^
+src/generators/template_parameter_generator.py: note: In member "_build_prompt" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:79:5: error: Function is missing
+a type annotation  [no-untyped-def]
+        def _build_prompt(self, context):
+        ^
+src/generators/template_parameter_generator.py:182:16: error: Call to untyped
+function "_should_force_exploration" in typed context  [no-untyped-call]
+                if self._should_force_exploration(context.iteration_num):
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py: note: In member "_should_force_exploration" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:241:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def _should_force_exploration(self, iteration_num):
+        ^
+src/generators/template_parameter_generator.py: note: In member "_sanitize_parsed_dict" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:254:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def _sanitize_parsed_dict(self, parsed):
+        ^
+src/generators/template_parameter_generator.py: note: In member "_parse_response" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:315:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def _parse_response(self, response_text):
+        ^
+src/generators/template_parameter_generator.py:355:24: error: Call to untyped
+function "_sanitize_parsed_dict" in typed context  [no-untyped-call]
+                    return self._sanitize_parsed_dict(parsed)
+                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:367:28: error: Call to untyped
+function "_sanitize_parsed_dict" in typed context  [no-untyped-call]
+                        return self._sanitize_parsed_dict(parsed)
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:379:28: error: Call to untyped
+function "_sanitize_parsed_dict" in typed context  [no-untyped-call]
+                        return self._sanitize_parsed_dict(parsed)
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:407:28: error: Call to untyped
+function "_sanitize_parsed_dict" in typed context  [no-untyped-call]
+                        return self._sanitize_parsed_dict(parsed)
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py: note: In member "_validate_params" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:414:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def _validate_params(self, params):
+        ^
+src/generators/template_parameter_generator.py: note: In member "_call_llm_for_parameters" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:486:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def _call_llm_for_parameters(self, prompt, iteration_num=0):
+        ^
+src/generators/template_parameter_generator.py:507:26: error: Call to untyped
+function "_should_force_exploration" in typed context  [no-untyped-call]
+            is_exploration = self._should_force_exploration(iteration_num)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:516:20: error: Call to untyped
+function "_call_google_ai" in typed context  [no-untyped-call]
+                return self._call_google_ai(prompt, temperature)
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:521:24: error: Call to untyped
+function "_call_openrouter" in typed context  [no-untyped-call]
+                    return self._call_openrouter(prompt, temperature)
+                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py: note: In member "_call_google_ai" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:526:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def _call_google_ai(self, prompt, temperature):
+        ^
+src/generators/template_parameter_generator.py:536:9: error: Module
+"google.generativeai" does not explicitly export attribute "configure" 
+[attr-defined]
+            genai.configure(api_key=api_key)
+            ^~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:540:24: error: Module
+"google.generativeai" does not explicitly export attribute "GenerativeModel" 
+[attr-defined]
+            gemini_model = genai.GenerativeModel(model_name)
+                           ^~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:545:31: error: Module
+"google.generativeai" does not explicitly export attribute "GenerationConfig" 
+[attr-defined]
+                generation_config=genai.GenerationConfig(
+                                  ^~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py: note: In member "_call_openrouter" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:553:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def _call_openrouter(self, prompt, temperature):
+        ^
+src/generators/template_parameter_generator.py: note: At top level:
+src/generators/template_parameter_generator.py:555:1: error: Library stubs not
+installed for "requests"  [import-untyped]
+            import requests
+    ^
+src/generators/template_parameter_generator.py: note: In member "generate_parameters" of class "TemplateParameterGenerator":
+src/generators/template_parameter_generator.py:591:5: error: Function is
+missing a type annotation  [no-untyped-def]
+        def generate_parameters(self, context):
+        ^
+src/generators/template_parameter_generator.py:634:22: error: Call to untyped
+function "_build_prompt" in typed context  [no-untyped-call]
+                prompt = self._build_prompt(context)
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:639:24: error: Call to untyped
+function "_call_llm_for_parameters" in typed context  [no-untyped-call]
+                response = self._call_llm_for_parameters(prompt, context.i...
+                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/generators/template_parameter_generator.py:644:22: error: Call to untyped
+function "_parse_response" in typed context  [no-untyped-call]
+                params = self._parse_response(response)
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/generators/template_parameter_generator.py:658:32: error: Call to untyped
+function "_validate_params" in typed context  [no-untyped-call]
+                is_valid, errors = self._validate_params(params)
+                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Found 350 errors in 51 files (checked 18 source files)

@@ -1,0 +1,227 @@
+anti_churn:
+  additive_threshold: 0.02
+  min_sharpe_for_champion: 0.5
+  post_probation_relative_threshold: 0.01
+  post_probation_threshold: 0.05
+  probation_period: 2
+  probation_threshold: 0.1
+  staleness:
+    staleness_check_interval: 50
+    staleness_cohort_percentile: 0.1
+    staleness_enabled: true
+    staleness_min_cohort_size: 5
+  target_update_frequency: 0.15
+  threshold_logging_enabled: true
+  tuning_range:
+    post_probation_threshold:
+    - 0.03
+    - 0.1
+    probation_period:
+    - 1
+    - 3
+    probation_threshold:
+    - 0.05
+    - 0.15
+backtest:
+  default_end_date: '2024-12-31'
+  default_start_date: '2018-01-01'
+  report_fee_comparison: true
+  transaction_costs:
+    conservative:
+      fee_ratio: 0.0
+      tax_ratio: 0.003
+    default_fee_ratio: 0.001425
+    default_tax_ratio: 0.003
+    realistic:
+      fee_ratio: 0.001425
+      tax_ratio: 0.003
+exit_mutation:
+  enabled: true
+  exit_mutation_probability: 0.3
+  monitoring:
+    log_mutations: true
+    log_validation: true
+    track_mutation_types: true
+  mutation_config:
+    parameter_ranges:
+      stop_loss_range:
+      - 0.8
+      - 1.2
+      take_profit_range:
+      - 0.9
+      - 1.3
+      trailing_range:
+      - 0.85
+      - 1.25
+    tier1_weight: 0.5
+    tier2_weight: 0.3
+    tier3_weight: 0.2
+  validation:
+    max_retries: 3
+    validation_timeout: 5
+features:
+  enable_adaptive_tuning: false
+  enable_anti_churn: true
+fitness:
+  diversity_calculation:
+    correlation_weight: 0.3
+    factor_weight: 0.4
+    risk_weight: 0.3
+  hybrid_structured_ratio: ${HYBRID_STRUCTURED_RATIO:0.80}
+  mode: ${LLM_MODE:structured}
+  multi_objective_weights:
+    diversity: 0.3
+    sharpe: 0.7
+  similarity_rejection:
+    correlation_threshold: 0.75
+    factor_overlap_threshold: 0.8
+learning_loop:
+  backtest:
+    resample: ${BACKTEST_RESAMPLE:M}
+    timeout_seconds: ${BACKTEST_TIMEOUT:420}
+  champion:
+    file: ${CHAMPION_FILE:artifacts/data/champion.json}
+  continue_on_error: ${CONTINUE_ON_ERROR:false}
+  history:
+    file: ${HISTORY_FILE:artifacts/data/innovations.jsonl}
+    window: ${HISTORY_WINDOW:5}
+  llm:
+    retry_count: ${LLM_RETRY_COUNT:3}
+  logging:
+    log_dir: ${LOG_DIR:logs}
+    log_level: ${LOG_LEVEL:INFO}
+    log_to_console: ${LOG_TO_CONSOLE:true}
+    log_to_file: ${LOG_TO_FILE:true}
+  max_iterations: 1
+llm:
+  enabled: false
+  fallback:
+    enabled: true
+    max_retries: 3
+    retry_delay: 2
+  gemini:
+    api_key: ${GOOGLE_API_KEY}
+    model: ${LLM_MODEL:gemini-2.5-flash}
+    safety:
+      block_none: false
+  generation:
+    max_tokens: 2000
+    temperature: 0.7
+    timeout: 60
+  innovation_rate: 0.0
+  model: ${LLM_MODEL:google/gemini-2.5-flash}
+  openai:
+    api_key: ${OPENAI_API_KEY}
+    model: ${LLM_MODEL:gpt-4}
+    organization: ${OPENAI_ORG_ID}
+  openrouter:
+    api_key: ${OPENROUTER_API_KEY}
+    app_name: finlab-innovation
+    http_referer: https://github.com/finlab-project
+    model: ${LLM_MODEL:anthropic/claude-3.5-sonnet}
+  provider: openrouter
+maintenance:
+  archival_percentage: 0.2
+  backup_retention_days: 7
+  compression_age_days: 180
+  contender_threshold: 100
+multi_objective:
+  calmar_retention_ratio: 0.9
+  enabled: true
+  max_drawdown_tolerance: 1.1
+mutation:
+  exit_mutation:
+    bounds:
+      holding_period_days:
+        max: 60
+        min: 1
+      stop_loss_pct:
+        max: 0.2
+        min: 0.01
+      take_profit_pct:
+        max: 0.5
+        min: 0.05
+      trailing_stop_offset:
+        max: 0.05
+        min: 0.005
+    enabled: true
+    gaussian_std_dev: 0.15
+    weight: 0.2
+resource_monitoring:
+  alert_on_excessive_churn: true
+  alert_on_stagnation: true
+  alerting:
+    enabled: ${ALERTS_ENABLED:true}
+    evaluation_interval: ${ALERT_EVALUATION_INTERVAL:10}
+    suppression_window: ${ALERT_SUPPRESSION_WINDOW:300}
+    thresholds:
+      cpu_percent: ${CPU_THRESHOLD:90.0}
+      memory_percent: ${MEMORY_THRESHOLD:80.0}
+      orphaned_containers: ${ORPHANED_THRESHOLD:3}
+      success_rate_percent: ${SUCCESS_RATE_THRESHOLD:20.0}
+  config_file: config/monitoring_config.yaml
+  container_monitor:
+    auto_cleanup: ${CONTAINER_AUTO_CLEANUP:true}
+    enabled: ${CONTAINER_MONITOR_ENABLED:true}
+    scan_interval: ${CONTAINER_STATS_INTERVAL:30}
+  diversity_monitor:
+    collapse_threshold: ${DIVERSITY_COLLAPSE_THRESHOLD:0.1}
+    collapse_window: ${DIVERSITY_COLLAPSE_WINDOW:5}
+    enabled: ${DIVERSITY_MONITOR_ENABLED:true}
+    staleness_threshold: ${CHAMPION_STALENESS_THRESHOLD:20}
+  enabled: ${MONITORING_ENABLED:true}
+  grafana:
+    dashboard_file: ${GRAFANA_DASHBOARD:config/grafana_dashboard.json}
+    refresh_interval: ${GRAFANA_REFRESH:5}
+  log_champion_updates: true
+  prometheus:
+    enabled: ${PROMETHEUS_ENABLED:true}
+    endpoint: ${PROMETHEUS_ENDPOINT:/metrics}
+    port: ${PROMETHEUS_PORT:8000}
+  resource_monitor:
+    collection_interval: ${RESOURCE_COLLECTION_INTERVAL:5}
+    enabled: ${RESOURCE_MONITOR_ENABLED:true}
+sandbox:
+  docker:
+    cpu_count: ${DOCKER_CPU_LIMIT:0.5}
+    image: ${DOCKER_IMAGE:finlab-sandbox:latest}
+    memory_limit: ${DOCKER_MEMORY_LIMIT:2g}
+    network_mode: ${DOCKER_NETWORK_MODE:bridge}
+    read_only_filesystem: ${DOCKER_READ_ONLY:true}
+    seccomp_profile: ${SECCOMP_PROFILE:config/seccomp_profile.json}
+    timeout_seconds: ${DOCKER_TIMEOUT:600}
+  enabled: ${SANDBOX_ENABLED:true}
+  monitoring:
+    enabled: ${MONITORING_ENABLED:true}
+    export_metrics: ${EXPORT_METRICS:true}
+  security:
+    validation_enabled: ${VALIDATION_ENABLED:true}
+structured_innovation:
+  code_generation:
+    check_imports: ${CHECK_IMPORTS:true}
+    debug_mode: ${CODE_GEN_DEBUG:false}
+    timeout: ${CODE_GEN_TIMEOUT:10}
+    validate_ast: ${VALIDATE_GENERATED_CODE:true}
+  extraction:
+    cleanup_enabled: ${CLEAN_YAML:true}
+    max_attempts: ${EXTRACTION_MAX_ATTEMPTS:3}
+    multi_pattern: ${MULTI_PATTERN_EXTRACTION:true}
+  fallback:
+    auto_fallback: ${AUTO_FALLBACK:true}
+    fallback_mode: ${FALLBACK_MODE:factor_graph}
+    log_fallbacks: ${LOG_FALLBACKS:true}
+  monitoring:
+    export_metrics: ${EXPORT_YAML_METRICS:true}
+    log_code_generation: ${LOG_CODE_GEN:true}
+    log_validation: ${LOG_VALIDATION:true}
+  validation:
+    detailed_errors: ${YAML_DETAILED_ERRORS:true}
+    max_retries: ${YAML_VALIDATION_RETRIES:3}
+    strict_mode: ${YAML_STRICT_MODE:true}
+    timeout: ${YAML_VALIDATION_TIMEOUT:5}
+yaml_validation:
+  enabled: true
+  normalization:
+    debug_mode: false
+    enabled: true
+    strict_mode: false

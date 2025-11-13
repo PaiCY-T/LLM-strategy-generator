@@ -1,0 +1,230 @@
+# RSI Mean Reversion Strategy
+# ============================
+# RSI-based mean reversion with fundamental quality filter
+#
+# Strategy Logic:
+# - Buy when RSI <30 (oversold)
+# - Exit when RSI >70 (overbought)
+# - Filter for quality companies (high ROE)
+# - Factor-weighted by ROE for position sizing
+# - Designed for quality stock pullbacks
+#
+# Expected Performance: Sharpe 1.4-2.0, Annual Return 14-22%, Turnover: Medium-High
+# Market Conditions: Best in consolidating markets with quality stock pullbacks
+# Risk Level: Medium (quality filter reduces risk)
+
+metadata:
+  name: "RSI Quality Mean Reversion"
+  description: "RSI mean reversion strategy buying quality stocks (high ROE) at RSI <30 oversold levels, exiting at RSI >70, factor-weighted by ROE"
+  strategy_type: "mean_reversion"
+  rebalancing_frequency: "W-WED"  # Weekly Wednesday rebalancing
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - mean-reversion
+    - rsi
+    - quality
+    - fundamental
+    - factor-weighted
+    - pullback
+  risk_level: "medium"
+
+indicators:
+  # Technical indicators
+  technical_indicators:
+    # RSI for oversold/overbought
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # Stochastic for additional confirmation
+    - name: "stoch_k"
+      type: "Stochastic"
+      period: 14
+      source: "data.get('STOCH_K')"
+
+    - name: "stoch_d"
+      type: "Stochastic"
+      period: 3
+      source: "data.get('STOCH_D')"
+
+    # Moving averages for trend context
+    - name: "ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('MA_20')"
+
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+    # ADX for trend strength
+    - name: "adx_14"
+      type: "ADX"
+      period: 14
+      source: "data.get('ADX_14')"
+
+  # Fundamental factors for quality
+  fundamental_factors:
+    # Quality metrics
+    - name: "roe"
+      field: "ROE"
+      source: "data.get('ROE')"
+      transformation: "winsorize"
+
+    - name: "operating_margin"
+      field: "operating_margin"
+      source: "data.get('operating_margin')"
+
+    - name: "net_margin"
+      field: "net_margin"
+      source: "data.get('net_margin')"
+
+    # Financial health
+    - name: "debt_to_equity"
+      field: "debt_to_equity"
+      source: "data.get('debt_to_equity')"
+
+    - name: "current_ratio"
+      field: "current_ratio"
+      source: "data.get('current_ratio')"
+
+  # Custom calculations
+  custom_calculations:
+    # Quality score (for position weighting)
+    - name: "quality_score"
+      expression: "roe * operating_margin * (1 / (1 + debt_to_equity))"
+      description: "Combined quality metric: ROE × Operating Margin / (1 + D/E)"
+
+    # Oversold score
+    - name: "oversold_score"
+      expression: "(35 - rsi_14) * (25 - stoch_k) / 100"
+      description: "Combined oversold measure from RSI and Stochastic"
+
+    # Distance from MA (pullback measure)
+    - name: "pullback_distance"
+      expression: "(ma_20 - close) / ma_20"
+      description: "Distance below 20-day MA as percentage"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # RSI oversold
+    - condition: "rsi_14 < 30"
+      description: "RSI oversold (<30)"
+
+    # Stochastic confirmation
+    - condition: "stoch_k < 25"
+      description: "Stochastic %K oversold (<25)"
+
+    # Stochastic bullish crossover
+    - condition: "stoch_k > stoch_d"
+      description: "Stochastic %K above %D (bullish signal)"
+
+    # Quality filters - high quality companies
+    - condition: "roe > 0.15"
+      description: "High ROE (>15%)"
+
+    - condition: "operating_margin > 0.10"
+      description: "Strong operating margin (>10%)"
+
+    - condition: "net_margin > 0.05"
+      description: "Positive net margin (>5%)"
+
+    # Financial health
+    - condition: "debt_to_equity < 1.5"
+      description: "Reasonable leverage (D/E <1.5)"
+
+    - condition: "current_ratio > 1.2"
+      description: "Good liquidity (Current Ratio >1.2)"
+
+    # Long-term trend context (prefer uptrends)
+    - condition: "close > ma_50 * 0.92"
+      description: "Within 8% of 50-day MA (long-term support)"
+
+    # Weak trend (better for mean reversion)
+    - condition: "adx_14 < 28"
+      description: "Weak trend (ADX <28)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # Liquidity requirements
+  min_liquidity:
+    average_volume_20d: 80000000  # 80M minimum
+
+exit_conditions:
+  # Stop loss
+  stop_loss_pct: 0.10  # 10% stop loss
+
+  # Take profit
+  take_profit_pct: 0.15  # 15% take profit
+
+  # Conditional exits
+  conditional_exits:
+    # Exit when RSI overbought
+    - condition: "rsi_14 > 70"
+      description: "RSI overbought (>70) - mean reversion complete"
+
+    # Exit when Stochastic overbought
+    - condition: "stoch_k > 75"
+      description: "Stochastic overbought (>75)"
+
+    # Exit when price returns to 20-day MA
+    - condition: "close > ma_20"
+      description: "Price above 20-day MA (pullback recovered)"
+
+    # Exit if quality deteriorates
+    - condition: "roe < 0.12"
+      description: "ROE deteriorated below 12%"
+
+    - condition: "operating_margin < 0.08"
+      description: "Operating margin fell below 8%"
+
+    # Exit if leverage increases
+    - condition: "debt_to_equity > 2.0"
+      description: "Leverage increased above 2.0"
+
+  # Holding period
+  holding_period_days: 40
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Factor-weighted by ROE
+  method: "factor_weighted"
+
+  # Maximum 20 positions
+  max_positions: 20
+
+  # Maximum 10% per position
+  max_position_pct: 0.10
+
+  # Minimum 3% per position
+  min_position_pct: 0.03
+
+  # Weight by quality score
+  weighting_field: "quality_score"
+
+risk_management:
+  # Sector concentration limit
+  max_sector_exposure: 0.30
+
+  # Rebalance threshold
+  rebalance_threshold: 0.15
+
+  # Drawdown limit
+  max_drawdown_limit: 0.18
+
+  # Cash reserve
+  cash_reserve_pct: 0.05
+
+backtest_config:
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.001

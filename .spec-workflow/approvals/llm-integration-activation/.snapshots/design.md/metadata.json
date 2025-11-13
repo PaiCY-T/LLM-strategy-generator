@@ -1,0 +1,14 @@
+{
+  "filePath": ".claude/specs/llm-integration-activation/design.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-24T22:20:17.837Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761344417779_e49k8cpn9",
+      "approvalTitle": "LLM Integration Activation - Design Document"
+    }
+  ]
+}

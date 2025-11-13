@@ -1,0 +1,20 @@
+{
+  "mode_name": "Hybrid Mode",
+  "config_path": "config/phase5_validation_hybrid.yaml",
+  "start_time": "2025-11-12T22:40:02.578454",
+  "end_time": "2025-11-12T22:41:59.360873",
+  "duration_seconds": 116.782419,
+  "total_iterations": 20,
+  "successful_iterations": 0,
+  "failed_iterations": 20,
+  "success_rate": 0.0,
+  "level_0_count": 20,
+  "level_1_count": 0,
+  "level_2_count": 0,
+  "level_3_count": 0,
+  "average_sharpe": 0.0,
+  "best_sharpe": 0.0,
+  "champion_sharpe": 2.5604600394789623,
+  "api_errors_detected": 0,
+  "innovation_rate": 50
+}

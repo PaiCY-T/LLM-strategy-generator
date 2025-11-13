@@ -1,0 +1,533 @@
+{
+  "generation": 0,
+  "population": [
+    {
+      "id": "init_0",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 0 using Momentum template\n# Template type: Momentum\n# Strategy index: 0\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 0\nmomentum = close.pct_change(20)\nsignal = momentum.rank(axis=1)",
+      "parameters": {
+        "template": "Momentum",
+        "index": 0,
+        "lookback": 20
+      },
+      "metrics": {
+        "sharpe_ratio": 2.0000128317800208,
+        "calmar_ratio": 7.65910875401671,
+        "max_drawdown": -0.15979687988515298,
+        "total_return": 0.22009787296062377,
+        "win_rate": 0.0,
+        "annual_return": 1.223901681592932,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 4,
+      "crowding_distance": 0.1969500342542569,
+      "timestamp": "2025-10-19T23:30:20.323928",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "init_1",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 1 using Value template\n# Template type: Value\n# Strategy index: 1\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 1\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4')  # Strategy 1\nvalue = 1 / pe  # Index 1",
+      "parameters": {
+        "template": "Value",
+        "index": 1,
+        "lookback": 25
+      },
+      "metrics": {
+        "sharpe_ratio": -0.7450558899189027,
+        "calmar_ratio": -1.824307164709268,
+        "max_drawdown": -0.18711570881409553,
+        "total_return": -0.10580430433686705,
+        "win_rate": 0.0,
+        "annual_return": -0.3413565282192076,
+        "success": true
+      },
+      "novelty_score": 0.1,
+      "pareto_rank": 7,
+      "crowding_distance": 0.39788921850054426,
+      "timestamp": "2025-10-19T23:30:20.323961",
+      "template_type": "Value",
+      "metadata": {}
+    },
+    {
+      "id": "init_2",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 2 using Quality template\n# Template type: Quality\n# Strategy index: 2\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 2\nroe = data.get('price:\u6536\u76e4\u50f9')  # Strategy 2\nquality = roe.rolling(12).mean()",
+      "parameters": {
+        "template": "Quality",
+        "index": 2,
+        "lookback": 30
+      },
+      "metrics": {
+        "sharpe_ratio": 1.245017462545397,
+        "calmar_ratio": 3.6925493837094105,
+        "max_drawdown": -0.16316966964450755,
+        "total_return": 0.14378933836717955,
+        "win_rate": 0.0,
+        "annual_return": 0.6025120630858944,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 5,
+      "crowding_distance": 0.2502063773624301,
+      "timestamp": "2025-10-19T23:30:20.323968",
+      "template_type": "Quality",
+      "metadata": {}
+    },
+    {
+      "id": "init_3",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 3 using Mixed template\n# Template type: Mixed\n# Strategy index: 3\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 3\nfactor1 = close.pct_change(18)\nfactor2 = close.rolling(26).mean()\nsignal = factor1 * 0.3 + factor2 * (1 - 0.3)",
+      "parameters": {
+        "template": "Mixed",
+        "index": 3,
+        "lookback": 35
+      },
+      "metrics": {
+        "sharpe_ratio": 2.088961984704661,
+        "calmar_ratio": 9.242921554974153,
+        "max_drawdown": -0.13510620141132176,
+        "total_return": 0.24219739025434395,
+        "win_rate": 0.0,
+        "annual_return": 1.2487760212353853,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 3,
+      "crowding_distance": 0.15945416919176988,
+      "timestamp": "2025-10-19T23:30:20.323975",
+      "template_type": "Mixed",
+      "metadata": {}
+    },
+    {
+      "id": "init_4",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 4 using Momentum template\n# Template type: Momentum\n# Strategy index: 4\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 4\nmomentum = close.pct_change(40)\nsignal = momentum.rank(axis=1)",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": {
+        "sharpe_ratio": -1.3331453435785594,
+        "calmar_ratio": -2.474971415035721,
+        "max_drawdown": -0.20185687970016988,
+        "total_return": -0.17138064603475733,
+        "win_rate": 0.0,
+        "annual_return": -0.4995900071862247,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 8,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T23:30:20.323982",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "init_5",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 5 using Value template\n# Template type: Value\n# Strategy index: 5\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 5\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4')  # Strategy 5\nvalue = 1 / pe  # Index 5",
+      "parameters": {
+        "template": "Value",
+        "index": 5,
+        "lookback": 45
+      },
+      "metrics": {
+        "sharpe_ratio": -2.26774935160201,
+        "calmar_ratio": -2.405805736686264,
+        "max_drawdown": -0.2746875707879875,
+        "total_return": -0.25955903905861966,
+        "win_rate": 0.0,
+        "annual_return": -0.6608449335981545,
+        "success": true
+      },
+      "novelty_score": 0.1,
+      "pareto_rank": 8,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T23:30:20.323986",
+      "template_type": "Value",
+      "metadata": {}
+    },
+    {
+      "id": "init_6",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 6 using Quality template\n# Template type: Quality\n# Strategy index: 6\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 6\nroe = data.get('price:\u6536\u76e4\u50f9')  # Strategy 6\nquality = roe.rolling(16).mean()",
+      "parameters": {
+        "template": "Quality",
+        "index": 6,
+        "lookback": 50
+      },
+      "metrics": {
+        "sharpe_ratio": 4.883862358165627,
+        "calmar_ratio": 99.57948456798569,
+        "max_drawdown": -0.06985459689023271,
+        "total_return": 0.735450926689766,
+        "win_rate": 0.0,
+        "annual_return": 6.95608475303379,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 1,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T23:30:20.323991",
+      "template_type": "Quality",
+      "metadata": {}
+    },
+    {
+      "id": "init_7",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 7 using Mixed template\n# Template type: Mixed\n# Strategy index: 7\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 7\nfactor1 = close.pct_change(22)\nfactor2 = close.rolling(34).mean()\nsignal = factor1 * 0.7 + factor2 * (1 - 0.7)",
+      "parameters": {
+        "template": "Mixed",
+        "index": 7,
+        "lookback": 55
+      },
+      "metrics": {
+        "sharpe_ratio": 1.3253430502126122,
+        "calmar_ratio": 6.524619488205846,
+        "max_drawdown": -0.09946407541723011,
+        "total_return": 0.17714344225006418,
+        "win_rate": 0.0,
+        "annual_return": 0.6489652448436356,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 3,
+      "crowding_distance": 0.39910842697624305,
+      "timestamp": "2025-10-19T23:30:20.323996",
+      "template_type": "Mixed",
+      "metadata": {}
+    },
+    {
+      "id": "init_8",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 8 using Momentum template\n# Template type: Momentum\n# Strategy index: 8\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 8\nmomentum = close.pct_change(60)\nsignal = momentum.rank(axis=1)",
+      "parameters": {
+        "template": "Momentum",
+        "index": 8,
+        "lookback": 60
+      },
+      "metrics": {
+        "sharpe_ratio": 0.8889587980080654,
+        "calmar_ratio": 2.17287228872831,
+        "max_drawdown": -0.1760190819294439,
+        "total_return": 0.13638225761234235,
+        "win_rate": 0.0,
+        "annual_return": 0.38246698541188673,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 6,
+      "crowding_distance": 0.3232960344043567,
+      "timestamp": "2025-10-19T23:30:20.324000",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "init_9",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 9 using Value template\n# Template type: Value\n# Strategy index: 9\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 9\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4')  # Strategy 9\nvalue = 1 / pe  # Index 9",
+      "parameters": {
+        "template": "Value",
+        "index": 9,
+        "lookback": 65
+      },
+      "metrics": {
+        "sharpe_ratio": 1.7157774611334684,
+        "calmar_ratio": 6.041730608114883,
+        "max_drawdown": -0.14453493487591695,
+        "total_return": 0.22607962869752818,
+        "win_rate": 0.0,
+        "annual_return": 0.8732411399817188,
+        "success": true
+      },
+      "novelty_score": 0.1,
+      "pareto_rank": 4,
+      "crowding_distance": 0.27935877211486143,
+      "timestamp": "2025-10-19T23:30:20.324004",
+      "template_type": "Value",
+      "metadata": {}
+    },
+    {
+      "id": "init_10",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 10 using Quality template\n# Template type: Quality\n# Strategy index: 10\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 10\nroe = data.get('price:\u6536\u76e4\u50f9')  # Strategy 10\nquality = roe.rolling(20).mean()",
+      "parameters": {
+        "template": "Quality",
+        "index": 10,
+        "lookback": 70
+      },
+      "metrics": {
+        "sharpe_ratio": -0.08426014241377963,
+        "calmar_ratio": -0.40700805916537447,
+        "max_drawdown": -0.2521574644536557,
+        "total_return": -0.045242899777679035,
+        "win_rate": 0.0,
+        "annual_return": -0.10263012021134432,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 7,
+      "crowding_distance": 0.38417626282478184,
+      "timestamp": "2025-10-19T23:30:20.324008",
+      "template_type": "Quality",
+      "metadata": {}
+    },
+    {
+      "id": "init_11",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 11 using Mixed template\n# Template type: Mixed\n# Strategy index: 11\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 11\nfactor1 = close.pct_change(26)\nfactor2 = close.rolling(42).mean()\nsignal = factor1 * 0.11 + factor2 * (1 - 0.11)",
+      "parameters": {
+        "template": "Mixed",
+        "index": 11,
+        "lookback": 75
+      },
+      "metrics": {
+        "sharpe_ratio": 2.035414208014676,
+        "calmar_ratio": 10.877368389778113,
+        "max_drawdown": -0.11497459451107413,
+        "total_return": 0.2360654807187592,
+        "win_rate": 0.0,
+        "annual_return": 1.2506210199623138,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 3,
+      "crowding_distance": 0.19748052972946767,
+      "timestamp": "2025-10-19T23:30:20.324013",
+      "template_type": "Mixed",
+      "metadata": {}
+    },
+    {
+      "id": "init_12",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 12 using Momentum template\n# Template type: Momentum\n# Strategy index: 12\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 12\nmomentum = close.pct_change(80)\nsignal = momentum.rank(axis=1)",
+      "parameters": {
+        "template": "Momentum",
+        "index": 12,
+        "lookback": 80
+      },
+      "metrics": {
+        "sharpe_ratio": 3.484014759827828,
+        "calmar_ratio": 46.73403071909416,
+        "max_drawdown": -0.07085965622450867,
+        "total_return": 0.479067692702591,
+        "win_rate": 0.0,
+        "annual_return": 3.3115573507406397,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 2,
+      "crowding_distance": 1.483349347384609,
+      "timestamp": "2025-10-19T23:30:20.324019",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "init_13",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 13 using Value template\n# Template type: Value\n# Strategy index: 13\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 13\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4')  # Strategy 13\nvalue = 1 / pe  # Index 13",
+      "parameters": {
+        "template": "Value",
+        "index": 13,
+        "lookback": 85
+      },
+      "metrics": {
+        "sharpe_ratio": 0.526177682725592,
+        "calmar_ratio": 1.347574100081178,
+        "max_drawdown": -0.13985842002742843,
+        "total_return": 0.10989829236957638,
+        "win_rate": 0.0,
+        "annual_return": 0.18846958450723728,
+        "success": true
+      },
+      "novelty_score": 0.1,
+      "pareto_rank": 4,
+      "crowding_distance": 0.2850622009151015,
+      "timestamp": "2025-10-19T23:30:20.324023",
+      "template_type": "Value",
+      "metadata": {}
+    },
+    {
+      "id": "init_14",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 14 using Quality template\n# Template type: Quality\n# Strategy index: 14\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 14\nroe = data.get('price:\u6536\u76e4\u50f9')  # Strategy 14\nquality = roe.rolling(24).mean()",
+      "parameters": {
+        "template": "Quality",
+        "index": 14,
+        "lookback": 90
+      },
+      "metrics": {
+        "sharpe_ratio": 2.093186941224612,
+        "calmar_ratio": 18.81873073358527,
+        "max_drawdown": -0.06772273992449689,
+        "total_return": 0.252082425406859,
+        "win_rate": 0.0,
+        "annual_return": 1.2744560071797317,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 1,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T23:30:20.324026",
+      "template_type": "Quality",
+      "metadata": {}
+    },
+    {
+      "id": "init_15",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 15 using Mixed template\n# Template type: Mixed\n# Strategy index: 15\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 15\nfactor1 = close.pct_change(30)\nfactor2 = close.rolling(50).mean()\nsignal = factor1 * 0.15 + factor2 * (1 - 0.15)",
+      "parameters": {
+        "template": "Mixed",
+        "index": 15,
+        "lookback": 95
+      },
+      "metrics": {
+        "sharpe_ratio": 0.17490413571859714,
+        "calmar_ratio": 0.02840689204268551,
+        "max_drawdown": -0.2827075884386995,
+        "total_return": 0.011014728980839328,
+        "win_rate": 0.0,
+        "annual_return": 0.008030843944426103,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 7,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T23:30:20.324030",
+      "template_type": "Mixed",
+      "metadata": {}
+    },
+    {
+      "id": "init_16",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 16 using Momentum template\n# Template type: Momentum\n# Strategy index: 16\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 16\nmomentum = close.pct_change(100)\nsignal = momentum.rank(axis=1)",
+      "parameters": {
+        "template": "Momentum",
+        "index": 16,
+        "lookback": 100
+      },
+      "metrics": {
+        "sharpe_ratio": 0.33400759402860836,
+        "calmar_ratio": 0.5462951263245123,
+        "max_drawdown": -0.15399173332068775,
+        "total_return": 0.028423809067020578,
+        "win_rate": 0.0,
+        "annual_return": 0.08412493340735572,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 5,
+      "crowding_distance": 0.25610364006993686,
+      "timestamp": "2025-10-19T23:30:20.324034",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "init_17",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 17 using Value template\n# Template type: Value\n# Strategy index: 17\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 17\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4')  # Strategy 17\nvalue = 1 / pe  # Index 17",
+      "parameters": {
+        "template": "Value",
+        "index": 17,
+        "lookback": 105
+      },
+      "metrics": {
+        "sharpe_ratio": -0.5238597658521194,
+        "calmar_ratio": -1.0509658873523477,
+        "max_drawdown": -0.2365907994756331,
+        "total_return": -0.05364826130008127,
+        "win_rate": 0.0,
+        "annual_return": -0.24864885951031013,
+        "success": true
+      },
+      "novelty_score": 0.1,
+      "pareto_rank": 7,
+      "crowding_distance": 0.4324652063485499,
+      "timestamp": "2025-10-19T23:30:20.324038",
+      "template_type": "Value",
+      "metadata": {}
+    },
+    {
+      "id": "init_18",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 18 using Quality template\n# Template type: Quality\n# Strategy index: 18\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 18\nroe = data.get('price:\u6536\u76e4\u50f9')  # Strategy 18\nquality = roe.rolling(28).mean()",
+      "parameters": {
+        "template": "Quality",
+        "index": 18,
+        "lookback": 110
+      },
+      "metrics": {
+        "sharpe_ratio": 3.426354781250276,
+        "calmar_ratio": 32.179229388486824,
+        "max_drawdown": -0.11555911350227609,
+        "total_return": 0.48707729984257897,
+        "win_rate": 0.0,
+        "annual_return": 3.7186032213199276,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 2,
+      "crowding_distance": 1.2972821163882986,
+      "timestamp": "2025-10-19T23:30:20.324043",
+      "template_type": "Quality",
+      "metadata": {}
+    },
+    {
+      "id": "init_19",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 19 using Mixed template\n# Template type: Mixed\n# Strategy index: 19\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 19\nfactor1 = close.pct_change(34)\nfactor2 = close.rolling(58).mean()\nsignal = factor1 * 0.19 + factor2 * (1 - 0.19)",
+      "parameters": {
+        "template": "Mixed",
+        "index": 19,
+        "lookback": 115
+      },
+      "metrics": {
+        "sharpe_ratio": 2.096884432919945,
+        "calmar_ratio": 9.571888178253477,
+        "max_drawdown": -0.15982547755057486,
+        "total_return": 0.2940160266095242,
+        "win_rate": 0.0,
+        "annual_return": 1.529831599150064,
+        "success": true
+      },
+      "novelty_score": 0.0,
+      "pareto_rank": 3,
+      "crowding_distance": 0.71368646502832,
+      "timestamp": "2025-10-19T23:30:20.324047",
+      "template_type": "Mixed",
+      "metadata": {}
+    }
+  ],
+  "generation_history": [],
+  "config": {
+    "population_size": 20,
+    "elite_count": 2,
+    "tournament_size": 3,
+    "mutation_rate": 0.1
+  },
+  "timestamp": "2025-10-19T23:30:20.423307"
+}

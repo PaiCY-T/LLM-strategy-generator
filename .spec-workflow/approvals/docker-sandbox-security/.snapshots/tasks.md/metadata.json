@@ -1,0 +1,22 @@
+{
+  "filePath": ".claude/specs/docker-sandbox-security/tasks.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-25T12:40:10.810Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761396010729_wdflt8y0n",
+      "approvalTitle": "Review tasks.md for docker-sandbox-security (15 tasks, 2-3 days)"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-25T14:16:04.351Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761396010729_wdflt8y0n",
+      "approvalTitle": "Review tasks.md for docker-sandbox-security (15 tasks, 2-3 days)"
+    }
+  ]
+}

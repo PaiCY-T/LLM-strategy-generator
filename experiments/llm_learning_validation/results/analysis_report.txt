@@ -1,0 +1,47 @@
+================================================================================
+LLM CHARACTERIZATION TEST - 300 ITERATIONS
+================================================================================
+
+📊 CLASSIFICATION DISTRIBUTION
+--------------------------------------------------------------------------------
+Total Iterations:     300
+
+LEVEL_0 (Failures):   300 (100.0%)
+LEVEL_1 (Executed):     0 (0.0%)
+LEVEL_2 (Weak):         0 (0.0%)
+LEVEL_3 (Success):      0 (0.0%)
+
+✅ Success Rate (LEVEL_1+): 0.0%
+🏆 Strong Success (LEVEL_3): 0.0%
+
+📈 SHARPE RATIO DISTRIBUTION
+--------------------------------------------------------------------------------
+⚠️  No valid Sharpe ratios found
+
+❌ ERROR PATTERN ANALYSIS
+--------------------------------------------------------------------------------
+Total Errors:         300
+
+Error Type Distribution:
+  missing_sim_call    : 300 (100.0%)
+
+Sample Error Messages (first 10):
+  1. Strategy code did not create 'report' variable. Ensure code calls sim() and assigns result to 'report'....
+
+🤖 GENERATION METHOD DISTRIBUTION
+--------------------------------------------------------------------------------
+Total Iterations:     300
+LLM Generated:        300 (100.0%)
+
+Method Distribution:
+  llm                 : 300 (100.0%)
+
+🏆 CHAMPION UPDATE ANALYSIS
+--------------------------------------------------------------------------------
+Total Updates:        0
+Update Rate:          0.0%
+Update Iterations:    []
+
+================================================================================
+END OF REPORT
+================================================================================

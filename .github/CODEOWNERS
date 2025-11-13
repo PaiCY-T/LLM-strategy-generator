@@ -1,0 +1,98 @@
+# CODEOWNERS - Architecture Refactoring Project
+#
+# This file defines code ownership for the architecture refactoring components.
+# Code owners are automatically requested for review when someone opens a pull
+# request that modifies code they own.
+#
+# Format: <path/pattern> @username @org/team-name
+#
+# Learn more: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# =============================================================================
+# Architecture Refactoring - Core Components
+# =============================================================================
+
+# Phase 1: Emergency Fix - Configuration Priority & Error Handling
+/src/learning/iteration_executor.py @architecture-team
+
+# Phase 2: Pydantic Validation - Type-Safe Configuration
+/src/learning/config_models.py @architecture-team
+
+# Phase 3: Strategy Pattern - Decoupled Generation Methods
+/src/learning/generation_strategies.py @architecture-team
+
+# Phase 4: Audit Trail - Decision Logging & Reporting
+/src/learning/audit_trail.py @architecture-team
+
+# =============================================================================
+# Test Suites - Quality Assurance
+# =============================================================================
+
+# Phase 1 Tests
+/tests/learning/test_iteration_executor_phase1.py @architecture-team @qa-team
+
+# Phase 2 Tests
+/tests/learning/test_config_models.py @architecture-team @qa-team
+
+# Phase 3 Tests
+/tests/learning/test_generation_strategies.py @architecture-team @qa-team
+
+# Phase 4 Tests
+/tests/learning/test_audit_trail.py @architecture-team @qa-team
+
+# Shadow Mode Tests - Behavioral Equivalence Validation
+/tests/learning/test_shadow_mode*.py @architecture-team @qa-team
+
+# =============================================================================
+# CI/CD & Quality Gates
+# =============================================================================
+
+# GitHub Actions Workflow
+/.github/workflows/architecture-refactoring.yml @architecture-team @devops-team
+
+# Shadow Mode Comparison Script
+/scripts/compare_shadow_outputs.py @architecture-team @qa-team
+
+# Branch Protection Configuration
+/.github/BRANCH_PROTECTION.md @architecture-team @devops-team
+
+# This File
+/.github/CODEOWNERS @architecture-team
+
+# =============================================================================
+# Documentation - Architecture & Design
+# =============================================================================
+
+# Phase Completion Summaries
+/.spec-workflow/specs/architecture-contradictions-fix/PHASE*_COMPLETION_SUMMARY.md @architecture-team
+
+# Shadow Mode Results
+/.spec-workflow/specs/architecture-contradictions-fix/SHADOW_MODE_RESULTS.md @architecture-team @qa-team
+
+# Architecture Documentation
+/docs/ARCHITECTURE_CONTRADICTIONS_ANALYSIS.md @architecture-team
+
+# =============================================================================
+# Notes for Maintainers
+# =============================================================================
+#
+# Team Aliases (configure in GitHub Organization settings):
+#   @architecture-team - Core architecture and refactoring specialists
+#   @qa-team - Quality assurance and testing specialists
+#   @devops-team - CI/CD and infrastructure specialists
+#
+# Review Requirements:
+#   - All PRs modifying owned files require approval from at least one code owner
+#   - Branch protection rules enforce code owner reviews
+#   - See .github/BRANCH_PROTECTION.md for complete requirements
+#
+# Emergency Bypass:
+#   - Only administrators can bypass code owner review requirements
+#   - Use emergency rollback via feature flags instead (see BRANCH_PROTECTION.md)
+#
+# Adding New Owners:
+#   1. Update this file with new ownership rules
+#   2. Ensure team aliases exist in GitHub Organization settings
+#   3. Test by creating a PR that modifies owned files
+#   4. Verify correct owners are auto-requested for review
+#

@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/validation-framework-critical-fixes/design.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-31T23:11:14.392Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761952274221_uz2ngww95",
+      "approvalTitle": "Design: Validation Framework Critical Fixes"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-31T23:22:31.483Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761952274221_uz2ngww95",
+      "approvalTitle": "Design: Validation Framework Critical Fixes"
+    }
+  ]
+}

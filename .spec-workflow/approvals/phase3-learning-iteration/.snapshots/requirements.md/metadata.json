@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/phase3-learning-iteration/requirements.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-30T22:55:46.403Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761864946193_k3pmxkdyv",
+      "approvalTitle": "Phase 3 Learning Iteration - Requirements Document"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-30T22:57:49.202Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761864946193_k3pmxkdyv",
+      "approvalTitle": "Phase 3 Learning Iteration - Requirements Document"
+    }
+  ]
+}

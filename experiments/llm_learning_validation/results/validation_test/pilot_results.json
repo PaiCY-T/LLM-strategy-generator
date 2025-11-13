@@ -1,0 +1,247 @@
+{
+  "llm_only": {
+    "group_name": "llm_only",
+    "innovation_rate": 1.0,
+    "num_runs": 1,
+    "iterations_per_run": 10,
+    "runs": [
+      {
+        "run_id": "llm_only_run1",
+        "iterations": [
+          {
+            "iteration_num": 0,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_0",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.0005145072937011719,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.535241",
+            "champion_updated": false,
+            "feedback_used": "First iteration - no previous history. Generate a basic momentum strategy."
+          },
+          {
+            "iteration_num": 1,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_1",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.00037670135498046875,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.596229",
+            "champion_updated": false,
+            "feedback_used": "Iteration 1: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 2,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_2",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.0005106925964355469,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.672386",
+            "champion_updated": false,
+            "feedback_used": "Iteration 2: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 3,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_3",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.0004153251647949219,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.735557",
+            "champion_updated": false,
+            "feedback_used": "Iteration 3: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 4,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_4",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.00041222572326660156,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.800709",
+            "champion_updated": false,
+            "feedback_used": "Iteration 4: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 5,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_5",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.00044083595275878906,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.856868",
+            "champion_updated": false,
+            "feedback_used": "Iteration 5: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 6,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_6",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.00043082237243652344,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.911871",
+            "champion_updated": false,
+            "feedback_used": "Iteration 6: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 7,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_7",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.0003666877746582031,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:57.968300",
+            "champion_updated": false,
+            "feedback_used": "Iteration 7: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 8,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_8",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.00038504600524902344,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:58.022949",
+            "champion_updated": false,
+            "feedback_used": "Iteration 8: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          },
+          {
+            "iteration_num": 9,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_9",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": false,
+              "error_type": "ValueError",
+              "error_message": "Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.",
+              "execution_time": 0.0003910064697265625,
+              "sharpe_ratio": null,
+              "total_return": null,
+              "max_drawdown": null,
+              "report": null,
+              "stack_trace": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/backtest/executor.py\", line 475, in _execute_strategy_in_process\n    positions_df = strategy.to_pipeline(data)\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 441, in to_pipeline\n    self.validate()\n  File \"/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/src/factor_graph/strategy.py\", line 550, in validate\n    raise ValueError(\nValueError: Strategy validation failed: Factor 'trailing_stop_10pct' requires inputs ['positions', 'entry_price'] which are not available. Available columns at this point: ['breakout_signal', 'close', 'high', 'low', 'momentum', 'open', 'volume']. Ensure all dependencies are added before this factor.\n"
+            },
+            "metrics": {},
+            "classification_level": "LEVEL_0",
+            "timestamp": "2025-11-10T22:13:58.077290",
+            "champion_updated": false,
+            "feedback_used": "Iteration 9: SUCCESS\n\nPerformance:\n- Sharpe: 0.000\n- Classification: LEVEL_0\n\nNot enough history for trend analysis yet. Keep building on this success.\n\nChampion target: 2.560\nGap to champion: 100.0% below\n"
+          }
+        ],
+        "history_file": "experiments/llm_learning_validation/results/validation_test/llm_only_run1_history.jsonl",
+        "champion_file": "experiments/llm_learning_validation/results/validation_test/llm_only_run1_champion.json"
+      }
+    ]
+  }
+}

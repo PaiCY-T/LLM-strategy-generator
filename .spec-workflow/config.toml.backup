@@ -1,0 +1,5 @@
+# Spec Workflow MCP Configuration
+projectDir = "/mnt/c/Users/jnpi/documents/finlab"
+autoStartDashboard = true
+port = 3456
+lang = "zh"

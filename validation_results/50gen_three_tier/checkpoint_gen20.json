@@ -1,0 +1,12 @@
+{
+  "generation": 20,
+  "timestamp": "2025-10-23T15:47:15.606495",
+  "population_size": 20,
+  "best_sharpe": 1.8616910974869467,
+  "tier_distribution": {
+    "tier1": 0.26,
+    "tier2": 0.59,
+    "tier3": 0.15,
+    "total_mutations": 200
+  }
+}

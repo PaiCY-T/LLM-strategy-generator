@@ -1,0 +1,55 @@
+decision_criteria:
+  criteria:
+  - name: Statistical Signal
+    test: Mann-Whitney U p < 0.1 (exploratory)
+  - name: Novelty Advantage
+    test: LLM-Only avg novelty > FG-Only + 15%
+  - name: Execution Stability
+    test: Failure rate < 5%
+  - name: Champion Quality
+    test: At least 1 champion with Sharpe > 0.8
+  min_criteria_met: 2
+execution:
+  continue_on_error: false
+  max_parallel_groups: 1
+  paths:
+    learning_config: config/learning_system.yaml
+    results_dir: experiments/llm_learning_validation/results
+    template_dir: LLM-strategy-generator/factor_graph/templates
+  timeout_seconds: 420
+experiment:
+  description: 'LLM-Only testing: 100% LLM innovation'
+  name: llm-learning-validation
+  version: 1.0.0
+groups:
+  llm_only:
+    description: Maximum LLM innovation
+    innovation_rate: 1.0
+    name: LLM-Only
+novelty:
+  baseline_file: artifacts/data/champion.json
+  template_dir: strategies/factor_graph_templates/
+  weights:
+    combination_patterns: 0.4
+    factor_diversity: 0.3
+    logic_complexity: 0.3
+phases:
+  full_study:
+    description: Comprehensive statistical study
+    iterations_per_run: 200
+    num_runs: 5
+    total_iterations: 3000
+  pilot:
+    description: Quick validation phase
+    iterations_per_run: 2
+    num_runs: 1
+    total_iterations: 6
+statistics:
+  significance_level: 0.05
+  tests:
+  - mann_whitney_u
+  - mann_kendall
+  - sliding_window
+storage:
+  format: jsonl
+  results_dir: artifacts/experiments/llm_validation/

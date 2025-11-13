@@ -1,0 +1,586 @@
+{
+  "records": [
+    {
+      "iteration_num": 0,
+      "timestamp": "2025-10-30T10:13:42.352859",
+      "model": "gemini-2.5-flash",
+      "code": "# 1. Load data\nclose = data.get('price:收盤價')\ntrading_value = data.get('price:成交金額')\nroe = data.get('fundamental_features:ROE稅後')\nrevenue_yoy = data.get('monthly_revenue:去年同月增減(%)')\nforeign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')\nrsi = data.indicator('RSI')\n# 2. Calculate factors\n# Factor 1: Long-term Price Momentum (60-day returns)\nmomentum = close.pct_change(60).shift(1)\n# Factor 2: Quality (ROE with 4-quarter smoothing)\n# ROE is quarterly, so ffill then rolling mean\nquality = roe.ffill().rolling(4).mean().shift(1)\n# Factor 3: Growth (Monthly Revenue YoY, forward-filled)\nrevenue_growth = revenue_yoy.ffill().shift(1)\n# Factor 4: Institutional Flow (20-day sum of foreign net buy)\ninstitutional_flow = foreign_net_buy.rolling(20).sum().shift(1)\n# 3. Combine factors (normalize first!)\nmomentum_rank = momentum.rank(axis=1, pct=True)\nquality_rank = quality.rank(axis=1, pct=True)\nrevenue_rank = revenue_growth.rank(axis=1, pct=True)\nflow_rank = institutional_flow.rank(axis=1, pct=True)\n# Combine with weights\ncombined_factor = (momentum_rank * 0.30 +\n                   quality_rank * 0.25 +\n                   revenue_rank * 0.25 +\n                   flow_rank * 0.20)\n# 4. Apply filters\n# Liquidity filter: Average daily trading value over 20 days > 70M TWD\nliquidity_filter = trading_value.rolling(20).mean().shift(1) > 70_000_000\n# Price filter: Close price > 20 TWD to avoid penny stocks\nprice_filter = close.shift(1) > 20\n# RSI filter: Avoid extreme overbought/oversold conditions (RSI between 30 and 70)\nrsi_filter = (rsi.shift(1) > 30) & (rsi.shift(1) < 70)\n# Apply all filters\nfiltered_factor = combined_factor[liquidity_filter & price_filter & rsi_filter]\n# 5. Select stocks\n# Select top 10 stocks based on the combined factor score\nposition = filtered_factor.is_largest(10)\n# 6. Run backtest\nreport = sim(position, resample=\"Q\", upload=False, stop_loss=0.08)",
+      "validation_passed": true,
+      "validation_errors": [],
+      "execution_success": false,
+      "execution_error": "Container exited with code 1:\nTraceback (most recent call last):\n  File \"/code/strategy.py\", line 31, in <module>\n    close = data.get('price:收盤價')\nAttributeError: 'Data' object has no attribute 'get'\n",
+      "metrics": {},
+      "feedback": "✅ Validation: PASSED - Code meets all security requirements\n\n❌ Execution: FAILED\nError: Container exited with code 1:\nTraceback (most recent call last):\n  File \"/code/strategy.py\", line 31, in <module>\n    close = data.get('price:收盤價')\nAttributeError: 'Data' object has no attribute 'get'\n\n\nLikely cause: Calling method on wrong data type\nVerify DataFrame operations match finlab data structure\n",
+      "data_checksum": "EMPTY_DATA_CHECKSUM_00000000000000000000000000000000000000000000",
+      "data_version": {
+        "finlab_version": "1.5.3",
+        "data_pull_timestamp": "2025-10-30T18:13:25.816629",
+        "dataset_row_counts": {
+          "price:收盤價": null,
+          "price:成交金額": null,
+          "fundamental_features:ROE稅後": null
+        }
+      },
+      "config_snapshot": {
+        "iteration_num": 0,
+        "timestamp": "2025-10-30T10:13:25.837997",
+        "model_config": {
+          "model_name": "gemini-2.5-flash",
+          "temperature": 1.0,
+          "max_tokens": 8000
+        },
+        "prompt_config": {
+          "template_path": "prompt_template_v3_comprehensive.txt",
+          "version": "v3_comprehensive",
+          "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        },
+        "system_thresholds": {
+          "anti_churn_threshold": 0.05,
+          "probation_period": 2,
+          "novelty_threshold": 0.3,
+          "max_iterations": 3
+        },
+        "environment_state": {
+          "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+          "packages": {
+            "finlab": "1.5.3",
+            "pandas": "2.3.2",
+            "numpy": "2.2.6",
+            "scipy": "1.15.3"
+          },
+          "api_endpoints": [
+            "https://generativelanguage.googleapis.com/v1beta"
+          ],
+          "os_info": "Linux 5.15.153.1-microsoft-standard-WSL2"
+        },
+        "custom_config": null
+      },
+      "mode": null,
+      "parameters": null
+    },
+    {
+      "iteration_num": 1,
+      "timestamp": "2025-10-30T10:14:01.160777",
+      "model": "gemini-2.5-flash",
+      "code": "# 1. Load data\nclose = data.get('price:收盤價')\ntrading_value = data.get('price:成交金額')\nroe = data.get('fundamental_features:ROE稅後')\npe_ratio = data.get('price_earning_ratio:本益比')\nrevenue_yoy = data.get('monthly_revenue:去年同月增減(%)')\nforeign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')\nrsi = data.indicator('RSI')\n# 2. Calculate factors\n# Factor 1: Long-term Price Momentum (60-day returns)\nmomentum_factor = close.pct_change(60).shift(1)\n# Factor 2: Quality (ROE with 4-quarter smoothing)\n# Forward-fill quarterly data to daily frequency, then shift\nquality_factor = roe.rolling(4).mean().ffill().shift(1)\n# Factor 3: Value (Inverse P/E Ratio)\n# Forward-fill quarterly data to daily frequency, then shift\nvalue_factor = (1 / pe_ratio).ffill().shift(1)\n# Factor 4: Growth (Monthly Revenue YoY)\n# Forward-fill monthly data to daily frequency, then shift\ngrowth_factor = revenue_yoy.ffill().shift(1)\n# Factor 5: Institutional Flow (20-day sum of Foreign Net Buy)\ninstitutional_flow_factor = foreign_net_buy.rolling(20).sum().shift(1)\n# 3. Combine factors (normalize first!)\n# Normalize each factor to percentile ranks\nmomentum_rank = momentum_factor.rank(axis=1, pct=True)\nquality_rank = quality_factor.rank(axis=1, pct=True)\nvalue_rank = value_factor.rank(axis=1, pct=True)\ngrowth_rank = growth_factor.rank(axis=1, pct=True)\ninstitutional_flow_rank = institutional_flow_factor.rank(axis=1, pct=True)\n# Combine with meaningful weights\ncombined_factor = (momentum_rank * 0.30 +\n                   quality_rank * 0.25 +\n                   value_rank * 0.20 +\n                   growth_rank * 0.15 +\n                   institutional_flow_rank * 0.10)\n# 4. Apply filters\n# Liquidity filter: Average daily trading value over 20 days > 70M TWD\nliquidity_filter = trading_value.rolling(20).mean().shift(1) > 70_000_000\n# Price filter: Close price > 20 TWD to avoid penny stocks\nprice_filter = close.shift(1) > 20\n# RSI filter: Avoid overbought/oversold conditions (RSI between 30 and 70)\nrsi_filter = (rsi.shift(1) > 30) & (rsi.shift(1) < 70)\n# Apply all filters\nfiltered_factor = combined_factor[liquidity_filter & price_filter & rsi_filter]\n# 5. Select stocks\n# Select top 10 stocks based on the combined factor score\nposition = filtered_factor.is_largest(10)\n# 6. Run backtest\nreport = sim(position, resample=\"Q\", upload=False, stop_loss=0.08)",
+      "validation_passed": true,
+      "validation_errors": [],
+      "execution_success": false,
+      "execution_error": "Container exited with code 1:\nTraceback (most recent call last):\n  File \"/code/strategy.py\", line 31, in <module>\n    close = data.get('price:收盤價')\nAttributeError: 'Data' object has no attribute 'get'\n",
+      "metrics": {},
+      "feedback": "✅ Validation: PASSED - Code meets all security requirements\n\n❌ Execution: FAILED\nError: Container exited with code 1:\nTraceback (most recent call last):\n  File \"/code/strategy.py\", line 31, in <module>\n    close = data.get('price:收盤價')\nAttributeError: 'Data' object has no attribute 'get'\n\n\nLikely cause: Calling method on wrong data type\nVerify DataFrame operations match finlab data structure\n",
+      "data_checksum": "EMPTY_DATA_CHECKSUM_00000000000000000000000000000000000000000000",
+      "data_version": {
+        "finlab_version": "1.5.3",
+        "data_pull_timestamp": "2025-10-30T18:13:43.400696",
+        "dataset_row_counts": {
+          "price:收盤價": null,
+          "price:成交金額": null,
+          "fundamental_features:ROE稅後": null
+        }
+      },
+      "config_snapshot": {
+        "yaml_validation": {
+          "enabled": true,
+          "normalization": {
+            "enabled": true,
+            "debug_mode": false,
+            "strict_mode": false
+          }
+        },
+        "anti_churn": {
+          "probation_period": 2,
+          "probation_threshold": 0.1,
+          "post_probation_threshold": 0.05,
+          "post_probation_relative_threshold": 0.01,
+          "additive_threshold": 0.02,
+          "threshold_logging_enabled": true,
+          "min_sharpe_for_champion": 0.5,
+          "target_update_frequency": 0.15,
+          "tuning_range": {
+            "probation_period": [
+              1,
+              3
+            ],
+            "probation_threshold": [
+              0.05,
+              0.15
+            ],
+            "post_probation_threshold": [
+              0.03,
+              0.1
+            ]
+          },
+          "staleness": {
+            "staleness_check_interval": 50,
+            "staleness_cohort_percentile": 0.1,
+            "staleness_min_cohort_size": 5,
+            "staleness_enabled": true
+          }
+        },
+        "multi_objective": {
+          "enabled": true,
+          "calmar_retention_ratio": 0.9,
+          "max_drawdown_tolerance": 1.1
+        },
+        "features": {
+          "enable_anti_churn": true,
+          "enable_adaptive_tuning": false
+        },
+        "resource_monitoring": {
+          "enabled": "${MONITORING_ENABLED:true}",
+          "config_file": "config/monitoring_config.yaml",
+          "resource_monitor": {
+            "enabled": "${RESOURCE_MONITOR_ENABLED:true}",
+            "collection_interval": "${RESOURCE_COLLECTION_INTERVAL:5}"
+          },
+          "diversity_monitor": {
+            "enabled": "${DIVERSITY_MONITOR_ENABLED:true}",
+            "collapse_threshold": "${DIVERSITY_COLLAPSE_THRESHOLD:0.1}",
+            "collapse_window": "${DIVERSITY_COLLAPSE_WINDOW:5}",
+            "staleness_threshold": "${CHAMPION_STALENESS_THRESHOLD:20}"
+          },
+          "container_monitor": {
+            "enabled": "${CONTAINER_MONITOR_ENABLED:true}",
+            "scan_interval": "${CONTAINER_STATS_INTERVAL:30}",
+            "auto_cleanup": "${CONTAINER_AUTO_CLEANUP:true}"
+          },
+          "alerting": {
+            "enabled": "${ALERTS_ENABLED:true}",
+            "evaluation_interval": "${ALERT_EVALUATION_INTERVAL:10}",
+            "suppression_window": "${ALERT_SUPPRESSION_WINDOW:300}",
+            "thresholds": {
+              "memory_percent": "${MEMORY_THRESHOLD:80.0}",
+              "cpu_percent": "${CPU_THRESHOLD:90.0}",
+              "success_rate_percent": "${SUCCESS_RATE_THRESHOLD:20.0}",
+              "orphaned_containers": "${ORPHANED_THRESHOLD:3}"
+            }
+          },
+          "prometheus": {
+            "enabled": "${PROMETHEUS_ENABLED:true}",
+            "port": "${PROMETHEUS_PORT:8000}",
+            "endpoint": "${PROMETHEUS_ENDPOINT:/metrics}"
+          },
+          "grafana": {
+            "dashboard_file": "${GRAFANA_DASHBOARD:config/grafana_dashboard.json}",
+            "refresh_interval": "${GRAFANA_REFRESH:5}"
+          },
+          "log_champion_updates": true,
+          "alert_on_excessive_churn": true,
+          "alert_on_stagnation": true
+        },
+        "mutation": {
+          "exit_mutation": {
+            "enabled": true,
+            "weight": 0.2,
+            "gaussian_std_dev": 0.15,
+            "bounds": {
+              "stop_loss_pct": {
+                "min": 0.01,
+                "max": 0.2
+              },
+              "take_profit_pct": {
+                "min": 0.05,
+                "max": 0.5
+              },
+              "trailing_stop_offset": {
+                "min": 0.005,
+                "max": 0.05
+              },
+              "holding_period_days": {
+                "min": 1,
+                "max": 60
+              }
+            }
+          }
+        },
+        "exit_mutation": {
+          "enabled": true,
+          "exit_mutation_probability": 0.3,
+          "mutation_config": {
+            "tier1_weight": 0.5,
+            "tier2_weight": 0.3,
+            "tier3_weight": 0.2,
+            "parameter_ranges": {
+              "stop_loss_range": [
+                0.8,
+                1.2
+              ],
+              "take_profit_range": [
+                0.9,
+                1.3
+              ],
+              "trailing_range": [
+                0.85,
+                1.25
+              ]
+            }
+          },
+          "validation": {
+            "max_retries": 3,
+            "validation_timeout": 5
+          },
+          "monitoring": {
+            "log_mutations": true,
+            "track_mutation_types": true,
+            "log_validation": true
+          }
+        },
+        "maintenance": {
+          "contender_threshold": 100,
+          "archival_percentage": 0.2,
+          "compression_age_days": 180,
+          "backup_retention_days": 7
+        },
+        "sandbox": {
+          "enabled": "${SANDBOX_ENABLED:true}",
+          "docker": {
+            "image": "${DOCKER_IMAGE:finlab-sandbox:latest}",
+            "memory_limit": "${DOCKER_MEMORY_LIMIT:2g}",
+            "cpu_count": "${DOCKER_CPU_LIMIT:0.5}",
+            "timeout_seconds": "${DOCKER_TIMEOUT:600}",
+            "network_mode": "${DOCKER_NETWORK_MODE:bridge}",
+            "read_only_filesystem": "${DOCKER_READ_ONLY:true}",
+            "seccomp_profile": "${SECCOMP_PROFILE:config/seccomp_profile.json}"
+          },
+          "security": {
+            "validation_enabled": "${VALIDATION_ENABLED:true}"
+          },
+          "monitoring": {
+            "enabled": "${MONITORING_ENABLED:true}",
+            "export_metrics": "${EXPORT_METRICS:true}"
+          }
+        },
+        "llm": {
+          "enabled": true,
+          "provider": "gemini",
+          "innovation_rate": 0.05,
+          "fallback": {
+            "enabled": true,
+            "max_retries": 3,
+            "retry_delay": 2
+          },
+          "generation": {
+            "max_tokens": "${LLM_MAX_TOKENS:2000}",
+            "temperature": "${LLM_TEMPERATURE:0.7}",
+            "timeout": "${LLM_TIMEOUT:60}"
+          },
+          "model": "${LLM_MODEL:anthropic/claude-3.5-sonnet}",
+          "openrouter": {
+            "api_key": "${OPENROUTER_API_KEY}",
+            "model": "${LLM_MODEL:anthropic/claude-3.5-sonnet}",
+            "http_referer": "https://github.com/finlab-project",
+            "app_name": "finlab-innovation"
+          },
+          "gemini": {
+            "api_key": "${GOOGLE_API_KEY}",
+            "model": "${LLM_MODEL:gemini-2.5-flash}",
+            "safety": {
+              "block_none": false
+            }
+          },
+          "openai": {
+            "api_key": "${OPENAI_API_KEY}",
+            "model": "${LLM_MODEL:gpt-4}",
+            "organization": "${OPENAI_ORG_ID}"
+          },
+          "mode": "${LLM_MODE:structured}",
+          "hybrid_structured_ratio": "${HYBRID_STRUCTURED_RATIO:0.80}"
+        },
+        "structured_innovation": {
+          "validation": {
+            "strict_mode": "${YAML_STRICT_MODE:true}",
+            "timeout": "${YAML_VALIDATION_TIMEOUT:5}",
+            "max_retries": "${YAML_VALIDATION_RETRIES:3}",
+            "detailed_errors": "${YAML_DETAILED_ERRORS:true}"
+          },
+          "code_generation": {
+            "debug_mode": "${CODE_GEN_DEBUG:false}",
+            "timeout": "${CODE_GEN_TIMEOUT:10}",
+            "validate_ast": "${VALIDATE_GENERATED_CODE:true}",
+            "check_imports": "${CHECK_IMPORTS:true}"
+          },
+          "fallback": {
+            "auto_fallback": "${AUTO_FALLBACK:true}",
+            "fallback_mode": "${FALLBACK_MODE:factor_graph}",
+            "log_fallbacks": "${LOG_FALLBACKS:true}"
+          },
+          "extraction": {
+            "multi_pattern": "${MULTI_PATTERN_EXTRACTION:true}",
+            "max_attempts": "${EXTRACTION_MAX_ATTEMPTS:3}",
+            "cleanup_enabled": "${CLEAN_YAML:true}"
+          },
+          "monitoring": {
+            "log_validation": "${LOG_VALIDATION:true}",
+            "log_code_generation": "${LOG_CODE_GEN:true}",
+            "export_metrics": "${EXPORT_YAML_METRICS:true}"
+          }
+        }
+      },
+      "mode": null,
+      "parameters": null
+    },
+    {
+      "iteration_num": 2,
+      "timestamp": "2025-10-30T10:14:17.725158",
+      "model": "gemini-2.5-flash",
+      "code": "# 1. Load data\nclose = data.get('price:收盤價')\ntrading_value = data.get('price:成交金額')\nroe = data.get('fundamental_features:ROE稅後')\nrevenue_yoy = data.get('monthly_revenue:去年同月增減(%)')\nforeign_net_buy = data.get('institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)')\nrsi = data.indicator('RSI')\n# 2. Calculate factors\n# Factor 1: Price Momentum (60-day returns)\nmomentum = close.pct_change(60).shift(1)\n# Factor 2: Quality & Growth (Smoothed ROE and Monthly Revenue YoY)\n# Smooth ROE over 4 quarters and forward-fill\nroe_smoothed = roe.rolling(4).mean().ffill().shift(1)\n# Forward-fill monthly revenue growth\nrevenue_growth = revenue_yoy.ffill().shift(1)\n# Combine ROE and Revenue Growth\nquality_growth = (roe_smoothed + revenue_growth) / 2\n# Factor 3: Institutional Buying Pressure (20-day sum of foreign net buys)\ninstitutional_flow = foreign_net_buy.rolling(20).sum().shift(1)\n# 3. Combine factors (normalize first!)\nmomentum_rank = momentum.rank(axis=1, pct=True)\nquality_growth_rank = quality_growth.rank(axis=1, pct=True)\nflow_rank = institutional_flow.rank(axis=1, pct=True)\n# Combine with weights\ncombined_factor = (momentum_rank * 0.40 +\n                   quality_growth_rank * 0.30 +\n                   flow_rank * 0.30)\n# 4. Apply filters\n# Liquidity filter: Average daily trading value over 20 days > 70M TWD\nliquidity_filter = trading_value.rolling(20).mean().shift(1) > 70_000_000\n# Price filter: Close price > 20 TWD\nprice_filter = close.shift(1) > 20\n# RSI filter: Avoid extreme overbought/oversold conditions\nrsi_filter = (rsi.shift(1) > 30) & (rsi.shift(1) < 70)\n# Apply all filters\nfiltered_factor = combined_factor[liquidity_filter & price_filter & rsi_filter]\n# 5. Select stocks (top 10)\nposition = filtered_factor.is_largest(10)\n# 6. Run backtest\nreport = sim(position, resample=\"Q\", upload=False, stop_loss=0.08)",
+      "validation_passed": true,
+      "validation_errors": [],
+      "execution_success": false,
+      "execution_error": "Container exited with code 1:\nTraceback (most recent call last):\n  File \"/code/strategy.py\", line 31, in <module>\n    close = data.get('price:收盤價')\nAttributeError: 'Data' object has no attribute 'get'\n",
+      "metrics": {},
+      "feedback": "✅ Validation: PASSED - Code meets all security requirements\n\n❌ Execution: FAILED\nError: Container exited with code 1:\nTraceback (most recent call last):\n  File \"/code/strategy.py\", line 31, in <module>\n    close = data.get('price:收盤價')\nAttributeError: 'Data' object has no attribute 'get'\n\n\nLikely cause: Calling method on wrong data type\nVerify DataFrame operations match finlab data structure\n",
+      "data_checksum": "EMPTY_DATA_CHECKSUM_00000000000000000000000000000000000000000000",
+      "data_version": {
+        "finlab_version": "1.5.3",
+        "data_pull_timestamp": "2025-10-30T18:14:02.185799",
+        "dataset_row_counts": {
+          "price:收盤價": null,
+          "price:成交金額": null,
+          "fundamental_features:ROE稅後": null
+        }
+      },
+      "config_snapshot": {
+        "yaml_validation": {
+          "enabled": true,
+          "normalization": {
+            "enabled": true,
+            "debug_mode": false,
+            "strict_mode": false
+          }
+        },
+        "anti_churn": {
+          "probation_period": 2,
+          "probation_threshold": 0.1,
+          "post_probation_threshold": 0.05,
+          "post_probation_relative_threshold": 0.01,
+          "additive_threshold": 0.02,
+          "threshold_logging_enabled": true,
+          "min_sharpe_for_champion": 0.5,
+          "target_update_frequency": 0.15,
+          "tuning_range": {
+            "probation_period": [
+              1,
+              3
+            ],
+            "probation_threshold": [
+              0.05,
+              0.15
+            ],
+            "post_probation_threshold": [
+              0.03,
+              0.1
+            ]
+          },
+          "staleness": {
+            "staleness_check_interval": 50,
+            "staleness_cohort_percentile": 0.1,
+            "staleness_min_cohort_size": 5,
+            "staleness_enabled": true
+          }
+        },
+        "multi_objective": {
+          "enabled": true,
+          "calmar_retention_ratio": 0.9,
+          "max_drawdown_tolerance": 1.1
+        },
+        "features": {
+          "enable_anti_churn": true,
+          "enable_adaptive_tuning": false
+        },
+        "resource_monitoring": {
+          "enabled": "${MONITORING_ENABLED:true}",
+          "config_file": "config/monitoring_config.yaml",
+          "resource_monitor": {
+            "enabled": "${RESOURCE_MONITOR_ENABLED:true}",
+            "collection_interval": "${RESOURCE_COLLECTION_INTERVAL:5}"
+          },
+          "diversity_monitor": {
+            "enabled": "${DIVERSITY_MONITOR_ENABLED:true}",
+            "collapse_threshold": "${DIVERSITY_COLLAPSE_THRESHOLD:0.1}",
+            "collapse_window": "${DIVERSITY_COLLAPSE_WINDOW:5}",
+            "staleness_threshold": "${CHAMPION_STALENESS_THRESHOLD:20}"
+          },
+          "container_monitor": {
+            "enabled": "${CONTAINER_MONITOR_ENABLED:true}",
+            "scan_interval": "${CONTAINER_STATS_INTERVAL:30}",
+            "auto_cleanup": "${CONTAINER_AUTO_CLEANUP:true}"
+          },
+          "alerting": {
+            "enabled": "${ALERTS_ENABLED:true}",
+            "evaluation_interval": "${ALERT_EVALUATION_INTERVAL:10}",
+            "suppression_window": "${ALERT_SUPPRESSION_WINDOW:300}",
+            "thresholds": {
+              "memory_percent": "${MEMORY_THRESHOLD:80.0}",
+              "cpu_percent": "${CPU_THRESHOLD:90.0}",
+              "success_rate_percent": "${SUCCESS_RATE_THRESHOLD:20.0}",
+              "orphaned_containers": "${ORPHANED_THRESHOLD:3}"
+            }
+          },
+          "prometheus": {
+            "enabled": "${PROMETHEUS_ENABLED:true}",
+            "port": "${PROMETHEUS_PORT:8000}",
+            "endpoint": "${PROMETHEUS_ENDPOINT:/metrics}"
+          },
+          "grafana": {
+            "dashboard_file": "${GRAFANA_DASHBOARD:config/grafana_dashboard.json}",
+            "refresh_interval": "${GRAFANA_REFRESH:5}"
+          },
+          "log_champion_updates": true,
+          "alert_on_excessive_churn": true,
+          "alert_on_stagnation": true
+        },
+        "mutation": {
+          "exit_mutation": {
+            "enabled": true,
+            "weight": 0.2,
+            "gaussian_std_dev": 0.15,
+            "bounds": {
+              "stop_loss_pct": {
+                "min": 0.01,
+                "max": 0.2
+              },
+              "take_profit_pct": {
+                "min": 0.05,
+                "max": 0.5
+              },
+              "trailing_stop_offset": {
+                "min": 0.005,
+                "max": 0.05
+              },
+              "holding_period_days": {
+                "min": 1,
+                "max": 60
+              }
+            }
+          }
+        },
+        "exit_mutation": {
+          "enabled": true,
+          "exit_mutation_probability": 0.3,
+          "mutation_config": {
+            "tier1_weight": 0.5,
+            "tier2_weight": 0.3,
+            "tier3_weight": 0.2,
+            "parameter_ranges": {
+              "stop_loss_range": [
+                0.8,
+                1.2
+              ],
+              "take_profit_range": [
+                0.9,
+                1.3
+              ],
+              "trailing_range": [
+                0.85,
+                1.25
+              ]
+            }
+          },
+          "validation": {
+            "max_retries": 3,
+            "validation_timeout": 5
+          },
+          "monitoring": {
+            "log_mutations": true,
+            "track_mutation_types": true,
+            "log_validation": true
+          }
+        },
+        "maintenance": {
+          "contender_threshold": 100,
+          "archival_percentage": 0.2,
+          "compression_age_days": 180,
+          "backup_retention_days": 7
+        },
+        "sandbox": {
+          "enabled": "${SANDBOX_ENABLED:true}",
+          "docker": {
+            "image": "${DOCKER_IMAGE:finlab-sandbox:latest}",
+            "memory_limit": "${DOCKER_MEMORY_LIMIT:2g}",
+            "cpu_count": "${DOCKER_CPU_LIMIT:0.5}",
+            "timeout_seconds": "${DOCKER_TIMEOUT:600}",
+            "network_mode": "${DOCKER_NETWORK_MODE:bridge}",
+            "read_only_filesystem": "${DOCKER_READ_ONLY:true}",
+            "seccomp_profile": "${SECCOMP_PROFILE:config/seccomp_profile.json}"
+          },
+          "security": {
+            "validation_enabled": "${VALIDATION_ENABLED:true}"
+          },
+          "monitoring": {
+            "enabled": "${MONITORING_ENABLED:true}",
+            "export_metrics": "${EXPORT_METRICS:true}"
+          }
+        },
+        "llm": {
+          "enabled": true,
+          "provider": "gemini",
+          "innovation_rate": 0.05,
+          "fallback": {
+            "enabled": true,
+            "max_retries": 3,
+            "retry_delay": 2
+          },
+          "generation": {
+            "max_tokens": "${LLM_MAX_TOKENS:2000}",
+            "temperature": "${LLM_TEMPERATURE:0.7}",
+            "timeout": "${LLM_TIMEOUT:60}"
+          },
+          "model": "${LLM_MODEL:anthropic/claude-3.5-sonnet}",
+          "openrouter": {
+            "api_key": "${OPENROUTER_API_KEY}",
+            "model": "${LLM_MODEL:anthropic/claude-3.5-sonnet}",
+            "http_referer": "https://github.com/finlab-project",
+            "app_name": "finlab-innovation"
+          },
+          "gemini": {
+            "api_key": "${GOOGLE_API_KEY}",
+            "model": "${LLM_MODEL:gemini-2.5-flash}",
+            "safety": {
+              "block_none": false
+            }
+          },
+          "openai": {
+            "api_key": "${OPENAI_API_KEY}",
+            "model": "${LLM_MODEL:gpt-4}",
+            "organization": "${OPENAI_ORG_ID}"
+          },
+          "mode": "${LLM_MODE:structured}",
+          "hybrid_structured_ratio": "${HYBRID_STRUCTURED_RATIO:0.80}"
+        },
+        "structured_innovation": {
+          "validation": {
+            "strict_mode": "${YAML_STRICT_MODE:true}",
+            "timeout": "${YAML_VALIDATION_TIMEOUT:5}",
+            "max_retries": "${YAML_VALIDATION_RETRIES:3}",
+            "detailed_errors": "${YAML_DETAILED_ERRORS:true}"
+          },
+          "code_generation": {
+            "debug_mode": "${CODE_GEN_DEBUG:false}",
+            "timeout": "${CODE_GEN_TIMEOUT:10}",
+            "validate_ast": "${VALIDATE_GENERATED_CODE:true}",
+            "check_imports": "${CHECK_IMPORTS:true}"
+          },
+          "fallback": {
+            "auto_fallback": "${AUTO_FALLBACK:true}",
+            "fallback_mode": "${FALLBACK_MODE:factor_graph}",
+            "log_fallbacks": "${LOG_FALLBACKS:true}"
+          },
+          "extraction": {
+            "multi_pattern": "${MULTI_PATTERN_EXTRACTION:true}",
+            "max_attempts": "${EXTRACTION_MAX_ATTEMPTS:3}",
+            "cleanup_enabled": "${CLEAN_YAML:true}"
+          },
+          "monitoring": {
+            "log_validation": "${LOG_VALIDATION:true}",
+            "log_code_generation": "${LOG_CODE_GEN:true}",
+            "export_metrics": "${EXPORT_YAML_METRICS:true}"
+          }
+        }
+      },
+      "mode": null,
+      "parameters": null
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/validation-framework-critical-fixes/requirements.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-31T22:43:07.422Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761950586948_r8rgq8k6k",
+      "approvalTitle": "Requirements: Validation Framework Critical Fixes"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-31T23:04:42.613Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761950586948_r8rgq8k6k",
+      "approvalTitle": "Requirements: Validation Framework Critical Fixes"
+    }
+  ]
+}

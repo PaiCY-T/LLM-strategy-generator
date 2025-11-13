@@ -1,0 +1,11 @@
+Defaulting to user installation because normal site-packages is not writeable
+WARNING: Ignoring invalid distribution -andas (/home/john/.local/lib/python3.10/site-packages)
+WARNING: Ignoring invalid distribution -andas (/home/john/.local/lib/python3.10/site-packages)
+Collecting networkx
+  Downloading networkx-3.4.2-py3-none-any.whl.metadata (6.3 kB)
+Downloading networkx-3.4.2-py3-none-any.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 1.8 MB/s  0:00:00
+WARNING: Ignoring invalid distribution -andas (/home/john/.local/lib/python3.10/site-packages)
+Installing collected packages: networkx
+WARNING: Ignoring invalid distribution -andas (/home/john/.local/lib/python3.10/site-packages)
+Successfully installed networkx-3.4.2

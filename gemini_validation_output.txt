@@ -1,0 +1,149 @@
+YAML validation failed with 10 error(s)
+YAML validation failed with 10 error(s)
+
+======================================================================
+YAML Mode Real API Validation
+======================================================================
+Provider: openrouter
+Model: google/gemini-2.0-flash-exp:free
+Iterations: 10
+Target: >90% success rate
+======================================================================
+
+[1/3] Initializing InnovationEngine (YAML mode)...
+✅ Engine initialized successfully
+   Using model: google/gemini-2.0-flash-exp:free
+
+[2/3] Running 10 iterations with real API calls...
+======================================================================
+
+Iteration 1/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/1 (0.0%)
+
+Iteration 2/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/2 (0.0%)
+
+Iteration 3/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/3 (0.0%)
+
+Iteration 4/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/4 (0.0%)
+
+Iteration 5/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/5 (0.0%)
+
+Iteration 6/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/6 (0.0%)
+
+Iteration 7/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/7 (0.0%)
+
+Iteration 8/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ Innovation generation failed: YAML validation failed: entry_conditions.ranking_rules.0: Missing required field 'field'
+  ❌ FAILURE - No code generated
+     Progress: 0/8 (0.0%)
+
+Iteration 9/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/9 (0.0%)
+
+Iteration 10/10:
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 1/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+⚠️  API call failed (attempt 2/3), retrying...
+❌ OpenRouter API error None: 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
+❌ Innovation generation failed: LLM API call failed after all retries
+  ❌ FAILURE - No code generated
+     Progress: 0/10 (0.0%)
+
+======================================================================
+[3/3] Test Complete
+
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+
+Success Metrics:
+  Total Attempts:  10
+  Successes:       0
+  Failures:        10
+  Success Rate:    0.0%
+  Target (>90%):   ❌ BELOW TARGET
+
+Cost Metrics:
+  Total Cost:      $0.000000
+  Avg per Attempt: $0.000000
+
+Performance Metrics:
+  Total Time:      60.67s
+  Avg per Attempt: 6.07s
+  Throughput:      0.16 gen/s
+
+Errors (10):
+  - No code generated: 10x
+
+======================================================================
+
+Results saved to: gemini_flash_validation_results.json
+❌ TEST FAILED - Success rate 0.0% < 90%

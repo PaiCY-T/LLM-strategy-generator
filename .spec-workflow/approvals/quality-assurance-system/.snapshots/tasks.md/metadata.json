@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/quality-assurance-system/tasks.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-06T15:18:10.826Z",
+      "trigger": "initial",
+      "approvalId": "approval_1762442290642_frhrpst52",
+      "approvalTitle": "Quality Assurance System - Tasks"
+    }
+  ]
+}

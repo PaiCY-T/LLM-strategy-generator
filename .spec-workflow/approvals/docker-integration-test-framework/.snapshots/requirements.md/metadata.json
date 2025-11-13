@@ -1,0 +1,30 @@
+{
+  "filePath": ".spec-workflow/specs/docker-integration-test-framework/requirements.md",
+  "currentVersion": 3,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-01T22:45:11.948Z",
+      "trigger": "initial",
+      "approvalId": "approval_1762037111805_3magsdp3j",
+      "approvalTitle": "Requirements Document - Docker Integration Test Framework"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-11-01T23:23:28.495Z",
+      "trigger": "approved",
+      "approvalId": "approval_1762039396014_sikubmc6w",
+      "approvalTitle": "Docker Integration Test Framework - Requirements (Updated with Refactoring Pre-Conditions)"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-11-01T23:32:59.374Z",
+      "trigger": "approved",
+      "approvalId": "approval_1762039929453_f5jt677hj",
+      "approvalTitle": "Requirements - Updated with Handoff Workflow (Requirement 7)"
+    }
+  ]
+}

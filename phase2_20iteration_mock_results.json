@@ -1,0 +1,225 @@
+{
+  "test_type": "mock",
+  "start_time": "2025-10-24T00:02:05.926433",
+  "baseline": {
+    "mean_sharpe": 0.6796985050161022,
+    "median_sharpe": 0.6805152361801852,
+    "std_sharpe": 0.10072120063617193,
+    "min_sharpe": 0.5171813951101569,
+    "max_sharpe": 0.9872296253626673,
+    "p25_sharpe": 0.6152179166963452,
+    "p75_sharpe": 0.7335916893240686,
+    "mean_calmar": 2.4064607660361927,
+    "median_calmar": 2.40898984958557,
+    "std_calmar": 0.5134315054933993,
+    "mean_mdd": 0.22274757766437867,
+    "median_mdd": 0.21175701339060937,
+    "std_mdd": 0.03017862142097559,
+    "mean_return": 0.3350131217939531,
+    "median_return": 0.30736265379540273,
+    "std_return": 0.10596314833254142,
+    "mean_win_rate": 0.5736073590651601,
+    "median_win_rate": 0.5868010172653882,
+    "adaptive_sharpe_threshold": 0.8156382060193226,
+    "adaptive_calmar_threshold": 2.887752919243431,
+    "max_drawdown_limit": 0.25,
+    "total_iterations": 20,
+    "computation_timestamp": "2025-10-23T22:27:57.224699",
+    "source_file": "baseline_20gen_mock.json"
+  },
+  "iterations": [
+    {
+      "iteration": 0,
+      "innovation_triggered": true,
+      "innovation_attempted": true,
+      "innovation_success": true,
+      "innovation_id": "innov_20251024000205_2604a0179736",
+      "failure_reason": null,
+      "category": "quality"
+    },
+    {
+      "iteration": 1,
+      "innovation_triggered": true,
+      "innovation_attempted": true,
+      "innovation_success": true,
+      "innovation_id": "innov_20251024000205_06e3fd0fd8eb",
+      "failure_reason": null,
+      "category": "value"
+    },
+    {
+      "iteration": 2,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 3,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 4,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 5,
+      "innovation_triggered": true,
+      "innovation_attempted": true,
+      "innovation_success": true,
+      "innovation_id": "innov_20251024000205_009821396e6e",
+      "failure_reason": null,
+      "category": "quality"
+    },
+    {
+      "iteration": 6,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 7,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 8,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 9,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 10,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 11,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 12,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 13,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 14,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 15,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 16,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 17,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 18,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    },
+    {
+      "iteration": 19,
+      "innovation_triggered": false,
+      "innovation_attempted": false,
+      "innovation_success": false,
+      "innovation_id": null,
+      "failure_reason": null,
+      "category": null
+    }
+  ],
+  "status": "PASSED",
+  "end_time": "2025-10-24T00:02:05.975445",
+  "statistics": {
+    "total_attempts": 3,
+    "successful_innovations": 3,
+    "failed_validations": 0,
+    "llm_failures": 0,
+    "success_rate": 1.0,
+    "repository_size": 3,
+    "innovation_frequency": 0.2
+  },
+  "criteria_passed": 3,
+  "total_criteria": 4
+}

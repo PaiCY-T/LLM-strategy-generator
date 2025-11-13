@@ -1,0 +1,71 @@
+# Valid Momentum Strategy - Test Specification
+# ============================================
+# Simple RSI-based momentum strategy with moving average filter
+# Used for testing schema validation (should PASS)
+
+metadata:
+  name: "RSI Momentum Test Strategy"
+  description: "Basic momentum strategy using RSI indicator with 50-day MA trend filter and trailing stop exit"
+  strategy_type: "momentum"
+  rebalancing_frequency: "W-FRI"
+  version: "1.0.0"
+  author: "FinLab Test Suite"
+  tags:
+    - momentum
+    - rsi
+    - test
+    - basic
+  risk_level: medium
+
+indicators:
+  technical_indicators:
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+    - name: "volume_ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('volume_20d_avg')"
+
+entry_conditions:
+  threshold_rules:
+    - condition: "rsi_14 > 50"
+      description: "RSI shows upward momentum"
+
+    - condition: "close > ma_50"
+      description: "Price above 50-day moving average"
+
+    - condition: "volume > volume_ma_20"
+      description: "Volume above 20-day average"
+
+  logical_operator: "AND"
+
+  min_liquidity:
+    average_volume_20d: 100000000
+
+exit_conditions:
+  stop_loss_pct: 0.10
+  take_profit_pct: 0.25
+
+  trailing_stop:
+    trail_percent: 0.08
+    activation_profit: 0.05
+
+  holding_period_days: 30
+  exit_operator: "OR"
+
+position_sizing:
+  method: "equal_weight"
+  max_positions: 20
+  max_position_pct: 0.10
+
+risk_management:
+  max_sector_exposure: 0.30
+  rebalance_threshold: 0.15

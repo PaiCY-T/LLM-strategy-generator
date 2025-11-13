@@ -1,0 +1,262 @@
+# Volatility Breakout Strategy
+# ==============================
+# Bollinger Band squeeze breakout with ATR confirmation
+#
+# Strategy Logic:
+# - Identify low volatility periods (Bollinger Band squeeze)
+# - Enter on volatility expansion breakouts
+# - Use custom formula sizing (larger positions on stronger breakouts)
+# - Designed for capturing explosive moves after consolidation
+#
+# Expected Performance: Sharpe 1.1-1.7, Annual Return 20-32%, Turnover: Very High
+# Market Conditions: Best after extended consolidation periods
+# Risk Level: High (breakout failure risk)
+
+metadata:
+  name: "Volatility Expansion Breakout"
+  description: "Volatility breakout strategy entering on Bollinger Band squeeze expansion, custom formula sizing by breakout strength, capturing explosive moves after consolidation"
+  strategy_type: "momentum"
+  rebalancing_frequency: "W-TUE"  # Weekly Tuesday
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - volatility
+    - breakout
+    - bollinger-squeeze
+    - atr
+    - custom-sizing
+    - expansion
+  risk_level: "high"
+
+indicators:
+  # Technical indicators
+  technical_indicators:
+    # Bollinger Bands for squeeze detection
+    - name: "bb_upper"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_UPPER')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_middle"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_MIDDLE')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_lower"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_LOWER')"
+      parameters:
+        std_dev: 2.0
+
+    # ATR for volatility measurement
+    - name: "atr_14"
+      type: "ATR"
+      period: 14
+      source: "data.get('ATR_14')"
+
+    - name: "atr_50"
+      type: "ATR"
+      period: 50
+      source: "data.get('ATR_50')"
+
+    # RSI for momentum
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # Moving averages
+    - name: "ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('MA_20')"
+
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+    # Volume
+    - name: "volume_ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('volume_20d_avg')"
+
+  # Custom calculations
+  custom_calculations:
+    # Bollinger Band width (volatility measure)
+    - name: "bb_width"
+      expression: "(bb_upper - bb_lower) / bb_middle"
+      description: "Bollinger Band width as % of middle band"
+
+    # Historical volatility rank (current vs 50-day ATR)
+    - name: "volatility_rank"
+      expression: "atr_14 / atr_50"
+      description: "Current ATR vs 50-day ATR (volatility rank)"
+
+    # Squeeze indicator (low volatility)
+    - name: "squeeze_level"
+      expression: "1.0 / (bb_width * 10)"
+      description: "Squeeze level (higher when bands narrow)"
+
+    # Breakout strength (distance from middle band)
+    - name: "breakout_distance"
+      expression: "abs(close - bb_middle) / bb_middle"
+      description: "Distance from middle Bollinger Band"
+
+    # Volume surge
+    - name: "volume_ratio"
+      expression: "volume / volume_ma_20"
+      description: "Volume relative to 20-day average"
+
+    # Volatility expansion (ATR increasing)
+    - name: "volatility_expansion"
+      expression: "(atr_14 - atr_14.shift(5)) / atr_14.shift(5)"
+      description: "5-day ATR percentage change (expansion measure)"
+
+    # Breakout score (for position sizing)
+    - name: "breakout_score"
+      expression: "breakout_distance * volume_ratio * (1 + volatility_expansion)"
+      description: "Breakout strength score for position sizing"
+
+    # Custom position size factor
+    - name: "position_factor"
+      expression: "1.0 + (breakout_score * 2.0)"
+      description: "Position sizing factor (larger for stronger breakouts)"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # Squeeze requirement (low volatility period)
+    # Note: Entry on expansion, but we look for recent squeeze
+    - condition: "bb_width > 0.08"
+      description: "Bollinger Bands expanding (>8% width)"
+
+    - condition: "bb_width < 0.25"
+      description: "Not excessively volatile (<25% width)"
+
+    # Volatility expansion (breaking out of squeeze)
+    - condition: "volatility_expansion > 0.10"
+      description: "ATR expanding >10% (volatility breakout)"
+
+    - condition: "volatility_rank > 1.0"
+      description: "Current volatility > 50-day average (expansion confirmed)"
+
+    # Price breakout (above upper or below lower band)
+    - condition: "close > bb_upper"
+      description: "Price breakout above upper Bollinger Band"
+
+    # Momentum confirmation
+    - condition: "rsi_14 > 58"
+      description: "RSI showing momentum (>58)"
+
+    # Trend alignment
+    - condition: "close > ma_20"
+      description: "Price above 20-day MA"
+
+    - condition: "ma_20 > ma_50"
+      description: "20-day MA above 50-day MA (uptrend)"
+
+    # Volume confirmation
+    - condition: "volume_ratio > 1.3"
+      description: "Volume >1.3x average (breakout confirmation)"
+
+    # Breakout strength
+    - condition: "breakout_distance > 0.02"
+      description: "Breakout >2% from middle band (significant move)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # High liquidity for breakouts
+  min_liquidity:
+    average_volume_20d: 180000000  # 180M minimum
+    dollar_volume: 12000000        # 12M daily dollar volume
+
+exit_conditions:
+  # Tight stop loss for breakout failure
+  stop_loss_pct: 0.08  # 8% stop loss
+
+  # Take profit target
+  take_profit_pct: 0.20  # 20% take profit
+
+  # Trailing stop
+  trailing_stop:
+    trail_percent: 0.10      # Trail 10% below peak
+    activation_profit: 0.05  # Activate after 5% profit
+
+  # Conditional exits
+  conditional_exits:
+    # Exit if volatility contracts (squeeze returning)
+    - condition: "volatility_expansion < -0.05"
+      description: "Volatility contracting (ATR declining >5%)"
+
+    # Exit if price returns inside bands
+    - condition: "close < bb_middle"
+      description: "Price returned to middle band (breakout failed)"
+
+    # Exit if RSI reverses
+    - condition: "rsi_14 < 48"
+      description: "RSI momentum reversal (<48)"
+
+    # Exit if volume dries up
+    - condition: "volume_ratio < 0.9"
+      description: "Volume dried up (<90% of average)"
+
+    # Exit if trend breaks
+    - condition: "close < ma_20"
+      description: "Price below 20-day MA (short-term support broken)"
+
+    # Exit if Bollinger Bands narrow again
+    - condition: "bb_width < 0.10"
+      description: "Bollinger Bands narrowing (squeeze returning)"
+
+  # Short holding period for breakouts
+  holding_period_days: 20
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Custom formula sizing (larger positions on stronger breakouts)
+  method: "custom_formula"
+
+  # Maximum 18 positions (concentrated breakouts)
+  max_positions: 18
+
+  # Maximum 12% per position (allow larger positions)
+  max_position_pct: 0.12
+
+  # Minimum 3% per position
+  min_position_pct: 0.03
+
+  # Custom formula: size by breakout strength
+  custom_formula: "1.0 + (breakout_score * 2.0)"
+
+risk_management:
+  # Sector concentration
+  max_sector_exposure: 0.35
+
+  # Portfolio volatility limit
+  max_portfolio_volatility: 0.30
+
+  # Frequent rebalancing
+  rebalance_threshold: 0.10
+
+  # Tight drawdown limit
+  max_drawdown_limit: 0.18
+
+  # Higher cash reserve for breakout opportunities
+  cash_reserve_pct: 0.12
+
+backtest_config:
+  start_date: "2021-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.002  # Higher slippage for volatile breakouts

@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-10-26 13:13:25",
+  "exit_mutation_stats": {
+    "success_rate": 1.0,
+    "avg_time_ms": 2.6504981166217476,
+    "median_time_ms": 0.9737539803609252,
+    "p95_time_ms": 2.7496867813169956,
+    "p99_time_ms": 10.923894534353167,
+    "memory_overhead_mb": 5.098302841186523,
+    "syntax_correctness": 1.0,
+    "total_mutations": 1000,
+    "successful_mutations": 1000,
+    "failed_mutations": 0
+  },
+  "factor_mutation_stats": {
+    "success_rate": 0.849,
+    "avg_time_ms": 0.5654646101174876,
+    "median_time_ms": 0.5599305150099099,
+    "p95_time_ms": 0.9760942775756121,
+    "p99_time_ms": 1.4755815523676574,
+    "memory_overhead_mb": 0.1015777587890625,
+    "syntax_correctness": 0.914,
+    "total_mutations": 1000,
+    "successful_mutations": 849,
+    "failed_mutations": 151
+  },
+  "comparison": {
+    "success_rate_improvement": 15.100000000000001,
+    "speed_ratio": 0.2133427700141939,
+    "memory_ratio": 50.19113339342046
+  }
+}

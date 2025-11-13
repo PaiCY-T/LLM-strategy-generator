@@ -1,0 +1,21 @@
+{
+  "test_type": "real_llm_api_validation",
+  "provider": "openrouter",
+  "model": "default",
+  "timestamp": "2025-10-26 19:49:03",
+  "results": {
+    "total_attempts": 2,
+    "successes": 0,
+    "failures": 2,
+    "success_rate": 0.0,
+    "total_cost_usd": 0.070587,
+    "avg_cost_per_attempt_usd": 0.0352935,
+    "total_time_seconds": 49.843881607055664,
+    "avg_time_per_attempt_seconds": 24.921940803527832,
+    "errors": [
+      "No code generated",
+      "No code generated"
+    ],
+    "generated_code_count": 0
+  }
+}

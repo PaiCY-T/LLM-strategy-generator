@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/llm-learning-validation/tasks.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-06T15:18:08.822Z",
+      "trigger": "initial",
+      "approvalId": "approval_1762442288665_2juvelmpl",
+      "approvalTitle": "LLM Learning Validation - Revised Tasks (Audit Addressed)"
+    }
+  ]
+}

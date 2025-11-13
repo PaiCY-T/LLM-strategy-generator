@@ -1,0 +1,199 @@
+# Mean Reversion Strategy Example
+# ================================
+# Bollinger Bands mean reversion with fundamental quality filter
+#
+# Strategy Logic:
+# - Buy when price breaches lower Bollinger Band (oversold)
+# - Confirm with RSI oversold condition (<30)
+# - Filter for quality companies (ROE >10%)
+# - Exit when price reverts to middle band or becomes overbought
+#
+# Expected Performance: Sharpe 1.2-1.8, Annual Return 12-20%
+
+metadata:
+  name: "Quality Mean Reversion Strategy"
+  description: "Buys quality stocks (ROE >10%) when price breaches lower Bollinger Band with RSI confirmation, exits on mean reversion to middle band or RSI overbought"
+  strategy_type: "mean_reversion"
+  rebalancing_frequency: "M"
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - mean-reversion
+    - bollinger-bands
+    - rsi
+    - quality
+    - fundamental
+  risk_level: "medium"
+
+indicators:
+  # Technical indicators
+  technical_indicators:
+    # Bollinger Bands (20-day, 2 std dev)
+    - name: "bb_upper"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_UPPER')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_middle"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_MIDDLE')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_lower"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_LOWER')"
+      parameters:
+        std_dev: 2.0
+
+    # RSI for oversold/overbought
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # 200-day MA for long-term trend
+    - name: "ma_200"
+      type: "SMA"
+      period: 200
+      source: "data.get('MA_200')"
+
+  # Fundamental factors for quality filter
+  fundamental_factors:
+    # Return on Equity
+    - name: "roe"
+      field: "ROE"
+      source: "data.get('ROE')"
+      transformation: "winsorize"  # Remove extreme outliers
+
+    # Debt to Equity ratio
+    - name: "debt_to_equity"
+      field: "debt_to_equity"
+      source: "data.get('debt_to_equity')"
+
+    # Operating margin
+    - name: "operating_margin"
+      field: "operating_margin"
+      source: "data.get('operating_margin')"
+
+  # Volume filter
+  volume_filters:
+    - name: "avg_volume_30"
+      metric: "average_volume"
+      period: 30
+      threshold: 50000000  # 50M minimum volume
+
+  # Custom calculations
+  custom_calculations:
+    # Bollinger Band width (volatility measure)
+    - name: "bb_width"
+      expression: "(bb_upper - bb_lower) / bb_middle"
+      description: "Bollinger Band width as percentage of middle band"
+
+    # Distance from lower band
+    - name: "lower_band_distance"
+      expression: "(close - bb_lower) / bb_lower"
+      description: "Distance of price from lower Bollinger Band"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # Price breached lower Bollinger Band
+    - condition: "close < bb_lower"
+      description: "Price breached lower Bollinger Band (oversold)"
+
+    # RSI oversold
+    - condition: "rsi_14 < 30"
+      description: "RSI indicates oversold condition (<30)"
+
+    # Quality filter: ROE above 10%
+    - condition: "roe > 0.10"
+      description: "High quality company (ROE >10%)"
+
+    # Financial health: reasonable leverage
+    - condition: "debt_to_equity < 1.5"
+      description: "Reasonable leverage (D/E <1.5)"
+
+    # Profitability filter
+    - condition: "operating_margin > 0.05"
+      description: "Profitable operations (margin >5%)"
+
+    # Long-term uptrend (price above 200-day MA)
+    - condition: "close > ma_200"
+      description: "Long-term uptrend (price above 200-day MA)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # Liquidity requirements
+  min_liquidity:
+    average_volume_20d: 60000000   # 60M minimum volume
+    dollar_volume: 3000000         # 3M daily dollar volume
+
+exit_conditions:
+  # Take profit at +12% (mean reversion typically smaller moves)
+  take_profit_pct: 0.12
+
+  # Stop loss at -8%
+  stop_loss_pct: 0.08
+
+  # Conditional exits (mean reversion signals)
+  conditional_exits:
+    # Exit when price returns to middle band (mean reversion complete)
+    - condition: "close > bb_middle"
+      description: "Price reverted to middle Bollinger Band (exit)"
+
+    # Exit when RSI becomes overbought
+    - condition: "rsi_14 > 70"
+      description: "RSI overbought (exit on mean reversion)"
+
+    # Exit if quality deteriorates
+    - condition: "roe < 0.08"
+      description: "ROE deteriorated below 8% (quality decline)"
+
+    # Exit if leverage increases
+    - condition: "debt_to_equity > 2.0"
+      description: "Leverage increased above 2.0 (risk increase)"
+
+  # Maximum holding period (mean reversion should happen faster)
+  holding_period_days: 45
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Equal weight allocation
+  method: "equal_weight"
+
+  # Maximum 15 positions (concentrated)
+  max_positions: 15
+
+  # Maximum 12% per position
+  max_position_pct: 0.12
+
+  # Minimum 3% per position
+  min_position_pct: 0.03
+
+risk_management:
+  # Sector concentration limit (mean reversion benefits from diversification)
+  max_sector_exposure: 0.35
+
+  # Rebalance if position drifts >15%
+  rebalance_threshold: 0.15
+
+  # Stop trading if portfolio drawdown >18%
+  max_drawdown_limit: 0.18
+
+  # Keep 5% cash reserve for opportunities
+  cash_reserve_pct: 0.05
+
+backtest_config:
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.001

@@ -1,0 +1,80 @@
+# LLM Learning Validation Experiment Configuration - Dry Run
+# Quick 15-iteration test (5 × 1 × 3 groups)
+
+experiment:
+  name: "llm-learning-validation-dry-run"
+  version: "1.0.0"
+  description: "Dry run: 5 iterations per group for validation"
+
+# 3 Experimental Groups
+groups:
+  hybrid:
+    name: "Hybrid"
+    innovation_rate: 0.30  # 30% LLM, 70% Factor Graph
+    description: "Current production configuration"
+
+  fg_only:
+    name: "FactorGraph-Only"
+    innovation_rate: 0.00  # 0% LLM, 100% Factor Graph
+    description: "Baseline control group"
+
+  llm_only:
+    name: "LLM-Only"
+    innovation_rate: 1.00  # 100% LLM, 0% Factor Graph
+    description: "Maximum LLM innovation"
+
+# Phase Configuration
+phases:
+  pilot:
+    iterations_per_run: 5
+    num_runs: 1
+    total_iterations: 15  # 5 × 1 × 3 groups
+    description: "Quick dry run for validation"
+
+  full_study:
+    iterations_per_run: 200
+    num_runs: 5
+    total_iterations: 3000  # Not used in dry run
+    description: "Comprehensive statistical study"
+
+# Novelty System Configuration (3-Layer Weighted)
+novelty:
+  weights:
+    factor_diversity: 0.30      # Layer 1: 30%
+    combination_patterns: 0.40  # Layer 2: 40%
+    logic_complexity: 0.30      # Layer 3: 30%
+
+  baseline_file: "artifacts/data/champion.json"
+  template_dir: "strategies/factor_graph_templates/"
+
+# Statistical Testing
+statistics:
+  significance_level: 0.05  # p-value threshold
+  tests:
+    - mann_whitney_u      # Compare distributions
+    - mann_kendall        # Detect trends
+    - sliding_window      # Temporal analysis
+
+# Go/No-Go Decision Criteria (after Pilot)
+decision_criteria:
+  min_criteria_met: 2  # Minimum 2/4 for GO
+  criteria:
+    - name: "Statistical Signal"
+      test: "Mann-Whitney U p < 0.1 (exploratory)"
+    - name: "Novelty Advantage"
+      test: "LLM-Only avg novelty > FG-Only + 15%"
+    - name: "Execution Stability"
+      test: "Failure rate < 5%"
+    - name: "Champion Quality"
+      test: "At least 1 champion with Sharpe > 0.8"
+
+# Storage Configuration
+storage:
+  results_dir: "artifacts/experiments/llm_validation/"
+  format: "jsonl"  # One JSON per line for incremental writes
+
+# Execution Configuration
+execution:
+  timeout_seconds: 420
+  continue_on_error: false  # Stop on errors during experiment
+  max_parallel_groups: 1    # Sequential execution (single machine)

@@ -1,0 +1,314 @@
+{
+  "total_iterations": 30,
+  "docker_iterations": 15,
+  "docker_successes": 0,
+  "docker_failures": 15,
+  "success_rate": 0.0,
+  "diversity_activations": 1,
+  "diversity_rate": 3.33,
+  "import_errors": 0,
+  "config_snapshot_errors": 15,
+  "execution_time_seconds": 1879.68,
+  "iterations_data": [
+    {
+      "iteration": 0,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:24:23.948168",
+      "metrics": null
+    },
+    {
+      "iteration": 1,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:25:23.266413",
+      "metrics": null
+    },
+    {
+      "iteration": 2,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:25:41.217293",
+      "metrics": null
+    },
+    {
+      "iteration": 3,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:26:08.718255",
+      "metrics": null
+    },
+    {
+      "iteration": 4,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:27:21.193549",
+      "metrics": null
+    },
+    {
+      "iteration": 5,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:27:29.015331",
+      "metrics": null
+    },
+    {
+      "iteration": 6,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:27:55.251154",
+      "metrics": null
+    },
+    {
+      "iteration": 7,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:29:29.561471",
+      "metrics": null
+    },
+    {
+      "iteration": 8,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:29:56.558473",
+      "metrics": null
+    },
+    {
+      "iteration": 9,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:30:18.383678",
+      "metrics": null
+    },
+    {
+      "iteration": 10,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:31:14.547172",
+      "metrics": null
+    },
+    {
+      "iteration": 11,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:31:22.474762",
+      "metrics": null
+    },
+    {
+      "iteration": 12,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:33:00.139890",
+      "metrics": null
+    },
+    {
+      "iteration": 13,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:33:57.277706",
+      "metrics": null
+    },
+    {
+      "iteration": 14,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:35:15.627483",
+      "metrics": null
+    },
+    {
+      "iteration": 15,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:36:02.234579",
+      "metrics": null
+    },
+    {
+      "iteration": 16,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:36:52.698485",
+      "metrics": null
+    },
+    {
+      "iteration": 17,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:37:24.157540",
+      "metrics": null
+    },
+    {
+      "iteration": 18,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:38:40.303053",
+      "metrics": null
+    },
+    {
+      "iteration": 19,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:40:04.371103",
+      "metrics": null
+    },
+    {
+      "iteration": 20,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:41:51.511069",
+      "metrics": null
+    },
+    {
+      "iteration": 21,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:44:37.420264",
+      "metrics": null
+    },
+    {
+      "iteration": 22,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:45:59.442417",
+      "metrics": null
+    },
+    {
+      "iteration": 23,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:48:23.510170",
+      "metrics": null
+    },
+    {
+      "iteration": 24,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:48:29.362609",
+      "metrics": null
+    },
+    {
+      "iteration": 25,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:51:35.279715",
+      "metrics": null
+    },
+    {
+      "iteration": 26,
+      "docker_used": true,
+      "docker_success": false,
+      "diversity_activated": true,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:52:53.148449",
+      "metrics": null
+    },
+    {
+      "iteration": 27,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:52:57.965360",
+      "metrics": null
+    },
+    {
+      "iteration": 28,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": false,
+      "timestamp": "2025-11-02T18:54:16.610268",
+      "metrics": null
+    },
+    {
+      "iteration": 29,
+      "docker_used": false,
+      "docker_success": null,
+      "diversity_activated": false,
+      "import_error": false,
+      "config_error": true,
+      "timestamp": "2025-11-02T18:55:34.657882",
+      "metrics": null
+    }
+  ]
+}

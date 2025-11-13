@@ -1,0 +1,27 @@
+checkpointing:
+  checkpoint_dir: validation_results/phase1_20251020_184114/checkpoints
+  enabled: true
+exit_mutation:
+  enabled: true
+  exit_mutation_probability: 0.3
+  monitoring:
+    log_mutations: true
+    log_validation: true
+    track_mutation_types: true
+  mutation_config:
+    parameter_ranges:
+      stop_loss_range:
+      - 0.8
+      - 1.2
+      take_profit_range:
+      - 0.9
+      - 1.3
+      trailing_range:
+      - 0.85
+      - 1.25
+    tier1_weight: 0.5
+    tier2_weight: 0.3
+    tier3_weight: 0.2
+  validation:
+    max_retries: 3
+    validation_timeout: 5

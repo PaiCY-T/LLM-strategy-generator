@@ -1,0 +1,82 @@
+# LLM-Only 300 Iterations Validation Test
+# Purpose: Characterize pure LLM strategy generation capabilities
+
+experiment:
+  name: "llm-only-300-iterations"
+  version: "1.0.0"
+  description: "Pure LLM strategy generation - 300 iterations characterization study"
+
+# Single Group: LLM-Only
+groups:
+  llm_only:
+    name: "LLM-Only"
+    innovation_rate: 1.00  # 100% LLM generation
+    description: "Pure LLM strategy generation"
+
+# Phase Configuration: 300 iterations total
+phases:
+  pilot:
+    iterations_per_run: 300
+    num_runs: 1
+    total_iterations: 300
+    description: "300 iterations characterization study"
+
+  full_study:
+    iterations_per_run: 500
+    num_runs: 1
+    total_iterations: 500
+    description: "Extended study (if needed)"
+
+# Novelty System Configuration (3-Layer Weighted)
+novelty:
+  weights:
+    factor_diversity: 0.30      # Layer 1: 30%
+    combination_patterns: 0.40  # Layer 2: 40%
+    logic_complexity: 0.30      # Layer 3: 30%
+
+  baseline_file: "artifacts/data/champion.json"
+  template_dir: "strategies/factor_graph_templates/"
+
+# Statistical Testing
+statistics:
+  significance_level: 0.05
+  tests:
+    - mann_whitney_u
+    - mann_kendall
+    - sliding_window
+
+# Storage Configuration
+storage:
+  results_dir: "artifacts/experiments/llm_300_characterization/"
+  format: "jsonl"
+
+# Execution Configuration
+execution:
+  timeout_seconds: 600  # 10 min per iteration
+  continue_on_error: true  # Continue on individual iteration failures
+  max_parallel_groups: 1
+
+  # Path Configuration
+  paths:
+    learning_config: "config/learning_system.yaml"
+    results_dir: "experiments/llm_learning_validation/results"
+    template_dir: "LLM-strategy-generator/factor_graph/templates"
+
+# Experimental Features
+experimental:
+  # Factor Graph disabled (architectural incompatibility with FinLab data structure)
+  # See: LLM_VALIDATION_STATUS.md, FACTOR_GRAPH_COMPREHENSIVE_ANALYSIS.md
+  use_factor_graph: false
+
+# Success Criteria for Characterization
+decision_criteria:
+  min_criteria_met: 3
+  criteria:
+    - name: "Execution Success Rate"
+      test: "Valid backtest rate > 70%"
+    - name: "Strategy Quality"
+      test: "At least 5% strategies with Sharpe > 0.8"
+    - name: "Code Quality"
+      test: "Syntax error rate < 10%"
+    - name: "Diversity Maintenance"
+      test: "Strategy diversity > 40% over time"

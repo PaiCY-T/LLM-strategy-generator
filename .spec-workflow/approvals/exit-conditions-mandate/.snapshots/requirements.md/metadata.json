@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/exit-conditions-mandate/requirements.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-27T14:50:30.408Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761576630188_n42tudm9s",
+      "approvalTitle": "Requirements: Exit Conditions Mandate"
+    }
+  ]
+}

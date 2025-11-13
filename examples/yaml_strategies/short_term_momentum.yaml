@@ -1,0 +1,198 @@
+# Short-Term Momentum Strategy
+# =============================
+# High-frequency momentum strategy using RSI and MACD for day-trading timeframes
+#
+# Strategy Logic:
+# - Identify stocks with strong short-term momentum using RSI and MACD
+# - Enter when RSI crosses above 50 and MACD shows bullish crossover
+# - Use tight 5% stop loss for quick exits
+# - Daily timeframe with equal weight position sizing
+# - Designed for volatile markets with quick reversals
+#
+# Expected Performance: Sharpe 1.0-1.5, Annual Return 15-25%, Turnover: High
+# Market Conditions: Best in trending markets with moderate volatility
+# Risk Level: High (tight stops, frequent trading)
+
+metadata:
+  name: "Short-Term RSI MACD Momentum"
+  description: "Day-trading momentum strategy using RSI >50 and bullish MACD crossover signals, with tight 5% stops for rapid entries and exits in trending markets"
+  strategy_type: "momentum"
+  rebalancing_frequency: "W-MON"  # Weekly Monday rebalancing
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - short-term
+    - momentum
+    - rsi
+    - macd
+    - day-trading
+    - high-frequency
+  risk_level: "high"
+
+indicators:
+  # Technical indicators for short-term momentum
+  technical_indicators:
+    # RSI for momentum direction
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # MACD for trend confirmation
+    - name: "macd_line"
+      type: "MACD"
+      period: 12
+      source: "data.get('MACD')"
+      parameters:
+        fast_period: 12
+        slow_period: 26
+        signal_period: 9
+
+    - name: "macd_signal"
+      type: "MACD"
+      period: 9
+      source: "data.get('MACD_signal')"
+      parameters:
+        fast_period: 12
+        slow_period: 26
+        signal_period: 9
+
+    # Short-term moving averages
+    - name: "ma_5"
+      type: "SMA"
+      period: 5
+      source: "data.get('MA_5')"
+
+    - name: "ma_10"
+      type: "SMA"
+      period: 10
+      source: "data.get('MA_10')"
+
+    # ATR for volatility-based stops
+    - name: "atr_14"
+      type: "ATR"
+      period: 14
+      source: "data.get('ATR_14')"
+
+  # Custom momentum calculations
+  custom_calculations:
+    # MACD histogram (momentum strength)
+    - name: "macd_histogram"
+      expression: "macd_line - macd_signal"
+      description: "MACD histogram showing momentum strength"
+
+    # Price momentum (5-day percentage change)
+    - name: "momentum_5d"
+      expression: "(close - close.shift(5)) / close.shift(5)"
+      description: "5-day price momentum"
+
+    # Volatility ratio
+    - name: "volatility_ratio"
+      expression: "atr_14 / close"
+      description: "ATR as percentage of price (volatility measure)"
+
+entry_conditions:
+  # Threshold-based entry rules for momentum
+  threshold_rules:
+    # RSI momentum confirmation
+    - condition: "rsi_14 > 50"
+      description: "RSI above 50 (bullish momentum)"
+
+    - condition: "rsi_14 < 75"
+      description: "RSI below 75 (not yet overbought)"
+
+    # MACD bullish crossover
+    - condition: "macd_histogram > 0"
+      description: "MACD above signal line (bullish crossover)"
+
+    # Short-term trend alignment
+    - condition: "ma_5 > ma_10"
+      description: "5-day MA above 10-day MA (short-term uptrend)"
+
+    - condition: "close > ma_5"
+      description: "Price above 5-day MA (immediate strength)"
+
+    # Positive 5-day momentum
+    - condition: "momentum_5d > 0.02"
+      description: "Price up >2% over 5 days"
+
+    # Volatility filter (avoid low volatility stocks)
+    - condition: "volatility_ratio > 0.015"
+      description: "Sufficient volatility for momentum (ATR >1.5% of price)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # Liquidity requirements (high for day trading)
+  min_liquidity:
+    average_volume_20d: 200000000  # 200M minimum volume
+    dollar_volume: 10000000        # 10M daily dollar volume
+
+exit_conditions:
+  # Tight stop loss for day trading
+  stop_loss_pct: 0.05  # 5% stop loss
+
+  # Take profit at 12% (quick wins)
+  take_profit_pct: 0.12
+
+  # Trailing stop (tighter for short-term)
+  trailing_stop:
+    trail_percent: 0.05      # Trail 5% below peak
+    activation_profit: 0.03  # Activate after 3% profit
+
+  # Conditional exits (momentum reversal signals)
+  conditional_exits:
+    # Exit if RSI reverses below 45
+    - condition: "rsi_14 < 45"
+      description: "RSI momentum reversal (below 45)"
+
+    # Exit if MACD bearish crossover
+    - condition: "macd_histogram < 0"
+      description: "MACD bearish crossover (exit)"
+
+    # Exit if price falls below 5-day MA
+    - condition: "close < ma_5"
+      description: "Price below 5-day MA (short-term weakness)"
+
+    # Exit if 5-day MA crosses below 10-day MA
+    - condition: "ma_5 < ma_10"
+      description: "5-day MA below 10-day MA (trend reversal)"
+
+  # Short holding period for day trading
+  holding_period_days: 10
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Equal weight allocation
+  method: "equal_weight"
+
+  # Maximum 25 positions (diversified for day trading)
+  max_positions: 25
+
+  # Maximum 8% per position (smaller for high risk)
+  max_position_pct: 0.08
+
+  # Minimum 2% per position
+  min_position_pct: 0.02
+
+risk_management:
+  # Sector concentration limit
+  max_sector_exposure: 0.25
+
+  # Rebalance frequently
+  rebalance_threshold: 0.10
+
+  # Tight drawdown limit
+  max_drawdown_limit: 0.15
+
+  # Keep cash reserve for opportunities
+  cash_reserve_pct: 0.10
+
+backtest_config:
+  start_date: "2022-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.001

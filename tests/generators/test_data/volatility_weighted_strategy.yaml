@@ -1,0 +1,45 @@
+# Volatility Weighted Strategy Test YAML
+# Tests volatility_weighted position sizing method
+
+metadata:
+  name: "Low Volatility Quality"
+  description: "Select quality stocks and weight by inverse volatility"
+  strategy_type: "factor_combination"
+  rebalancing_frequency: "M"
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - "low_volatility"
+    - "quality"
+    - "factor"
+  risk_level: "low"
+
+indicators:
+  fundamental_factors:
+    - name: "roe"
+      field: "ROE"
+      source: "data.get('ROE')"
+      transformation: "rank"
+
+    - name: "debt_ratio"
+      field: "debt_ratio"
+      source: "data.get('debt_ratio')"
+      transformation: "none"
+
+entry_conditions:
+  ranking_rules:
+    - field: "roe"
+      method: "top_percent"
+      value: 30
+      ascending: false
+
+  threshold_rules:
+    - condition: "debt_ratio < 0.5"
+      description: "Low debt"
+
+  logical_operator: "AND"
+
+position_sizing:
+  method: "volatility_weighted"
+  max_positions: 30
+  max_position_pct: 0.08

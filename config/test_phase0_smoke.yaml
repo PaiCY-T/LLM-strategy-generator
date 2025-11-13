@@ -1,0 +1,52 @@
+# Phase 0: Pre-Docker Smoke Test Configuration
+# Safe to run TODAY - NO execution, dry-run mode only
+
+docker:
+  enabled: false              # CRITICAL: Docker disabled
+
+llm:
+  enabled: true
+  provider: "openrouter"
+  model: "google/gemini-2.0-flash-lite"  # Fast, cheap model
+  api_key_env: "OPENROUTER_API_KEY"
+
+  # Innovation settings
+  innovation_rate: 0.20       # 20% of iterations use LLM
+  max_api_calls: 5            # Cost control: 5 × $0.02 = $0.10
+  timeout: 30                 # 30 seconds per API call
+
+  # Retry settings
+  max_retries: 3
+  retry_delay: 2
+
+execution:
+  mode: "dry_run"             # ONLY validate syntax, NO execution
+  validate_ast: true          # Parse with ast.parse()
+  validate_imports: true      # Check for dangerous imports
+  validate_schema: true       # Validate YAML against schema
+
+safety:
+  allow_execution: false      # Hard block on execution
+  allow_filesystem_write: false
+  allow_network: false
+
+test_params:
+  max_iterations: 10
+  checkpoint_interval: 2
+  export_yaml_specs: true     # Save generated YAML
+  export_code: true           # Save generated code
+  log_level: "DEBUG"
+
+artifacts:
+  yaml_specs_path: "artifacts/phase0_yaml_specs.jsonl"
+  generated_code_path: "artifacts/phase0_generated_code.jsonl"
+  metrics_path: "artifacts/phase0_metrics.json"
+  logs_path: "artifacts/phase0_logs.txt"
+
+# Expected success criteria
+success_criteria:
+  yaml_validation_rate_min: 0.70     # ≥70% YAML valid
+  code_generation_rate_min: 1.00     # 100% code generated
+  syntax_correctness_rate_min: 1.00  # 100% syntax correct
+  max_cost_usd: 0.10                 # <$0.10 total
+  max_duration_seconds: 300          # <5 minutes

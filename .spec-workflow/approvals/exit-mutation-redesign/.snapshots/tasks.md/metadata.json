@@ -1,0 +1,30 @@
+{
+  "filePath": ".claude/specs/exit-mutation-redesign/tasks.md",
+  "currentVersion": 3,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-25T12:40:12.687Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761396012576_b3dgf1w6a",
+      "approvalTitle": "Review tasks.md for exit-mutation-redesign (8 tasks, 1-2 days)"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-25T14:14:56.099Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761396012576_b3dgf1w6a",
+      "approvalTitle": "Review tasks.md for exit-mutation-redesign (8 tasks, 1-2 days)"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-10-27T16:49:31.991Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761583632092_ln3v7e7my",
+      "approvalTitle": "Exit Mutation Tasks Document - 11 Implementation Tasks"
+    }
+  ]
+}

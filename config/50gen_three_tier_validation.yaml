@@ -1,0 +1,200 @@
+# 50-Generation Three-Tier Validation Configuration
+# Task D.6 - Comprehensive validation of three-tier mutation system
+#
+# This configuration runs a full 50-generation evolution with all three
+# mutation tiers active to validate system completeness and effectiveness.
+
+name: "50-Generation Three-Tier Validation"
+description: "Comprehensive validation of Tier 1 (YAML), Tier 2 (Factor), and Tier 3 (AST) mutation system"
+
+# Population Configuration
+population:
+  size: 20                    # Population size for evolution
+  generations: 50             # Total generations to run
+  elite_count: 4              # Number of elite strategies to preserve (20%)
+  tournament_size: 3          # Tournament selection size
+  diversity_threshold: 0.3    # Minimum diversity to maintain
+  convergence_window: 10      # Generations to check for convergence
+
+# Mutation Configuration
+mutation:
+  enable_three_tier: true     # Enable three-tier mutation system
+
+  # Tier Selection Configuration
+  tier_selection:
+    # Initial tier thresholds (adaptive learning will adjust)
+    initial_thresholds:
+      tier1_max: 0.3          # Tier 1 if random < 0.3
+      tier2_max: 0.7          # Tier 2 if 0.3 <= random < 0.7
+                              # Tier 3 if random >= 0.7
+
+    # Adaptive learning configuration
+    adaptive_learning: true
+    learning_rate: 0.1
+    success_bonus: 0.05
+    failure_penalty: 0.02
+
+    # Fallback configuration
+    fallback_enabled: true
+    fallback_order: [2, 1, 3] # Try Tier 2 first, then 1, then 3
+
+  # Tier 1: YAML Configuration Mutations
+  tier1:
+    enabled: true
+    mutation_types:
+      - parameter_adjustment    # Adjust factor parameters
+      - factor_swap            # Swap similar factors
+    parameter_std_dev: 0.15
+
+  # Tier 2: Factor-Level Mutations
+  tier2:
+    enabled: true
+    mutation_types:
+      - add_factor             # Add new factor to DAG
+      - remove_factor          # Remove factor from DAG
+      - replace_factor         # Replace factor with similar one
+      - mutate_parameters      # Gaussian parameter mutation
+
+    # Mutation rates (relative weights)
+    weights:
+      add_factor: 0.25
+      remove_factor: 0.15
+      replace_factor: 0.30
+      mutate_parameters: 0.30
+
+    # Smart mutation configuration
+    smart_selection: true
+    category_aware: true
+
+    # Parameter mutation
+    parameter_std_dev: 0.20
+    parameter_bounds_check: true
+
+  # Tier 3: AST Code Mutations
+  tier3:
+    enabled: true
+    mutation_types:
+      - boolean_operator_swap  # AND <-> OR
+      - comparison_inversion   # > <-> <, >= <-> <=
+      - threshold_adjustment   # Multiply threshold by factor
+      - condition_negation     # if cond -> if not cond
+
+    # Mutation rates
+    weights:
+      boolean_operator_swap: 0.30
+      comparison_inversion: 0.25
+      threshold_adjustment: 0.30
+      condition_negation: 0.15
+
+    # Safety configuration
+    ast_validation: true
+    forbidden_operations:
+      - exec
+      - eval
+      - compile
+      - __import__
+
+    # Threshold adjustment ranges
+    threshold_multiplier_range: [0.5, 2.0]
+
+# Validation Configuration
+validation:
+  # Checkpoint configuration
+  checkpoint_interval: 10      # Save checkpoint every N generations
+  checkpoint_dir: "validation_results/50gen_three_tier"
+  save_all_strategies: false   # Only save elite strategies
+
+  # Metrics to track
+  metrics_to_track:
+    - sharpe_ratio
+    - calmar_ratio
+    - max_drawdown
+    - win_rate
+    - total_return
+    - volatility
+
+  # Target tier distribution (for assessment)
+  target_tier_distribution:
+    tier1: 0.30               # Target 30% Tier 1 usage
+    tier2: 0.50               # Target 50% Tier 2 usage
+    tier3: 0.20               # Target 20% Tier 3 usage
+
+  # Performance targets (for success criteria)
+  performance_targets:
+    min_best_sharpe: 1.8      # Minimum best Sharpe to consider success
+    min_improvement_rate: 0.02 # Minimum improvement rate (2% of generations)
+    max_generations_to_breakthrough: 50
+
+  # System stability targets
+  stability_targets:
+    min_completion_rate: 0.95  # At least 95% of generations complete
+    min_diversity: 0.3         # Maintain diversity above 0.3
+    max_crashes: 0             # Zero crashes expected
+
+# System Configuration
+system:
+  # Execution configuration
+  parallel_evaluation: false   # Sequential evaluation (safer for validation)
+  max_workers: 1              # Single worker for reproducibility
+
+  # Memory management
+  cache_enabled: false        # Disable caching for clean validation
+  garbage_collection: true    # Enable aggressive garbage collection
+
+  # Logging configuration
+  log_level: "INFO"
+  log_file: "validation_results/50gen_three_tier/validation.log"
+  verbose: true
+
+  # Export configuration
+  export_format: "json"       # Export metrics as JSON
+  export_interval: 10         # Export every 10 generations
+  export_path: "validation_results/50gen_three_tier/metrics"
+
+# Backtest Configuration
+backtest:
+  # Data configuration
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+  universe: "tw_stock"        # Taiwan stock market
+
+  # Trading configuration
+  initial_capital: 1000000
+  commission: 0.001425        # 0.1425% commission
+  slippage: 0.001            # 0.1% slippage
+
+  # Risk management
+  max_position_size: 0.1     # Max 10% per position
+  max_portfolio_leverage: 1.0 # No leverage
+
+  # Performance calculation
+  risk_free_rate: 0.01       # 1% risk-free rate for Sharpe/Calmar
+  periods_per_year: 252      # Trading days per year
+
+# Report Configuration
+report:
+  generate_markdown: true
+  generate_json: true
+  generate_visualizations: true
+
+  output_dir: "validation_results/50gen_three_tier"
+  report_filename: "THREE_TIER_VALIDATION_REPORT.md"
+  metrics_filename: "validation_metrics.json"
+
+  # Report sections to include
+  include_sections:
+    - executive_summary
+    - tier_distribution
+    - performance_progression
+    - tier_effectiveness
+    - system_stability
+    - breakthrough_strategies
+    - recommendations
+    - appendix
+
+  # Breakthrough detection
+  breakthrough_threshold: 2.5  # Sharpe > 2.5 considered breakthrough
+
+  # Visualization configuration
+  chart_format: "text"        # Text-based charts (no matplotlib)
+  sample_interval: 5          # Sample every 5 generations for charts

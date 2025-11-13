@@ -1,0 +1,36 @@
+{
+  "generation": 10,
+  "timestamp": "2025-10-20T18:41:16.411904",
+  "population_size": 20,
+  "statistics": {
+    "generation": 10,
+    "best_sharpe": 1.7384259898989207,
+    "avg_sharpe": 1.6512573525515872,
+    "mutation_attempts": 6,
+    "mutation_successes": 0,
+    "mutation_failures": 6,
+    "success_rate": 0.0,
+    "diversity_score": 0.18947368421052632,
+    "unique_patterns": 3,
+    "exit_patterns": [
+      "stop_loss",
+      "basic",
+      "take_profit"
+    ],
+    "jaccard_diversity": 0.3038286893704851,
+    "improvement_rate": 1.2155183296752467e-16,
+    "pareto_front_size": 1,
+    "time": 0.177687406539917,
+    "elapsed_total": 2.320542812347412
+  },
+  "exit_mutation_stats": {
+    "attempts": 51,
+    "successes": 0,
+    "failures": 51,
+    "by_type": {
+      "parametric": 0,
+      "structural": 0,
+      "relational": 0
+    }
+  }
+}

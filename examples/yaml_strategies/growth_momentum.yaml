@@ -1,0 +1,277 @@
+# Growth Momentum Factor Strategy
+# =================================
+# Multi-factor growth investing with momentum confirmation
+#
+# Strategy Logic:
+# - Combine Revenue Growth and Price Momentum factors
+# - Select high-growth companies with strong price trends
+# - Volatility-weighted position sizing to manage risk
+# - Designed for growth stock bull markets
+#
+# Expected Performance: Sharpe 1.4-2.1, Annual Return 22-35%, Turnover: Medium
+# Market Conditions: Best in growth/tech bull markets with risk-on sentiment
+# Risk Level: High (growth stocks more volatile)
+
+metadata:
+  name: "Growth Momentum Composite"
+  description: "Growth investing strategy combining revenue growth with price momentum, volatility-weighted positions, targeting high-growth companies in strong uptrends"
+  strategy_type: "factor_combination"
+  rebalancing_frequency: "M"  # Monthly rebalancing
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - factor-combination
+    - growth
+    - momentum
+    - high-growth
+    - volatility-weighted
+    - tech
+  risk_level: "high"
+
+indicators:
+  # Fundamental factors
+  fundamental_factors:
+    # Growth factors
+    - name: "revenue_growth"
+      field: "revenue_growth"
+      source: "data.get('revenue_growth')"
+      transformation: "winsorize"
+
+    - name: "earnings_growth"
+      field: "earnings_growth"
+      source: "data.get('earnings_growth')"
+      transformation: "winsorize"
+
+    # Profitability
+    - name: "operating_margin"
+      field: "operating_margin"
+      source: "data.get('operating_margin')"
+
+    - name: "net_margin"
+      field: "net_margin"
+      source: "data.get('net_margin')"
+
+    # Valuation context
+    - name: "pe_ratio"
+      field: "PE_ratio"
+      source: "data.get('PE_ratio')"
+
+    - name: "ps_ratio"
+      field: "PS_ratio"
+      source: "data.get('PS_ratio')"
+
+    # Efficiency
+    - name: "asset_turnover"
+      field: "asset_turnover"
+      source: "data.get('asset_turnover')"
+
+  # Technical indicators
+  technical_indicators:
+    # Price momentum
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # Moving averages
+    - name: "ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('MA_20')"
+
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+    # Volatility
+    - name: "atr_20"
+      type: "ATR"
+      period: 20
+      source: "data.get('ATR_20')"
+
+    # Trend strength
+    - name: "adx_14"
+      type: "ADX"
+      period: 14
+      source: "data.get('ADX_14')"
+
+  # Custom factor calculations
+  custom_calculations:
+    # Growth score
+    - name: "growth_score"
+      expression: "revenue_growth * (1 + earnings_growth)"
+      description: "Composite growth: Revenue Growth × (1 + Earnings Growth)"
+
+    # Momentum score (50-day rate of change)
+    - name: "momentum_score"
+      expression: "(close - close.shift(50)) / close.shift(50)"
+      description: "50-day price momentum"
+
+    # Growth-momentum composite (primary ranking metric)
+    - name: "growth_momentum"
+      expression: "growth_score * (1 + momentum_score) * 100"
+      description: "Growth × Momentum composite factor"
+
+    # Profitability-adjusted growth momentum
+    - name: "profit_adjusted_gm"
+      expression: "growth_momentum * (1 + operating_margin)"
+      description: "Growth-Momentum adjusted for profitability"
+
+    # Normalized volatility (for position sizing)
+    - name: "normalized_volatility"
+      expression: "atr_20 / close"
+      description: "ATR as percentage of price (volatility measure)"
+
+    # Valuation efficiency (growth per dollar of valuation)
+    - name: "growth_efficiency"
+      expression: "revenue_growth / ps_ratio"
+      description: "Revenue growth per unit of Price/Sales ratio"
+
+entry_conditions:
+  # Ranking-based selection
+  ranking_rules:
+    # Select top 25% by profitability-adjusted growth-momentum
+    - field: "profit_adjusted_gm"
+      method: "top_percent"
+      value: 25
+      ascending: false
+
+  # Threshold-based filters
+  threshold_rules:
+    # Growth filters
+    - condition: "revenue_growth > 0.15"
+      description: "Strong revenue growth (>15%)"
+
+    - condition: "earnings_growth > 0.10"
+      description: "Positive earnings growth (>10%)"
+
+    # Momentum filters
+    - condition: "momentum_score > 0.10"
+      description: "Strong price momentum (>10% over 50 days)"
+
+    - condition: "rsi_14 > 55"
+      description: "RSI showing strength (>55)"
+
+    - condition: "close > ma_20"
+      description: "Price above 20-day MA"
+
+    - condition: "close > ma_50"
+      description: "Price above 50-day MA"
+
+    - condition: "ma_20 > ma_50"
+      description: "20-day MA above 50-day MA (uptrend)"
+
+    # Trend strength
+    - condition: "adx_14 > 22"
+      description: "Moderate-to-strong trend (ADX >22)"
+
+    # Profitability filters (avoid unprofitable growth)
+    - condition: "operating_margin > 0.05"
+      description: "Positive operating margin (>5%)"
+
+    # Valuation sanity checks
+    - condition: "pe_ratio > 0"
+      description: "Positive earnings"
+
+    - condition: "ps_ratio > 0"
+      description: "Positive revenue"
+
+    - condition: "ps_ratio < 20"
+      description: "PS ratio <20 (not extremely expensive)"
+
+    # Efficiency filter
+    - condition: "asset_turnover > 0.3"
+      description: "Reasonable asset efficiency (>0.3)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # Liquidity requirements
+  min_liquidity:
+    average_volume_20d: 100000000  # 100M minimum
+
+exit_conditions:
+  # Moderate stop loss (growth stocks volatile)
+  stop_loss_pct: 0.15  # 15% stop loss
+
+  # Large take profit target (let winners run)
+  take_profit_pct: 0.60  # 60% take profit
+
+  # Trailing stop
+  trailing_stop:
+    trail_percent: 0.18      # Trail 18% below peak (wider for growth)
+    activation_profit: 0.12  # Activate after 12% profit
+
+  # Conditional exits
+  conditional_exits:
+    # Exit if growth slows
+    - condition: "revenue_growth < 0.08"
+      description: "Revenue growth slowed below 8%"
+
+    - condition: "earnings_growth < 0"
+      description: "Earnings growth turned negative"
+
+    # Exit if momentum reverses
+    - condition: "momentum_score < 0"
+      description: "Price momentum turned negative"
+
+    - condition: "rsi_14 < 45"
+      description: "RSI momentum reversal (<45)"
+
+    # Exit if trend breaks
+    - condition: "close < ma_50"
+      description: "Price below 50-day MA (trend broken)"
+
+    - condition: "ma_20 < ma_50"
+      description: "20-day MA below 50-day MA (bearish cross)"
+
+    # Exit if trend weakens
+    - condition: "adx_14 < 18"
+      description: "Trend weakened (ADX <18)"
+
+    # Exit if profitability deteriorates
+    - condition: "operating_margin < 0.02"
+      description: "Operating margin deteriorated (<2%)"
+
+  # Holding period
+  holding_period_days: 90
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Volatility-weighted (inverse volatility)
+  method: "volatility_weighted"
+
+  # Maximum 20 positions (concentrated growth)
+  max_positions: 20
+
+  # Maximum 10% per position
+  max_position_pct: 0.10
+
+  # Minimum 3% per position
+  min_position_pct: 0.03
+
+risk_management:
+  # Sector concentration (allow tech concentration)
+  max_sector_exposure: 0.40
+
+  # Portfolio volatility target
+  max_portfolio_volatility: 0.25
+
+  # Rebalance threshold
+  rebalance_threshold: 0.15
+
+  # Wider drawdown tolerance for growth
+  max_drawdown_limit: 0.28
+
+  # Lower cash reserve (growth strategies stay invested)
+  cash_reserve_pct: 0.03
+
+backtest_config:
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 2000000  # 2M capital
+  transaction_cost: 0.001425
+  slippage: 0.0015  # Slightly higher for growth stocks

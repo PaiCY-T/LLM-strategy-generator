@@ -1,0 +1,37 @@
+{
+  "genome_id": "autonomous_generated_20251110_150959_2.48",
+  "template_name": "autonomous_generated",
+  "parameters": {
+    "datasets": [
+      "fundamental_features:ROE稅後",
+      "monthly_revenue:去年同月增減(%)",
+      "price:成交股數",
+      "price:成交金額",
+      "price:收盤價",
+      "price_earning_ratio:本益比"
+    ],
+    "liquidity_threshold": 50,
+    "roe_smoothing_window": 1,
+    "roe_type": "raw",
+    "revenue_handling": "simple_shift",
+    "value_factor": "pe_ratio",
+    "price_filter": 10,
+    "volume_filter": null,
+    "factor_combination": "returns_20d * 0.3 +     revenue_growth_factor * 0.3 +     roe_factor * 0.2 +     inverse_pe_factor * 0.2",
+    "__iteration_num__": 6,
+    "__generation_method__": "llm"
+  },
+  "metrics": {
+    "total_return": 0.43943126047094666,
+    "annual_return": 0.11953852782851668,
+    "sharpe_ratio": 2.4751337704804173,
+    "max_drawdown": -0.15238839675266508,
+    "win_rate": 0.31606829325386526,
+    "position_count": 3277
+  },
+  "created_at": "2025-11-10 15:09:59",
+  "strategy_code": "# 1. Load data\nclose = data.get('price:收盤價')\nvolume = data.get('price:成交股數')\nrevenue_yoy = data.get('monthly_revenue:去年同月增減(%)')\nroe = data.get('fundamental_features:ROE稅後')\npe_ratio = data.get('price_earning_ratio:本益比')\n\n# 2. Calculate factors\n# Momentum factor (20-day return)\nreturns_20d = close.pct_change(20).shift(1)\n\n# Revenue growth factor (YoY)\nrevenue_growth_factor = revenue_yoy.shift(1)\n\n# ROE factor\nroe_factor = roe.shift(1)\n\n# Inverse P/E ratio factor (lower P/E is better)\n# Handle potential division by zero or negative P/E\ninverse_pe_factor = (1 / pe_ratio).replace([float('inf'), -float('inf')], 0).shift(1)\n\n# 3. Combine factors\n# Normalize factors (simple min-max normalization for illustration, though Finlab often handles this implicitly)\n# For simplicity, we'll combine directly, assuming relative ranking is what matters.\n# Higher returns, higher revenue growth, higher ROE, lower PE are generally better.\ncombined_factor = (\n    returns_20d * 0.3 +\n    revenue_growth_factor * 0.3 +\n    roe_factor * 0.2 +\n    inverse_pe_factor * 0.2\n)\n\n# 4. Apply filters\n# Liquidity filter: average daily trading value over 20 days > 50 million TWD\ntrading_value = data.get('price:成交金額')\nliquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000\n\n# Price filter: stock price > 10 TWD\nprice_filter = close.shift(1) > 10\n\n# Combine filters\nfinal_filter = liquidity_filter & price_filter\n\n# 5. Select stocks\n# Apply filters and select the top 10 stocks based on the combined factor\nposition = combined_factor[final_filter].is_largest(10)\n\n# 6. Run backtest\nreport = sim(position, resample=\"Q\", upload=False, stop_loss=0.08)",
+  "success_patterns": [
+    "price > 10 TWD - Filters penny stocks"
+  ]
+}

@@ -1,0 +1,81 @@
+# LLM Validation Test - 10 Iterations
+# Purpose: Verify fix for missing sim() call issue
+
+experiment:
+  name: "llm-validation-test"
+  version: "1.0.0"
+  description: "Quick validation test for LLM wrapper fix (10 iterations)"
+
+# Single Group: LLM-Only
+groups:
+  llm_only:
+    name: "LLM-Only"
+    innovation_rate: 1.00  # 100% LLM generation
+    description: "Pure LLM strategy generation (test)"
+
+# Phase Configuration: 10 iterations for quick validation
+phases:
+  pilot:
+    iterations_per_run: 10
+    num_runs: 1
+    total_iterations: 10
+    description: "10 iterations validation test"
+
+  full_study:
+    iterations_per_run: 500
+    num_runs: 1
+    total_iterations: 500
+    description: "Extended study (if needed)"
+
+# Novelty System Configuration (3-Layer Weighted)
+novelty:
+  weights:
+    factor_diversity: 0.30      # Layer 1: 30%
+    combination_patterns: 0.40  # Layer 2: 40%
+    logic_complexity: 0.30      # Layer 3: 30%
+
+  baseline_file: "artifacts/data/champion.json"
+  template_dir: "strategies/factor_graph_templates/"
+
+# Statistical Testing
+statistics:
+  significance_level: 0.05
+  tests:
+    - mann_whitney_u
+    - mann_kendall
+    - sliding_window
+
+# Storage Configuration
+storage:
+  results_dir: "artifacts/experiments/llm_validation_test/"
+  format: "jsonl"
+
+# Execution Configuration
+execution:
+  timeout_seconds: 600  # 10 min per iteration
+  continue_on_error: true  # Continue on individual iteration failures
+  max_parallel_groups: 1
+
+  # Path Configuration
+  paths:
+    learning_config: "config/learning_system.yaml"
+    results_dir: "experiments/llm_learning_validation/results/validation_test"
+    template_dir: "LLM-strategy-generator/factor_graph/templates"
+
+# Experimental Features
+experimental:
+  # Factor Graph disabled (architectural incompatibility with FinLab data structure)
+  use_factor_graph: false
+
+# Success Criteria for Characterization
+decision_criteria:
+  min_criteria_met: 3
+  criteria:
+    - name: "Execution Success Rate"
+      test: "Valid backtest rate > 70%"
+    - name: "Strategy Quality"
+      test: "At least 5% strategies with Sharpe > 0.8"
+    - name: "Code Quality"
+      test: "Syntax error rate < 10%"
+    - name: "Diversity Maintenance"
+      test: "Strategy diversity > 40% over time"

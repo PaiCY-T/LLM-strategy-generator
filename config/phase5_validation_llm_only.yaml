@@ -1,0 +1,111 @@
+# Phase 5 Validation Configuration: LLM Only Mode
+# Tests API error prevention with 100% LLM-generated strategies
+# innovation_rate: 100 (always use LLM, never Factor Graph)
+
+learning_loop:
+  max_iterations: 20
+  continue_on_error: true
+  history:
+    file: artifacts/data/phase5_llm_only_innovations.jsonl
+    window: 5
+  champion:
+    file: artifacts/data/phase5_llm_only_champion.json
+  backtest:
+    timeout_seconds: 420
+    resample: M
+  logging:
+    log_dir: logs
+    log_level: INFO
+    log_to_file: true
+    log_to_console: true
+  llm:
+    retry_count: 3
+
+backtest:
+  default_start_date: "2018-01-01"
+  default_end_date: "2024-12-31"
+  transaction_costs:
+    default_fee_ratio: 0.001425
+    default_tax_ratio: 0.003
+  report_fee_comparison: true
+
+anti_churn:
+  probation_period: 2
+  probation_threshold: 0.10
+  post_probation_threshold: 0.05
+  post_probation_relative_threshold: 0.01
+  additive_threshold: 0.02
+  threshold_logging_enabled: true
+  min_sharpe_for_champion: 0.5
+  staleness:
+    staleness_check_interval: 50
+    staleness_cohort_percentile: 0.10
+    staleness_min_cohort_size: 5
+    staleness_enabled: true
+
+multi_objective:
+  enabled: true
+  calmar_retention_ratio: 0.90
+  max_drawdown_tolerance: 1.10
+
+sandbox:
+  enabled: true
+  docker:
+    image: finlab-sandbox:latest
+    memory_limit: 2g
+    cpu_count: 0.5
+    timeout_seconds: 600
+    network_mode: bridge
+    read_only_filesystem: true
+    seccomp_profile: config/seccomp_profile.json
+  security:
+    validation_enabled: true
+  monitoring:
+    enabled: true
+    export_metrics: true
+
+# LLM ONLY MODE CONFIGURATION
+llm:
+  enabled: true
+  provider: openrouter
+  innovation_rate: 1.0  # 100% LLM (LLM ONLY MODE)
+  fallback:
+    enabled: true
+    max_retries: 3
+    retry_delay: 2
+  generation:
+    max_tokens: 2000
+    temperature: 0.7
+    timeout: 60
+  model: google/gemini-2.5-flash
+  openrouter:
+    api_key: ${OPENROUTER_API_KEY}
+    model: google/gemini-2.5-flash
+    http_referer: https://github.com/finlab-project
+    app_name: finlab-phase5-validation
+  mode: structured
+  hybrid_structured_ratio: 0.80
+
+structured_innovation:
+  validation:
+    strict_mode: true
+    timeout: 5
+    max_retries: 3
+    detailed_errors: true
+  code_generation:
+    debug_mode: false
+    timeout: 10
+    validate_ast: true
+    check_imports: true
+  fallback:
+    auto_fallback: true
+    fallback_mode: factor_graph
+    log_fallbacks: true
+  extraction:
+    multi_pattern: true
+    max_attempts: 3
+    cleanup_enabled: true
+  monitoring:
+    log_validation: true
+    log_code_generation: true
+    export_metrics: true

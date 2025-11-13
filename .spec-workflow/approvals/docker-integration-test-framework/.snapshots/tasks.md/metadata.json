@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/docker-integration-test-framework/tasks.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-01T23:42:56.495Z",
+      "trigger": "initial",
+      "approvalId": "approval_1762040576340_o6jly5gnj",
+      "approvalTitle": "Tasks Document - Test-First Implementation (20 Tasks, 6 Phases)"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-11-01T23:43:08.632Z",
+      "trigger": "approved",
+      "approvalId": "approval_1762040576340_o6jly5gnj",
+      "approvalTitle": "Tasks Document - Test-First Implementation (20 Tasks, 6 Phases)"
+    }
+  ]
+}

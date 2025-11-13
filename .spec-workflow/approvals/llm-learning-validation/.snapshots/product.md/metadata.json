@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/llm-learning-validation/product.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-06T15:18:09.129Z",
+      "trigger": "initial",
+      "approvalId": "approval_1762442288998_jq2cmp7n7",
+      "approvalTitle": "LLM Learning Validation - Product Specification"
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+# ============================================================================
+# Finlab Autonomous Trading System - Requirements
+# ============================================================================
+# Python version: 3.10+
+# Last updated: 2025-10-16
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Core Trading & Data Analysis
+# ----------------------------------------------------------------------------
+finlab>=1.5.3
+pandas>=2.3.2
+numpy>=2.2.0,<3.0.0
+scipy>=1.15.0
+scikit-learn>=1.7.0
+
+# Statistical analysis (Track 3: Statistical Testing Pipeline)
+pymannkendall>=1.4.2
+
+# Financial data sources
+yfinance>=0.2.60
+pandas-market-calendars>=5.1.0
+exchange-calendars>=4.11.0
+
+# Technical analysis
+TA-Lib>=0.6.7
+
+# Alternative data sources
+ml4t-finlab-downloader>=0.1.0
+
+# Graph algorithms (Factor Graph System)
+networkx>=3.4.0
+
+# ----------------------------------------------------------------------------
+# AI/LLM Integration (OpenRouter, Anthropic, Google)
+# ----------------------------------------------------------------------------
+anthropic>=0.69.0
+openai>=2.2.0
+google-generativeai>=0.8.5
+google-ai-generativelanguage>=0.6.15
+google-api-python-client>=2.184.0
+google-api-core>=2.25.0
+google-auth>=2.41.0
+google-auth-httplib2>=0.2.0
+
+# Async HTTP clients for API calls
+aiohttp>=3.12.0
+httpx>=0.28.0
+
+# ----------------------------------------------------------------------------
+# Backtesting & Performance Analysis
+# ----------------------------------------------------------------------------
+# Note: finlab includes its own backtesting engine
+# Additional optimization libraries
+deap>=1.4.3  # Genetic algorithms for strategy optimization
+statsmodels>=0.14.5  # Statistical analysis
+patsy>=1.0.0  # Statistical formulas
+
+# ----------------------------------------------------------------------------
+# Configuration & Environment
+# ----------------------------------------------------------------------------
+python-dotenv>=1.1.0
+PyYAML>=6.0.0
+pydantic>=2.11.0
+pydantic-core>=2.33.0
+
+# ----------------------------------------------------------------------------
+# Data Storage & Caching
+# ----------------------------------------------------------------------------
+SQLAlchemy>=2.0.43
+redis>=5.1.0
+duckdb>=1.4.0
+peewee>=3.18.0
+
+# Data compression
+cramjam>=2.11.0
+lz4>=4.4.0
+
+# Data formats
+fastparquet>=2024.11.0
+pyarrow>=21.0.0
+
+# ----------------------------------------------------------------------------
+# Visualization & Reporting
+# ----------------------------------------------------------------------------
+matplotlib>=3.10.0
+seaborn>=0.13.0
+plotly>=6.3.0
+
+# ----------------------------------------------------------------------------
+# Testing & Code Quality
+# ----------------------------------------------------------------------------
+pytest>=8.4.0
+pytest-asyncio>=1.2.0
+pytest-cov>=7.0.0
+pytest-mock>=3.15.0
+pytest-benchmark>=5.1.0
+coverage>=7.10.0
+
+# Test utilities
+approvaltests>=15.3.0
+testfixtures>=8.3.0
+mock>=5.2.0
+
+# Code quality
+flake8>=7.3.0
+pylint>=3.3.0
+mypy>=1.18.0
+isort>=6.0.0
+vulture>=2.14.0
+
+# Type stubs
+pandas-stubs>=2.3.0
+types-pytz>=2025.2.0
+
+# ----------------------------------------------------------------------------
+# Utilities
+# ----------------------------------------------------------------------------
+# CLI & UI
+click>=8.3.0
+typer>=0.19.0
+rich>=14.1.0
+tabulate>=0.9.0
+
+# Async support
+anyio>=4.10.0
+
+# Time & date handling
+python-dateutil>=2.9.0
+pytz>=2025.0
+tzdata>=2025.0
+
+# Data utilities
+frozendict>=2.4.0
+toolz>=1.0.0
+
+# Progress bars
+tqdm>=4.67.0
+
+# Korean lunar calendar (finlab dependency)
+korean-lunar-calendar>=0.3.0
+
+# ----------------------------------------------------------------------------
+# Monitoring & Debugging
+# ----------------------------------------------------------------------------
+psutil>=7.1.0
+memory-profiler>=0.61.0
+py-cpuinfo>=9.0.0
+
+# Logging enhancements
+colorama>=0.4.4
+
+# ----------------------------------------------------------------------------
+# Web Framework (Optional - for API endpoints)
+# ----------------------------------------------------------------------------
+fastapi>=0.116.0
+starlette>=0.47.0
+uvicorn>=0.35.0
+h11>=0.16.0
+
+# ----------------------------------------------------------------------------
+# Security & Cryptography
+# ----------------------------------------------------------------------------
+# Task 21: Pin Docker SDK version for supply chain security
+docker==7.1.0
+
+cryptography>=3.4.8
+bcrypt>=3.2.0
+
+# ----------------------------------------------------------------------------
+# System Integration
+# ----------------------------------------------------------------------------
+requests>=2.32.0
+urllib3>=2.5.0
+certifi>=2025.8.0
+charset-normalizer>=3.4.0
+
+# HTTP/2 support
+httpcore>=1.0.9
+
+# Protocol buffers (for gRPC/Google APIs)
+protobuf>=5.29.0
+grpcio>=1.75.0
+grpcio-status>=1.71.0
+googleapis-common-protos>=1.70.0
+
+# ----------------------------------------------------------------------------
+# Development Tools
+# ----------------------------------------------------------------------------
+ipython>=8.37.0
+build>=1.3.0
+wheel>=0.45.0
+
+# File watching
+watchdog>=6.0.0
+
+# ----------------------------------------------------------------------------
+# Notes
+# ----------------------------------------------------------------------------
+# Version constraints explanation:
+# - Core packages (pandas, numpy, scipy): Use >= for latest features
+# - AI APIs: Pin to recent versions for API stability
+# - finlab: Core dependency, use >= for compatibility
+#
+# Installation:
+#   pip install -r requirements.txt
+#
+# For development:
+#   pip install -r requirements.txt
+#   pip install -e .  # If using setup.py
+#
+# Platform notes:
+# - TA-Lib requires system library: brew install ta-lib (macOS) or apt-get install ta-lib (Ubuntu)
+# - Some packages may need build tools: gcc, g++, python3-dev

@@ -1,0 +1,20 @@
+{
+  "test_type": "real_llm_api_validation",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash-lite",
+  "timestamp": "2025-10-30 15:13:30",
+  "results": {
+    "total_attempts": 10,
+    "successes": 9,
+    "failures": 1,
+    "success_rate": 0.9,
+    "total_cost_usd": 0.0,
+    "avg_cost_per_attempt_usd": 0.0,
+    "total_time_seconds": 34.957608699798584,
+    "avg_time_per_attempt_seconds": 3.4957608699798586,
+    "errors": [
+      "No code generated"
+    ],
+    "generated_code_count": 9
+  }
+}

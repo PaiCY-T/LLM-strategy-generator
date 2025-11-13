@@ -1,0 +1,102 @@
+anti_churn:
+  additive_threshold: 0.02
+  min_sharpe_for_champion: 0.5
+  post_probation_relative_threshold: 0.01
+  post_probation_threshold: 0.05
+  probation_period: 2
+  probation_threshold: 0.1
+  staleness:
+    staleness_check_interval: 50
+    staleness_cohort_percentile: 0.1
+    staleness_enabled: true
+    staleness_min_cohort_size: 5
+  threshold_logging_enabled: true
+backtest:
+  default_end_date: '2024-12-31'
+  default_start_date: '2018-01-01'
+  report_fee_comparison: true
+  transaction_costs:
+    default_fee_ratio: 0.001425
+    default_tax_ratio: 0.003
+history_file: artifacts/data/test_prompt_fix.jsonl
+learning_loop:
+  backtest:
+    resample: M
+    timeout_seconds: 420
+  champion:
+    file: artifacts/data/phase5_llm_only_champion.json
+  continue_on_error: true
+  history:
+    file: artifacts/data/phase5_llm_only_innovations.jsonl
+    window: 5
+  llm:
+    retry_count: 3
+  logging:
+    log_dir: logs
+    log_level: INFO
+    log_to_console: true
+    log_to_file: true
+  max_iterations: 20
+llm:
+  enabled: true
+  fallback:
+    enabled: true
+    max_retries: 3
+    retry_delay: 2
+  generation:
+    max_tokens: 2000
+    temperature: 0.7
+    timeout: 60
+  hybrid_structured_ratio: 0.8
+  innovation_rate: 1.0
+  mode: structured
+  model: google/gemini-2.5-flash
+  openrouter:
+    api_key: ${OPENROUTER_API_KEY}
+    app_name: finlab-phase5-validation
+    http_referer: https://github.com/finlab-project
+    model: google/gemini-2.5-flash
+  provider: openrouter
+max_iterations: 3
+multi_objective:
+  calmar_retention_ratio: 0.9
+  enabled: true
+  max_drawdown_tolerance: 1.1
+sandbox:
+  docker:
+    cpu_count: 0.5
+    image: finlab-sandbox:latest
+    memory_limit: 2g
+    network_mode: bridge
+    read_only_filesystem: true
+    seccomp_profile: config/seccomp_profile.json
+    timeout_seconds: 600
+  enabled: true
+  monitoring:
+    enabled: true
+    export_metrics: true
+  security:
+    validation_enabled: true
+structured_innovation:
+  code_generation:
+    check_imports: true
+    debug_mode: false
+    timeout: 10
+    validate_ast: true
+  extraction:
+    cleanup_enabled: true
+    max_attempts: 3
+    multi_pattern: true
+  fallback:
+    auto_fallback: true
+    fallback_mode: factor_graph
+    log_fallbacks: true
+  monitoring:
+    export_metrics: true
+    log_code_generation: true
+    log_validation: true
+  validation:
+    detailed_errors: true
+    max_retries: 3
+    strict_mode: true
+    timeout: 5

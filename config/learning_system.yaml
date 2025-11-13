@@ -1,0 +1,1256 @@
+# Learning System Configuration
+# Controls anti-churn behavior and champion update frequency
+
+# ============================================================================
+# PHASE 6: LEARNING LOOP CONFIGURATION
+# ============================================================================
+# Core parameters for autonomous learning loop (Phase 6)
+# Controls iteration count, error handling, file paths, and logging
+learning_loop:
+  # Maximum number of learning iterations (1-1000)
+  # Each iteration generates and tests one strategy
+  # Recommended: 20 for initial exploration, 100+ for production runs
+  max_iterations: ${MAX_ITERATIONS:20}
+
+  # Continue if iteration fails (error handling strategy)
+  # true: log error and continue to next iteration (recommended for production)
+  # false: stop on first error (useful for debugging)
+  continue_on_error: ${CONTINUE_ON_ERROR:false}
+
+  # History tracking configuration
+  history:
+    # JSONL file for iteration history persistence
+    # Each line stores one iteration's full record (JSON format)
+    # Format: artifacts/data/innovations.jsonl
+    file: ${HISTORY_FILE:artifacts/data/innovations.jsonl}
+
+    # Number of recent iterations to use for feedback generation
+    # Higher = more context for LLM, but slower and more expensive
+    # Lower = faster generation, but less historical context
+    # Recommended: 5 iterations provides good balance
+    window: ${HISTORY_WINDOW:5}
+
+  # Champion tracking configuration
+  champion:
+    # JSON file for current champion strategy persistence
+    # Stores best-performing strategy found so far
+    # Format: artifacts/data/champion.json
+    file: ${CHAMPION_FILE:artifacts/data/champion.json}
+
+  # Backtest execution configuration
+  backtest:
+    # Timeout for strategy execution (seconds, minimum 60)
+    # Strategies exceeding this timeout will be killed
+    # Recommended: 420 (7 minutes) for typical backtests
+    timeout_seconds: ${BACKTEST_TIMEOUT:420}
+
+    # Rebalancing frequency for portfolio strategies
+    # D = Daily, W = Weekly, M = Monthly
+    # Monthly is recommended for most strategies (reduces transaction costs)
+    resample: ${BACKTEST_RESAMPLE:M}
+
+  # Logging configuration
+  logging:
+    # Log directory for timestamped log files
+    # Created automatically if it doesn't exist
+    log_dir: ${LOG_DIR:logs}
+
+    # Logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+    # DEBUG: very verbose, shows all internal steps
+    # INFO: normal operation, shows iteration progress (recommended)
+    # WARNING: only warnings and errors
+    log_level: ${LOG_LEVEL:INFO}
+
+    # Write logs to timestamped file in log_dir
+    # Useful for debugging and audit trails
+    log_to_file: ${LOG_TO_FILE:true}
+
+    # Write logs to console (stdout)
+    # Set to false for daemon/background operation
+    log_to_console: ${LOG_TO_CONSOLE:true}
+
+  # LLM retry configuration (Phase 6 specific)
+  llm:
+    # Number of LLM retries before falling back to Factor Graph
+    # Applies when LLM generation fails (timeout, invalid code, API error)
+    # Recommended: 3 retries provides good balance
+    retry_count: ${LLM_RETRY_COUNT:3}
+
+# ============================================================================
+
+# === BACKTEST CONFIGURATION ===
+# Controls backtest date ranges and transaction costs
+# Part of phase2-validation-framework-integration spec (Tasks 1-2)
+backtest:
+  # Default backtest date range (7-year period for validation)
+  # Rationale: Supports train/val/test split (2018-2020 train, 2021-2022 val, 2023-2024 test)
+  default_start_date: "2018-01-01"  # Start of 7-year validation period
+  default_end_date: "2024-12-31"    # End of validation period
+
+  # Transaction cost configuration (Taiwan market)
+  # Total cost per round-trip: 0.4425% (0.1425% fee + 0.3% tax)
+  transaction_costs:
+    # Broker commission (Taiwan market standard)
+    # Typical range: 0.1425% (full rate) to 0.05% (discount brokers)
+    default_fee_ratio: 0.001425  # 0.1425% commission
+
+    # Securities transaction tax (Taiwan government requirement)
+    # Fixed by law, cannot be negotiated
+    default_tax_ratio: 0.003  # 0.3% tax
+
+    # Conservative mode (for stress testing)
+    # Uses zero commission to represent best-case discount broker
+    conservative:
+      fee_ratio: 0.0      # Assume zero commission (discount broker)
+      tax_ratio: 0.003    # Tax is mandatory
+
+    # Realistic mode (for production evaluation)
+    # Uses actual Taiwan market rates
+    realistic:
+      fee_ratio: 0.001425  # Standard broker commission
+      tax_ratio: 0.003     # Mandatory tax
+
+  # Fee comparison reporting
+  # When true, backtests report both with-fees and without-fees metrics
+  report_fee_comparison: true
+
+# === YAML VALIDATION CONFIGURATION ===
+# Controls YAML normalization for LLM-generated strategies
+# Task 5 of yaml-normalizer-implementation spec
+yaml_validation:
+  enabled: true  # Enable YAML validation
+
+  normalization:
+    enabled: true  # Feature flag for YAML normalizer (Task 4 integration)
+    debug_mode: false  # Log all transformations at DEBUG level
+    strict_mode: false  # Fail on any transformation (testing only)
+
+anti_churn:
+  # Probation period: Higher threshold for newly crowned champions (iterations)
+  probation_period: 2
+
+  # Required improvement during probation (multiplicative factor)
+  # Example: 0.10 means new strategy must be 10% better to replace champion
+  probation_threshold: 0.10
+
+  # Required improvement after probation (multiplicative factor)
+  # Example: 0.05 means strategy must be 5% better after probation
+  post_probation_threshold: 0.05
+
+  # === HYBRID THRESHOLD SYSTEM ===
+  # Addresses the problem: Fixed percentage thresholds fail at high Sharpe ratios
+  # - At Sharpe 2.4751, a 5% improvement requires 2.599 (extremely difficult)
+  # - At Sharpe 0.5, a 5% improvement requires 0.525 (reasonable)
+  #
+  # Solution: Accept EITHER condition (whichever is easier to achieve):
+  # 1. Relative threshold: new_sharpe >= old_sharpe * (1 + relative_threshold)
+  # 2. Absolute threshold: new_sharpe >= old_sharpe + additive_threshold
+  #
+  # Example scenarios for champion with Sharpe 2.4751:
+  # - Relative (1%): Requires 2.4751 * 1.01 = 2.500 (0.025 improvement)
+  # - Absolute (0.02): Requires 2.4751 + 0.02 = 2.495 (0.02 improvement)
+  # - System accepts: 2.495 (easier absolute threshold)
+  #
+  # Example scenarios for champion with Sharpe 0.5:
+  # - Relative (1%): Requires 0.5 * 1.01 = 0.505 (0.005 improvement)
+  # - Absolute (0.02): Requires 0.5 + 0.02 = 0.52 (0.02 improvement)
+  # - System accepts: 0.505 (easier relative threshold)
+
+  # Post-probation relative threshold (multiplicative factor)
+  # Replaces the fixed 5% with a more achievable 1% for high Sharpe ratios
+  post_probation_relative_threshold: 0.01  # 1% relative improvement
+
+  # Post-probation additive threshold (absolute improvement)
+  # Provides a fixed improvement target regardless of current Sharpe
+  # Set to 0.02 based on historical champion improvements
+  additive_threshold: 0.02  # 0.02 absolute Sharpe improvement
+
+  # Enable detailed logging of threshold calculations
+  # Logs which threshold (relative vs absolute) was used for each decision
+  threshold_logging_enabled: true
+
+  # Minimum Sharpe ratio required to become champion
+  min_sharpe_for_champion: 0.5
+
+  # Target champion update frequency (10-20% of iterations)
+  target_update_frequency: 0.15  # 15% target
+
+  # Tuning ranges for adaptive adjustment
+  tuning_range:
+    probation_period: [1, 3]
+    probation_threshold: [0.05, 0.15]
+    post_probation_threshold: [0.03, 0.10]
+
+  # === CHAMPION STALENESS MECHANISM ===
+  # Purpose: Prevent system from clinging to outdated outlier champions that had
+  #          exceptional performance in the past but are no longer competitive
+  #
+  # How it works:
+  #   1. Every N iterations (staleness_check_interval), perform staleness check
+  #   2. Build cohort from top X% of recent strategies (staleness_cohort_percentile)
+  #   3. Calculate median Sharpe ratio of the cohort
+  #   4. Compare champion Sharpe vs cohort median
+  #   5. If champion < cohort median → DEMOTE champion and promote best cohort strategy
+  #
+  # Example scenarios:
+  #   Scenario A: Champion remains competitive
+  #   - Iteration 6: Champion achieves exceptional Sharpe 2.4751 (outlier)
+  #   - Iterations 7-56: Champion remains dominant, no better strategies found
+  #   - Iteration 50: Staleness check triggered
+  #   - Recent cohort (top 10% from iterations 40-50): median Sharpe 1.8
+  #   - Champion Sharpe 2.4751 > cohort median 1.8 → KEEP champion (still competitive)
+  #
+  #   Scenario B: Champion becomes stale
+  #   - Iteration 100: Another staleness check
+  #   - Recent cohort median: 2.6 (system has improved significantly)
+  #   - Champion Sharpe 2.4751 < cohort median 2.6 → DEMOTE champion
+  #   - Promote best strategy from cohort (e.g., Sharpe 2.8)
+  #
+  # Configuration guidance:
+  #   - staleness_check_interval: Lower = more frequent checks, higher = allow longer reign
+  #     Typical: 50 (check every 50 iterations, ~twice per 100 iterations)
+  #   - staleness_cohort_percentile: Lower = stricter comparison, higher = more lenient
+  #     Typical: 0.10 (compare against top 10% of recent strategies)
+  #   - staleness_min_cohort_size: Minimum strategies needed for valid comparison
+  #     Typical: 5 (ensures statistical reliability of cohort median)
+  #   - staleness_enabled: Set to false to disable staleness checks entirely
+  #
+  staleness:
+    staleness_check_interval: 50          # Check every 50 iterations
+    staleness_cohort_percentile: 0.10     # Top 10% of recent strategies
+    staleness_min_cohort_size: 5          # Minimum 5 strategies for valid cohort
+    staleness_enabled: true               # Enable staleness mechanism
+
+# === MULTI-OBJECTIVE VALIDATION ===
+# Purpose: Prevent brittle strategy selection by ensuring balanced risk/return characteristics
+# Problem: A strategy can have high Sharpe but poor risk characteristics (low Calmar, high drawdown)
+#          This creates "brittle" strategies that look good but perform poorly in real markets
+#
+# Solution: Require ALL criteria to pass for champion update:
+#   1. Sharpe: Pass hybrid threshold (relative OR absolute improvement)
+#   2. Calmar: new_calmar >= old_calmar * calmar_retention_ratio
+#   3. Max Drawdown: new_mdd <= old_mdd * max_drawdown_tolerance
+#
+# Example Scenarios:
+#   ACCEPT: Sharpe 2.0→2.1 (+5%), Calmar 0.8→0.75 (-6.25%), MDD -15%→-16% (+6.7%)
+#           All criteria pass: Sharpe improves, Calmar drops <10%, drawdown worsens <10%
+#
+#   REJECT: Sharpe 2.0→2.1 (+5%), Calmar 0.8→0.65 (-18.75%), MDD -15%→-16% (+6.7%)
+#           Reason: Calmar drops >10%, fails retention ratio (0.65/0.8 = 81.25% < 90%)
+#
+#   REJECT: Sharpe 2.0→2.1 (+5%), Calmar 0.8→0.75 (-6.25%), MDD -15%→-18% (+20%)
+#           Reason: Drawdown worsens >10%, fails tolerance (18%/15% = 120% > 110%)
+#
+#   REJECT: Sharpe 2.5→2.6 (+4%), Calmar 0.75→0.60 (-20%), MDD -12%→-15% (+25%)
+#           Reason: Both Calmar and drawdown fail criteria (brittle strategy)
+#
+# Metric Relationships & Why They Matter:
+#   - Sharpe Ratio = Return/Volatility
+#     Measures reward per unit of risk (volatility)
+#     High Sharpe alone doesn't guarantee good real-world performance
+#
+#   - Calmar Ratio = CAGR/MaxDrawdown
+#     Measures long-term return vs worst loss
+#     Better indicator of real-world trading viability than Sharpe
+#     Low Calmar despite high Sharpe indicates "lucky" or brittle strategy
+#
+#   - Max Drawdown = Worst peak-to-trough decline
+#     Measures maximum loss exposure (psychological and capital risk)
+#     High drawdowns cause investor panic and margin calls
+#     Sharpe doesn't capture tail risk or extreme losses
+#
+#   - Why validate all three:
+#     A strategy can optimize Sharpe while sacrificing Calmar/drawdown
+#     Multi-objective validation ensures balanced risk/return profile
+#     Prevents selecting strategies that look good on paper but fail in practice
+multi_objective:
+  # Enable multi-objective validation (feature flag)
+  # Set to false to use only Sharpe ratio validation (legacy behavior)
+  enabled: true
+
+  # Calmar retention ratio: New champion must maintain ≥90% of old champion's Calmar
+  # Formula: new_calmar >= old_calmar * calmar_retention_ratio
+  # Example: If old_calmar = 1.0, new_calmar must be ≥ 0.90
+  # Rationale: 10% Calmar degradation is acceptable for Sharpe improvement
+  #           More degradation indicates brittle strategy optimization
+  # Lower values: Allow more Calmar degradation (riskier, more updates)
+  # Higher values: Require stricter Calmar maintenance (safer, fewer updates)
+  calmar_retention_ratio: 0.90
+
+  # Max drawdown tolerance: New champion can have ≤110% of old champion's drawdown
+  # Formula: new_mdd <= old_mdd * max_drawdown_tolerance
+  # Example: If old_mdd = -20%, new_mdd must be ≤ -22% (110% of 20% = 22%)
+  # Rationale: 10% worse drawdown is acceptable for Sharpe/Calmar improvement
+  #           Worse drawdowns indicate increased tail risk
+  # Note: Drawdowns are negative, so "worse" means more negative (larger magnitude)
+  # Lower values: Require stricter drawdown control (safer, fewer updates)
+  # Higher values: Allow worse drawdowns (riskier, more updates)
+  max_drawdown_tolerance: 1.10
+
+# Feature flags
+features:
+  enable_anti_churn: true
+  enable_adaptive_tuning: false  # Future: auto-adjust thresholds based on update frequency
+
+# === RESOURCE MONITORING CONFIGURATION ===
+# Purpose: Resource monitoring, alerting, and observability for production systems
+# Controls Prometheus metrics, Grafana dashboards, system/diversity/container monitoring
+#
+# Configuration Hierarchy:
+#   1. Settings in this file (learning_system.yaml) - Quick overrides for production
+#   2. Detailed settings in monitoring_config.yaml - Comprehensive configuration
+#   3. System defaults - Fallback values if not specified
+#
+# When to use this file vs monitoring_config.yaml:
+#   - Use this file for: Enabling/disabling monitoring, quick threshold adjustments
+#   - Use monitoring_config.yaml for: Detailed tuning, alert rules, Grafana settings
+#
+# Environment Variable Substitution:
+#   All settings support environment variable overrides: ${VAR_NAME:default_value}
+#   Example: enabled: ${MONITORING_ENABLED:true}
+#   Set MONITORING_ENABLED=false in environment to disable monitoring
+resource_monitoring:
+  # Master switch for all monitoring features
+  # Set to false to disable monitoring entirely (not recommended for production)
+  # Default: true (enabled for production observability)
+  enabled: ${MONITORING_ENABLED:true}
+
+  # Monitoring configuration file path
+  # Contains detailed settings for all monitors, alerts, and dashboards
+  # Relative to project root
+  # If settings exist both here and in config file, settings here take precedence
+  config_file: config/monitoring_config.yaml
+
+  # === RESOURCE MONITORING ===
+  # Tracks system resources (CPU, memory, disk) to prevent resource exhaustion
+  # Helps identify performance bottlenecks and capacity planning needs
+  resource_monitor:
+    # Enable/disable resource tracking
+    # When disabled, system metrics are not collected (reduces overhead by ~0.5%)
+    enabled: ${RESOURCE_MONITOR_ENABLED:true}
+
+    # Collection interval (seconds)
+    # How often to sample system resources
+    # Lower = detect issues faster, higher CPU overhead
+    # Higher = less overhead, slower issue detection
+    # Recommended: 5s for production, 10s for dev/test
+    # Overrides: monitoring_config.yaml → resource_monitor.collection_interval
+    collection_interval: ${RESOURCE_COLLECTION_INTERVAL:5}
+
+  # === DIVERSITY MONITORING ===
+  # Tracks population diversity and champion staleness to detect learning stagnation
+  # Critical for identifying when the evolutionary system stops exploring new strategies
+  diversity_monitor:
+    # Enable/disable diversity tracking
+    # When disabled, diversity metrics are not collected
+    enabled: ${DIVERSITY_MONITOR_ENABLED:true}
+
+    # Diversity collapse threshold (0.0-1.0)
+    # Alert if diversity falls below this value for consecutive iterations
+    # 0.0 = no diversity (all strategies identical)
+    # 1.0 = maximum diversity (all strategies unique)
+    # Recommended: 0.1 (indicates severe diversity loss)
+    # Overrides: monitoring_config.yaml → diversity_monitor.diversity_collapse_threshold
+    collapse_threshold: ${DIVERSITY_COLLAPSE_THRESHOLD:0.1}
+
+    # Diversity collapse detection window (iterations)
+    # Alert triggers if diversity stays below threshold for this many consecutive iterations
+    # Lower = faster detection but more false positives
+    # Higher = fewer false positives but slower detection
+    # Recommended: 5 iterations
+    # Overrides: monitoring_config.yaml → diversity_monitor.diversity_collapse_window
+    collapse_window: ${DIVERSITY_COLLAPSE_WINDOW:5}
+
+    # Champion staleness threshold (iterations)
+    # Alert if champion hasn't updated in this many iterations
+    # Indicates learning stagnation or overly strict anti-churn settings
+    # Recommended: 20 iterations (based on typical update frequency of 10-20%)
+    # Overrides: monitoring_config.yaml → diversity_monitor.champion_staleness_threshold
+    staleness_threshold: ${CHAMPION_STALENESS_THRESHOLD:20}
+
+  # === CONTAINER MONITORING ===
+  # Tracks Docker container resources and detects orphaned containers
+  # Prevents resource leaks from failed sandbox executions
+  container_monitor:
+    # Enable/disable container tracking
+    # When disabled, container metrics are not collected and orphans are not cleaned
+    enabled: ${CONTAINER_MONITOR_ENABLED:true}
+
+    # Container stats scan interval (seconds)
+    # How often to query Docker API for container resource usage
+    # Lower = more accurate tracking, higher Docker API load
+    # Higher = less load, coarser resource data
+    # Recommended: 30s (containers are long-lived, less frequent checks acceptable)
+    # Overrides: monitoring_config.yaml → container_monitor.stats_collection_interval
+    scan_interval: ${CONTAINER_STATS_INTERVAL:30}
+
+    # Automatic orphaned container cleanup
+    # If true, automatically remove containers with label=finlab-sandbox and status=exited
+    # If false, only alert on orphans (manual cleanup required)
+    # Recommended: true (prevent resource leaks)
+    # Overrides: monitoring_config.yaml → container_monitor.auto_cleanup_orphans
+    auto_cleanup: ${CONTAINER_AUTO_CLEANUP:true}
+
+  # === ALERTING ===
+  # Proactive issue detection via threshold-based alerts
+  # Alerts are logged and exported as Prometheus metrics (alerts_triggered_total)
+  alerting:
+    # Enable/disable alert evaluation
+    # When disabled, metrics are still collected but alerts are not triggered
+    enabled: ${ALERTS_ENABLED:true}
+
+    # Alert evaluation interval (seconds)
+    # How often to check alert conditions
+    # Lower = faster alert response, higher CPU overhead
+    # Higher = less overhead, slower alerts
+    # Recommended: 10s (balance between responsiveness and performance)
+    # Overrides: monitoring_config.yaml → alerts.evaluation_interval
+    evaluation_interval: ${ALERT_EVALUATION_INTERVAL:10}
+
+    # Alert suppression window (seconds)
+    # Don't re-alert for the same condition within this time window
+    # Prevents alert fatigue from flapping conditions
+    # Recommended: 300s (5 minutes)
+    # Overrides: monitoring_config.yaml → alerts.suppression_window
+    suppression_window: ${ALERT_SUPPRESSION_WINDOW:300}
+
+    # Quick threshold overrides (override monitoring_config.yaml values)
+    # For detailed alert configuration, edit monitoring_config.yaml
+    thresholds:
+      # Memory usage alert threshold (percent of system memory)
+      # Alert if system memory usage exceeds this percentage
+      # Overrides: monitoring_config.yaml → alerts.memory.threshold_percent
+      memory_percent: ${MEMORY_THRESHOLD:80.0}
+
+      # CPU usage alert threshold (percent of total CPU)
+      # Alert if system CPU usage exceeds this percentage
+      # Overrides: monitoring_config.yaml → alerts.cpu.threshold_percent
+      cpu_percent: ${CPU_THRESHOLD:90.0}
+
+      # Success rate alert threshold (percent of successful backtests)
+      # Alert if success rate falls below this over window
+      # Overrides: monitoring_config.yaml → alerts.success_rate.threshold_percent
+      success_rate_percent: ${SUCCESS_RATE_THRESHOLD:20.0}
+
+      # Orphaned containers alert threshold (container count)
+      # Alert if orphaned container count exceeds this value
+      # Overrides: monitoring_config.yaml → alerts.orphaned_containers.threshold
+      orphaned_containers: ${ORPHANED_THRESHOLD:3}
+
+  # === PROMETHEUS METRICS EXPORT ===
+  # Exposes metrics via HTTP endpoint for Prometheus scraping
+  prometheus:
+    # Enable/disable Prometheus metrics server
+    # When disabled, metrics are not exported (monitoring still runs internally)
+    enabled: ${PROMETHEUS_ENABLED:true}
+
+    # HTTP server port for /metrics endpoint
+    # Prometheus scrapes this endpoint to collect metrics
+    # Recommended: 8000 (standard Prometheus client port)
+    # Overrides: monitoring_config.yaml → monitoring.prometheus.port
+    port: ${PROMETHEUS_PORT:8000}
+
+    # Metrics endpoint path
+    # Full URL: http://localhost:8000/metrics
+    # Overrides: monitoring_config.yaml → monitoring.prometheus.metrics_path
+    endpoint: ${PROMETHEUS_ENDPOINT:/metrics}
+
+  # === GRAFANA DASHBOARD ===
+  # Visual monitoring interface for operators
+  # Requires Grafana 9.0+ with Prometheus datasource configured
+  grafana:
+    # Dashboard configuration file path (JSON template)
+    # Import this file into Grafana to create monitoring dashboard
+    # Relative to project root
+    # Overrides: monitoring_config.yaml → grafana.dashboard_path
+    dashboard_file: ${GRAFANA_DASHBOARD:config/grafana_dashboard.json}
+
+    # Dashboard refresh interval (seconds)
+    # How often Grafana polls Prometheus for new data
+    # Lower = more real-time, higher Prometheus load
+    # Recommended: 5s (matches metric collection interval)
+    # Overrides: monitoring_config.yaml → grafana.refresh_interval
+    refresh_interval: ${GRAFANA_REFRESH:5}
+
+  # === LEGACY MONITORING FLAGS (backward compatibility) ===
+  # These flags are preserved for backward compatibility with existing code
+  # New code should use resource_monitoring.enabled instead
+  log_champion_updates: true
+  alert_on_excessive_churn: true
+  alert_on_stagnation: true
+
+# === MONITORING USAGE EXAMPLES ===
+#
+# Example 1: Disable all monitoring in development
+#   Set environment variable: MONITORING_ENABLED=false
+#   Or edit this file: resource_monitoring.enabled: false
+#
+# Example 2: Adjust memory alert threshold for high-memory systems
+#   Set environment variable: MEMORY_THRESHOLD=90.0 (for 90% threshold)
+#   Or edit this file: resource_monitoring.alerting.thresholds.memory_percent: 90.0
+#
+# Example 3: Reduce monitoring overhead by increasing collection intervals
+#   resource_monitoring.resource_monitor.collection_interval: 10  # 10s instead of 5s
+#   resource_monitoring.container_monitor.scan_interval: 60       # 60s instead of 30s
+#
+# Example 4: Disable container monitoring (no Docker environment)
+#   Set environment variable: CONTAINER_MONITOR_ENABLED=false
+#   Or edit this file: resource_monitoring.container_monitor.enabled: false
+#
+# Example 5: Custom Prometheus port (avoid conflicts)
+#   Set environment variable: PROMETHEUS_PORT=8001
+#   Or edit this file: resource_monitoring.prometheus.port: 8001
+#   Remember to update Prometheus scrape config to match new port
+
+# === MUTATION CONFIGURATION ===
+# Controls all mutation operators for evolutionary learning
+mutation:
+  # === EXIT MUTATION CONFIGURATION (Task 1.2) ===
+  # Purpose: Configure exit parameter mutation with Gaussian noise and bounds
+  # Part of exit-mutation-redesign spec
+  #
+  # Exit mutations modify stop-loss, take-profit, trailing-stop, and holding period
+  # parameters using Gaussian noise within bounded ranges to ensure trading viability
+  #
+  # Mutation Approach:
+  #   - Apply Gaussian noise: new_value = old_value * (1 + N(0, gaussian_std_dev))
+  #   - Clip to bounds: new_value = max(min_bound, min(max_bound, new_value))
+  #   - Ensures parameters stay within safe/realistic trading ranges
+  exit_mutation:
+    # Enable exit parameter mutation (feature flag)
+    enabled: true
+
+    # Weight of exit mutations in overall mutation mix
+    # 20% of all mutations will be exit mutations
+    # Remaining 80% allocated to other mutation types (factor params, structure, etc.)
+    weight: 0.20
+
+    # Gaussian noise standard deviation for parameter perturbation
+    # Mutation formula: new_value = old_value * (1 + N(0, gaussian_std_dev))
+    # 0.15 = 15% typical change (68% of changes within ±15% due to 1-sigma rule)
+    # Larger values = more exploration, smaller values = more exploitation
+    gaussian_std_dev: 0.15
+
+    # Bounded parameter ranges (trading risk management)
+    # All parameters clipped to these bounds after Gaussian noise application
+    # Bounds ensure mutations produce realistic, tradeable strategies
+    bounds:
+      # Stop-loss percentage bounds (positive value = loss threshold)
+      # Lower bound: Minimum loss before exit
+      # Upper bound: Maximum loss before exit
+      stop_loss_pct:
+        min: 0.01  # 1% minimum - tighter stops cause premature exits from noise
+        max: 0.20  # 20% maximum - wider stops violate risk management (max 20% drawdown)
+
+      # Take-profit percentage bounds (positive value = profit target)
+      # Lower bound: Minimum profit to justify transaction costs
+      # Upper bound: Maximum realistic profit target
+      take_profit_pct:
+        min: 0.05  # 5% minimum - smaller profits eaten by transaction costs (~0.3% per trade)
+        max: 0.50  # 50% maximum - larger targets unrealistic for typical holdings (weekly/monthly)
+
+      # Trailing stop offset bounds (positive value = distance from peak)
+      # Lower bound: Minimum offset to avoid noise-triggered exits
+      # Upper bound: Maximum offset to protect accumulated profits
+      trailing_stop_offset:
+        min: 0.005  # 0.5% minimum - tighter trailing stops exit on normal price noise
+        max: 0.05   # 5% maximum - wider offsets give back too much profit on reversals
+
+      # Holding period bounds (integer days)
+      # Lower bound: Minimum days to hold position
+      # Upper bound: Maximum days to hold position
+      holding_period_days:
+        min: 1      # 1 day minimum - avoid day trading (transaction costs, slippage)
+        max: 60     # 60 days (2 months) maximum - realistic for weekly/monthly rebalancing
+
+# === EXIT MUTATION CONFIGURATION (Phase 1 - Legacy) ===
+# Purpose: Configure exit strategy mutation framework for population-based learning
+# Part of structural-mutation-phase2 spec (Task 1.6)
+#
+# Exit mutations modify stop-loss, take-profit, and trailing-stop mechanisms
+# to optimize risk-adjusted performance (Sharpe, Calmar, drawdown control)
+#
+# Mutation Types:
+#   - Parametric: Adjust threshold values (e.g., stop_loss: -5% → -7%)
+#   - Structural: Change mechanism type (e.g., fixed → trailing)
+#   - Relational: Modify conditional logic (e.g., AND → OR conditions)
+#
+# Evidence: Phase 0 validation showed Sharpe improvement of +0.5211 with exit mutations
+exit_mutation:
+  # Enable exit mutation framework (feature flag)
+  enabled: true
+
+  # Probability of applying exit mutation vs. parameter mutation
+  # Range: 0.0-1.0, typical: 0.2-0.4
+  # Higher values increase exit mutation frequency
+  exit_mutation_probability: 0.3
+
+  # Mutation configuration (tier weights control mutation type distribution)
+  mutation_config:
+    # Tier 1 (Parametric): Adjust numeric thresholds (safest, highest frequency)
+    # Examples: stop_loss -5% → -7%, take_profit 10% → 12%
+    tier1_weight: 0.5
+
+    # Tier 2 (Structural): Change mechanism type (moderate risk)
+    # Examples: fixed stop-loss → trailing stop, simple → conditional exit
+    tier2_weight: 0.3
+
+    # Tier 3 (Relational): Modify logic operators (highest risk, lowest frequency)
+    # Examples: AND → OR conditions, add/remove exit criteria
+    tier3_weight: 0.2
+
+    # Parameter mutation ranges
+    parameter_ranges:
+      # Stop-loss adjustment range (multiplicative factor)
+      # Example: 0.8-1.2 means ±20% adjustment
+      stop_loss_range: [0.8, 1.2]
+
+      # Take-profit adjustment range (multiplicative factor)
+      take_profit_range: [0.9, 1.3]
+
+      # Trailing stop distance adjustment range
+      trailing_range: [0.85, 1.25]
+
+  # Validation settings
+  validation:
+    # Maximum retry attempts if mutation validation fails
+    max_retries: 3
+
+    # Timeout for validation checks (seconds)
+    validation_timeout: 5
+
+  # Monitoring and logging
+  monitoring:
+    # Log all exit mutation attempts (success/failure)
+    log_mutations: true
+
+    # Track mutation type distribution
+    track_mutation_types: true
+
+    # Log validation results
+    log_validation: true
+
+# === MAINTENANCE CONFIGURATION ===
+# Purpose: Configure automated Hall of Fame maintenance operations
+# Controls archival, compression, and backup management behavior
+maintenance:
+  # Archival settings
+  contender_threshold: 100        # Archive when contenders exceed this count
+  archival_percentage: 0.20       # Archive lowest 20% of contenders
+
+  # Compression settings
+  compression_age_days: 180       # Compress strategies older than 6 months
+
+  # Backup retention
+  backup_retention_days: 7        # Keep last 7 days of backups
+
+# === DOCKER SANDBOX SECURITY CONFIGURATION ===
+# Purpose: Enable isolated strategy execution in Docker containers for security
+# Protects host system from potentially dangerous generated code
+#
+# Architecture:
+#   1. SecurityValidator: AST-based code validation before execution
+#   2. DockerExecutor: Container lifecycle management with resource limits
+#   3. ContainerMonitor: Resource tracking and orphaned container cleanup
+#
+# Security Layers:
+#   - Pre-execution: AST validation blocks dangerous imports/operations
+#   - Execution: Docker isolation with network disabled, read-only FS
+#   - Post-execution: Automatic cleanup prevents resource leaks
+#
+# When to Enable:
+#   - Production environments (recommended)
+#   - Untrusted strategy generation (LLM-based mutations)
+#   - Multi-tenant or shared infrastructure
+#
+# When to Disable:
+#   - Development/debugging (direct execution is easier to debug)
+#   - Resource-constrained environments (Docker overhead ~5%)
+#   - Trusted code only (e.g., manual strategy writing)
+#
+# Performance Impact:
+#   - Container creation: ~2-3 seconds overhead per strategy
+#   - Execution overhead: ~5% slower than direct execution
+#   - Memory overhead: 2GB per container (configurable)
+#
+# Prerequisites:
+#   - Docker Engine 20.10+ installed
+#   - User has Docker permissions (docker group or sudo)
+#   - Base image built: python:3.10-slim with FinLab dependencies
+#
+sandbox:
+  # Enable Docker sandbox execution (feature flag)
+  # ✅ ENABLED BY DEFAULT (2025-10-30 Decision)
+  #
+  # Decision Rationale:
+  #   - 100% test pass rate (59/59 tests across 3 phases)
+  #   - 0% fallback rate in performance testing (20 iterations)
+  #   - 50-60% overhead with realistic backtests (< 100% threshold)
+  #   - Significant security improvement (multi-layer defense)
+  #   - Production-ready reliability with automatic fallback
+  #
+  # Performance Impact: +1.9s per iteration, +38s per 20-iteration run
+  # Security Benefit: Protects against LLM-generated malicious code
+  #
+  # To disable: Set SANDBOX_ENABLED=false or edit this value to false
+  # See: DOCKER_SANDBOX_DECISION_REPORT.md for full analysis
+  # ✅ ENABLED: finlab API token now passed to container
+  enabled: ${SANDBOX_ENABLED:true}
+
+  # Docker container configuration
+  docker:
+    # Base image for strategy execution
+    # Production image includes: pandas, numpy, finlab, TA-Lib, LLM APIs, networkx
+    # Build with: docker build -t finlab-sandbox:latest -f Dockerfile.sandbox .
+    # Override with: DOCKER_IMAGE=custom-image:tag
+    image: ${DOCKER_IMAGE:finlab-sandbox:latest}
+
+    # Memory limit (format: <number><unit> where unit is k/m/g)
+    # Prevents memory-hungry strategies from consuming host resources
+    # Container killed if limit exceeded (OOM killer)
+    # Typical: 2g for most strategies, increase if needed
+    # Override with: DOCKER_MEMORY_LIMIT=4g
+    memory_limit: ${DOCKER_MEMORY_LIMIT:2g}
+
+    # CPU limit (fractional cores, e.g., 0.5 = half a core)
+    # Prevents CPU-intensive strategies from starving other processes
+    # Range: 0.1 - <number of host cores>
+    # Typical: 0.5 for single-threaded strategies
+    # Override with: DOCKER_CPU_LIMIT=1.0
+    cpu_count: ${DOCKER_CPU_LIMIT:0.5}
+
+    # Maximum execution time before container is forcefully killed (seconds)
+    # Prevents infinite loops or hanging strategies
+    # Range: 60-3600 (1 minute to 1 hour)
+    # Typical: 600 (10 minutes) for backtesting
+    # Override with: DOCKER_TIMEOUT=1200
+    timeout_seconds: ${DOCKER_TIMEOUT:600}
+
+    # Network isolation mode
+    # Options:
+    #   - "none": No network access (RECOMMENDED for security)
+    #   - "bridge": Container network with outbound access
+    #   - "host": Share host network (UNSAFE, only for debugging)
+    # Default: "bridge" - allows finlab API access for data fetching
+    # Note: Changed from "none" to "bridge" for Phase 2 (finlab requires network)
+    # Override with: DOCKER_NETWORK_MODE=none
+    network_mode: ${DOCKER_NETWORK_MODE:bridge}
+
+    # Mount root filesystem as read-only
+    # Prevents strategies from modifying system files
+    # Writable /tmp directory provided via tmpfs mount
+    # Default: true (recommended for security)
+    # Override with: DOCKER_READ_ONLY=false
+    read_only_filesystem: ${DOCKER_READ_ONLY:true}
+
+    # Path to seccomp security profile (syscall filtering)
+    # Blocks dangerous system calls (fork, execve, socket, etc.)
+    # Provides kernel-level security enforcement
+    # File: config/seccomp_profile.json (auto-created if missing)
+    # Override with: SECCOMP_PROFILE=/custom/path/profile.json
+    seccomp_profile: ${SECCOMP_PROFILE:config/seccomp_profile.json}
+
+  # Security validation configuration
+  security:
+    # Enable pre-execution AST validation
+    # Blocks dangerous imports (os.system, subprocess, eval, exec)
+    # Blocks unauthorized file/network operations
+    # Recommended: true (first line of defense)
+    # Override with: VALIDATION_ENABLED=false
+    validation_enabled: ${VALIDATION_ENABLED:true}
+
+    # Fallback to direct execution if Docker unavailable
+
+  # Monitoring and observability
+  monitoring:
+    # Enable container resource usage tracking
+    # Collects CPU, memory, I/O stats from Docker API
+    # Useful for debugging performance issues
+    # Override with: MONITORING_ENABLED=false
+    enabled: ${MONITORING_ENABLED:true}
+
+    # Export container metrics to Prometheus
+    # Metrics include:
+    #   - sandbox_container_cpu_usage_percent
+    #   - sandbox_container_memory_usage_bytes
+    #   - sandbox_container_execution_duration_seconds
+    #   - sandbox_orphaned_containers_total
+    # Requires Prometheus exporter configured (MetricsCollector)
+    # Override with: EXPORT_METRICS=false
+    export_metrics: ${EXPORT_METRICS:true}
+
+# ============================================================================
+# LLM-Driven Strategy Innovation Configuration
+# ============================================================================
+# Enable LLM-based strategy generation as alternative to Factor Graph mutation.
+# Part of llm-integration-activation spec (Task 6)
+#
+# OVERVIEW:
+#   LLM integration enables the system to discover novel strategies beyond
+#   predefined Factor Graph templates through AI-powered strategy generation.
+#
+# SUPPORTED PROVIDERS:
+#   - openrouter: Claude 3.5 Sonnet, GPT-4, etc. via OpenRouter API
+#   - gemini: Google Gemini 2.0 Flash with thinking mode
+#   - openai: GPT-4o, GPT-4 Turbo direct from OpenAI
+#
+# QUICK START:
+#   1. Set provider API key as environment variable:
+#      export OPENROUTER_API_KEY="your-key-here"
+#
+#   2. Enable LLM innovation:
+#      llm.enabled: true
+#
+#   3. Configure innovation rate (default 20%):
+#      llm.innovation_rate: 0.2
+#
+# ENVIRONMENT VARIABLES (required):
+#   - openrouter: Set OPENROUTER_API_KEY
+#   - gemini: Set GOOGLE_API_KEY or GEMINI_API_KEY
+#   - openai: Set OPENAI_API_KEY
+#
+# DEFAULT CONFIGURATION (Updated 2025-11-05):
+#   - Default: llm.enabled = true (LLM is CORE capability)
+#   - If LLM disabled, Factor Graph is used for 100% of iterations (Stage 1 mode)
+#   - Stage 1 (no LLM): 70% success, 19-day plateau, diversity collapse
+#   - Stage 2 (with LLM): >80% success target, continuous innovation
+#
+# SECURITY:
+#   - NEVER hardcode API keys in this file
+#   - Always use ${ENV_VAR} syntax for secrets
+#   - API keys are loaded from environment variables at runtime
+#
+# COST MANAGEMENT:
+#   - LLM API calls cost money (typically $0.01-0.10 per strategy)
+#   - Control costs via innovation_rate (lower = fewer LLM calls)
+#   - Fallback to Factor Graph prevents wasted API calls on failures
+#
+# See docs/LLM_INTEGRATION.md for detailed configuration guide
+#
+# ============================================================================
+
+llm:
+  # Enable/disable LLM innovation (default: true - LLM is CORE capability)
+  # LLM innovation is the primary intelligence source for Stage 2 (>80% success, >2.5 Sharpe)
+  # Requires API key configured via environment variable
+  # Without LLM: 19-day plateau, 10.4% diversity collapse → limited to 13 predefined factors
+  # With LLM: Continuous structural innovation, sustained diversity >40%, breakthrough potential
+  enabled: true
+
+  # Provider selection: openrouter, gemini, or openai
+  # OpenRouter provides access to multiple models with unified API
+  # Default: openrouter (best quality/cost ratio)
+  provider: openrouter
+
+  # Innovation rate: Percentage of iterations using LLM (0.0-1.0)
+  # Example: 0.2 = 20% of iterations use LLM, 80% use Factor Graph
+  # Higher values increase API costs but enable more innovation
+  # UPDATED 2025-11-01: Increased from 0.05 to 0.30 for diversity improvement
+  innovation_rate: 0.30
+
+  # Fallback behavior when LLM fails (API error, timeout, invalid response)
+  fallback:
+    # Enable automatic fallback to Factor Graph on LLM failures
+    enabled: true
+
+    # Max retries before fallback (applies to rate limit errors)
+    max_retries: 3
+
+    # Retry delay in seconds (exponential backoff: delay * 2^retry_count)
+    retry_delay: 2
+
+  # Generation settings
+  generation:
+    # Max tokens in LLM response
+    # Strategy generation requires substantial output
+    # Recommended: 2000-4000 tokens
+    max_tokens: 2000
+
+    # Temperature for generation (0.0 = deterministic, 1.0 = creative)
+    # Higher temperature = more creative but potentially less reliable
+    # 0.0 = deterministic (less creative)
+    # 0.7 = balanced (recommended)
+    # 1.0+ = creative (more random)
+    temperature: 0.7
+
+    # Timeout for LLM API calls (seconds)
+    # LLM generation can be slow, allow sufficient time
+    # Recommended: 60-120 seconds
+    timeout: 60
+
+  # Model name for the selected provider
+  # OpenRouter: anthropic/claude-3.5-sonnet, openai/gpt-4o, google/gemini-2.5-flash, etc.
+  # Gemini: gemini-2.0-flash-thinking-exp, gemini-1.5-pro
+  # OpenAI: gpt-4o, gpt-4-turbo-preview
+  # If not specified, uses provider default
+  model: ${LLM_MODEL:google/gemini-2.5-flash}
+
+  # ============================================================================
+  # Provider-Specific Configuration
+  # ============================================================================
+
+  # OpenRouter: Multi-model LLM provider
+  # Sign up: https://openrouter.ai/
+  # Get API key: https://openrouter.ai/keys
+  openrouter:
+    # API key from environment variable (DO NOT hardcode secrets)
+    api_key: ${OPENROUTER_API_KEY}
+
+    # Model selection
+    # Options: anthropic/claude-3.5-sonnet, openai/gpt-4, etc.
+    # See: https://openrouter.ai/models
+    model: ${LLM_MODEL:anthropic/claude-3.5-sonnet}
+
+    # Optional: HTTP referer for usage tracking
+    http_referer: https://github.com/finlab-project
+
+    # Optional: Application name for usage tracking
+    app_name: finlab-innovation
+
+  # Google Gemini: Google's LLM API
+  # Sign up: https://ai.google.dev/
+  # Get API key: https://makersuite.google.com/app/apikey
+  gemini:
+    # API key from environment variable
+    api_key: ${GOOGLE_API_KEY}
+
+    # Model selection
+    # Options: gemini-2.5-flash, gemini-2.5-pro
+    model: ${LLM_MODEL:gemini-2.5-flash}
+
+    # Safety settings (optional)
+    safety:
+      # Block harmful content categories (HARM_CATEGORY_*)
+      block_none: false
+
+  # OpenAI: ChatGPT and GPT-4
+  # Sign up: https://platform.openai.com/
+  # Get API key: https://platform.openai.com/api-keys
+  openai:
+    # API key from environment variable
+    api_key: ${OPENAI_API_KEY}
+
+    # Model selection
+    # Options: gpt-4, gpt-4-turbo, gpt-3.5-turbo
+    model: ${LLM_MODEL:gpt-4}
+
+    # Organization ID (optional)
+    organization: ${OPENAI_ORG_ID}
+
+  # ============================================================================
+  # Fitness Function Configuration (Multi-Objective Optimization)
+  # ============================================================================
+  # ADDED 2025-11-01: Multi-objective fitness for diversity optimization
+  # Per Gemini 2.5 Pro recommendation: Balance Sharpe ratio and diversity
+
+fitness:
+  # Multi-objective weights for fitness calculation
+  multi_objective_weights:
+    sharpe: 0.7    # 70% weight on Sharpe ratio (performance)
+    diversity: 0.3  # 30% weight on diversity score (population variety)
+
+  # Diversity calculation sub-weights
+  diversity_calculation:
+    factor_weight: 0.4       # Weight for factor diversity (Jaccard similarity)
+    correlation_weight: 0.3  # Weight for return correlation diversity
+    risk_weight: 0.3         # Weight for risk diversity (max drawdown CV)
+                             # Increased from 0.2 to address zero risk diversity
+
+  # Similarity rejection thresholds
+  similarity_rejection:
+    factor_overlap_threshold: 0.80  # Reject if Jaccard similarity >80%
+    correlation_threshold: 0.75     # Reject if return correlation >75%
+                                    # Tightened from 0.90 to align with target <0.70
+
+  # ============================================================================
+  # Generation Mode Configuration
+  # ============================================================================
+  # Controls how strategies are generated by LLM:
+  #   - "structured": Generate strategies via YAML specifications (RECOMMENDED)
+  #       Highest success rate (>90%), reduced hallucinations, faster generation
+  #       YAML specs are validated then compiled to Python code
+  #       Best for production use
+  #
+  #   - "code": Generate Python code directly (LEGACY mode)
+  #       Lower success rate (~60%), higher hallucination risk
+  #       Useful for debugging or when YAML schema cannot express desired pattern
+  #       Fallback mode when YAML generation fails
+  #
+  #   - "hybrid": Mix both modes based on hybrid_structured_ratio
+  #       Balances innovation (code mode) with reliability (structured mode)
+  #       Example: 0.80 ratio = 80% YAML, 20% direct code
+  #       Useful for exploring edge cases while maintaining high success rate
+  #
+  # Default: "structured" (recommended for best reliability)
+  mode: ${LLM_MODE:structured}
+
+  # Hybrid mode ratio (only used when mode="hybrid")
+  # Percentage of iterations using structured YAML mode (0.0-1.0)
+  # Example: 0.80 = 80% structured YAML, 20% direct code
+  # Higher values = more reliable, lower values = more creative
+  # Recommended: 0.80 (balance between reliability and exploration)
+  hybrid_structured_ratio: ${HYBRID_STRUCTURED_RATIO:0.80}
+
+  # Mode Selection Guide:
+  # ┌─────────────────┬────────────────┬──────────────────┬─────────────────┐
+  # │ Mode            │ Success Rate   │ Hallucinations   │ Use Case        │
+  # ├─────────────────┼────────────────┼──────────────────┼─────────────────┤
+  # │ structured      │ >90%           │ Low              │ Production      │
+  # │ code            │ ~60%           │ High             │ Debugging       │
+  # │ hybrid (0.80)   │ ~85%           │ Medium           │ Exploration     │
+  # └─────────────────┴────────────────┴──────────────────┴─────────────────┘
+  #
+  # Performance Comparison (based on validation testing):
+  #   - Structured Mode: 90%+ successful generations, <200ms YAML→Code
+  #   - Code Mode: 60% successful generations, frequent syntax errors
+  #   - Hybrid (0.80): 85% success, 20% creative exploration
+  #
+  # Backward Compatibility:
+  #   - If mode not specified: defaults to "structured"
+  #   - Legacy code using generation_mode='yaml' continues to work
+  #   - Legacy code using generation_mode='full_code' continues to work
+  #
+  # Environment Variable Overrides:
+  #   - LLM_MODE: Set to "structured", "code", or "hybrid"
+  #   - HYBRID_STRUCTURED_RATIO: Set ratio (e.g., "0.80" for 80% YAML)
+  #
+  # Examples:
+  #   # Production: Maximum reliability
+  #   mode: "structured"
+  #
+  #   # Debugging: Direct code inspection
+  #   mode: "code"
+  #
+  #   # Exploration: Balanced approach
+  #   mode: "hybrid"
+  #   hybrid_structured_ratio: 0.80
+
+# ============================================================================
+# Structured Innovation Configuration (Task 8)
+# ============================================================================
+# Fine-grained control over YAML-based strategy generation
+# This section provides additional configuration options specific to
+# structured mode operation beyond the basic mode selection above
+#
+# OVERVIEW:
+#   Structured innovation generates strategies via YAML specifications
+#   that are validated against a JSON Schema and compiled to Python code.
+#   This approach provides higher reliability and reduced hallucinations
+#   compared to direct code generation.
+#
+# RELATIONSHIP TO llm.mode:
+#   - llm.mode: Controls WHEN to use structured mode (always/never/hybrid)
+#   - structured_innovation: Controls HOW structured mode operates
+#
+# BACKWARD COMPATIBILITY:
+#   - All settings are optional with sensible defaults
+#   - Legacy code continues to work without this section
+#   - Can be added incrementally to existing configs
+#
+# ============================================================================
+structured_innovation:
+  # === VALIDATION SETTINGS ===
+  # Controls YAML schema validation behavior
+  validation:
+    # Enable strict mode validation
+    # When true, validation fails on any schema violation (recommended for production)
+    # When false, validator attempts to coerce/fix minor issues
+    # Default: true (strict validation)
+    # Override: YAML_STRICT_MODE=false
+    strict_mode: ${YAML_STRICT_MODE:true}
+
+    # Validation timeout (seconds)
+    # Maximum time allowed for YAML schema validation
+    # Prevents hanging on malformed or extremely complex specs
+    # Typical: 5 seconds is sufficient for most strategies
+    # Override: YAML_VALIDATION_TIMEOUT=10
+    timeout: ${YAML_VALIDATION_TIMEOUT:5}
+
+    # Maximum retry attempts for validation failures
+    # If LLM generates invalid YAML, retry with error feedback
+    # Higher values = more LLM calls but better success rate
+    # Typical: 3 retries provides good balance
+    # Override: YAML_VALIDATION_RETRIES=5
+    max_retries: ${YAML_VALIDATION_RETRIES:3}
+
+    # Enable detailed validation error reporting
+    # When true, validation errors include field paths and suggestions
+    # Helps debug schema compliance issues
+    # Default: true (detailed errors)
+    # Override: YAML_DETAILED_ERRORS=false
+    detailed_errors: ${YAML_DETAILED_ERRORS:true}
+
+  # === CODE GENERATION SETTINGS ===
+  # Controls YAML to Python code compilation behavior
+  code_generation:
+    # Enable code generation debug mode
+    # When true, generated code includes detailed comments
+    # Useful for understanding YAML→Code mapping
+    # Default: false (production mode, minimal comments)
+    # Override: CODE_GEN_DEBUG=true
+    debug_mode: ${CODE_GEN_DEBUG:false}
+
+    # Code generation timeout (seconds)
+    # Maximum time allowed for YAML→Code compilation
+    # Typical: 10 seconds handles complex strategies
+    # Override: CODE_GEN_TIMEOUT=20
+    timeout: ${CODE_GEN_TIMEOUT:10}
+
+    # Enable AST validation of generated code
+    # When true, runs ast.parse() on generated code to verify syntax
+    # Catches template bugs and ensures code is valid Python
+    # Default: true (always validate generated code)
+    # Override: VALIDATE_GENERATED_CODE=false
+    validate_ast: ${VALIDATE_GENERATED_CODE:true}
+
+    # Enable runtime imports check
+    # When true, verifies all imported modules are available
+    # Prevents runtime ImportError from missing dependencies
+    # Default: true (check imports)
+    # Override: CHECK_IMPORTS=false
+    check_imports: ${CHECK_IMPORTS:true}
+
+  # === FALLBACK BEHAVIOR ===
+  # Controls fallback to code mode when YAML mode fails
+  fallback:
+    # Enable automatic fallback to code mode
+    # When true, falls back to full code generation if YAML fails
+    # When false, raises exception on YAML failures
+    # Tradeoff:
+    #   true = more robust (always generates something)
+    #   false = fail-fast (don't silently degrade quality)
+    # Default: true (auto fallback for production resilience)
+    # Override: AUTO_FALLBACK=false
+    auto_fallback: ${AUTO_FALLBACK:true}
+
+    # Fallback mode selection
+    # Options:
+    #   - "code": Fall back to full Python code generation
+    #   - "factor_graph": Fall back to Factor Graph mutation (safest)
+    # Default: "factor_graph" (most reliable fallback)
+    # Override: FALLBACK_MODE=code
+    fallback_mode: ${FALLBACK_MODE:factor_graph}
+
+    # Log fallback events
+    # When true, logs whenever fallback is triggered
+    # Useful for monitoring YAML success rate
+    # Default: true (track fallback frequency)
+    # Override: LOG_FALLBACKS=false
+    log_fallbacks: ${LOG_FALLBACKS:true}
+
+  # === YAML EXTRACTION SETTINGS ===
+  # Controls extraction of YAML from LLM responses
+  extraction:
+    # Enable multi-pattern extraction
+    # When true, tries multiple regex patterns to find YAML blocks
+    # Increases robustness to LLM formatting variations
+    # Default: true (maximize extraction success)
+    # Override: MULTI_PATTERN_EXTRACTION=false
+    multi_pattern: ${MULTI_PATTERN_EXTRACTION:true}
+
+    # Maximum extraction attempts
+    # If first pattern fails, try additional patterns
+    # Typical: 3 patterns covers most LLM formatting styles
+    # Override: EXTRACTION_MAX_ATTEMPTS=5
+    max_attempts: ${EXTRACTION_MAX_ATTEMPTS:3}
+
+    # Enable YAML cleanup/sanitization
+    # When true, removes common LLM artifacts (markdown, comments)
+    # Improves extraction reliability
+    # Default: true (clean YAML before parsing)
+    # Override: CLEAN_YAML=false
+    cleanup_enabled: ${CLEAN_YAML:true}
+
+  # === MONITORING AND LOGGING ===
+  # Controls observability for structured innovation
+  monitoring:
+    # Log all YAML validation attempts (success/failure)
+    # Useful for tracking success rate over time
+    # Default: true (comprehensive logging)
+    # Override: LOG_VALIDATION=false
+    log_validation: ${LOG_VALIDATION:true}
+
+    # Log code generation metrics (time, size, complexity)
+    # Tracks YAML→Code compilation performance
+    # Default: true (track generation metrics)
+    # Override: LOG_CODE_GEN=false
+    log_code_generation: ${LOG_CODE_GEN:true}
+
+    # Export structured mode metrics to Prometheus
+    # Metrics include:
+    #   - yaml_validation_success_rate
+    #   - yaml_extraction_attempts_total
+    #   - yaml_to_code_duration_seconds
+    #   - yaml_fallback_events_total
+    # Requires Prometheus exporter configured
+    # Default: true (export metrics if monitoring enabled)
+    # Override: EXPORT_YAML_METRICS=false
+    export_metrics: ${EXPORT_YAML_METRICS:true}
+
+# ============================================================================
+# Structured Innovation Usage Examples
+# ============================================================================
+#
+# Example 1: Production Setup (Maximum Reliability)
+#   llm:
+#     mode: "structured"
+#   structured_innovation:
+#     validation:
+#       strict_mode: true
+#       max_retries: 3
+#     fallback:
+#       auto_fallback: true
+#       fallback_mode: "factor_graph"
+#
+# Example 2: Development/Debugging Setup
+#   llm:
+#     mode: "structured"
+#   structured_innovation:
+#     validation:
+#       strict_mode: false          # Allow minor schema violations
+#       detailed_errors: true       # Get detailed error messages
+#     code_generation:
+#       debug_mode: true            # Add comments to generated code
+#     fallback:
+#       auto_fallback: false        # Fail fast on errors
+#       log_fallbacks: true         # Track all fallback events
+#
+# Example 3: Hybrid Mode with Conservative Settings
+#   llm:
+#     mode: "hybrid"
+#     hybrid_structured_ratio: 0.90  # 90% YAML, 10% code
+#   structured_innovation:
+#     validation:
+#       strict_mode: true
+#       max_retries: 5              # More retries for high success rate
+#     fallback:
+#       auto_fallback: true
+#       fallback_mode: "factor_graph"  # Safest fallback
+#
+# Example 4: Minimal Overhead Setup (Fast Iteration)
+#   llm:
+#     mode: "structured"
+#   structured_innovation:
+#     validation:
+#       timeout: 2                  # Fast validation
+#       max_retries: 1              # Minimal retries
+#     code_generation:
+#       timeout: 5                  # Fast generation
+#       check_imports: false        # Skip import checks
+#     monitoring:
+#       log_validation: false       # Reduce logging overhead
+#       export_metrics: false       # Disable metrics export
+#
+# Example 5: Environment Variable Override (Docker/CI)
+#   Environment variables:
+#     YAML_STRICT_MODE=true
+#     YAML_VALIDATION_TIMEOUT=10
+#     AUTO_FALLBACK=false
+#     LOG_FALLBACKS=true
+#   Config file uses defaults with ${VAR_NAME:default} syntax
+#
+# ============================================================================
+
+# ============================================================================
+# End of LLM Configuration
+# ============================================================================

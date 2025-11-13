@@ -1,0 +1,172 @@
+# Type Checking Workflow - API Mismatch Prevention System Phase 5A.2
+#
+# This workflow implements automated type checking for the API Mismatch Prevention System.
+# It runs mypy with strict mode on src/learning/* modules to catch API mismatches early.
+#
+# Requirements (from DESIGN_IMPROVEMENTS.md):
+# - Trigger on push to main/develop and all PRs
+# - Run mypy with --strict on src/learning/* modules
+# - Cache mypy results for performance (<2min target)
+# - Report type errors as annotations
+# - Fail CI if type errors detected
+#
+# Performance optimizations:
+# - Pip dependency caching (~30s savings)
+# - mypy cache directory persistence (~20s savings)
+# - Scoped to src/learning/ only (faster than full project scan)
+#
+# Reference: .spec-workflow/specs/api-mismatch-prevention-system/DESIGN_IMPROVEMENTS.md
+
+name: Type Checking
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'src/learning/**/*.py'
+      - 'mypy.ini'
+      - '.github/workflows/type-check.yml'
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'src/learning/**/*.py'
+      - 'mypy.ini'
+      - '.github/workflows/type-check.yml'
+
+jobs:
+  mypy-strict-check:
+    name: mypy strict type checking
+    runs-on: ubuntu-latest
+    timeout-minutes: 5  # Performance target: <2min with caching
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'  # Cache pip dependencies for performance
+
+      - name: Cache mypy results
+        uses: actions/cache@v3
+        with:
+          path: .mypy_cache
+          key: mypy-cache-${{ runner.os }}-${{ hashFiles('src/learning/**/*.py', 'mypy.ini') }}
+          restore-keys: |
+            mypy-cache-${{ runner.os }}-
+
+      - name: Install mypy and type stubs
+        run: |
+          pip install --upgrade pip
+          pip install mypy types-requests types-PyYAML
+
+      - name: Run mypy on src/learning/ with strict mode
+        run: |
+          mypy src/learning/ --config-file=mypy.ini --show-error-codes
+        continue-on-error: false  # Fail CI if type errors detected
+
+      - name: Upload mypy report as artifact
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: mypy-error-report
+          path: .mypy_cache/
+          retention-days: 7
+
+  # Optional: Check legacy modules with lenient mode (warnings only)
+  mypy-legacy-check:
+    name: mypy legacy module warnings
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    continue-on-error: true  # Don't fail CI for legacy warnings
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install mypy and type stubs
+        run: |
+          pip install --upgrade pip
+          pip install mypy types-requests types-PyYAML
+
+      - name: Check legacy modules (src/backtest/)
+        run: |
+          mypy src/backtest/ --config-file=mypy.ini --show-error-codes || true
+        continue-on-error: true
+
+      - name: Comment on PR with migration suggestions
+        if: github.event_name == 'pull_request' && failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ Legacy module type warnings detected. Consider adding type hints during refactoring. See mypy.ini for migration guide.'
+            })
+
+  # Performance and quality metrics
+  type-check-metrics:
+    name: Type check performance metrics
+    runs-on: ubuntu-latest
+    needs: mypy-strict-check
+    if: success()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install mypy types-requests types-PyYAML
+
+      - name: Generate type coverage report
+        run: |
+          echo "# Type Coverage Report" > type-coverage.md
+          echo "" >> type-coverage.md
+          echo "## Strict Mode Modules (src/learning/)" >> type-coverage.md
+          mypy src/learning/ --config-file=mypy.ini --show-error-codes --any-exprs-report=. || true
+          echo "" >> type-coverage.md
+          echo "## Summary" >> type-coverage.md
+          echo "- ✅ All src/learning/ modules pass strict type checking" >> type-coverage.md
+          echo "- ⚠️  Legacy modules (src/backtest/) use lenient mode" >> type-coverage.md
+          echo "- 🎯 Target: 100% strict coverage for new code" >> type-coverage.md
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: type-coverage-report
+          path: type-coverage.md
+          retention-days: 30
+
+      - name: Comment PR with success message
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Type checking passed! All src/learning/ modules comply with strict mode. See artifacts for detailed coverage report.'
+            })

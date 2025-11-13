@@ -1,0 +1,53 @@
+# Momentum Strategy Test YAML
+# Tests momentum strategy type with technical indicators and ranking
+
+metadata:
+  name: "RSI Momentum Strategy"
+  description: "Select stocks with strong momentum using RSI and MA crossover"
+  strategy_type: "momentum"
+  rebalancing_frequency: "M"
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - "momentum"
+    - "technical"
+    - "rsi"
+  risk_level: "medium"
+
+indicators:
+  technical_indicators:
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    - name: "ma_50"
+      type: "SMA"
+      period: 50
+      source: "data.get('MA_50')"
+
+    - name: "ma_200"
+      type: "SMA"
+      period: 200
+      source: "data.get('MA_200')"
+
+entry_conditions:
+  threshold_rules:
+    - condition: "rsi_14 > 30"
+      description: "RSI not oversold"
+
+    - condition: "rsi_14 < 70"
+      description: "RSI not overbought"
+
+    - condition: "ma_50 > ma_200"
+      description: "Golden cross signal"
+
+  logical_operator: "AND"
+
+  min_liquidity:
+    average_volume_20d: 100000000
+
+position_sizing:
+  method: "equal_weight"
+  max_positions: 20
+  max_position_pct: 0.10

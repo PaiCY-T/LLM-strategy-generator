@@ -1,0 +1,61 @@
+{
+  "records": [
+    {
+      "iteration_num": 0,
+      "timestamp": "2025-10-07T08:18:50.544377",
+      "model": "google/gemini-2.5-flash",
+      "code": "# 1. Load data\nclose = data.get('price:收盤價')\nvolume = data.get('price:成交股數')\nrevenue_yoy = data.get('monthly_revenue:去年同月增減(%)')\npb_ratio = data.get('price_earning_ratio:股價淨值比')\nnet_profit_margin = data.get('fundamental_features:稅後淨利率')\ntrading_value = data.get('price:成交金額')\n\n# 2. Calculate factors\n\n# Factor 1: Momentum (20-day returns)\nmomentum = close.pct_change(20).shift(1)\n\n# Factor 2: Revenue Growth (YoY)\n# Use a 3-month average for stability\navg_revenue_yoy = revenue_yoy.rolling(3).mean().shift(1)\n\n# Factor 3: Value (Inverse P/B ratio)\n# Lower P/B is better, so we use 1/PB\n# Add a small constant to avoid division by zero and handle negative P/B if any\nvalue = (1 / (pb_ratio + 0.001)).shift(1)\n\n# Factor 4: Profitability (Net Profit Margin)\nprofitability = net_profit_margin.shift(1)\n\n# 3. Combine factors\n# Normalize factors to a 0-1 range (or similar) to combine them effectively\n# For simplicity, we'll just sum them, assuming they are somewhat comparable or we want to give equal weight.\n# A more robust approach would involve rank normalization or z-scoring.\n\n# We want high momentum, high revenue growth, high value (low PB), high profitability\n# So, we sum them up.\ncombined_factor = momentum + avg_revenue_yoy + value + profitability\n\n# 4. Apply filters\n# Filter 1: Liquidity filter (average daily trading value over 20 days > 50 million TWD)\nliquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000\n\n# Filter 2: Price filter (stock price > 10 TWD to avoid penny stocks)\nprice_filter = close.shift(1) > 10\n\n# Combine filters\nfinal_filter = liquidity_filter & price_filter\n\n# 5. Select stocks\n# Apply the combined filter to the combined factor\nfiltered_factor = combined_factor[final_filter]\n\n# Select the top 10 stocks based on the filtered combined factor\nposition = filtered_factor.is_largest(10)\n\n# 6. Run backtest\nreport = sim(position, resample=\"Q\", upload=False, stop_loss=0.08)",
+      "validation_passed": true,
+      "validation_errors": [],
+      "execution_success": true,
+      "execution_error": null,
+      "metrics": {
+        "total_return": 0.6086804712651837,
+        "annual_return": 0.060746733051324414,
+        "sharpe_ratio": 0.36238959957777417,
+        "max_drawdown": -0.14230992731402514,
+        "win_rate": 0.630688927819685,
+        "position_count": 3277
+      },
+      "feedback": "✅ Validation: PASSED - Code meets all security requirements\n\n✅ Execution: SUCCESS\nMetrics:\n- total_return: 0.6087\n- annual_return: 0.0607\n- sharpe_ratio: 0.3624\n- max_drawdown: -0.1423\n- win_rate: 0.6307\n- position_count: 3277\n\n⚠️ Performance: NEEDS IMPROVEMENT (Low Sharpe)\n"
+    },
+    {
+      "iteration_num": 1,
+      "timestamp": "2025-10-07T08:19:11.912357",
+      "model": "google/gemini-2.5-flash",
+      "code": "# 1. Load data\nclose = data.get('price:收盤價')\nvolume = data.get('price:成交股數')\nrevenue_yoy = data.get('monthly_revenue:去年同月增減(%)')\nroe = data.get('fundamental_features:ROE稅後')\npe_ratio = data.get('price_earning_ratio:本益比')\ntrading_value = data.get('price:成交金額')\n\n# 2. Calculate factors\n\n# Factor 1: Momentum (20-day return)\nmomentum = close.pct_change(20).shift(1)\n\n# Factor 2: Revenue YoY growth\n# Monthly data, need to forward fill to align with daily price data\nrevenue_yoy_daily = revenue_yoy.ffill().shift(1)\n\n# Factor 3: ROE (Trailing 4 quarters average)\n# Quarterly data, need to forward fill to align with daily price data\nroe_avg = roe.rolling(window=4, min_periods=1).mean().ffill().shift(1)\n\n# Factor 4: Inverse P/E Ratio (Value factor)\n# Lower P/E is better, so take inverse\ninverse_pe = (1 / pe_ratio).replace([float('inf'), -float('inf')], 0).shift(1)\n\n# 3. Combine factors\n# Normalize factors to a 0-1 range (or rank) before combining if their scales differ significantly.\n# For simplicity, we'll combine directly here, assuming relative magnitudes are somewhat comparable or will be handled by ranking later.\n# We'll give more weight to momentum and revenue growth, and less to ROE and inverse PE.\ncombined_factor = (momentum * 0.4 +\n                   revenue_yoy_daily * 0.3 +\n                   roe_avg * 0.2 +\n                   inverse_pe * 0.1)\n\n# 4. Apply filters\n# Liquidity filter: Average daily trading value over the last 20 days must be greater than 100 million TWD\nliquidity_filter = trading_value.rolling(20).mean().shift(1) > 100_000_000\n\n# Price filter: Close price must be above 10 TWD to avoid penny stocks\nprice_filter = close.shift(1) > 10\n\n# Combine all filters\nall_filters = liquidity_filter & price_filter\n\n# 5. Select stocks\n# Apply filters and then select the top 10 stocks based on the combined factor\nposition = combined_factor[all_filters].is_largest(10)\n\n# 6. Run backtest\nreport = sim(position, resample=\"Q\", upload=False, stop_loss=0.08)",
+      "validation_passed": true,
+      "validation_errors": [],
+      "execution_success": true,
+      "execution_error": null,
+      "metrics": {
+        "total_return": 0.09522278100318865,
+        "annual_return": 0.31849985366682165,
+        "sharpe_ratio": 0.9692658593128121,
+        "max_drawdown": -0.4610529119199658,
+        "win_rate": 0.6951087341406069,
+        "position_count": 3277
+      },
+      "feedback": "✅ Validation: PASSED - Code meets all security requirements\n\n✅ Execution: SUCCESS\nMetrics:\n- total_return: 0.0952\n- annual_return: 0.3185\n- sharpe_ratio: 0.9693\n- max_drawdown: -0.4611\n- win_rate: 0.6951\n- position_count: 3277\n\n📉 Performance: MODERATE (Sharpe > 0.5)\n"
+    },
+    {
+      "iteration_num": 2,
+      "timestamp": "2025-10-07T08:19:25.060081",
+      "model": "google/gemini-2.5-flash",
+      "code": "# 1. Load data\nclose = data.get('price:收盤價')\nvolume = data.get('price:成交股數')\nrevenue_yoy = data.get('monthly_revenue:去年同月增減(%)')\nroe = data.get('fundamental_features:ROE稅後')\npe_ratio = data.get('price_earning_ratio:本益比')\ntrading_value = data.get('price:成交金額')\n\n# 2. Calculate factors\n# Factor 1: Momentum (20-day returns)\nmomentum = close.pct_change(20).shift(1)\n\n# Factor 2: Revenue YoY growth (shifted by 1 month, then 1 day)\n# Monthly data needs careful shifting. Finlab handles monthly data alignment.\n# We shift by 1 to avoid look-ahead from the current month's revenue announcement.\nrevenue_growth_factor = revenue_yoy.shift(1)\n\n# Factor 3: ROE (shifted by 1 quarter, then 1 day)\n# Quarterly data needs careful shifting. Finlab handles quarterly data alignment.\n# We shift by 1 to avoid look-ahead from the current quarter's ROE announcement.\nroe_factor = roe.shift(1)\n\n# Factor 4: Inverse P/E ratio (lower P/E is better, so 1/PE)\n# Add a small constant to avoid division by zero if PE is 0, and handle negative P/E.\n# For negative P/E, we can set it to NaN or a very low value to exclude it.\ninverse_pe = (1 / pe_ratio.replace([0, -0], 0.000001)).replace([float('inf'), -float('inf')], 0).shift(1)\n# Filter out extremely high inverse_pe values that might result from very low positive P/E,\n# or set negative P/E to NaN.\ninverse_pe[pe_ratio <= 0] = None # Exclude stocks with non-positive P/E\ninverse_pe = inverse_pe.clip(upper=0.1) # Cap inverse PE to prevent outliers from dominating\n\n# 3. Combine factors\n# Normalize factors if necessary, but for this simple combination, direct multiplication/addition can work.\n# We'll give more weight to momentum and revenue growth.\ncombined_factor = (momentum * 0.4 + revenue_growth_factor * 0.3 + roe_factor * 0.2 + inverse_pe * 0.1)\n\n# 4. Apply filters\n# Liquidity filter: Average daily trading value over the last 20 days must be > 50 million TWD\nliquidity_filter = trading_value.rolling(20).mean().shift(1) > 50_000_000\n\n# Price filter: Close price must be above 10 TWD (to avoid penny stocks)\nprice_filter = close.shift(1) > 10\n\n# Volume filter: Average daily volume over the last 20 days must be > 100,000 shares\navg_volume = volume.rolling(20).mean().shift(1)\nvolume_filter = avg_volume > 100_000\n\n# Combine all filters\nall_filters = liquidity_filter & price_filter & volume_filter\n\n# 5. Select stocks\n# Apply filters and then select the top 10 stocks based on the combined factor\nposition = combined_factor[all_filters].is_largest(10)\n\n# 6. Run backtest\nreport = sim(position, resample=\"Q\", upload=False, stop_loss=0.08)",
+      "validation_passed": true,
+      "validation_errors": [],
+      "execution_success": true,
+      "execution_error": null,
+      "metrics": {
+        "total_return": 0.3817751161257514,
+        "annual_return": 0.09852210093493655,
+        "sharpe_ratio": -0.35431851228100086,
+        "max_drawdown": -0.4089091089441738,
+        "win_rate": 0.6976677596630894,
+        "position_count": 3277
+      },
+      "feedback": "✅ Validation: PASSED - Code meets all security requirements\n\n✅ Execution: SUCCESS\nMetrics:\n- total_return: 0.3818\n- annual_return: 0.0985\n- sharpe_ratio: -0.3543\n- max_drawdown: -0.4089\n- win_rate: 0.6977\n- position_count: 3277\n\n⚠️ Performance: NEEDS IMPROVEMENT (Low Sharpe)\n"
+    }
+  ]
+}

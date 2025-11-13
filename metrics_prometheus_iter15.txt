@@ -1,0 +1,71 @@
+# HELP learning_iterations_total Total number of iterations executed
+# TYPE learning_iterations_total counter
+learning_iterations_total 15 1760595065315
+
+# HELP learning_iterations_successful Number of successful iterations (passed validation and execution)
+# TYPE learning_iterations_successful counter
+learning_iterations_successful 12 1760595067018
+
+# HELP learning_success_rate Rolling success rate over recent iterations
+# TYPE learning_success_rate gauge
+learning_success_rate 80.0 1760595067018
+
+# HELP learning_sharpe_ratio Current iteration Sharpe ratio
+# TYPE learning_sharpe_ratio gauge
+learning_sharpe_ratio 1.8 1760595067018
+
+# HELP learning_sharpe_ratio_avg Average Sharpe ratio over recent successful iterations
+# TYPE learning_sharpe_ratio_avg gauge
+learning_sharpe_ratio_avg 1.7750000000000001 1760595067018
+
+# HELP learning_sharpe_ratio_best Best Sharpe ratio achieved so far
+# TYPE learning_sharpe_ratio_best gauge
+learning_sharpe_ratio_best 2.05 1760595059589
+
+# HELP performance_iteration_duration_seconds Time taken to complete one full iteration
+# TYPE performance_iteration_duration_seconds histogram
+performance_iteration_duration_seconds 1.7028632164001465 1760595067018
+
+# HELP performance_generation_duration_seconds Time taken for strategy generation
+# TYPE performance_generation_duration_seconds histogram
+performance_generation_duration_seconds 0.5005970001220703 1760595065816
+
+# HELP performance_validation_duration_seconds Time taken for code validation
+# TYPE performance_validation_duration_seconds histogram
+performance_validation_duration_seconds 0.10020327568054199 1760595065916
+
+# HELP performance_execution_duration_seconds Time taken for strategy execution
+# TYPE performance_execution_duration_seconds histogram
+performance_execution_duration_seconds 1.0011117458343506 1760595066918
+
+# HELP performance_metric_extraction_duration_seconds Time taken for metric extraction
+# TYPE performance_metric_extraction_duration_seconds histogram
+performance_metric_extraction_duration_seconds 0.10029768943786621 1760595067018
+
+# HELP performance_metric_extraction_method Metric extraction method used (DIRECT, SIGNAL, DEFAULT)
+# TYPE performance_metric_extraction_method counter
+performance_metric_extraction_method{method="DIRECT"} 12 1760595067018
+
+# HELP quality_validation_passed_total Number of iterations that passed validation
+# TYPE quality_validation_passed_total counter
+quality_validation_passed_total 13 1760595065916
+
+# HELP quality_validation_failed_total Number of iterations that failed validation
+# TYPE quality_validation_failed_total counter
+quality_validation_failed_total 2 1760595060205
+
+# HELP quality_validation_pass_rate Rolling validation pass rate
+# TYPE quality_validation_pass_rate gauge
+quality_validation_pass_rate 86.66666666666667 1760595065916
+
+# HELP quality_execution_success_total Number of iterations with successful execution
+# TYPE quality_execution_success_total counter
+quality_execution_success_total 12 1760595066918
+
+# HELP quality_execution_failed_total Number of iterations with failed execution
+# TYPE quality_execution_failed_total counter
+quality_execution_failed_total 1 1760595052774
+
+# HELP system_errors_total Total number of system errors (by type)
+# TYPE system_errors_total counter
+system_errors_total{error_type="validation"} 3 1760595060205

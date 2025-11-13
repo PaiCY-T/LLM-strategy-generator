@@ -1,0 +1,228 @@
+# Volume Breakout Strategy
+# =========================
+# Intraday breakout strategy using volume surge and price momentum
+#
+# Strategy Logic:
+# - Detect volume surges (volume >2x average)
+# - Confirm with price breakout above recent highs
+# - Enter on intraday signals with tight risk management
+# - Use risk parity sizing to balance position volatility
+# - Designed for capturing breakout moves
+#
+# Expected Performance: Sharpe 1.2-1.8, Annual Return 20-30%, Turnover: Very High
+# Market Conditions: Best in volatile markets with news catalysts
+# Risk Level: High (breakout strategies have lower win rate)
+
+metadata:
+  name: "Volume Surge Breakout"
+  description: "Intraday breakout strategy entering on volume surges >2x average combined with price breakout above 20-day high, using risk parity position sizing"
+  strategy_type: "momentum"
+  rebalancing_frequency: "W-TUE"  # Weekly Tuesday rebalancing
+  version: "1.0.0"
+  author: "FinLab LLM System"
+  tags:
+    - volume
+    - breakout
+    - intraday
+    - surge
+    - high-turnover
+    - risk-parity
+  risk_level: "high"
+
+indicators:
+  # Technical indicators for breakout detection
+  technical_indicators:
+    # 20-day high for breakout level
+    - name: "high_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('high_20d')"
+
+    # 20-day average volume
+    - name: "volume_ma_20"
+      type: "SMA"
+      period: 20
+      source: "data.get('volume_20d_avg')"
+
+    # RSI for momentum confirmation
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+    # ATR for volatility-based sizing
+    - name: "atr_14"
+      type: "ATR"
+      period: 14
+      source: "data.get('ATR_14')"
+
+    # Bollinger Bands for volatility context
+    - name: "bb_upper"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_UPPER')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_lower"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_LOWER')"
+      parameters:
+        std_dev: 2.0
+
+    # 10-day MA for short-term trend
+    - name: "ma_10"
+      type: "SMA"
+      period: 10
+      source: "data.get('MA_10')"
+
+  # Volume indicators
+  volume_filters:
+    - name: "avg_volume_30"
+      metric: "average_volume"
+      period: 30
+      threshold: 150000000  # 150M minimum
+
+  # Custom calculations
+  custom_calculations:
+    # Volume ratio (surge detection)
+    - name: "volume_ratio"
+      expression: "volume / volume_ma_20"
+      description: "Current volume relative to 20-day average"
+
+    # Price vs 20-day high
+    - name: "breakout_level"
+      expression: "(close - high_20) / high_20"
+      description: "Distance from 20-day high"
+
+    # Normalized ATR (for position sizing)
+    - name: "normalized_atr"
+      expression: "atr_14 / close"
+      description: "ATR as percentage of price"
+
+    # 10-day momentum
+    - name: "momentum_10d"
+      expression: "(close - close.shift(10)) / close.shift(10)"
+      description: "10-day price momentum"
+
+    # Breakout strength score
+    - name: "breakout_score"
+      expression: "volume_ratio * (1 + momentum_10d)"
+      description: "Combined volume surge and momentum score"
+
+entry_conditions:
+  # Threshold-based entry rules
+  threshold_rules:
+    # Volume surge (>2x average)
+    - condition: "volume_ratio > 2.0"
+      description: "Volume surge >2x average (strong interest)"
+
+    # Price breakout above 20-day high
+    - condition: "close > high_20"
+      description: "Price breakout above 20-day high"
+
+    # Breakout confirmation (close at least 1% above high)
+    - condition: "breakout_level > 0.01"
+      description: "Confirmed breakout (>1% above 20-day high)"
+
+    # RSI momentum (not oversold, showing strength)
+    - condition: "rsi_14 > 55"
+      description: "RSI showing momentum (>55)"
+
+    # Price above short-term MA
+    - condition: "close > ma_10"
+      description: "Price above 10-day MA (short-term strength)"
+
+    # Positive 10-day momentum
+    - condition: "momentum_10d > 0.05"
+      description: "Positive 10-day momentum (>5%)"
+
+    # Breakout score threshold
+    - condition: "breakout_score > 2.5"
+      description: "High breakout score (volume × momentum >2.5)"
+
+    # Sufficient volatility for breakout
+    - condition: "normalized_atr > 0.020"
+      description: "Sufficient volatility (ATR >2% of price)"
+
+  # All conditions must be met
+  logical_operator: "AND"
+
+  # High liquidity requirements for breakouts
+  min_liquidity:
+    average_volume_20d: 200000000  # 200M minimum
+    dollar_volume: 15000000        # 15M daily dollar volume
+
+exit_conditions:
+  # Tight stop loss for breakout failure
+  stop_loss_pct: 0.07  # 7% stop loss
+
+  # Take profit at 18%
+  take_profit_pct: 0.18
+
+  # Trailing stop for breakout continuation
+  trailing_stop:
+    trail_percent: 0.08      # Trail 8% below peak
+    activation_profit: 0.05  # Activate after 5% profit
+
+  # Conditional exits (breakout failure signals)
+  conditional_exits:
+    # Exit if volume dries up
+    - condition: "volume_ratio < 0.8"
+      description: "Volume dried up (below 80% of average)"
+
+    # Exit if price falls back below 20-day high
+    - condition: "close < high_20"
+      description: "Breakout failed (price below 20-day high)"
+
+    # Exit if RSI reverses sharply
+    - condition: "rsi_14 < 45"
+      description: "RSI momentum reversal (below 45)"
+
+    # Exit if price falls below 10-day MA
+    - condition: "close < ma_10"
+      description: "Price below 10-day MA (short-term weakness)"
+
+    # Exit if price falls below lower Bollinger Band
+    - condition: "close < bb_lower"
+      description: "Price below lower Bollinger Band (failure)"
+
+  # Short holding period for breakouts
+  holding_period_days: 15
+
+  # Exit if ANY exit condition is met
+  exit_operator: "OR"
+
+position_sizing:
+  # Risk parity allocation (volatility-adjusted)
+  method: "risk_parity"
+
+  # Maximum 20 positions (diversified breakouts)
+  max_positions: 20
+
+  # Maximum 10% per position
+  max_position_pct: 0.10
+
+  # Minimum 3% per position
+  min_position_pct: 0.03
+
+risk_management:
+  # Sector concentration limit
+  max_sector_exposure: 0.30
+
+  # Frequent rebalancing for breakouts
+  rebalance_threshold: 0.12
+
+  # Tight drawdown limit
+  max_drawdown_limit: 0.18
+
+  # Higher cash reserve for breakout opportunities
+  cash_reserve_pct: 0.15
+
+backtest_config:
+  start_date: "2022-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000
+  transaction_cost: 0.001425
+  slippage: 0.002  # Higher slippage for breakouts

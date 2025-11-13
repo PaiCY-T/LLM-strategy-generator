@@ -1,0 +1,293 @@
+{
+  "generation": 100,
+  "timestamp": 1760847528.0979888,
+  "population_size": 50,
+  "recent_metrics": [
+    {
+      "generation": 90,
+      "timestamp": 1760847194.8759599,
+      "population_size": 50,
+      "avg_fitness": 1.9928867934031187,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.4227811977112577,
+      "median_fitness": 2.0991524650067515,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 3,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 27.98435640335083
+    },
+    {
+      "generation": 91,
+      "timestamp": 1760847219.4006257,
+      "population_size": 50,
+      "avg_fitness": 2.0309285485004933,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.5747833736300105,
+      "median_fitness": 2.1302196278165395,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 7,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 24.520702362060547
+    },
+    {
+      "generation": 92,
+      "timestamp": 1760847255.267849,
+      "population_size": 50,
+      "avg_fitness": 1.9695548022368334,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.0479082881273927,
+      "median_fitness": 2.1302196278165395,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 49,
+        "Mastiff": 1
+      },
+      "template_percentages": {
+        "Turtle": 98.0,
+        "Mastiff": 2.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061,
+        "Mastiff": 1.0479082881273927
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 5,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 35.863187313079834
+    },
+    {
+      "generation": 93,
+      "timestamp": 1760847312.2133057,
+      "population_size": 50,
+      "avg_fitness": 1.8971332651932484,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.065295077533176,
+      "median_fitness": 1.9851533706889635,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 4,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 56.940829038619995
+    },
+    {
+      "generation": 94,
+      "timestamp": 1760847359.323736,
+      "population_size": 50,
+      "avg_fitness": 1.919221133088883,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.4142938611025528,
+      "median_fitness": 1.9205000903286638,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 8,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 47.106080532073975
+    },
+    {
+      "generation": 95,
+      "timestamp": 1760847392.3761005,
+      "population_size": 50,
+      "avg_fitness": 1.9927240502514687,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.4597576685510367,
+      "median_fitness": 2.017620930633899,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 9,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 33.04749059677124
+    },
+    {
+      "generation": 96,
+      "timestamp": 1760847429.2072744,
+      "population_size": 50,
+      "avg_fitness": 2.00213729469184,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.1829986517339648,
+      "median_fitness": 2.094366287545263,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 5,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 36.82579755783081
+    },
+    {
+      "generation": 97,
+      "timestamp": 1760847466.4364178,
+      "population_size": 50,
+      "avg_fitness": 1.9651606372887065,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.1996122204053319,
+      "median_fitness": 2.0698966782896298,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 4,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 37.22529053688049
+    },
+    {
+      "generation": 98,
+      "timestamp": 1760847504.4962983,
+      "population_size": 50,
+      "avg_fitness": 1.9667559848152802,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.3737934770718363,
+      "median_fitness": 2.0698966782896298,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 12,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 38.055163621902466
+    },
+    {
+      "generation": 99,
+      "timestamp": 1760847528.0663211,
+      "population_size": 50,
+      "avg_fitness": 1.9818031540578043,
+      "best_fitness": 2.148409178294061,
+      "worst_fitness": 1.0340558122148527,
+      "median_fitness": 2.094366287545263,
+      "param_diversity": 0.0,
+      "template_diversity": 0.0,
+      "unified_diversity": 0.0,
+      "template_distribution": {
+        "Turtle": 50
+      },
+      "template_percentages": {
+        "Turtle": 100.0
+      },
+      "best_fitness_per_template": {
+        "Turtle": 2.148409178294061
+      },
+      "champion_template": "Turtle",
+      "champion_fitness": 2.148409178294061,
+      "champion_updated": false,
+      "mutation_count": 7,
+      "crossover_count": 23,
+      "template_mutation_count": 0,
+      "generation_duration": 23.567431926727295
+    }
+  ],
+  "total_mutations": 675,
+  "total_crossovers": 2300,
+  "best_fitness_ever": 2.148409178294061
+}

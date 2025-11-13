@@ -1,0 +1,52 @@
+# .pre-commit-config.yaml - Pre-commit Hook Configuration
+#
+# This configuration implements Phase 5A.3 requirements from the API Mismatch
+# Prevention System specification. It runs mypy type checking on staged files
+# before commits to catch API mismatches early in the development workflow.
+#
+# Philosophy: Fast feedback loop with local type checking
+# - Scoped to src/ directory only (performance optimization)
+# - Auto-installs dependencies on first commit
+# - Fails commit if type errors detected
+# - Target execution time: <5s for typical commits
+#
+# Reference: .spec-workflow/specs/api-mismatch-prevention-system/DESIGN_IMPROVEMENTS.md Section 5
+
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.0
+    hooks:
+      - id: mypy
+        name: mypy type checking (src/ only)
+        description: Run mypy type checker on source code to catch API mismatches
+        args:
+          - --strict
+          - --config-file=mypy.ini
+          - --show-error-codes
+        additional_dependencies:
+          # Type stubs for external libraries
+          - types-requests
+          - types-PyYAML
+        # Performance optimization: Only check src/ directory
+        files: ^src/
+        # Don't pass individual filenames (mypy handles this internally)
+        pass_filenames: false
+        # Only run when files are staged for commit (not on every save)
+        always_run: false
+        # Run during commit stage
+        stages: [commit]
+        # Provide detailed output for debugging
+        verbose: true
+
+# Configuration for pre-commit CLI
+default_install_hook_types: [pre-commit]
+default_stages: [commit]
+
+# Optimization: Fail fast on first error
+fail_fast: false
+
+# Minimum version requirement
+minimum_pre_commit_version: 2.20.0

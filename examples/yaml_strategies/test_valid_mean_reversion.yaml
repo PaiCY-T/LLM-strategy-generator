@@ -1,0 +1,99 @@
+# Valid Mean Reversion Strategy - Test Specification
+# ===================================================
+# Bollinger Bands mean reversion with RSI confirmation
+# Used for testing schema validation (should PASS)
+
+metadata:
+  name: "BB RSI Mean Reversion"
+  description: "Mean reversion strategy using Bollinger Bands lower band breach with RSI oversold confirmation"
+  strategy_type: "mean_reversion"
+  rebalancing_frequency: "M"
+  version: "1.5.0"
+  author: "FinLab Test Suite"
+  tags:
+    - mean-reversion
+    - bollinger-bands
+    - rsi
+    - oversold
+    - test
+  risk_level: medium
+
+indicators:
+  technical_indicators:
+    - name: "bb_upper"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_UPPER')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_middle"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_MIDDLE')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "bb_lower"
+      type: "BB"
+      period: 20
+      source: "data.get('BB_LOWER')"
+      parameters:
+        std_dev: 2.0
+
+    - name: "rsi_14"
+      type: "RSI"
+      period: 14
+      source: "data.get('RSI_14')"
+
+  fundamental_factors:
+    - name: "roe"
+      field: "ROE"
+      source: "data.get('ROE')"
+
+  volume_filters:
+    - name: "avg_volume_30"
+      metric: "average_volume"
+      period: 30
+      threshold: 80000000
+
+entry_conditions:
+  threshold_rules:
+    - condition: "close < bb_lower"
+      description: "Price breached lower Bollinger Band"
+
+    - condition: "rsi_14 < 30"
+      description: "RSI indicates oversold condition"
+
+    - condition: "roe > 0.10"
+      description: "Fundamental quality filter - ROE above 10%"
+
+  logical_operator: "AND"
+
+  min_liquidity:
+    average_volume_20d: 60000000
+
+exit_conditions:
+  # Exit when price returns to middle band or take profit
+  take_profit_pct: 0.12
+  stop_loss_pct: 0.08
+
+  conditional_exits:
+    - condition: "close > bb_middle"
+      description: "Exit at mean reversion to middle band"
+
+    - condition: "rsi_14 > 70"
+      description: "Exit when RSI becomes overbought"
+
+  holding_period_days: 45
+  exit_operator: "OR"
+
+position_sizing:
+  method: "equal_weight"
+  max_positions: 15
+  max_position_pct: 0.12
+
+risk_management:
+  max_sector_exposure: 0.35
+  rebalance_threshold: 0.15
+  max_drawdown_limit: 0.18

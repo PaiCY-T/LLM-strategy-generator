@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/quality-assurance-system/design.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-06T07:18:47.065Z",
+      "trigger": "initial",
+      "approvalId": "approval_1762413526837_lg5gg3hd0",
+      "approvalTitle": "Quality Assurance System - Design Document"
+    }
+  ]
+}

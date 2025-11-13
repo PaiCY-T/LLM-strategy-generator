@@ -1,0 +1,2 @@
+{"timestamp": "2025-11-11T23:07:49.781020", "iteration_num": 1, "decision": "llm", "reason": "Test decision", "config_snapshot": {"innovation_rate": 100}, "use_factor_graph": null, "innovation_rate": 100, "success": true, "error": null}
+{"timestamp": "2025-11-11T23:08:59.344007", "iteration_num": 0, "decision": "llm", "reason": "Test decision for validation", "config_snapshot": {"innovation_rate": 100}, "use_factor_graph": null, "innovation_rate": 100, "success": true, "error": null}

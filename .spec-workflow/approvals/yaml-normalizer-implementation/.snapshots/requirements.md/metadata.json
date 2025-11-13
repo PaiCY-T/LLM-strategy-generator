@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/yaml-normalizer-implementation/requirements.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-26T16:48:23.038Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761497302896_5csa7qczu",
+      "approvalTitle": "Requirements: YAML Normalizer Implementation"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-10-26T22:33:23.424Z",
+      "trigger": "approved",
+      "approvalId": "approval_1761497302896_5csa7qczu",
+      "approvalTitle": "Requirements: YAML Normalizer Implementation"
+    }
+  ]
+}

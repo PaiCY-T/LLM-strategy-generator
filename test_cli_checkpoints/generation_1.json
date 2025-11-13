@@ -1,0 +1,135 @@
+{
+  "generation": 1,
+  "population": [
+    {
+      "id": "init_4",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 4 using Momentum template\n# Template type: Momentum\n# Strategy index: 4\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 4\nmomentum = close.pct_change(40)\nsignal = momentum.rank(axis=1)",
+      "parameters": {
+        "template": "Momentum",
+        "index": 4,
+        "lookback": 40
+      },
+      "metrics": {
+        "sharpe_ratio": 3.4535859989144924,
+        "calmar_ratio": 23.49790018198498,
+        "max_drawdown": -0.13453196909912954,
+        "total_return": 0.41932836151851616,
+        "win_rate": 0.0,
+        "annual_return": 3.161218781177234,
+        "success": true
+      },
+      "novelty_score": 0.125,
+      "pareto_rank": 1,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T22:59:58.005592",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "init_2",
+      "generation": 0,
+      "parent_ids": [],
+      "code": "# Initial strategy 2 using Quality template\n# Template type: Quality\n# Strategy index: 2\n\n# Data retrieval (placeholder)\nclose = data.get('price:\u6536\u76e4\u50f9')  # Strategy 2\nroe = data.get('price:\u6536\u76e4\u50f9')  # Strategy 2\nquality = roe.rolling(12).mean()",
+      "parameters": {
+        "template": "Quality",
+        "index": 2,
+        "lookback": 30
+      },
+      "metrics": {
+        "sharpe_ratio": 1.308334498967634,
+        "calmar_ratio": 5.05981542268362,
+        "max_drawdown": -0.1280623176199325,
+        "total_return": 0.17198580604466263,
+        "win_rate": 0.0,
+        "annual_return": 0.6479716897579428,
+        "success": true
+      },
+      "novelty_score": 0.125,
+      "pareto_rank": 1,
+      "crowding_distance": Infinity,
+      "timestamp": "2025-10-19T22:59:58.005583",
+      "template_type": "Quality",
+      "metadata": {}
+    },
+    {
+      "id": "gen1_offspring_5",
+      "generation": 1,
+      "parent_ids": [
+        "init_2",
+        "init_0"
+      ],
+      "code": "# Offspring from init_2 + init_0",
+      "parameters": {
+        "template": "Quality",
+        "index": 2,
+        "lookback": 30
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T22:59:58.033428",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen1_offspring_5",
+      "generation": 1,
+      "parent_ids": [
+        "init_2",
+        "init_4"
+      ],
+      "code": "# Offspring from init_2 + init_4",
+      "parameters": {
+        "template": "Quality",
+        "index": 2,
+        "lookback": 30
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T22:59:58.033441",
+      "template_type": "Momentum",
+      "metadata": {}
+    },
+    {
+      "id": "gen1_offspring_5",
+      "generation": 1,
+      "parent_ids": [
+        "init_2",
+        "init_4"
+      ],
+      "code": "# Offspring from init_2 + init_4",
+      "parameters": {
+        "template": "Quality",
+        "index": 2,
+        "lookback": 30
+      },
+      "metrics": null,
+      "novelty_score": 0.0,
+      "pareto_rank": 0,
+      "crowding_distance": 0.0,
+      "timestamp": "2025-10-19T22:59:58.033447",
+      "template_type": "Momentum",
+      "metadata": {}
+    }
+  ],
+  "generation_history": [
+    {
+      "generation": 1,
+      "diversity_score": 0.6,
+      "total_time": 0.0013890266418457031,
+      "pareto_front_size": 2
+    }
+  ],
+  "config": {
+    "population_size": 5,
+    "elite_count": 2,
+    "tournament_size": 3,
+    "mutation_rate": 0.1
+  },
+  "timestamp": "2025-10-19T22:59:58.037164"
+}
