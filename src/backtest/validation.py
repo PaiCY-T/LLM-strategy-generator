@@ -8,8 +8,14 @@ Also provides field validators for ExecutionResult metrics - Phase 3.2 Schema Va
 """
 
 import ast
+import logging
 import math
-from typing import List, Optional, Set, Tuple
+from typing import List, Optional, Set, Tuple, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.backtest.executor import ExecutionResult
+
+logger = logging.getLogger(__name__)
 
 
 # Allowed module imports for strategy code
@@ -248,104 +254,49 @@ def validate_total_return(value: Optional[float]) -> Optional[str]:
     return None
 
 
-# =============================================================================
-# ExecutionResult Metric Validators - Phase 3.2 Schema Validation
-# =============================================================================
 
-def validate_sharpe_ratio(value):
-    """Validate sharpe_ratio field is within expected range [-10, 10].
+def validate_max_drawdown(value: Optional[float]) -> Optional[str]:
+    """Validate max_drawdown is non-positive (drawdown <= 0).
 
-    Args:
-        value: Sharpe ratio to validate (None is valid)
-
-    Returns:
-        Error message if invalid, None if valid
-    """
-    if value is None:
-        return None
-
-    if math.isnan(value):
-        return f"sharpe_ratio is NaN (not a number)"
-
-    if math.isinf(value):
-        return f"sharpe_ratio is infinite ({value})"
-
-    if value < -10.0 or value > 10.0:
-        return f"sharpe_ratio {value} is out of valid range [-10, 10]"
-
-    return None
-
-
-def validate_total_return(value):
-    """Validate total_return field is within acceptable range [-1, 10].
-
-    Total return represents cumulative performance from -100% (total loss)
-    to +1000% (10x gain). Values outside this range indicate anomalies.
+    Drawdown represents peak-to-trough decline and must be non-positive.
+    A value of 0 means no drawdown, negative values indicate losses.
 
     Args:
-        value: Total return value to validate (None is valid for optional field)
+        value: Max drawdown to validate (None is valid for optional field)
 
     Returns:
         Error message if invalid, None if valid
 
     Examples:
-        >>> validate_total_return(0.25)
+        >>> validate_max_drawdown(-0.25)
         None
-        >>> validate_total_return(-1.0)
+        >>> validate_max_drawdown(0.0)
         None
-        >>> validate_total_return(-1.5)
-        'total_return -1.5 is out of valid range [-1, 10]. Expected: -1 <= total_return <= 10.'
+        >>> validate_max_drawdown(0.1)
+        'max_drawdown 0.1 must be <= 0. Got positive value (drawdowns must be non-positive).'
     """
-    # None is valid (optional field)
     if value is None:
         return None
 
-    # Check for NaN
     if math.isnan(value):
         return (
-            "total_return must be a valid number, got NaN. "
-            "Suggestion: Check for invalid calculations in return computation."
+            "max_drawdown must be a valid number, got NaN. "
+            "Suggestion: Check for invalid calculations in drawdown computation."
         )
 
-    # Check for infinity
     if math.isinf(value):
         inf_str = 'inf' if value > 0 else '-inf'
         return (
-            f"total_return must be finite, got {inf_str}. "
-            f"Suggestion: Check for division by zero in return calculation."
+            f"max_drawdown must be finite, got {inf_str}. "
+            "Suggestion: Check for division by zero in drawdown calculation."
         )
-
-    # Check range [-1, 10] (allows -100% loss to +1000% gain)
-    if value < -1.0 or value > 10.0:
-        return (
-            f"total_return {value} is out of valid range [-1, 10]. "
-            f"Expected: -1 <= total_return <= 10. "
-            f"Suggestion: Verify backtest logic and check for data corruption."
-        )
-
-    return None
-
-
-def validate_max_drawdown(value):
-    """Validate max_drawdown field is non-positive (drawdown <= 0).
-
-    Args:
-        value: Max drawdown to validate (None is valid)
-
-    Returns:
-        Error message if invalid, None if valid
-    """
-    if value is None:
-        return None
-
-    if math.isnan(value):
-        return f"max_drawdown is NaN (not a number)"
-
-    if math.isinf(value):
-        return f"max_drawdown is infinite ({value})"
 
     if value > 0:
-        return f"max_drawdown {value} must be <= 0 (drawdown cannot be positive)"
+        return (
+            f"max_drawdown {value} must be <= 0. "
+            f"Got positive value (drawdowns must be non-positive). "
+            f"Suggestion: Verify backtest logic - drawdown should be negative or zero."
+        )
 
     return None
 
@@ -381,34 +332,51 @@ def log_validation_error(field_name: str, value, error_message: str) -> None:
     )
 
 
-def validate_execution_result(result):
-    """Validate all metrics in ExecutionResult.
+def validate_execution_result(result: 'ExecutionResult') -> List[str]:
+    """Validate all metrics in an ExecutionResult.
+
+    Performs comprehensive validation of all numeric metrics in the result.
+    Validation is skipped for failed executions (success=False) since their
+    metrics may be incomplete or invalid by design.
 
     Args:
-        result: ExecutionResult to validate
+        result: ExecutionResult instance to validate
 
     Returns:
-        List of error messages (empty if all valid)
+        List of validation error messages. Empty list if all metrics are valid.
+
+    Examples:
+        >>> result = ExecutionResult(success=True, sharpe_ratio=2.0, total_return=0.5, max_drawdown=-0.2)
+        >>> validate_execution_result(result)
+        []
+
+        >>> result = ExecutionResult(success=True, sharpe_ratio=15.0, max_drawdown=0.5)
+        >>> errors = validate_execution_result(result)
+        >>> len(errors)
+        2
     """
     # Skip validation for failed executions
     if not result.success:
         return []
 
-    errors = []
+    errors: List[str] = []
 
     # Validate sharpe_ratio
     sharpe_error = validate_sharpe_ratio(result.sharpe_ratio)
     if sharpe_error:
         errors.append(sharpe_error)
+        log_validation_error("sharpe_ratio", result.sharpe_ratio, sharpe_error)
 
     # Validate total_return
     return_error = validate_total_return(result.total_return)
     if return_error:
         errors.append(return_error)
+        log_validation_error("total_return", result.total_return, return_error)
 
     # Validate max_drawdown
     drawdown_error = validate_max_drawdown(result.max_drawdown)
     if drawdown_error:
         errors.append(drawdown_error)
+        log_validation_error("max_drawdown", result.max_drawdown, drawdown_error)
 
     return errors
