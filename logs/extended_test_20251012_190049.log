@@ -1,6 +1,0 @@
-2025-10-12 19:00:49,500 - extended_test_harness - INFO - Logging initialized: logs/extended_test_20251012_190049.log
-2025-10-12 19:00:49,501 - extended_test_harness - INFO - ExtendedTestHarness initialized:
-2025-10-12 19:00:49,501 - extended_test_harness - INFO -   Model: google/gemini-2.5-flash
-2025-10-12 19:00:49,501 - extended_test_harness - INFO -   Target iterations: 50
-2025-10-12 19:00:49,501 - extended_test_harness - INFO -   Checkpoint interval: 10
-2025-10-12 19:00:49,502 - extended_test_harness - INFO -   Checkpoint dir: checkpoints

@@ -1,3 +1,0 @@
-"""
-Backtest engine layer tests.
-"""

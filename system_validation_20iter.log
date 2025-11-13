@@ -1,8 +1,0 @@
-================================================================================
-20-Iteration Full System Validation Test
-================================================================================
-Start Time: 2025-10-28 13:06:16
-Project Root: /mnt/c/Users/jnpi/documents/finlab
-
-[1/7] Checking imports...
-  ❌ Import error: cannot import name 'IterationEngine' from 'artifacts.working.modules.iteration_engine' (/mnt/c/Users/jnpi/documents/finlab/artifacts/working/modules/iteration_engine.py)

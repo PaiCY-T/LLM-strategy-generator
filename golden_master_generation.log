@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/mnt/c/Users/jnpi/documents/finlab/scripts/generate_golden_master.py", line 41, in <module>
-    from autonomous_loop import AutonomousLoop, ChampionStrategy
-  File "/mnt/c/Users/jnpi/documents/finlab/artifacts/working/modules/autonomous_loop.py", line 29, in <module>
-    from src.repository.hall_of_fame import HallOfFameRepository
-  File "/mnt/c/Users/jnpi/documents/finlab/src/repository/__init__.py", line 38, in <module>
-    from .index_manager import IndexManager
-ModuleNotFoundError: No module named 'src.repository.index_manager'
