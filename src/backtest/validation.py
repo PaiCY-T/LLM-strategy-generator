@@ -3,9 +3,12 @@ Strategy code validation using AST parsing.
 
 Provides security validation to prevent execution of malicious or
 invalid code by analyzing the Abstract Syntax Tree.
+
+Also provides field validators for ExecutionResult metrics - Phase 3.2 Schema Validation.
 """
 
 import ast
+import math
 from typing import List, Optional, Set, Tuple
 
 
@@ -193,3 +196,29 @@ def validate_strategy_code(code: str) -> Tuple[bool, Optional[str]]:
     """
     validator = CodeValidator()
     return validator.validate_strategy_code(code)
+
+
+# Field validators for ExecutionResult metrics
+
+def validate_sharpe_ratio(value: Optional[float]) -> Optional[str]:
+    """Validate sharpe_ratio is within acceptable range [-10, 10].
+
+    Args:
+        value: Sharpe ratio to validate (None is valid)
+
+    Returns:
+        Error message if invalid, None if valid
+    """
+    if value is None:
+        return None
+
+    if math.isnan(value):
+        return "sharpe_ratio must be a valid number, got NaN"
+
+    if math.isinf(value):
+        return f"sharpe_ratio must be finite, got {'inf' if value > 0 else '-inf'}"
+
+    if value < -10.0 or value > 10.0:
+        return f"sharpe_ratio {value} is out of valid range [-10, 10]"
+
+    return None
