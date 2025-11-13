@@ -30,6 +30,8 @@ from typing import Any, Dict, Optional, Tuple
 import numpy as np
 import pandas as pd
 
+from src.backtest.validation import validate_execution_result
+
 
 @dataclass
 class ExecutionResult:
@@ -197,6 +199,28 @@ class BacktestExecutor:
             # Add final execution time if not already set
             if result.execution_time <= 0:
                 result.execution_time = execution_time
+
+            # TASK 3.2.5: Validate ExecutionResult metrics (Phase 3.2 - SV-2.4, SV-2.6)
+            # Only validate successful executions; failed executions may have incomplete metrics
+            if result.success:
+                validation_errors = validate_execution_result(result)
+
+                if validation_errors:
+                    # Metric validation failed - return as failed execution
+                    # Preserve original metrics for debugging while marking as failed
+                    error_details = "; ".join(validation_errors)
+                    return ExecutionResult(
+                        success=False,
+                        error_type="ValidationError",
+                        error_message=f"Metric validation failed: {error_details}",
+                        execution_time=result.execution_time,
+                        # Preserve invalid metrics for debugging
+                        sharpe_ratio=result.sharpe_ratio,
+                        total_return=result.total_return,
+                        max_drawdown=result.max_drawdown,
+                        stack_trace=f"Invalid metrics detected:\n{error_details}"
+                    )
+
             return result
         except Empty:
             # Process completed but no result in queue (unexpected error)

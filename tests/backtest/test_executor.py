@@ -325,11 +325,13 @@ class TestSuccessfulExecutionWithTimeout:
         """Test that quick execution completes before timeout."""
         executor = BacktestExecutor(timeout=5)
 
-        # Create mock sim that returns valid report
-        mock_report = {
-            "sharpe_ratio": 1.5,
+        # Create mock report object with get_stats() method returning valid metrics
+        # Note: max_drawdown must be negative (drawdown is a loss)
+        mock_report = Mock()
+        mock_report.get_stats.return_value = {
+            "daily_sharpe": 1.5,
             "total_return": 0.25,
-            "max_drawdown": 0.10,
+            "max_drawdown": -0.10,  # Negative for drawdown
         }
         mock_sim = Mock(return_value=mock_report)
 
@@ -353,7 +355,7 @@ report = sim(
         assert result.success is True
         assert result.sharpe_ratio == 1.5
         assert result.total_return == 0.25
-        assert result.max_drawdown == 0.10
+        assert result.max_drawdown == -0.10
         assert result.execution_time > 0
         assert result.execution_time < 2.0  # Should be very quick
 
@@ -361,7 +363,13 @@ report = sim(
         """Test execution with sleep completes successfully."""
         executor = BacktestExecutor(timeout=5)
 
-        mock_report = {"sharpe_ratio": 2.0, "total_return": 0.5, "max_drawdown": 0.05}
+        # Create mock report object with get_stats() method returning valid metrics
+        mock_report = Mock()
+        mock_report.get_stats.return_value = {
+            "daily_sharpe": 2.0,
+            "total_return": 0.5,
+            "max_drawdown": -0.05,  # Negative for drawdown
+        }
         mock_sim = Mock(return_value=mock_report)
 
         strategy_code = """
