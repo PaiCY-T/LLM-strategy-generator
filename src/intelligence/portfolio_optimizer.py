@@ -99,10 +99,11 @@ class PortfolioOptimizer:
         asset_names = returns.columns.tolist()
 
         # Calculate covariance matrix
-        cov_matrix = returns.cov().values
+        cov_matrix_original = returns.cov().values
 
-        # Add regularization for numerical stability (handle singular matrices)
-        cov_matrix += np.eye(n_assets) * 1e-8
+        # Add minimal regularization for numerical stability (handle singular matrices)
+        regularization = 1e-10 * np.trace(cov_matrix_original) / n_assets
+        cov_matrix = cov_matrix_original + np.eye(n_assets) * regularization
 
         def objective(weights: np.ndarray) -> float:
             """
@@ -113,6 +114,10 @@ class PortfolioOptimizer:
             # Portfolio variance
             portfolio_var = weights @ cov_matrix @ weights
 
+            # Avoid division by zero
+            if portfolio_var < 1e-10:
+                return 1e10
+
             # Marginal contribution to risk for each asset
             marginal_contrib = cov_matrix @ weights
 
@@ -122,8 +127,8 @@ class PortfolioOptimizer:
             # Target risk contribution (equal split)
             target_rc = portfolio_var / n_assets
 
-            # Sum of squared deviations
-            deviations = risk_contrib - target_rc
+            # Sum of squared deviations (normalized)
+            deviations = (risk_contrib - target_rc) / (target_rc + 1e-10)
             return np.sum(deviations ** 2)
 
         # Constraints: weights sum to 1
@@ -134,13 +139,19 @@ class PortfolioOptimizer:
         # Bounds: each weight in [min_weight, max_weight]
         bounds = [(self.min_weight, self.max_weight)] * n_assets
 
-        # Initial guess: equal weights
-        x0 = np.array([1.0 / n_assets] * n_assets)
+        # Initial guess: inverse volatility weights (better than equal weights)
+        volatilities = np.sqrt(np.diag(cov_matrix))
+        inv_vol = 1.0 / (volatilities + 1e-10)
+        x0 = inv_vol / np.sum(inv_vol)
+
+        # Ensure initial guess satisfies bounds
+        x0 = np.clip(x0, self.min_weight, self.max_weight)
+        x0 = x0 / np.sum(x0)  # Renormalize
 
         # Check if constraints are feasible
         if n_assets * self.min_weight > 1.0:
             # Infeasible: fallback to equal weights
-            optimal_weights = x0
+            optimal_weights = np.array([1.0 / n_assets] * n_assets)
             success = False
         else:
             # Optimize using SLSQP
@@ -150,7 +161,7 @@ class PortfolioOptimizer:
                 method='SLSQP',
                 constraints=constraints,
                 bounds=bounds,
-                options={'maxiter': 1000, 'ftol': 1e-9}
+                options={'maxiter': 1000, 'ftol': 1e-12}
             )
 
             if result.success:
@@ -158,28 +169,28 @@ class PortfolioOptimizer:
                 success = True
             else:
                 # Fallback to equal weights on failure
-                optimal_weights = x0
+                optimal_weights = np.array([1.0 / n_assets] * n_assets)
                 success = False
 
         # Normalize weights to ensure they sum exactly to 1.0
         optimal_weights = optimal_weights / np.sum(optimal_weights)
 
-        # Calculate portfolio metrics
+        # Calculate portfolio metrics using ORIGINAL covariance (without regularization)
         weights_dict = dict(zip(asset_names, optimal_weights))
 
         # Expected return (annualized)
         mean_returns = returns.mean().values
         expected_return = (optimal_weights @ mean_returns) * 252
 
-        # Volatility (annualized)
-        daily_var = optimal_weights @ cov_matrix @ optimal_weights
+        # Volatility (annualized) - use original cov matrix
+        daily_var = optimal_weights @ cov_matrix_original @ optimal_weights
         volatility = np.sqrt(daily_var) * np.sqrt(252)
 
         # Sharpe ratio
         sharpe_ratio = expected_return / volatility if volatility > 0 else 0.0
 
-        # Risk contributions
-        marginal_contrib = cov_matrix @ optimal_weights
+        # Risk contributions - use original cov matrix
+        marginal_contrib = cov_matrix_original @ optimal_weights
         risk_contrib = optimal_weights * marginal_contrib
         risk_contrib_dict = dict(zip(asset_names, risk_contrib))
 
