@@ -9,8 +9,9 @@ Complete implementation to make all tests pass.
 """
 
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, Any
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from scipy.optimize import minimize
 
@@ -105,7 +106,7 @@ class PortfolioOptimizer:
         regularization = 1e-10 * np.trace(cov_matrix_original) / n_assets
         cov_matrix = cov_matrix_original + np.eye(n_assets) * regularization
 
-        def objective(weights: np.ndarray) -> float:
+        def objective(weights: npt.NDArray[np.floating[Any]]) -> float:
             """
             Objective function: sum of squared deviations from equal risk contribution.
 
@@ -129,7 +130,7 @@ class PortfolioOptimizer:
 
             # Sum of squared deviations (normalized)
             deviations = (risk_contrib - target_rc) / (target_rc + 1e-10)
-            return np.sum(deviations ** 2)
+            return float(np.sum(deviations ** 2))
 
         # Constraints: weights sum to 1
         constraints = [
