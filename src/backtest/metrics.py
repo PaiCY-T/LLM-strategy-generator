@@ -7,7 +7,7 @@ built-in metrics functions and pandas operations.
 
 import logging
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -162,7 +162,7 @@ class StrategyMetrics:
         """
         return hasattr(self, key)
 
-    def keys(self) -> list:
+    def keys(self) -> List[str]:
         """Dict-like keys() method for iteration compatibility.
 
         Returns list of all metric attribute names, matching dict.keys()
@@ -180,14 +180,14 @@ class StrategyMetrics:
         return ['sharpe_ratio', 'total_return', 'max_drawdown',
                 'win_rate', 'execution_success']
 
-    def values(self) -> list:
+    def values(self) -> List[Any]:
         """Dict-like values() method for iteration compatibility.
 
         Returns list of all metric values in the same order as keys(),
         matching dict.values() behavior for code that iterates over values.
 
         Returns:
-            List of metric values
+            List of metric values (Optional[float] or bool)
 
         Examples:
             >>> metrics = StrategyMetrics(sharpe_ratio=1.5, total_return=0.25)
@@ -198,14 +198,14 @@ class StrategyMetrics:
         return [self.sharpe_ratio, self.total_return, self.max_drawdown,
                 self.win_rate, self.execution_success]
 
-    def items(self) -> list:
+    def items(self) -> List[Tuple[str, Any]]:
         """Dict-like items() method for iteration compatibility.
 
         Returns list of (key, value) tuples for all metrics, matching
         dict.items() behavior for code that iterates over key-value pairs.
 
         Returns:
-            List of (key, value) tuples
+            List of (key, value) tuples where value is Optional[float] or bool
 
         Examples:
             >>> metrics = StrategyMetrics(sharpe_ratio=1.5)
