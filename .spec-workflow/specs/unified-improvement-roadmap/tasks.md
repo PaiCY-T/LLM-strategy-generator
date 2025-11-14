@@ -175,8 +175,9 @@
             - Run tests: expect ALL to fail (RED phase)
         - *Requirements*: P1.1 acceptance criteria
         - *Estimate*: 2h
+        - *COMPLETED*: ✅ 12/12 tests created, all failed as expected
 
-    - [ ] P1.1.2. GREEN: Implement RegimeDetector
+    - [x] P1.1.2. GREEN: Implement RegimeDetector
         - *Goal*: Make all regime detection tests pass
         - *Details*:
             - Create `src/intelligence/regime_detector.py`
@@ -188,6 +189,7 @@
             - Run tests: expect ALL to pass (GREEN phase)
         - *Requirements*: P1.1 acceptance criteria
         - *Estimate*: 3-4h
+        - *COMPLETED*: ✅ 12/12 tests passed, 0% error rate
 
     - [ ] P1.1.3. Integration test: Regime-aware strategy selection
         - *Goal*: Verify regime detector integrates with strategy selection
