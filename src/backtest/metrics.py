@@ -88,6 +88,149 @@ class StrategyMetrics:
             'execution_success': self.execution_success
         }
 
+    def get(self, key: str, default: Any = None) -> Any:
+        """Dict-like get() method for backward compatibility.
+
+        Allows StrategyMetrics to be accessed like a dictionary while
+        maintaining dataclass type safety benefits. Enables legacy code
+        patterns like metrics.get('sharpe_ratio', 0) to work seamlessly.
+
+        Special behavior: Returns default if attribute value is None,
+        which is useful for empty metrics in comparison logic.
+
+        Args:
+            key: Metric attribute name ('sharpe_ratio', 'max_drawdown',
+                 'win_rate', 'total_return', 'execution_success')
+            default: Value to return if attribute not found or is None
+
+        Returns:
+            Attribute value if found and not None, otherwise default value
+
+        Examples:
+            >>> metrics = StrategyMetrics(sharpe_ratio=1.5)
+            >>> metrics.get('sharpe_ratio', 0)
+            1.5
+            >>> metrics = StrategyMetrics()  # All None
+            >>> metrics.get('sharpe_ratio', 0)
+            0
+        """
+        value = getattr(self, key, default)
+        # Return default if value is None (for empty metrics)
+        return value if value is not None else default
+
+    def __getitem__(self, key: str) -> Any:
+        """Dict-like bracket access for backward compatibility.
+
+        Enables metrics['sharpe_ratio'] syntax for legacy code that
+        expects dictionary-style access patterns.
+
+        Args:
+            key: Metric attribute name
+
+        Returns:
+            Attribute value
+
+        Raises:
+            KeyError: If attribute does not exist
+
+        Examples:
+            >>> metrics = StrategyMetrics(sharpe_ratio=1.5)
+            >>> metrics['sharpe_ratio']
+            1.5
+        """
+        try:
+            return getattr(self, key)
+        except AttributeError:
+            raise KeyError(f"Metric '{key}' not found")
+
+    def __contains__(self, key: str) -> bool:
+        """Dict-like 'in' operator for backward compatibility.
+
+        Enables 'sharpe_ratio' in metrics syntax for checking if
+        a metric attribute exists.
+
+        Args:
+            key: Metric attribute name
+
+        Returns:
+            True if attribute exists, False otherwise
+
+        Examples:
+            >>> metrics = StrategyMetrics(sharpe_ratio=1.5)
+            >>> 'sharpe_ratio' in metrics
+            True
+        """
+        return hasattr(self, key)
+
+    def keys(self) -> list:
+        """Dict-like keys() method for iteration compatibility.
+
+        Returns list of all metric attribute names, matching dict.keys()
+        behavior for code that iterates over metrics.
+
+        Returns:
+            List of metric attribute names
+
+        Examples:
+            >>> metrics = StrategyMetrics(sharpe_ratio=1.5)
+            >>> metrics.keys()
+            ['sharpe_ratio', 'total_return', 'max_drawdown',
+             'win_rate', 'execution_success']
+        """
+        return ['sharpe_ratio', 'total_return', 'max_drawdown',
+                'win_rate', 'execution_success']
+
+    def values(self) -> list:
+        """Dict-like values() method for iteration compatibility.
+
+        Returns list of all metric values in the same order as keys(),
+        matching dict.values() behavior for code that iterates over values.
+
+        Returns:
+            List of metric values
+
+        Examples:
+            >>> metrics = StrategyMetrics(sharpe_ratio=1.5, total_return=0.25)
+            >>> values = list(metrics.values())
+            >>> 1.5 in values
+            True
+        """
+        return [self.sharpe_ratio, self.total_return, self.max_drawdown,
+                self.win_rate, self.execution_success]
+
+    def items(self) -> list:
+        """Dict-like items() method for iteration compatibility.
+
+        Returns list of (key, value) tuples for all metrics, matching
+        dict.items() behavior for code that iterates over key-value pairs.
+
+        Returns:
+            List of (key, value) tuples
+
+        Examples:
+            >>> metrics = StrategyMetrics(sharpe_ratio=1.5)
+            >>> items = list(metrics.items())
+            >>> ('sharpe_ratio', 1.5) in items
+            True
+        """
+        return [(key, getattr(self, key)) for key in self.keys()]
+
+    def __len__(self) -> int:
+        """Dict-like len() method for compatibility.
+
+        Returns the number of metric fields (always 5), matching dict
+        behavior for code that checks metric count.
+
+        Returns:
+            Number of metric fields (5)
+
+        Examples:
+            >>> metrics = StrategyMetrics(sharpe_ratio=1.5)
+            >>> len(metrics)
+            5
+        """
+        return len(self.keys())
+
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'StrategyMetrics':
         """Create StrategyMetrics from dictionary format.
