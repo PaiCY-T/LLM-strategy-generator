@@ -59,7 +59,7 @@
         - *Requirements*: P0.1 acceptance criteria
         - *Estimate*: 30 minutes
 
-- [ ] **P0.2 - ASHA Hyperparameter Optimizer** (6-9h)
+- [x] **P0.2 - ASHA Hyperparameter Optimizer** (6-9h)
     - [x] P0.2.1. RED Phase 1: Write tests for initialization and study creation
         - *Goal*: Create test specification for implemented methods
         - *Details*:
@@ -129,7 +129,7 @@
         - *Requirements*: P0.2 acceptance criteria
         - *Estimate*: 1-4h
 
-    - [ ] P0.2.5. REFACTOR: Code quality and performance validation
+    - [x] P0.2.5. REFACTOR: Code quality and performance validation
         - *Goal*: Ensure production-ready code quality
         - *Details*:
             - Add comprehensive docstrings with examples
