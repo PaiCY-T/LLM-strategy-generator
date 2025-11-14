@@ -191,7 +191,7 @@
         - *Estimate*: 3-4h
         - *COMPLETED*: ✅ 12/12 tests passed, 0% error rate
 
-    - [ ] P1.1.3. Integration test: Regime-aware strategy selection
+    - [x] P1.1.3. Integration test: Regime-aware strategy selection
         - *Goal*: Verify regime detector integrates with strategy selection
         - *Details*:
             - Create `tests/integration/test_regime_aware.py`
@@ -200,6 +200,7 @@
             - Use historical data from 2020-2024
         - *Requirements*: P1.1 acceptance criteria, Gate 2
         - *Estimate*: 2h
+        - *COMPLETED*: ✅ 4/4 integration tests passed, regime-aware demonstrates defensive value
 
     - [ ] P1.1.4. REFACTOR: Code quality
         - *Goal*: Production-ready regime detection
