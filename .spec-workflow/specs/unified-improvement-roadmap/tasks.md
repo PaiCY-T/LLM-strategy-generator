@@ -77,7 +77,7 @@
         - *Requirements*: P0.2 acceptance criteria
         - *Estimate*: 2h
 
-    - [ ] P0.2.2. GREEN Phase 1: Implement optimize() and get_search_stats()
+    - [x] P0.2.2. GREEN Phase 1: Implement optimize() and get_search_stats()
         - *Goal*: Complete NotImplementedError methods to pass Phase 1 tests
         - *Details*:
             - Edit `src/learning/optimizer.py`
@@ -96,7 +96,7 @@
         - *Requirements*: P0.2 acceptance criteria
         - *Estimate*: 2-3h
 
-    - [ ] P0.2.3. RED Phase 2: Write tests for optimization behavior
+    - [x] P0.2.3. RED Phase 2: Write tests for optimization behavior
         - *Goal*: Create comprehensive test specification for optimization logic
         - *Details*:
             - Add 10 additional tests to `test_asha_optimizer.py`:
@@ -115,7 +115,7 @@
         - *Requirements*: P0.2 acceptance criteria
         - *Estimate*: 1h
 
-    - [ ] P0.2.4. GREEN Phase 2: Complete optimization implementation
+    - [x] P0.2.4. GREEN Phase 2: Complete optimization implementation
         - *Goal*: Full ASHA optimizer implementation passing all tests
         - *Details*:
             - Refine `optimize()` implementation:
