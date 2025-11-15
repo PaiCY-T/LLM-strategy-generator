@@ -23,11 +23,11 @@ class TestPurgedWalkForwardCV:
     @pytest.fixture
     def sample_data(self):
         """Create sample time-series data for testing."""
-        # Create 3 years of daily trading data (756 trading days)
-        dates = pd.date_range('2020-01-01', periods=756, freq='B')  # Business days
+        # Create 3+ years of daily trading data (1000 trading days for flexibility)
+        dates = pd.date_range('2020-01-01', periods=1000, freq='B')  # Business days
         data = pd.DataFrame({
-            'price': np.random.randn(756).cumsum() + 100,
-            'volume': np.random.randint(1000, 10000, 756)
+            'price': np.random.randn(1000).cumsum() + 100,
+            'volume': np.random.randint(1000, 10000, 1000)
         }, index=dates)
         return data
 
@@ -405,7 +405,7 @@ class TestPurgedWalkForwardCV:
 
     def test_realistic_3year_backtest_scenario(self, sample_data):
         """
-        GIVEN 3 years of data (756 trading days)
+        GIVEN sufficient trading data (1000 trading days)
         WHEN using realistic parameters (1 year test, 2 year min train, 21 day purge)
         THEN generates valid splits
         """
