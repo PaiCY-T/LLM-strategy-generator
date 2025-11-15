@@ -13,10 +13,11 @@ References:
       Problems of Integrated System Identification and System Optimization
 """
 
-from typing import List, Optional
+from typing import List, Optional, Callable
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
-from scipy.optimize import minimize
+from scipy.optimize import minimize, OptimizeResult
 
 from .portfolio_optimizer import PortfolioWeights
 
@@ -85,7 +86,7 @@ class EpsilonConstraintOptimizer:
     def optimize(
         self,
         returns: pd.DataFrame,
-        epsilon_values: np.ndarray,
+        epsilon_values: npt.NDArray[np.float64],
         risk_metric: str = 'volatility'
     ) -> List[PortfolioWeights]:
         """Generate Pareto frontier using epsilon-constraint method.
@@ -128,8 +129,8 @@ class EpsilonConstraintOptimizer:
 
         # Calculate statistics
         n_assets = len(returns.columns)
-        mean_returns = returns.mean().values
-        cov_matrix = returns.cov().values
+        mean_returns: npt.NDArray[np.float64] = np.array(returns.mean().values, dtype=np.float64)
+        cov_matrix: npt.NDArray[np.float64] = np.array(returns.cov().values, dtype=np.float64)
 
         # Add regularization for numerical stability
         cov_matrix += np.eye(n_assets) * 1e-8
@@ -137,17 +138,17 @@ class EpsilonConstraintOptimizer:
         # Calculate minimum number of active assets
         min_active_assets = int(np.ceil(n_assets * self.diversity_threshold))
 
-        pareto_frontier = []
-        previous_weights = None
+        pareto_frontier: List[PortfolioWeights] = []
+        previous_weights: Optional[npt.NDArray[np.float64]] = None
 
         # Iterate through epsilon values in sorted order
         for epsilon in sorted(epsilon_values):
             # Objective: maximize return (minimize negative return)
-            def objective(w):
-                return -(w @ mean_returns)
+            def objective(w: npt.NDArray[np.float64]) -> float:
+                return float(-(w @ mean_returns))
 
             # Risk constraint
-            def risk_constraint(w):
+            def risk_constraint(w: npt.NDArray[np.float64]) -> float:
                 if risk_metric == 'volatility':
                     # Annualized volatility
                     risk = np.sqrt(w @ cov_matrix @ w) * np.sqrt(252)
@@ -158,12 +159,12 @@ class EpsilonConstraintOptimizer:
                 else:
                     raise NotImplementedError(f"Risk metric '{risk_metric}' not implemented")
 
-                return epsilon - risk  # Must be ≥ 0
+                return float(epsilon - risk)  # Must be ≥ 0
 
             # Diversity constraint: at least min_active_assets with weight > threshold
-            def diversity_constraint(w):
+            def diversity_constraint(w: npt.NDArray[np.float64]) -> float:
                 active_count = np.sum(w > 1e-4)
-                return active_count - min_active_assets  # Must be ≥ 0
+                return float(active_count - min_active_assets)  # Must be ≥ 0
 
             # Define constraints
             constraints = [
@@ -176,10 +177,10 @@ class EpsilonConstraintOptimizer:
             bounds = [(self.min_weight, self.max_weight)] * n_assets
 
             # Try multiple initial guesses to improve convergence
-            best_result = None
+            best_result: Optional[OptimizeResult] = None
 
             # Initial guess 1: equal weights
-            x0_options = [np.array([1.0 / n_assets] * n_assets)]
+            x0_options: List[npt.NDArray[np.float64]] = [np.array([1.0 / n_assets] * n_assets)]
 
             # Initial guess 2: previous solution (if available)
             if previous_weights is not None:
