@@ -110,14 +110,15 @@ class PortfolioOptimizer:
             """
             Objective function: sum of squared deviations from equal risk contribution.
 
-            The optimal ERC portfolio minimizes the variance of risk contributions.
+            Uses numerically stable normalization by mean portfolio risk
+            instead of target risk per asset, avoiding division by small numbers.
             """
             # Portfolio variance
             portfolio_var = weights @ cov_matrix @ weights
 
-            # Avoid division by zero
-            if portfolio_var < 1e-10:
-                return 1e10
+            # Avoid division by zero or negative variance
+            if portfolio_var < 1e-12:
+                return 1e12
 
             # Marginal contribution to risk for each asset
             marginal_contrib = cov_matrix @ weights
@@ -128,8 +129,14 @@ class PortfolioOptimizer:
             # Target risk contribution (equal split)
             target_rc = portfolio_var / n_assets
 
-            # Sum of squared deviations (normalized)
-            deviations = (risk_contrib - target_rc) / (target_rc + 1e-10)
+            # Normalize by mean risk contribution for numerical stability
+            # This is more stable than dividing by potentially small target_rc
+            mean_rc = np.mean(risk_contrib)
+            if mean_rc < 1e-12:
+                return 1e12
+
+            # Sum of squared deviations (normalized by mean instead of target)
+            deviations = (risk_contrib - target_rc) / mean_rc
             return float(np.sum(deviations ** 2))
 
         # Constraints: weights sum to 1
