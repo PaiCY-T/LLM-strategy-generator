@@ -154,7 +154,7 @@
 
 ### P1: Intelligence Layer (24-32h)
 
-- [ ] **P1.1 - Market Regime Detection** (8-10h)
+- [x] **P1.1 - Market Regime Detection** (8-10h)
     - [x] P1.1.1. RED: Write regime detection tests
         - *Goal*: Create test specification for RegimeDetector
         - *Details*:
@@ -202,7 +202,7 @@
         - *Estimate*: 2h
         - *COMPLETED*: ✅ 4/4 integration tests passed, regime-aware demonstrates defensive value
 
-    - [ ] P1.1.4. REFACTOR: Code quality
+    - [x] P1.1.4. REFACTOR: Code quality
         - *Goal*: Production-ready regime detection
         - *Details*:
             - Add docstrings and examples
@@ -210,6 +210,7 @@
             - Verify tests still pass
         - *Requirements*: P1.1 acceptance criteria
         - *Estimate*: 1h
+        - *COMPLETED*: ✅ mypy --strict passes, comprehensive docstrings with examples, 16/16 tests passing
 
 - [ ] **P1.2 - Portfolio Optimization with ERC** (8-10h)
     - [ ] P1.2.1. RED: Write ERC optimizer tests
