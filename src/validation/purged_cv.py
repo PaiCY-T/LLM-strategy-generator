@@ -6,6 +6,7 @@ in financial time series backtesting through purge gaps.
 
 from typing import Iterator, Tuple
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 
 
@@ -76,7 +77,7 @@ class PurgedWalkForwardCV:
         self.test_size = test_size
         self.min_train_size = min_train_size
 
-    def split(self, data: pd.DataFrame) -> Iterator[Tuple[np.ndarray, np.ndarray]]:
+    def split(self, data: pd.DataFrame) -> Iterator[Tuple[npt.NDArray[np.int_], npt.NDArray[np.int_]]]:
         """Generate train-test splits with purge gap.
 
         Args:
