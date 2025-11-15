@@ -4,12 +4,121 @@ This module provides shared fixtures for end-to-end testing including
 market data, test environments, and validation thresholds.
 """
 
+import os
 from pathlib import Path
 from typing import Dict, Any
 
 import pytest
 import pandas as pd
 import numpy as np
+
+
+# Test data constants
+N_DAYS = 756  # 3 years of trading days (252 trading days/year)
+N_STOCKS = 100  # Number of stocks in test market data
+
+
+def get_test_api_key() -> str:
+    """Get API key from environment variable or use mock key for CI.
+
+    Returns:
+        API key string - either from TEST_API_KEY env var or mock key
+
+    Note:
+        In production tests, set TEST_API_KEY environment variable.
+        In CI/CD, the mock key is used for fast, isolated testing.
+    """
+    return os.environ.get("TEST_API_KEY", "mock-key-for-ci")
+
+
+def create_test_learning_config(
+    tmpdir: str,
+    max_iterations: int,
+    innovation_rate: int,
+) -> Any:
+    """Create LearningConfig for E2E tests.
+
+    Centralized config factory to reduce code duplication across test files.
+
+    Args:
+        tmpdir: Temporary directory for test artifacts
+        max_iterations: Number of iterations to run
+        innovation_rate: 0-100, LLM vs Factor Graph ratio
+
+    Returns:
+        LearningConfig instance configured for testing
+
+    Note:
+        Imports LearningConfig inside function to avoid circular imports
+        during pytest collection phase.
+    """
+    from src.learning.learning_config import LearningConfig
+    import yaml
+
+    tmpdir_path = Path(tmpdir)
+
+    # Create required directories
+    (tmpdir_path / "artifacts" / "data").mkdir(parents=True, exist_ok=True)
+    (tmpdir_path / "logs").mkdir(parents=True, exist_ok=True)
+
+    # Create minimal config file for AntiChurnManager and LLMClient
+    config_file = tmpdir_path / "test_config.yaml"
+    with open(config_file, 'w') as f:
+        yaml.dump({
+            'anti_churn': {
+                'min_improvement_pct': 2.0,
+                'probation_iterations': 3,
+                'probation_multiplier': 1.5
+            },
+            'llm': {
+                'enabled': True,
+                'provider': 'openrouter',
+                'model': 'gemini-2.5-flash',
+                'api_key': 'test-key',
+                'timeout': 30,
+                'max_tokens': 2000,
+                'temperature': 0.7,
+                'innovation_rate': innovation_rate / 100.0  # Convert 0-100 to 0.0-1.0
+            }
+        }, f)
+
+    return LearningConfig(
+        # Loop control
+        max_iterations=max_iterations,
+        continue_on_error=False,
+
+        # LLM config
+        llm_model="gemini-2.5-flash",
+        api_key=get_test_api_key(),
+        llm_timeout=30,
+        llm_temperature=0.7,
+        llm_max_tokens=2000,
+
+        # Innovation
+        innovation_mode=True,
+        innovation_rate=innovation_rate,
+        llm_retry_count=1,  # Minimal retries for speed
+
+        # Backtest
+        timeout_seconds=60,  # Short timeout for tests
+        start_date="2020-01-01",
+        end_date="2022-12-31",
+        fee_ratio=0.001425,
+        tax_ratio=0.003,
+        resample="M",
+
+        # Files
+        history_file=str(tmpdir_path / "artifacts" / "data" / "innovations.jsonl"),
+        history_window=3,
+        champion_file=str(tmpdir_path / "artifacts" / "data" / "champion.json"),
+        log_dir=str(tmpdir_path / "logs"),
+        config_file=str(config_file),
+
+        # Logging
+        log_level="ERROR",  # Reduce noise in tests
+        log_to_file=False,
+        log_to_console=False,
+    )
 
 
 @pytest.fixture
@@ -34,9 +143,9 @@ def market_data() -> pd.DataFrame:
     """
     np.random.seed(42)  # Reproducible test data
 
-    # 3 years of daily data (252 trading days/year)
-    n_days = 756
-    n_stocks = 100
+    # Use module constants for test data dimensions
+    n_days = N_DAYS
+    n_stocks = N_STOCKS
 
     # Generate correlated returns using factor model
     # Common market factor (strength: 0.5)

@@ -32,6 +32,7 @@ from dataclasses import dataclass
 from src.learning.learning_loop import LearningLoop
 from src.learning.learning_config import LearningConfig
 from src.intelligence.regime_detector import RegimeDetector, MarketRegime
+from tests.e2e.conftest import get_test_api_key, create_test_learning_config
 
 
 @dataclass
@@ -56,57 +57,23 @@ class TestEvolutionWorkflowPerformance:
         innovation_rate: int,
         test_environment: Dict[str, Any]
     ) -> LearningConfig:
-        """Create optimized configuration for performance testing."""
-        tmpdir_path = Path(tmpdir)
-        (tmpdir_path / "artifacts" / "data").mkdir(parents=True, exist_ok=True)
-        (tmpdir_path / "logs").mkdir(parents=True, exist_ok=True)
+        """Create optimized configuration for performance testing.
 
-        config_file = tmpdir_path / "test_config.yaml"
-        import yaml
-        with open(config_file, 'w') as f:
-            yaml.dump({
-                'anti_churn': {
-                    'min_improvement_pct': 2.0,
-                    'probation_iterations': 3,
-                    'probation_multiplier': 1.5
-                },
-                'llm': {
-                    'enabled': True,
-                    'provider': 'openrouter',
-                    'model': 'gemini-2.5-flash',
-                    'api_key': 'test-key',
-                    'timeout': 30,
-                    'max_tokens': 2000,
-                    'temperature': 0.7,
-                    'innovation_rate': innovation_rate / 100.0
-                }
-            }, f)
+        Delegates to shared config factory in conftest.py to reduce code duplication.
 
-        return LearningConfig(
+        Args:
+            tmpdir: Temporary directory for test artifacts
+            max_iterations: Number of iterations to run
+            innovation_rate: 0-100, LLM vs Factor Graph ratio
+            test_environment: Test environment fixture (unused, kept for API compatibility)
+
+        Returns:
+            LearningConfig instance configured for testing
+        """
+        return create_test_learning_config(
+            tmpdir=tmpdir,
             max_iterations=max_iterations,
-            continue_on_error=False,
-            llm_model="gemini-2.5-flash",
-            api_key="test-api-key",
-            llm_timeout=30,
-            llm_temperature=0.7,
-            llm_max_tokens=2000,
-            innovation_mode=True,
-            innovation_rate=innovation_rate,
-            llm_retry_count=1,
-            timeout_seconds=60,
-            start_date="2020-01-01",
-            end_date="2022-12-31",
-            fee_ratio=0.001425,
-            tax_ratio=0.003,
-            resample="M",
-            history_file=str(tmpdir_path / "artifacts" / "data" / "innovations.jsonl"),
-            history_window=3,
-            champion_file=str(tmpdir_path / "artifacts" / "data" / "champion.json"),
-            log_dir=str(tmpdir_path / "logs"),
-            config_file=str(config_file),
-            log_level="ERROR",
-            log_to_file=False,
-            log_to_console=False,
+            innovation_rate=innovation_rate
         )
 
     def _generate_fast_mock_strategy(self) -> str:
@@ -271,7 +238,12 @@ def strategy(data):
 
         TDD RED: This test will fail if there are memory leaks or inefficiencies.
         """
-        # Arrange: Force garbage collection before measurement
+        # Arrange: Force garbage collection before measurement to improve isolation
+        # Note: gc.collect() helps but doesn't guarantee perfect isolation because:
+        # 1. Python's memory allocator may not release memory to OS immediately
+        # 2. RSS (Resident Set Size) includes shared memory pages
+        # 3. Other threads/processes may affect memory measurements
+        # This is a best-effort measurement for detecting significant leaks
         gc.collect()
         process = psutil.Process()
         mem_before_mb = process.memory_info().rss / 1024 / 1024
@@ -311,6 +283,8 @@ def strategy(data):
                     loop = LearningLoop(config)
                     loop.run()
 
+                    # Force garbage collection after test to measure actual retained memory
+                    # This helps isolate test-specific memory from Python's memory pool
                     gc.collect()
                     mem_after_mb = process.memory_info().rss / 1024 / 1024
                     memory_delta_mb = mem_after_mb - mem_before_mb
@@ -526,57 +500,23 @@ class TestComprehensiveWorkflowPerformance:
         innovation_rate: int,
         test_environment: Dict[str, Any]
     ) -> LearningConfig:
-        """Create optimized configuration for performance testing."""
-        tmpdir_path = Path(tmpdir)
-        (tmpdir_path / "artifacts" / "data").mkdir(parents=True, exist_ok=True)
-        (tmpdir_path / "logs").mkdir(parents=True, exist_ok=True)
+        """Create optimized configuration for performance testing.
 
-        config_file = tmpdir_path / "test_config.yaml"
-        import yaml
-        with open(config_file, 'w') as f:
-            yaml.dump({
-                'anti_churn': {
-                    'min_improvement_pct': 2.0,
-                    'probation_iterations': 3,
-                    'probation_multiplier': 1.5
-                },
-                'llm': {
-                    'enabled': True,
-                    'provider': 'openrouter',
-                    'model': 'gemini-2.5-flash',
-                    'api_key': 'test-key',
-                    'timeout': 30,
-                    'max_tokens': 2000,
-                    'temperature': 0.7,
-                    'innovation_rate': innovation_rate / 100.0
-                }
-            }, f)
+        Delegates to shared config factory in conftest.py to reduce code duplication.
 
-        return LearningConfig(
+        Args:
+            tmpdir: Temporary directory for test artifacts
+            max_iterations: Number of iterations to run
+            innovation_rate: 0-100, LLM vs Factor Graph ratio
+            test_environment: Test environment fixture (unused, kept for API compatibility)
+
+        Returns:
+            LearningConfig instance configured for testing
+        """
+        return create_test_learning_config(
+            tmpdir=tmpdir,
             max_iterations=max_iterations,
-            continue_on_error=False,
-            llm_model="gemini-2.5-flash",
-            api_key="test-api-key",
-            llm_timeout=30,
-            llm_temperature=0.7,
-            llm_max_tokens=2000,
-            innovation_mode=True,
-            innovation_rate=innovation_rate,
-            llm_retry_count=1,
-            timeout_seconds=60,
-            start_date="2020-01-01",
-            end_date="2022-12-31",
-            fee_ratio=0.001425,
-            tax_ratio=0.003,
-            resample="M",
-            history_file=str(tmpdir_path / "artifacts" / "data" / "innovations.jsonl"),
-            history_window=3,
-            champion_file=str(tmpdir_path / "artifacts" / "data" / "champion.json"),
-            log_dir=str(tmpdir_path / "logs"),
-            config_file=str(config_file),
-            log_level="ERROR",
-            log_to_file=False,
-            log_to_console=False,
+            innovation_rate=innovation_rate
         )
 
     def _generate_fast_mock_strategy(self) -> str:

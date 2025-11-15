@@ -8,6 +8,8 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
+from tests.e2e.conftest import N_DAYS, N_STOCKS
+
 
 @pytest.mark.e2e
 class TestE2EInfrastructure:
@@ -26,12 +28,12 @@ class TestE2EInfrastructure:
         assert isinstance(market_data.index, pd.DatetimeIndex), \
             "Index should be DatetimeIndex"
 
-        # Verify we have ~3 years of data (756 trading days)
-        assert len(market_data) == 756, f"Expected 756 rows, got {len(market_data)}"
+        # Verify we have ~3 years of data (N_DAYS trading days)
+        assert len(market_data) == N_DAYS, f"Expected {N_DAYS} rows, got {len(market_data)}"
 
-        # Verify we have multiple stocks (100 stocks × 3 columns each = 300 columns)
+        # Verify we have multiple stocks (N_STOCKS × 3 columns each)
         # (price, volume, returns for each stock)
-        expected_cols = 100 * 3
+        expected_cols = N_STOCKS * 3
         assert len(market_data.columns) == expected_cols, \
             f"Expected {expected_cols} columns, got {len(market_data.columns)}"
 

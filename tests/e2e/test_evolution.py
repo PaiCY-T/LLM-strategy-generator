@@ -13,10 +13,11 @@ import tempfile
 import sys
 from pathlib import Path
 from unittest.mock import Mock, patch, MagicMock
-from typing import Dict, Any
+from typing import Dict, Any, Iterator
 
 from src.learning.learning_loop import LearningLoop
 from src.learning.learning_config import LearningConfig
+from tests.e2e.conftest import get_test_api_key, create_test_learning_config
 
 
 @pytest.mark.e2e
@@ -414,79 +415,21 @@ class TestStrategyEvolution:
     ) -> LearningConfig:
         """Create test configuration for evolution.
 
+        Delegates to shared config factory in conftest.py to reduce code duplication.
+
         Args:
             tmpdir: Temporary directory for test artifacts
             max_iterations: Number of iterations to run
             innovation_rate: 0-100, LLM vs Factor Graph ratio
-            test_environment: Test environment fixture
+            test_environment: Test environment fixture (unused, kept for API compatibility)
 
         Returns:
             LearningConfig instance configured for testing
         """
-        tmpdir_path = Path(tmpdir)
-
-        # Create required directories
-        (tmpdir_path / "artifacts" / "data").mkdir(parents=True, exist_ok=True)
-        (tmpdir_path / "logs").mkdir(parents=True, exist_ok=True)
-
-        # Create minimal config file for AntiChurnManager and LLMClient
-        config_file = tmpdir_path / "test_config.yaml"
-        import yaml
-        with open(config_file, 'w') as f:
-            yaml.dump({
-                'anti_churn': {
-                    'min_improvement_pct': 2.0,
-                    'probation_iterations': 3,
-                    'probation_multiplier': 1.5
-                },
-                'llm': {
-                    'enabled': True,
-                    'provider': 'openrouter',
-                    'model': 'gemini-2.5-flash',
-                    'api_key': 'test-key',
-                    'timeout': 30,
-                    'max_tokens': 2000,
-                    'temperature': 0.7,
-                    'innovation_rate': innovation_rate / 100.0  # Convert 0-100 to 0.0-1.0
-                }
-            }, f)
-
-        return LearningConfig(
-            # Loop control
+        return create_test_learning_config(
+            tmpdir=tmpdir,
             max_iterations=max_iterations,
-            continue_on_error=False,
-
-            # LLM config
-            llm_model="gemini-2.5-flash",
-            api_key="test-api-key",
-            llm_timeout=30,
-            llm_temperature=0.7,
-            llm_max_tokens=2000,
-
-            # Innovation
-            innovation_mode=True,
-            innovation_rate=innovation_rate,
-            llm_retry_count=1,  # Minimal retries for speed
-
-            # Backtest
-            timeout_seconds=60,  # Short timeout for tests
-            start_date="2020-01-01",
-            end_date="2022-12-31",
-            fee_ratio=0.001425,
-            tax_ratio=0.003,
-            resample="M",
-
-            # Files
-            history_file=str(tmpdir_path / "artifacts" / "data" / "innovations.jsonl"),
-            history_window=3,
-            champion_file=str(tmpdir_path / "artifacts" / "data" / "champion.json"),
-            log_dir=str(tmpdir_path / "logs"),
-            config_file=str(config_file),
-
-            # Logging
-            log_level="ERROR",  # Reduce noise in tests
-            log_to_file=False,
-            log_to_console=False,
+            innovation_rate=innovation_rate
         )
 
     def _setup_mock_innovation_engine(self, MockInnovationEngine, custom_generator=None):
@@ -498,26 +441,46 @@ class TestStrategyEvolution:
 
         Returns:
             Configured mock engine instance
+
+        Raises:
+            RuntimeError: If mock setup fails due to invalid configuration
         """
-        mock_engine = Mock()
-        # Use a list to cycle through strategies
-        strategies = list(self._generate_mock_strategy_sequence())
-        call_count = [0]
+        try:
+            mock_engine = Mock()
+            # Use a list to cycle through strategies
+            strategies = list(self._generate_mock_strategy_sequence())
 
-        if custom_generator:
-            mock_engine.generate_innovation.side_effect = custom_generator
-        else:
-            def get_next_strategy(*args, **kwargs):
-                strategy = strategies[call_count[0] % len(strategies)]
-                call_count[0] += 1
-                return strategy
+            if not strategies:
+                raise ValueError("No mock strategies generated - check _generate_mock_strategy_sequence()")
 
-            mock_engine.generate_innovation.side_effect = get_next_strategy
+            call_count = [0]
 
-        MockInnovationEngine.return_value = mock_engine
-        return mock_engine
+            if custom_generator:
+                mock_engine.generate_innovation.side_effect = custom_generator
+            else:
+                def get_next_strategy(*args, **kwargs):
+                    try:
+                        strategy = strategies[call_count[0] % len(strategies)]
+                        call_count[0] += 1
+                        return strategy
+                    except Exception as e:
+                        raise RuntimeError(
+                            f"Failed to generate strategy (call #{call_count[0]}): {e}"
+                        ) from e
 
-    def _generate_mock_strategy_sequence(self):
+                mock_engine.generate_innovation.side_effect = get_next_strategy
+
+            MockInnovationEngine.return_value = mock_engine
+            return mock_engine
+
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to setup mock InnovationEngine: {e}. "
+                "Check that MockInnovationEngine is a valid Mock object and "
+                "_generate_mock_strategy_sequence() returns valid strategies."
+            ) from e
+
+    def _generate_mock_strategy_sequence(self) -> Iterator[str]:
         """Generate sequence of mock strategies with improving performance.
 
         Yields:
