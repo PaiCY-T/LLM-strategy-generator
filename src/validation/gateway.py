@@ -53,7 +53,7 @@ Requirements:
 - NFR-P1: Layer 2 validation completes in <5ms (Task 3.2)
 """
 
-from typing import Optional
+from typing import Optional, Callable, Tuple
 
 from src.config.feature_flags import FeatureFlagManager
 from src.config.data_fields import DataFieldManifest
@@ -314,3 +314,137 @@ class ValidationGateway:
         # No validation layers enabled - return valid result (graceful degradation)
         # This ensures backward compatibility when Layer 2 is disabled
         return ValidationResult()
+
+    def validate_and_retry(
+        self,
+        llm_generate_func: Callable[[str], str],
+        initial_prompt: str,
+        max_retries: int = 3
+    ) -> Tuple[str, 'ValidationResult']:
+        """Validate LLM-generated code and retry with error feedback if invalid.
+
+        Integrates ErrorFeedbackLoop for automatic retry when code validation fails.
+        Uses Layer 2 (FieldValidator) to validate generated code and provides
+        structured error feedback to the LLM for correction.
+
+        Validation & Retry Flow:
+            1. Generate code using llm_generate_func with initial_prompt
+            2. Validate code using validate_strategy()
+            3. If valid: return code and ValidationResult
+            4. If invalid: generate retry prompt with errors
+            5. Repeat steps 1-4 up to max_retries times
+            6. Return last code and ValidationResult (even if invalid)
+
+        Args:
+            llm_generate_func: Callable that takes prompt string and returns generated code.
+                              Signature: (prompt: str) -> str
+                              Example: lambda p: openai.generate(p)
+            initial_prompt: Initial prompt for LLM generation
+                           Should include strategy requirements and field references
+            max_retries: Maximum retry attempts (default: 3)
+                        Range: 1-10 recommended
+                        0 = no retries (single attempt)
+
+        Returns:
+            Tuple of (final_code, final_validation_result):
+                - final_code: Last generated code (may be invalid if retries exhausted)
+                - final_validation_result: ValidationResult from last validation
+
+        Performance:
+            - Retry overhead: ~5-10ms per retry (validation + prompt generation)
+            - LLM call time not included (depends on LLM provider)
+
+        Requirements:
+            - AC2.4: ErrorFeedbackLoop integrated into ValidationGateway
+            - AC2.5: Retry prompt includes validation errors and suggestions
+            - Task 4.1: Automatic retry mechanism integration
+            - Task 4.2: Retry prompt generation with field errors
+
+        Example:
+            >>> import os
+            >>> os.environ['ENABLE_VALIDATION_LAYER1'] = 'true'
+            >>> os.environ['ENABLE_VALIDATION_LAYER2'] = 'true'
+            >>> gateway = ValidationGateway()
+            >>>
+            >>> # Define LLM generation function
+            >>> def my_llm(prompt: str) -> str:
+            ...     return generate_strategy_code(prompt)
+            >>>
+            >>> # Validate with automatic retry
+            >>> code, result = gateway.validate_and_retry(
+            ...     llm_generate_func=my_llm,
+            ...     initial_prompt="Create a momentum strategy using close prices",
+            ...     max_retries=3
+            ... )
+            >>>
+            >>> if result.is_valid:
+            ...     print(f"Success! Generated code:\\n{code}")
+            ... else:
+            ...     print(f"Failed after {max_retries + 1} attempts")
+            ...     for error in result.errors:
+            ...         print(f"  - {error}")
+            >>>
+            >>> # With Layer 2 disabled (graceful degradation)
+            >>> os.environ['ENABLE_VALIDATION_LAYER2'] = 'false'
+            >>> gateway = ValidationGateway()
+            >>> code, result = gateway.validate_and_retry(my_llm, "Create strategy")
+            >>> # Returns after single attempt (no validation to retry)
+        """
+        # Import here to avoid circular dependency
+        from src.prompts.error_feedback import generate_retry_prompt_for_code
+
+        # Execute retry loop
+        return self._retry_with_feedback(
+            llm_generate_func=llm_generate_func,
+            initial_prompt=initial_prompt,
+            max_retries=max_retries
+        )
+
+    def _retry_with_feedback(
+        self,
+        llm_generate_func: Callable[[str], str],
+        initial_prompt: str,
+        max_retries: int
+    ) -> Tuple[str, 'ValidationResult']:
+        """Execute retry loop with error feedback.
+
+        Internal helper method that orchestrates the validation-retry cycle.
+        Separated for cleaner code organization and easier testing.
+
+        Args:
+            llm_generate_func: LLM code generation function
+            initial_prompt: Initial prompt for generation
+            max_retries: Maximum retry attempts
+
+        Returns:
+            Tuple of (final_code, final_validation_result)
+        """
+        from src.prompts.error_feedback import generate_retry_prompt_for_code
+
+        current_prompt = initial_prompt
+
+        for attempt_number in range(max_retries + 1):
+            # Generate code
+            code = llm_generate_func(current_prompt)
+
+            # Validate generated code
+            result = self.validate_strategy(code)
+
+            # Early exit conditions
+            if result.is_valid:
+                return code, result
+
+            if self.field_validator is None:
+                # No validation layer to guide retry - return immediately
+                return code, result
+
+            # Generate retry prompt if not last attempt
+            if attempt_number < max_retries:
+                current_prompt = generate_retry_prompt_for_code(
+                    original_code=code,
+                    field_errors=result.errors,
+                    attempt_number=attempt_number + 1
+                )
+
+        # Max retries exhausted
+        return code, result
