@@ -8,6 +8,7 @@ Key Features:
 - Layer dependency management (Layer 2 requires Layer 1)
 - Field suggestions injection for LLM prompts
 - Graceful degradation when layers are disabled
+- Strategy code validation workflow (Task 3.2)
 
 Architecture:
 - Layer 1 (DataFieldManifest): Field name validation and suggestions
@@ -19,6 +20,13 @@ Usage:
 
     # Initialize gateway (reads feature flags automatically)
     gateway = ValidationGateway()
+
+    # Validate strategy code (Task 3.2)
+    code = "def strategy(data): return data.get('close') > 100"
+    result = gateway.validate_strategy(code)
+    if not result.is_valid:
+        for error in result.errors:
+            print(f"Line {error.line}: {error.message}")
 
     # Inject field suggestions into LLM prompt
     if gateway.manifest:
@@ -40,6 +48,9 @@ Requirements:
 - AC3.1: Gateway initializes components based on feature flags
 - AC3.2: Layer 2 requires Layer 1 to be enabled
 - AC3.3: inject_field_suggestions() provides formatted field reference
+- AC2.1: FieldValidator integrated into ValidationGateway (Task 3.2)
+- AC2.2: validate_strategy() calls FieldValidator after YAML parsing (Task 3.2)
+- NFR-P1: Layer 2 validation completes in <5ms (Task 3.2)
 """
 
 from typing import Optional
@@ -223,3 +234,83 @@ class ValidationGateway:
             lines.append(f'- "{wrong_field}" → "{correct_field}"')
 
         return "\n".join(lines)
+
+    def validate_strategy(self, strategy_code: str) -> 'ValidationResult':
+        """Validate strategy code through enabled validation layers.
+
+        Validates strategy code using Layer 2 (FieldValidator) if enabled.
+        This method is called after YAML parsing but before execution to catch
+        field errors early in the validation pipeline.
+
+        Validation Flow:
+            1. Check if Layer 2 (FieldValidator) is enabled
+            2. If enabled, parse code with AST and validate field usage
+            3. Return structured ValidationResult with FieldError objects
+            4. If disabled, return valid result (graceful degradation)
+
+        Args:
+            strategy_code: Python code string to validate. Must be syntactically
+                          valid Python code containing strategy logic.
+
+        Returns:
+            ValidationResult: Structured result with validation outcome.
+                - is_valid: True if no errors found, False otherwise
+                - errors: List of FieldError objects with line/column info
+                - warnings: List of non-critical warnings (if any)
+
+        Performance:
+            - Layer 2 validation: <5ms per validation (NFR-P1)
+            - AST parsing overhead: ~1-2ms
+            - Field validation: O(1) dict lookups
+
+        Raises:
+            No exceptions raised - all errors captured in ValidationResult
+
+        Requirements:
+            - AC2.1: FieldValidator integrated into ValidationGateway
+            - AC2.2: Call FieldValidator.validate() after YAML parsing
+            - NFR-P1: Layer 2 performance <5ms per validation
+
+        Example:
+            >>> # With Layer 2 enabled
+            >>> import os
+            >>> os.environ['ENABLE_VALIDATION_LAYER1'] = 'true'
+            >>> os.environ['ENABLE_VALIDATION_LAYER2'] = 'true'
+            >>> gateway = ValidationGateway()
+            >>>
+            >>> # Valid code passes
+            >>> code = "def strategy(data):\\n    return data.get('close') > 100"
+            >>> result = gateway.validate_strategy(code)
+            >>> assert result.is_valid is True
+            >>> assert len(result.errors) == 0
+            >>>
+            >>> # Invalid code fails with structured errors
+            >>> code = "def strategy(data):\\n    return data.get('price:成交量') > 100"
+            >>> result = gateway.validate_strategy(code)
+            >>> assert result.is_valid is False
+            >>> assert len(result.errors) > 0
+            >>> assert result.errors[0].line > 0
+            >>> assert result.errors[0].suggestion is not None
+            >>>
+            >>> # With Layer 2 disabled (graceful degradation)
+            >>> os.environ['ENABLE_VALIDATION_LAYER2'] = 'false'
+            >>> gateway = ValidationGateway()
+            >>> result = gateway.validate_strategy(code)
+            >>> assert result.is_valid is True  # No validation performed
+        """
+        # Import ValidationResult here to avoid circular imports
+        from src.validation.validation_result import ValidationResult
+
+        # Layer 2: FieldValidator (AST-based code validation)
+        if self.field_validator is not None:
+            # Call FieldValidator.validate() method
+            # This performs:
+            # 1. AST parsing for line/column tracking
+            # 2. Field name validation against DataFieldManifest
+            # 3. Auto-correction suggestions for common mistakes
+            result = self.field_validator.validate(strategy_code)
+            return result
+
+        # No validation layers enabled - return valid result (graceful degradation)
+        # This ensures backward compatibility when Layer 2 is disabled
+        return ValidationResult()
