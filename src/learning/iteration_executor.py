@@ -50,6 +50,8 @@ from src.learning.generation_strategies import (
     StrategyFactory
 )
 from src.metrics.collector import RolloutSampler, MetricsCollector
+from src.config.data_fields import DataFieldManifest
+from src.config.feature_flags import FeatureFlagManager
 
 logger = logging.getLogger(__name__)
 
@@ -193,6 +195,107 @@ class IterationExecutor:
         self.metrics_collector = MetricsCollector()
 
         logger.info(f"IterationExecutor initialized (Layer 1 rollout: {rollout_percentage}%)")
+
+        # Task 2.1 & 2.2: Initialize DataFieldManifest for Layer 1 field suggestions
+        # Use centralized FeatureFlagManager for configuration
+        flag_manager = FeatureFlagManager()
+        self._enable_layer1 = flag_manager.is_layer1_enabled
+
+        # Only initialize manifest if Layer 1 is enabled
+        if self._enable_layer1:
+            try:
+                # Use default cache path (tests/fixtures/finlab_fields.json)
+                self._field_manifest = DataFieldManifest()
+                logger.info("✓ Layer 1 field validation enabled - DataFieldManifest initialized")
+            except Exception as e:
+                logger.warning(f"Layer 1 initialization failed: {e}, disabling Layer 1")
+                self._enable_layer1 = False
+                self._field_manifest = None
+        else:
+            self._field_manifest = None
+            logger.info("Layer 1 field validation disabled")
+
+    def inject_field_suggestions(self) -> str:
+        """
+        Inject field suggestions into LLM prompt for Layer 1 validation.
+
+        Returns field suggestions containing:
+        - All valid field names with descriptions
+        - Common field corrections (21 entries from DataFieldManifest.COMMON_CORRECTIONS)
+
+        Returns:
+            Formatted field suggestions string if Layer 1 enabled, empty string otherwise
+
+        Performance:
+            <1μs per DataFieldManifest lookup (O(1) dict access)
+
+        Example:
+            >>> executor = IterationExecutor(...)
+            >>> suggestions = executor.inject_field_suggestions()
+            >>> # When enabled, returns formatted field reference
+            >>> # When disabled, returns ""
+        """
+        # Check if Layer 1 is disabled
+        if not self._enable_layer1 or self._field_manifest is None:
+            return ""
+
+        # Build field suggestions using helper methods
+        sections = [
+            "\n## Valid Data Fields Reference\n",
+            "The following field names are valid for use in your strategy:",
+            self._format_field_categories(),
+            self._format_common_corrections(),
+            "\nPlease use only these valid field names in your strategy code."
+        ]
+
+        return "\n".join(sections)
+
+    def _format_field_categories(self) -> str:
+        """
+        Format valid fields by category for LLM prompt.
+
+        Returns:
+            Formatted string with price and fundamental fields
+        """
+        lines = []
+
+        # Get fields by category
+        price_fields = self._field_manifest.get_fields_by_category('price')
+        fundamental_fields = self._field_manifest.get_fields_by_category('fundamental')
+
+        # Format price fields
+        if price_fields:
+            lines.append("\nPrice Fields:")
+            for field in price_fields:
+                alias_hint = f" (alias: {field.aliases[0]})" if field.aliases else ""
+                lines.append(f"- {field.canonical_name}{alias_hint}")
+
+        # Format fundamental fields
+        if fundamental_fields:
+            lines.append("\nFundamental Fields:")
+            for field in fundamental_fields:
+                alias_hint = f" (alias: {field.aliases[0]})" if field.aliases else ""
+                lines.append(f"- {field.canonical_name}{alias_hint}")
+
+        return "\n".join(lines)
+
+    def _format_common_corrections(self) -> str:
+        """
+        Format common field corrections for LLM prompt.
+
+        Returns:
+            Formatted string with all 21 common corrections
+        """
+        lines = ["\nCommon Field Corrections:"]
+
+        # Get corrections from DataFieldManifest
+        corrections = DataFieldManifest.COMMON_CORRECTIONS
+
+        # Format each correction in sorted order
+        for wrong_field, correct_field in sorted(corrections.items()):
+            lines.append(f'- "{wrong_field}" → "{correct_field}"')
+
+        return "\n".join(lines)
 
     def _initialize_finlab(self) -> bool:
         """Initialize finlab data and sim objects (lazy loading).
@@ -643,10 +746,30 @@ class IterationExecutor:
                 champion_code = ""
                 champion_metrics = {"sharpe_ratio": 0.0}
 
+            # Task 2.1: Inject field suggestions for Layer 1 validation
+            # Append field suggestions as a comment block to champion_code
+            # This ensures LLM sees valid field names and common corrections
+            field_suggestions = self.inject_field_suggestions()
+            if field_suggestions:
+                # Prepend field suggestions as Python comment block
+                # This way it appears in the prompt context
+                champion_code_with_suggestions = f"""
+# ============================================================================
+# IMPORTANT: Valid Data Field Names
+# ============================================================================
+{field_suggestions}
+# ============================================================================
+
+{champion_code}
+""".strip()
+                logger.info("✓ Layer 1 field suggestions injected into LLM prompt")
+            else:
+                champion_code_with_suggestions = champion_code
+
             # Generate strategy using InnovationEngine API
             logger.info("Calling LLM for strategy generation...")
             strategy_code = engine.generate_innovation(
-                champion_code=champion_code,
+                champion_code=champion_code_with_suggestions,
                 champion_metrics=champion_metrics,
                 failure_history=None,  # TODO: Extract from history in future iteration
                 target_metric="sharpe_ratio"

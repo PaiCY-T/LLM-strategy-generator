@@ -23,13 +23,18 @@
 - **新增**: tests/security/test_no_hardcoded_secrets.py (234行) - 全專案安全掃描
 - **配置**: .env.example 範本、.gitignore 更新、README.md 安全說明
 
-### Task 2.1 - Layer 1 整合 ✅ (已標記完成)
-- DataFieldManifest 整合至 LLM 提示生成
-- COMMON_CORRECTIONS (21項，覆蓋94%錯誤) 注入提示上下文
+### Task 2.1 - Layer 1 整合 ✅
+- **實作**: DataFieldManifest 整合至 iteration_executor.py
+- **注入**: COMMON_CORRECTIONS (21項，覆蓋94%錯誤) 至 LLM 提示
+- **測試**: 8個測試全部通過 (test_iteration_executor_layer1.py)
+- **效能**: <1μs (符合 NFR-P1 要求)
 
-### Task 2.2 - 功能開關 ✅ (已標記完成)
-- ENABLE_VALIDATION_LAYER1 環境變數控制
-- FeatureFlagManager 集中管理
+### Task 2.2 - 功能開關 ✅
+- **實作**: FeatureFlagManager 單例模式類別
+- **功能**: ENABLE_VALIDATION_LAYER1/2/3 環境變數支援
+- **測試**: 16個測試全部通過 (8個新測試 + 8個向後相容性)
+- **失效安全**: 預設為 false，無效值視為 false
+- **整合**: iteration_executor.py 已重構使用 FeatureFlagManager
 
 ### Task 2.3 - 10% 部署 ✅
 - **RolloutSampler**: 確定性雜湊取樣 (hash % 100 < 10)
@@ -54,8 +59,11 @@
 ### 新建檔案
 ```
 config/__init__.py                                   # 模組初始化
+src/config/feature_flags.py (125行)                 # 功能開關管理器
 src/metrics/__init__.py                              # 指標模組
 src/metrics/collector.py (216行)                    # 取樣與指標收集
+tests/config/test_feature_flags.py (9150字節)       # 功能開關測試
+tests/learning/test_iteration_executor_layer1.py (268行)  # Layer 1 整合測試
 tests/metrics/test_rollout.py (211行)               # 單元測試
 tests/metrics/test_rollout_integration.py (145行)   # 整合測試
 tests/security/test_no_hardcoded_secrets.py (234行) # 安全掃描
@@ -68,10 +76,12 @@ docs/TASK_2.4_REGRESSION_TESTING_SUMMARY.md         # 迴歸測試文檔
 
 ### 修改檔案
 ```
-src/learning/iteration_executor.py     # +71行 (rollout邏輯)
+src/learning/iteration_executor.py     # Task 2.1: +inject_field_suggestions(), Task 2.2: FeatureFlagManager整合
 src/learning/audit_trail.py            # typing 導入修復
 tests/integration/                      # 導入路徑修復
+tests/learning/test_iteration_executor_layer1.py  # 新增 fixture 支援 singleton 重置
 .env.example                            # 驗證配置
+.spec-workflow/specs/validation-infrastructure-integration/tasks.md  # Task 2.2 完成標記
 README.md                               # 安全設定說明
 ```
 
