@@ -118,3 +118,42 @@ class FeatureFlagManager:
             True if ENABLE_VALIDATION_LAYER3=true, False otherwise
         """
         return self._layer3_enabled
+
+    @property
+    def rollout_percentage_layer1(self) -> int:
+        """Get rollout percentage for Layer 1 validation (0-100).
+
+        Returns:
+            Rollout percentage from ROLLOUT_PERCENTAGE_LAYER1 environment variable.
+            Defaults to 10 if not set or invalid.
+            Valid range: 0-100 (values outside this range fall back to 10)
+
+        Examples:
+            >>> # ROLLOUT_PERCENTAGE_LAYER1=50
+            >>> flags = FeatureFlagManager()
+            >>> flags.rollout_percentage_layer1
+            50
+
+            >>> # ROLLOUT_PERCENTAGE_LAYER1 not set
+            >>> flags.rollout_percentage_layer1
+            10
+
+            >>> # ROLLOUT_PERCENTAGE_LAYER1=-10 (invalid)
+            >>> flags.rollout_percentage_layer1
+            10
+        """
+        value_str = os.getenv('ROLLOUT_PERCENTAGE_LAYER1', '10')
+
+        # Try to parse as integer
+        try:
+            value = int(value_str)
+        except ValueError:
+            # Non-numeric value, fall back to default
+            return 10
+
+        # Validate range [0, 100]
+        if 0 <= value <= 100:
+            return value
+        else:
+            # Out of range, fall back to default
+            return 10
