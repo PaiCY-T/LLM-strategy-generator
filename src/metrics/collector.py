@@ -36,6 +36,7 @@ Usage:
 """
 
 import hashlib
+from collections import deque
 from datetime import datetime
 from typing import Dict, Any
 
@@ -127,8 +128,8 @@ class MetricsCollector:
         self._llm_success_count = 0
         self._validation_latency_sum_ms = 0.0
 
-        # For debugging/troubleshooting
-        self._events = []
+        # For debugging/troubleshooting - bounded to last 1000 events
+        self._events = deque(maxlen=1000)
 
     def record_validation_event(
         self,
