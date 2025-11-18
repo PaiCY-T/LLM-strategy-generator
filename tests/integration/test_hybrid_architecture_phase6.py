@@ -31,7 +31,7 @@ import pandas as pd
 
 from src.learning.champion_tracker import ChampionTracker, ChampionStrategy
 from src.learning.iteration_history import IterationHistory, IterationRecord
-from src.hall_of_fame.repository import HallOfFameRepository
+from src.repository.hall_of_fame import HallOfFameRepository
 
 
 class TestLLMToFactorGraphTransition(unittest.TestCase):

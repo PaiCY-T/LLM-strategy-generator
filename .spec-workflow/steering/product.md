@@ -138,8 +138,54 @@
 
 **Status**: 🎯 **Refactoring validation complete, system ready for production**
 
+### Three-Mode Validation Testing ✅ **COMPLETE** (2025-11-15)
+**20-Iteration Three-Mode Comparison** - LLM vs Factor Graph vs Hybrid
+
+**Test Results** (2025-11-15):
+
+| Mode | Success Rate | Avg Sharpe | Key Findings |
+|------|-------------|------------|--------------|
+| **Factor Graph Only** | **0%** 🔴 | N/A | 100% failure - naming incompatibility |
+| **LLM Only** | **25%** 🟢 | 0.376 | 5/20 profitable strategies |
+| **Hybrid (50/50)** | **5%** 🟡 | 0.195 | Only LLM part successful |
+
+**Critical Discovery** 🚨:
+- **Factor Graph Completely Non-Functional**: 100% failure rate (30/30 attempts)
+- **Root Cause**: Architectural naming mismatch
+  - Factor Library outputs: `breakout_signal`, `momentum`, `rolling_trailing_stop_signal`
+  - FinLab validation requires: `signal`, `position`
+  - No mapping layer exists
+- **Impact**: Factor Graph Only mode unusable, Hybrid mode degraded by 60%
+- **Priority**: P0 (Critical) - Immediate fix required
+
+**SuccessClassifier Validation** ✅:
+- Classification logic: 100% correct
+- All 54 LEVEL_0: `execution_success=False`
+- All 6 LEVEL_3: `execution_success=True`, `sharpe>0`
+- Bug fix completely successful
+
+**LLM Performance Validated** 🎯:
+- **Success Rate**: 25% (5/20 iterations)
+- **Successful Strategies**:
+  - Best Sharpe: 0.453 (Iteration 3)
+  - Average Sharpe: 0.376
+  - Range: 0.265 - 0.453
+- **Failure Modes** (15/20 failures):
+  - Data access errors (53%): Using non-existent factors
+  - Missing report variable (40%): Incomplete code
+  - Other validation (7%): Various issues
+
+**Recommended Actions**:
+1. **Immediate (P0)**: Fix Factor Graph naming via mapping layer (1-2 days)
+2. **Short-term (P1)**: Enhance LLM prompts to reduce failures (3-5 days)
+3. **Medium-term (P2)**: Implement smart fallback in Hybrid mode (1 week)
+4. **Current Mitigation**: Use LLM Only mode until Factor Graph fixed
+
+**Documentation**: `docs/THREE_MODE_TEST_ANALYSIS_20ITER.md`
+
 ### Stage 2 (LLM + Population) ✅ **INTEGRATION TESTING COMPLETE** (2025-11-02)
 - **LLM Innovation Status**: ✅ Fully implemented, ✅ **100% validation success** (30/30 generations)
+- **Real-World Testing** (2025-11-15): ✅ **25% success rate validated** in 20-iteration test
 - **Test Results** (2025-11-02):
   - Success Rate: **100%** (30/30) - EXCEEDED TARGET (≥90%)
   - Dataset Key Correctness: **100%** (all use `etl:adj_close`, zero invalid keys)
@@ -158,10 +204,11 @@
   - ✅ InnovationEngine (src/innovation/innovation_engine.py)
   - ✅ Structured YAML pipeline (YAMLSchemaValidator, YAMLToCodeGenerator)
   - ✅ 7-Layer validation framework
-  - ✅ Auto-fallback to Factor Graph (80% of time)
+  - ✅ Auto-fallback to Factor Graph (80% of time) - **⚠️ Currently broken, requires P0 fix**
   - ✅ Three-layer defense system (Prompt Templates + Auto-Fixer + Static Validation)
   - ✅ Integration testing framework (characterization, unit, integration tests)
-- **Next Step**: **Phase 1 dry-run test** (20 iterations, dry_run=true) → Phase 2 (5% rate) → Phase 3 (20% rate)
+- **Current Recommendation**: **Use LLM Only mode** (innovation_rate=1.0) until Factor Graph naming issue resolved
+- **Next Step**: **Fix Factor Graph naming** (P0) → **Re-test Hybrid mode** → Phase 1 dry-run test (20 iterations)
 
 ### Priority Specs Completion (Post-Template Failure)
 
@@ -252,12 +299,22 @@ Domain-specific strategy templates with intelligent recommendation
 - 🔄 Template diversity: Forced exploration every 5th iteration
 - 📊 Analytics tracking: Usage statistics and success rate monitoring
 
-### 5. **因子圖系統** (Factor Graph System)
-Centralized factor library with compositional strategy building
+### 5. **因子圖系統** (Factor Graph System) ✅ **Phase 2 Matrix-Native (2025-11-01)**
+Centralized factor library with compositional strategy building, **redesigned for FinLab matrix architecture**
 - 🏗️ 13 reusable factors: Momentum, Value, Quality, Risk, Entry, Exit
+- 📊 **Matrix-Native Architecture (Phase 2)**: FinLabDataFrame container for Dates×Symbols (4563×2661) data
 - 🔍 Factor discovery: Category-based search and validation
 - ⚡ High performance: 7-200x faster than targets
 - 🧩 Strategy composition: Flexible factor combination and dependencies
+- ✅ **Production Status**: 170 tests passing, 6/6 E2E tests with real FinLab API (2025-11-11)
+- 📖 **Documentation**: `docs/FACTOR_GRAPH_V2_PRODUCTION_READINESS_ANALYSIS.md`
+
+**Phase 2 Architecture Breakthrough** (2025-11-01):
+- **Problem Solved**: Phase 1 DataFrame columns vs FinLab matrix incompatibility (ValueError on 2D assignment)
+- **Solution**: FinLabDataFrame container stores named matrices, lazy loading, matrix-native operations
+- **Implementation**: `src/factor_graph/finlab_dataframe.py` (377 lines, comprehensive design principles)
+- **Factor Refactoring**: All 13 factors updated to use `container.get_matrix()` and `container.add_matrix()`
+- **Validation**: E2E tests with real FinLab API integration, no Phase 1 architectural issues remain
 
 ### 6. **多層驗證系統** (Multi-Layer Validation System)
 Comprehensive validation to prevent overfitting and ensure robustness

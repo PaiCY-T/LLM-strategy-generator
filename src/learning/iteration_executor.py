@@ -25,6 +25,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 from src.backtest.executor import BacktestExecutor, ExecutionResult
 from src.backtest.metrics import MetricsExtractor, StrategyMetrics
 from src.backtest.error_classifier import ErrorClassifier
+from src.backtest.classifier import SuccessClassifier
 from src.learning.champion_tracker import ChampionTracker
 from src.learning.feedback_generator import FeedbackGenerator
 from src.learning.iteration_history import IterationHistory, IterationRecord
@@ -48,6 +49,7 @@ from src.learning.generation_strategies import (
     GenerationStrategy,
     StrategyFactory
 )
+from src.metrics.collector import RolloutSampler, MetricsCollector
 
 logger = logging.getLogger(__name__)
 
@@ -118,6 +120,7 @@ class IterationExecutor:
         # Initialize Phase 2 components
         self.metrics_extractor = MetricsExtractor()
         self.error_classifier = ErrorClassifier()
+        self.success_classifier = SuccessClassifier()
 
         # Phase 2: Pydantic validation (optional, controlled by feature flag)
         self.validated_config: Optional[Any] = None
@@ -183,7 +186,13 @@ class IterationExecutor:
                     "Provide them to IterationExecutor.__init__(data=..., sim=...)"
                 )
 
-        logger.info("IterationExecutor initialized")
+        # Task 2.3: Initialize rollout mechanism for Layer 1 validation
+        # Read rollout percentage from environment variable (default: 10%)
+        rollout_percentage = int(os.getenv("ROLLOUT_PERCENTAGE_LAYER1", "10"))
+        self.rollout_sampler = RolloutSampler(rollout_percentage=rollout_percentage)
+        self.metrics_collector = MetricsCollector()
+
+        logger.info(f"IterationExecutor initialized (Layer 1 rollout: {rollout_percentage}%)")
 
     def _initialize_finlab(self) -> bool:
         """Initialize finlab data and sim objects (lazy loading).
@@ -463,6 +472,71 @@ class IterationExecutor:
             logger.warning(f"Feedback generation failed: {e}")
             return "No feedback available (first iteration or error)."
 
+    def _should_apply_layer1_validation(self, iteration_num: int) -> bool:
+        """
+        Check if Layer 1 validation should be applied for this iteration.
+
+        Uses deterministic hash-based sampling to ensure:
+        - Same iteration always gets same result
+        - Approximately ROLLOUT_PERCENTAGE_LAYER1 % of iterations are validated
+
+        Args:
+            iteration_num: Current iteration number
+
+        Returns:
+            True if Layer 1 validation should be applied, False otherwise
+        """
+        # Create deterministic hash from iteration number
+        strategy_hash = f"iteration_{iteration_num}"
+
+        # Check rollout sampler
+        should_validate = self.rollout_sampler.is_enabled(strategy_hash)
+
+        if should_validate:
+            logger.debug(f"Layer 1 validation ENABLED for iteration {iteration_num}")
+        else:
+            logger.debug(f"Layer 1 validation DISABLED for iteration {iteration_num}")
+
+        return should_validate
+
+    def _record_validation_metrics(
+        self,
+        iteration_num: int,
+        validation_enabled: bool,
+        field_errors: int = 0,
+        llm_success: bool = False,
+        validation_latency_ms: float = 0.0
+    ) -> None:
+        """
+        Record validation metrics for monitoring.
+
+        Args:
+            iteration_num: Current iteration number
+            validation_enabled: Whether Layer 1 validation was applied
+            field_errors: Number of field errors detected (0 if not validated)
+            llm_success: Whether LLM generation succeeded
+            validation_latency_ms: Time spent on validation in milliseconds
+        """
+        strategy_hash = f"iteration_{iteration_num}"
+
+        self.metrics_collector.record_validation_event(
+            strategy_hash=strategy_hash,
+            validation_enabled=validation_enabled,
+            field_errors=field_errors,
+            llm_success=llm_success,
+            validation_latency_ms=validation_latency_ms
+        )
+
+        # Log metrics every 10 iterations for monitoring
+        if iteration_num > 0 and iteration_num % 10 == 0:
+            metrics = self.metrics_collector.get_metrics()
+            logger.info(
+                f"Rollout metrics (iteration {iteration_num}): "
+                f"field_error_rate={metrics['field_error_rate']:.2%}, "
+                f"llm_success_rate={metrics['llm_success_rate']:.2%}, "
+                f"validation_latency_avg={metrics['validation_latency_avg_ms']:.2f}ms"
+            )
+
     def _decide_generation_method(self) -> bool:
         """Decide whether to use LLM or Factor Graph.
 
@@ -740,10 +814,11 @@ class IterationExecutor:
         )
         strategy.add_factor(breakout_factor, depends_on=[])
 
-        # Add trailing stop factor (exit)
+        # Add rolling trailing stop factor (stateless exit - Phase 2 fix)
+        # Uses rolling window approximation instead of exact position tracking
         trailing_stop_factor = registry.create_factor(
-            "trailing_stop_factor",
-            parameters={"trail_percent": 0.10, "activation_profit": 0.05}
+            "rolling_trailing_stop_factor",
+            parameters={"trail_percent": 0.10, "lookback_periods": 20}
         )
         strategy.add_factor(
             trailing_stop_factor,
@@ -970,8 +1045,19 @@ class IterationExecutor:
                 execution_success=execution_result.success
             )
 
+            # DEBUG: Log input metrics
+            logger.info(f"[DEBUG] Classification input: sharpe={metrics.get('sharpe_ratio')}, "
+                       f"return={metrics.get('total_return')}, "
+                       f"drawdown={metrics.get('max_drawdown')}, "
+                       f"execution_success={execution_result.success}")
+
             # Classify using SuccessClassifier (fixed from ErrorClassifier)
             classification_result = self.success_classifier.classify_single(strategy_metrics)
+
+            # DEBUG: Log classification result
+            logger.info(f"[DEBUG] SuccessClassifier returned: level={classification_result.level}, "
+                       f"reason={classification_result.reason}, "
+                       f"coverage={classification_result.metrics_coverage}")
 
             # Convert level number to string format
             level_map = {
@@ -980,10 +1066,16 @@ class IterationExecutor:
                 2: "LEVEL_2",
                 3: "LEVEL_3"
             }
-            return level_map.get(classification_result.level, "LEVEL_0")
+            final_level = level_map.get(classification_result.level, "LEVEL_0")
+
+            # DEBUG: Log final classification
+            logger.info(f"[DEBUG] Final classification: {final_level}")
+
+            return final_level
 
         except Exception as e:
             logger.warning(f"Classification failed: {e}")
+            logger.exception("Full traceback:")  # Log full traceback
             return "LEVEL_0"  # Default to worst level on error
 
     def _update_champion_if_better(

@@ -1828,7 +1828,23 @@ LOG_LEVEL=INFO
 
 # 選填：界面語言 (zh-TW, en-US)
 UI_LANGUAGE=zh-TW
+
+# 測試環境：API Keys (Testing Environment)
+# For E2E and integration tests - uses mock key if not provided
+TEST_API_KEY=your_test_api_key_here
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+
+# 功能開關：驗證層控制 (Feature Flags: Validation Layers)
+# All default to 'false' - set to 'true' to enable
+ENABLE_VALIDATION_LAYER1=false  # Field suggestions in prompts (<1μs)
+ENABLE_VALIDATION_LAYER2=false  # Static AST validation (<200ms)
+ENABLE_VALIDATION_LAYER3=false  # Deep LLM validation (<5s)
 ```
+
+**Security Note** | **安全提示**:
+- ⚠️ **NEVER commit `.env` file to version control** | 絕不將 `.env` 文件提交到版本控制
+- ✅ The `.env` file is already in `.gitignore` | `.env` 文件已在 `.gitignore` 中
+- 🔒 Keep your API keys confidential | 保密您的 API 金鑰
 
 ### 3. 驗證安裝 Verify Installation
 

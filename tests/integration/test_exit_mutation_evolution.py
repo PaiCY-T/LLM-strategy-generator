@@ -34,7 +34,7 @@ import pytest
 from src.evolution.population_manager import PopulationManager
 from src.evolution.types import Strategy
 from src.factor_graph.strategy import Strategy as FactorGraphStrategy
-from src.mutation.exit_parameter_mutator import ExitParameterMutator, PARAM_BOUNDS
+from src.mutation.exit_parameter_mutator import ExitParameterMutator
 from src.mutation.unified_mutation_operator import UnifiedMutationOperator, MutationResult
 from src.mutation.tier2.smart_mutation_engine import SmartMutationEngine
 from src.mutation.tier3.ast_factor_mutator import ASTFactorMutator
@@ -466,7 +466,8 @@ class TestExitParameterTracking:
         logger.info("="*70)
 
         for param_name, values in param_evolution.items():
-            min_bound, max_bound = PARAM_BOUNDS[param_name]
+            bounds = ExitParameterMutator.PARAM_BOUNDS[param_name]
+            min_bound, max_bound = bounds.min_value, bounds.max_value
 
             logger.info(f"\n{param_name}:")
             logger.info(f"  Values: {len(values)}")
@@ -670,7 +671,7 @@ class TestMetadataTracking:
             assert metadata['exit_mutation'] is True, "Should be exit mutation"
 
             assert 'parameter_name' in metadata, "Should have parameter_name"
-            assert metadata['parameter_name'] in PARAM_BOUNDS, "Parameter should be valid"
+            assert metadata['parameter_name'] in ExitParameterMutator.PARAM_BOUNDS, "Parameter should be valid"
 
             assert 'old_value' in metadata, "Should have old_value"
             assert 'new_value' in metadata, "Should have new_value"
@@ -775,7 +776,8 @@ class TestBoundaryEnforcement:
         mutator = ExitParameterMutator(gaussian_std=0.50, seed=42)  # High std for testing
 
         # Test each parameter
-        for param_name, (min_bound, max_bound) in PARAM_BOUNDS.items():
+        for param_name, bounds in ExitParameterMutator.PARAM_BOUNDS.items():
+            min_bound, max_bound = bounds.min_value, bounds.max_value
             logger.info(f"\nTesting {param_name}: bounds=[{min_bound}, {max_bound}]")
 
             # Test with value near minimum

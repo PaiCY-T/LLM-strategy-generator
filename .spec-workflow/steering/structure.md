@@ -34,8 +34,9 @@ finlab/                           # Project root
 │   │       ├── innovation_validator.py  # Comprehensive validation pipeline
 │   │       ├── yaml_schema_validator.py # YAML structure validation
 │   │       └── yaml_to_code_generator.py # Jinja2 template-based code generation
-│   ├── factor_graph/             # Factor Graph system (Phase B)
-│   │   ├── strategy.py           # Strategy composition
+│   ├── factor_graph/             # Factor Graph system (Phase 2 Matrix-Native ✅ 2025-11-01)
+│   │   ├── finlab_dataframe.py   # ✅ Matrix-Native container (Dates×Symbols data, lazy loading)
+│   │   ├── strategy.py           # Strategy composition with FinLabDataFrame
 │   │   ├── factor.py             # Factor base class
 │   │   └── pipeline.py           # Execution pipeline
 │   ├── factor_library/           # 13 reusable factors
@@ -279,9 +280,13 @@ Phase 3-6 implementation (4,200 lines, 7 modules) - The system's execution backb
 - **bootstrap.py**: Statistical significance (1000 iterations)
 - **baseline.py**: Buy-and-Hold 0050, Equal-Weight, Risk Parity
 
-**Factor System** (`src/factor_graph/`, `src/factor_library/`):
-- **factor_graph/**: Strategy composition framework
+**Factor System** (`src/factor_graph/`, `src/factor_library/`) ✅ **Phase 2 Matrix-Native (2025-11-01)**:
+- **factor_graph/**: Strategy composition framework with FinLabDataFrame matrix-native architecture
+  - `finlab_dataframe.py`: Matrix container (Dates×Symbols), lazy loading, type safety, immutability
+  - Resolves Phase 1 DataFrame vs Matrix incompatibility (ValueError on 2D assignment)
+  - 170 tests passing, 6/6 E2E with real FinLab API (2025-11-11)
 - **factor_library/**: 13 reusable factors (Momentum, Value, Quality, Risk, Entry, Exit)
+  - All factors refactored to matrix-native operations (`container.get_matrix()`, `container.add_matrix()`)
 
 **Configuration** (`config/`):
 - **learning_system.yaml**: Anti-churn, multi-objective validation, exit mutation
