@@ -460,6 +460,8 @@ def strategy(data):
 
 {self._build_api_documentation_section()}
 
+{self._build_validation_helpers()}
+
 **Critical Rules**:
 1. No external imports - use only built-in pandas/numpy operations
 2. No look-ahead bias - always use `.shift(1)` or higher for historical data
@@ -611,6 +613,64 @@ roa = revenue / assets
         field_list_lines.append("]")
 
         return "\n".join(field_list_lines)
+
+    def _build_validation_helpers(self) -> str:
+        """
+        Build field validation helper function examples.
+
+        Provides LLM with validation helper function to check field validity
+        before using data.get(). This helps prevent field name hallucination
+        by showing how to validate fields against VALID_FIELDS catalog.
+
+        Requirements:
+        - Task 1.3: Field validation helper function example
+        - REQ-1: Field name validation
+
+        Returns:
+            str: Validation helper section with function example and usage
+
+        Example output:
+            **Field Validation Helper**:
+            def validate_field_exists(field_name, valid_fields):
+                ...usage example...
+        """
+        return """**Field Validation Helper** (Optional but Recommended):
+
+You can validate field names before use to avoid runtime errors:
+
+```python
+def validate_field_exists(field_name, valid_fields):
+    \"\"\"
+    Check if a field name exists in VALID_FIELDS catalog.
+
+    Args:
+        field_name: Field to validate (e.g., 'price:收盤價')
+        valid_fields: List of valid field names from catalog
+
+    Returns:
+        bool: True if field exists, False otherwise
+    \"\"\"
+    return field_name in valid_fields
+
+# Usage example in your strategy:
+VALID_FIELDS = [...]  # Use the complete field catalog from above
+
+def strategy(data):
+    # Validate field before using it
+    field_name = 'fundamental_features:ROE'
+
+    if validate_field_exists(field_name, VALID_FIELDS):
+        roe = data.get(field_name).shift(1)
+    else:
+        # Fallback: use alternative field or skip
+        print(f\"Warning: {field_name} not found in catalog\")
+        return pd.Series(False, index=data.index)
+
+    # Your strategy logic here...
+    return roe > 15
+```
+
+**Best Practice**: Always check field validity before calling `data.get()` to prevent KeyError at runtime."""
 
     def _build_basic_api_documentation(self) -> str:
         """
