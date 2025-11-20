@@ -1,0 +1,2604 @@
+{
+  "price:收盤價": {
+    "canonical_name": "price:收盤價",
+    "category": "price",
+    "frequency": "daily",
+    "dtype": "float",
+    "description_zh": "每日收盤價格",
+    "description_en": "Daily closing price",
+    "aliases": [
+      "close",
+      "收盤價",
+      "closing_price",
+      "close_price"
+    ],
+    "example_values": null,
+    "valid_range": [
+      0.0,
+      10000.0
+    ]
+  },
+  "price:開盤價": {
+    "canonical_name": "price:開盤價",
+    "category": "price",
+    "frequency": "daily",
+    "dtype": "float",
+    "description_zh": "每日開盤價格",
+    "description_en": "Daily opening price",
+    "aliases": [
+      "open",
+      "開盤價",
+      "opening_price",
+      "open_price"
+    ],
+    "example_values": null,
+    "valid_range": [
+      0.0,
+      10000.0
+    ]
+  },
+  "price:最高價": {
+    "canonical_name": "price:最高價",
+    "category": "price",
+    "frequency": "daily",
+    "dtype": "float",
+    "description_zh": "每日最高價格",
+    "description_en": "Daily high price",
+    "aliases": [
+      "high",
+      "最高價",
+      "high_price"
+    ],
+    "example_values": null,
+    "valid_range": [
+      0.0,
+      10000.0
+    ]
+  },
+  "price:最低價": {
+    "canonical_name": "price:最低價",
+    "category": "price",
+    "frequency": "daily",
+    "dtype": "float",
+    "description_zh": "每日最低價格",
+    "description_en": "Daily low price",
+    "aliases": [
+      "low",
+      "最低價",
+      "low_price"
+    ],
+    "example_values": null,
+    "valid_range": [
+      0.0,
+      10000.0
+    ]
+  },
+  "price:成交股數": {
+    "canonical_name": "price:成交股數",
+    "category": "price",
+    "frequency": "daily",
+    "dtype": "float",
+    "description_zh": "每日成交股數（單位：股）",
+    "description_en": "Daily trading volume (unit: shares)",
+    "aliases": [
+      "shares",
+      "trading_shares",
+      "成交股數"
+    ],
+    "example_values": null,
+    "valid_range": [
+      0.0,
+      1000000000000.0
+    ]
+  },
+  "price:成交金額": {
+    "canonical_name": "price:成交金額",
+    "category": "price",
+    "frequency": "daily",
+    "dtype": "float",
+    "description_zh": "每日成交金額（單位：千元）",
+    "description_en": "Daily trading value (unit: thousand TWD)",
+    "aliases": [
+      "amount",
+      "value",
+      "成交金額",
+      "trading_value",
+      "volume"
+    ],
+    "example_values": null,
+    "valid_range": [
+      0.0,
+      1000000000000.0
+    ]
+  },
+  "price:成交筆數": {
+    "canonical_name": "price:成交筆數",
+    "category": "price",
+    "frequency": "daily",
+    "dtype": "int",
+    "description_zh": "每日成交筆數",
+    "description_en": "Daily number of trades",
+    "aliases": [
+      "trades",
+      "num_trades",
+      "成交筆數"
+    ],
+    "example_values": null,
+    "valid_range": [
+      0.0,
+      1000000000.0
+    ]
+  },
+  "fundamental_features:ROE": {
+    "canonical_name": "fundamental_features:ROE",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "股東權益報酬率",
+    "description_en": "Return on Equity",
+    "aliases": [
+      "roe",
+      "return_on_equity"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:ROA": {
+    "canonical_name": "fundamental_features:ROA",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "資產報酬率",
+    "description_en": "Return on Assets",
+    "aliases": [
+      "roa",
+      "return_on_assets"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業利益率": {
+    "canonical_name": "fundamental_features:營業利益率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業利益率",
+    "description_en": "Operating Profit Margin",
+    "aliases": [
+      "operating_margin",
+      "profit_margin"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:稅後淨利率": {
+    "canonical_name": "fundamental_features:稅後淨利率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "稅後淨利率",
+    "description_en": "Net Profit Margin After Tax",
+    "aliases": [
+      "net_margin",
+      "profit_margin_after_tax"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:本益比": {
+    "canonical_name": "fundamental_features:本益比",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "本益比",
+    "description_en": "Price-to-Earnings Ratio",
+    "aliases": [
+      "pe",
+      "PE",
+      "p_e_ratio",
+      "price_earnings"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:股價淨值比": {
+    "canonical_name": "fundamental_features:股價淨值比",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "股價淨值比",
+    "description_en": "Price-to-Book Ratio",
+    "aliases": [
+      "pb",
+      "PB",
+      "p_b_ratio",
+      "price_book"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:殖利率": {
+    "canonical_name": "fundamental_features:殖利率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "現金殖利率",
+    "description_en": "Dividend Yield",
+    "aliases": [
+      "dividend_yield",
+      "yield"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:EPS": {
+    "canonical_name": "fundamental_features:EPS",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "每股盈餘",
+    "description_en": "Earnings Per Share",
+    "aliases": [
+      "eps",
+      "earnings_per_share"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:BPS": {
+    "canonical_name": "fundamental_features:BPS",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "每股淨值",
+    "description_en": "Book Value Per Share",
+    "aliases": [
+      "bps",
+      "book_per_share"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業收入": {
+    "canonical_name": "fundamental_features:營業收入",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業收入",
+    "description_en": "Operating Revenue",
+    "aliases": [
+      "revenue",
+      "operating_revenue"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業成本": {
+    "canonical_name": "fundamental_features:營業成本",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業成本",
+    "description_en": "Operating Cost",
+    "aliases": [
+      "operating_cost",
+      "cost"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業毛利": {
+    "canonical_name": "fundamental_features:營業毛利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業毛利",
+    "description_en": "Gross Profit",
+    "aliases": [
+      "gross_profit"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業費用": {
+    "canonical_name": "fundamental_features:營業費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業費用",
+    "description_en": "Operating Expenses",
+    "aliases": [
+      "operating_expenses",
+      "expenses"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業利益": {
+    "canonical_name": "fundamental_features:營業利益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業利益",
+    "description_en": "Operating Income",
+    "aliases": [
+      "operating_income"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業外收入": {
+    "canonical_name": "fundamental_features:營業外收入",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業外收入",
+    "description_en": "Non-Operating Income",
+    "aliases": [
+      "non_operating_income"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:稅前淨利": {
+    "canonical_name": "fundamental_features:稅前淨利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "稅前淨利",
+    "description_en": "Income Before Tax",
+    "aliases": [
+      "income_before_tax",
+      "pretax_income"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:稅後淨利": {
+    "canonical_name": "fundamental_features:稅後淨利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "稅後淨利",
+    "description_en": "Net Income After Tax",
+    "aliases": [
+      "net_income",
+      "after_tax_income"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:流動比率": {
+    "canonical_name": "fundamental_features:流動比率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "流動比率",
+    "description_en": "Current Ratio",
+    "aliases": [
+      "current_ratio"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:速動比率": {
+    "canonical_name": "fundamental_features:速動比率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "速動比率",
+    "description_en": "Quick Ratio",
+    "aliases": [
+      "quick_ratio"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:負債比率": {
+    "canonical_name": "fundamental_features:負債比率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "負債比率",
+    "description_en": "Debt Ratio",
+    "aliases": [
+      "debt_ratio"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:股東權益": {
+    "canonical_name": "fundamental_features:股東權益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "股東權益",
+    "description_en": "Shareholders' Equity",
+    "aliases": [
+      "equity",
+      "shareholders_equity"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:總資產": {
+    "canonical_name": "fundamental_features:總資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "總資產",
+    "description_en": "Total Assets",
+    "aliases": [
+      "total_assets",
+      "assets"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:總負債": {
+    "canonical_name": "fundamental_features:總負債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "總負債",
+    "description_en": "Total Liabilities",
+    "aliases": [
+      "total_liabilities",
+      "liabilities"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:流動資產": {
+    "canonical_name": "fundamental_features:流動資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "流動資產",
+    "description_en": "Current Assets",
+    "aliases": [
+      "current_assets"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:非流動資產": {
+    "canonical_name": "fundamental_features:非流動資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "非流動資產",
+    "description_en": "Non-Current Assets",
+    "aliases": [
+      "non_current_assets"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:流動負債": {
+    "canonical_name": "fundamental_features:流動負債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "流動負債",
+    "description_en": "Current Liabilities",
+    "aliases": [
+      "current_liabilities"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:非流動負債": {
+    "canonical_name": "fundamental_features:非流動負債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "非流動負債",
+    "description_en": "Non-Current Liabilities",
+    "aliases": [
+      "non_current_liabilities"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:現金及約當現金": {
+    "canonical_name": "fundamental_features:現金及約當現金",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "現金及約當現金",
+    "description_en": "Cash and Cash Equivalents",
+    "aliases": [
+      "cash"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:存貨": {
+    "canonical_name": "fundamental_features:存貨",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "存貨",
+    "description_en": "Inventory",
+    "aliases": [
+      "inventory"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:應收帳款": {
+    "canonical_name": "fundamental_features:應收帳款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應收帳款",
+    "description_en": "Accounts Receivable",
+    "aliases": [
+      "accounts_receivable",
+      "receivables"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:固定資產": {
+    "canonical_name": "fundamental_features:固定資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "固定資產",
+    "description_en": "Fixed Assets",
+    "aliases": [
+      "fixed_assets"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:無形資產": {
+    "canonical_name": "fundamental_features:無形資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "無形資產",
+    "description_en": "Intangible Assets",
+    "aliases": [
+      "intangible_assets"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:長期投資": {
+    "canonical_name": "fundamental_features:長期投資",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "長期投資",
+    "description_en": "Long-term Investments",
+    "aliases": [
+      "long_term_investments"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:短期借款": {
+    "canonical_name": "fundamental_features:短期借款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "短期借款",
+    "description_en": "Short-term Borrowings",
+    "aliases": [
+      "short_term_debt"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:長期借款": {
+    "canonical_name": "fundamental_features:長期借款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "長期借款",
+    "description_en": "Long-term Borrowings",
+    "aliases": [
+      "long_term_debt"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業活動現金流量": {
+    "canonical_name": "fundamental_features:營業活動現金流量",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業活動現金流量",
+    "description_en": "Operating Cash Flow",
+    "aliases": [
+      "operating_cash_flow",
+      "ocf"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:投資活動現金流量": {
+    "canonical_name": "fundamental_features:投資活動現金流量",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "投資活動現金流量",
+    "description_en": "Investing Cash Flow",
+    "aliases": [
+      "investing_cash_flow"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:融資活動現金流量": {
+    "canonical_name": "fundamental_features:融資活動現金流量",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "融資活動現金流量",
+    "description_en": "Financing Cash Flow",
+    "aliases": [
+      "financing_cash_flow"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:自由現金流量": {
+    "canonical_name": "fundamental_features:自由現金流量",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "自由現金流量",
+    "description_en": "Free Cash Flow",
+    "aliases": [
+      "free_cash_flow",
+      "fcf"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:現金股利": {
+    "canonical_name": "fundamental_features:現金股利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "現金股利",
+    "description_en": "Cash Dividend",
+    "aliases": [
+      "cash_dividend"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:股票股利": {
+    "canonical_name": "fundamental_features:股票股利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "股票股利",
+    "description_en": "Stock Dividend",
+    "aliases": [
+      "stock_dividend"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:每股現金股利": {
+    "canonical_name": "fundamental_features:每股現金股利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "每股現金股利",
+    "description_en": "Cash Dividend Per Share",
+    "aliases": [
+      "cash_dividend_per_share"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:股利發放率": {
+    "canonical_name": "fundamental_features:股利發放率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "股利發放率",
+    "description_en": "Dividend Payout Ratio",
+    "aliases": [
+      "payout_ratio"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:資產週轉率": {
+    "canonical_name": "fundamental_features:資產週轉率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "資產週轉率",
+    "description_en": "Asset Turnover",
+    "aliases": [
+      "asset_turnover"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:存貨週轉率": {
+    "canonical_name": "fundamental_features:存貨週轉率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "存貨週轉率",
+    "description_en": "Inventory Turnover",
+    "aliases": [
+      "inventory_turnover"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:應收帳款週轉率": {
+    "canonical_name": "fundamental_features:應收帳款週轉率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應收帳款週轉率",
+    "description_en": "Receivables Turnover",
+    "aliases": [
+      "receivables_turnover"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:固定資產週轉率": {
+    "canonical_name": "fundamental_features:固定資產週轉率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "固定資產週轉率",
+    "description_en": "Fixed Asset Turnover",
+    "aliases": [
+      "fixed_asset_turnover"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:權益乘數": {
+    "canonical_name": "fundamental_features:權益乘數",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "權益乘數",
+    "description_en": "Equity Multiplier",
+    "aliases": [
+      "equity_multiplier"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營業毛利率": {
+    "canonical_name": "fundamental_features:營業毛利率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業毛利率",
+    "description_en": "Gross Margin",
+    "aliases": [
+      "gross_margin"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:營運槓桿度": {
+    "canonical_name": "fundamental_features:營運槓桿度",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營運槓桿度",
+    "description_en": "Operating Leverage",
+    "aliases": [
+      "operating_leverage"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:財務槓桿度": {
+    "canonical_name": "fundamental_features:財務槓桿度",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "財務槓桿度",
+    "description_en": "Financial Leverage",
+    "aliases": [
+      "financial_leverage"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "fundamental_features:綜合槓桿度": {
+    "canonical_name": "fundamental_features:綜合槓桿度",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "綜合槓桿度",
+    "description_en": "Total Leverage",
+    "aliases": [
+      "total_leverage"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100.0,
+      200.0
+    ]
+  },
+  "financial_statement:現金": {
+    "canonical_name": "financial_statement:現金",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "現金",
+    "description_en": "Cash",
+    "aliases": [
+      "現金"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:銀行存款": {
+    "canonical_name": "financial_statement:銀行存款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "銀行存款",
+    "description_en": "Bank Deposits",
+    "aliases": [
+      "銀行存款"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:短期投資": {
+    "canonical_name": "financial_statement:短期投資",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "短期投資",
+    "description_en": "Short-term Investments",
+    "aliases": [
+      "短期投資"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應收票據": {
+    "canonical_name": "financial_statement:應收票據",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應收票據",
+    "description_en": "Notes Receivable",
+    "aliases": [
+      "應收票據"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應收帳款淨額": {
+    "canonical_name": "financial_statement:應收帳款淨額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應收帳款淨額",
+    "description_en": "Accounts Receivable Net",
+    "aliases": [
+      "應收帳款淨額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:其他應收款": {
+    "canonical_name": "financial_statement:其他應收款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "其他應收款",
+    "description_en": "Other Receivables",
+    "aliases": [
+      "其他應收款"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:存貨淨額": {
+    "canonical_name": "financial_statement:存貨淨額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "存貨淨額",
+    "description_en": "Inventory Net",
+    "aliases": [
+      "存貨淨額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:預付款項": {
+    "canonical_name": "financial_statement:預付款項",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "預付款項",
+    "description_en": "Prepayments",
+    "aliases": [
+      "預付款項"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:流動資產合計": {
+    "canonical_name": "financial_statement:流動資產合計",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "流動資產合計",
+    "description_en": "Total Current Assets",
+    "aliases": [
+      "流動資產合計"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:長期股權投資": {
+    "canonical_name": "financial_statement:長期股權投資",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "長期股權投資",
+    "description_en": "Long-term Equity Investments",
+    "aliases": [
+      "長期股權投資"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:固定資產原始成本": {
+    "canonical_name": "financial_statement:固定資產原始成本",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "固定資產原始成本",
+    "description_en": "Original Cost of Fixed Assets",
+    "aliases": [
+      "固定資產原始成本"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:累計折舊": {
+    "canonical_name": "financial_statement:累計折舊",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "累計折舊",
+    "description_en": "Accumulated Depreciation",
+    "aliases": [
+      "累計折舊"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:固定資產淨額": {
+    "canonical_name": "financial_statement:固定資產淨額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "固定資產淨額",
+    "description_en": "Fixed Assets Net",
+    "aliases": [
+      "固定資產淨額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:商譽": {
+    "canonical_name": "financial_statement:商譽",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "商譽",
+    "description_en": "Goodwill",
+    "aliases": [
+      "商譽"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:專利權": {
+    "canonical_name": "financial_statement:專利權",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "專利權",
+    "description_en": "Patents",
+    "aliases": [
+      "專利權"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:商標權": {
+    "canonical_name": "financial_statement:商標權",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "商標權",
+    "description_en": "Trademarks",
+    "aliases": [
+      "商標權"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:遞延所得稅資產": {
+    "canonical_name": "financial_statement:遞延所得稅資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "遞延所得稅資產",
+    "description_en": "Deferred Tax Assets",
+    "aliases": [
+      "遞延所得稅資產"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:其他資產": {
+    "canonical_name": "financial_statement:其他資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "其他資產",
+    "description_en": "Other Assets",
+    "aliases": [
+      "其他資產"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:資產總額": {
+    "canonical_name": "financial_statement:資產總額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "資產總額",
+    "description_en": "Total Assets",
+    "aliases": [
+      "資產總額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:短期借款": {
+    "canonical_name": "financial_statement:短期借款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "短期借款",
+    "description_en": "Short-term Loans",
+    "aliases": [
+      "短期借款"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應付票據": {
+    "canonical_name": "financial_statement:應付票據",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應付票據",
+    "description_en": "Notes Payable",
+    "aliases": [
+      "應付票據"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應付帳款": {
+    "canonical_name": "financial_statement:應付帳款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應付帳款",
+    "description_en": "Accounts Payable",
+    "aliases": [
+      "應付帳款"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應付所得稅": {
+    "canonical_name": "financial_statement:應付所得稅",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應付所得稅",
+    "description_en": "Income Tax Payable",
+    "aliases": [
+      "應付所得稅"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應付費用": {
+    "canonical_name": "financial_statement:應付費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應付費用",
+    "description_en": "Accrued Expenses",
+    "aliases": [
+      "應付費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:一年內到期長期負債": {
+    "canonical_name": "financial_statement:一年內到期長期負債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "一年內到期長期負債",
+    "description_en": "Current Portion of Long-term Debt",
+    "aliases": [
+      "一年內到期長期負債"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:其他流動負債": {
+    "canonical_name": "financial_statement:其他流動負債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "其他流動負債",
+    "description_en": "Other Current Liabilities",
+    "aliases": [
+      "其他流動負債"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:流動負債合計": {
+    "canonical_name": "financial_statement:流動負債合計",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "流動負債合計",
+    "description_en": "Total Current Liabilities",
+    "aliases": [
+      "流動負債合計"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:長期借款合計": {
+    "canonical_name": "financial_statement:長期借款合計",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "長期借款合計",
+    "description_en": "Total Long-term Loans",
+    "aliases": [
+      "長期借款合計"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應付公司債": {
+    "canonical_name": "financial_statement:應付公司債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應付公司債",
+    "description_en": "Bonds Payable",
+    "aliases": [
+      "應付公司債"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:長期應付款": {
+    "canonical_name": "financial_statement:長期應付款",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "長期應付款",
+    "description_en": "Long-term Payables",
+    "aliases": [
+      "長期應付款"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:遞延所得稅負債": {
+    "canonical_name": "financial_statement:遞延所得稅負債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "遞延所得稅負債",
+    "description_en": "Deferred Tax Liabilities",
+    "aliases": [
+      "遞延所得稅負債"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:負債總額": {
+    "canonical_name": "financial_statement:負債總額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "負債總額",
+    "description_en": "Total Liabilities",
+    "aliases": [
+      "負債總額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:普通股股本": {
+    "canonical_name": "financial_statement:普通股股本",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "普通股股本",
+    "description_en": "Common Stock Capital",
+    "aliases": [
+      "普通股股本"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:資本公積": {
+    "canonical_name": "financial_statement:資本公積",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "資本公積",
+    "description_en": "Capital Surplus",
+    "aliases": [
+      "資本公積"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:保留盈餘": {
+    "canonical_name": "financial_statement:保留盈餘",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "保留盈餘",
+    "description_en": "Retained Earnings",
+    "aliases": [
+      "保留盈餘"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:累積其他綜合損益": {
+    "canonical_name": "financial_statement:累積其他綜合損益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "累積其他綜合損益",
+    "description_en": "Accumulated Other Comprehensive Income",
+    "aliases": [
+      "累積其他綜合損益"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:庫藏股票": {
+    "canonical_name": "financial_statement:庫藏股票",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "庫藏股票",
+    "description_en": "Treasury Stock",
+    "aliases": [
+      "庫藏股票"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:權益總額": {
+    "canonical_name": "financial_statement:權益總額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "權益總額",
+    "description_en": "Total Equity",
+    "aliases": [
+      "權益總額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:負債及權益總額": {
+    "canonical_name": "financial_statement:負債及權益總額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "負債及權益總額",
+    "description_en": "Total Liabilities and Equity",
+    "aliases": [
+      "負債及權益總額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:銷貨收入": {
+    "canonical_name": "financial_statement:銷貨收入",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "銷貨收入",
+    "description_en": "Sales Revenue",
+    "aliases": [
+      "銷貨收入"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:銷貨成本": {
+    "canonical_name": "financial_statement:銷貨成本",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "銷貨成本",
+    "description_en": "Cost of Goods Sold",
+    "aliases": [
+      "銷貨成本"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:銷貨毛利": {
+    "canonical_name": "financial_statement:銷貨毛利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "銷貨毛利",
+    "description_en": "Gross Profit",
+    "aliases": [
+      "銷貨毛利"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:推銷費用": {
+    "canonical_name": "financial_statement:推銷費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "推銷費用",
+    "description_en": "Selling Expenses",
+    "aliases": [
+      "推銷費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:管理費用": {
+    "canonical_name": "financial_statement:管理費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "管理費用",
+    "description_en": "Administrative Expenses",
+    "aliases": [
+      "管理費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:研發費用": {
+    "canonical_name": "financial_statement:研發費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "研發費用",
+    "description_en": "R&D Expenses",
+    "aliases": [
+      "研發費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:營業費用合計": {
+    "canonical_name": "financial_statement:營業費用合計",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業費用合計",
+    "description_en": "Total Operating Expenses",
+    "aliases": [
+      "營業費用合計"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:營業淨利": {
+    "canonical_name": "financial_statement:營業淨利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業淨利",
+    "description_en": "Operating Net Income",
+    "aliases": [
+      "營業淨利"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:利息收入": {
+    "canonical_name": "financial_statement:利息收入",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "利息收入",
+    "description_en": "Interest Income",
+    "aliases": [
+      "利息收入"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:利息費用": {
+    "canonical_name": "financial_statement:利息費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "利息費用",
+    "description_en": "Interest Expense",
+    "aliases": [
+      "利息費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:處分投資損益": {
+    "canonical_name": "financial_statement:處分投資損益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "處分投資損益",
+    "description_en": "Gain/Loss on Investment Disposal",
+    "aliases": [
+      "處分投資損益"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:兌換損益": {
+    "canonical_name": "financial_statement:兌換損益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "兌換損益",
+    "description_en": "Foreign Exchange Gain/Loss",
+    "aliases": [
+      "兌換損益"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:營業外收支淨額": {
+    "canonical_name": "financial_statement:營業外收支淨額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業外收支淨額",
+    "description_en": "Net Non-operating Income",
+    "aliases": [
+      "營業外收支淨額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:稅前淨利": {
+    "canonical_name": "financial_statement:稅前淨利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "稅前淨利",
+    "description_en": "Income Before Tax",
+    "aliases": [
+      "稅前淨利"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:所得稅費用": {
+    "canonical_name": "financial_statement:所得稅費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "所得稅費用",
+    "description_en": "Income Tax Expense",
+    "aliases": [
+      "所得稅費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:稅後淨利": {
+    "canonical_name": "financial_statement:稅後淨利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "稅後淨利",
+    "description_en": "Net Income After Tax",
+    "aliases": [
+      "稅後淨利"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:停業單位損益": {
+    "canonical_name": "financial_statement:停業單位損益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "停業單位損益",
+    "description_en": "Gain/Loss from Discontinued Operations",
+    "aliases": [
+      "停業單位損益"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:非常損益": {
+    "canonical_name": "financial_statement:非常損益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "非常損益",
+    "description_en": "Extraordinary Gain/Loss",
+    "aliases": [
+      "非常損益"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:會計原則變動影響數": {
+    "canonical_name": "financial_statement:會計原則變動影響數",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "會計原則變動影響數",
+    "description_en": "Cumulative Effect of Accounting Changes",
+    "aliases": [
+      "會計原則變動影響數"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:本期淨利": {
+    "canonical_name": "financial_statement:本期淨利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "本期淨利",
+    "description_en": "Net Income",
+    "aliases": [
+      "本期淨利"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:每股盈餘": {
+    "canonical_name": "financial_statement:每股盈餘",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "每股盈餘",
+    "description_en": "Earnings Per Share",
+    "aliases": [
+      "每股盈餘"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:稀釋每股盈餘": {
+    "canonical_name": "financial_statement:稀釋每股盈餘",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "稀釋每股盈餘",
+    "description_en": "Diluted EPS",
+    "aliases": [
+      "稀釋每股盈餘"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:其他綜合損益": {
+    "canonical_name": "financial_statement:其他綜合損益",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "其他綜合損益",
+    "description_en": "Other Comprehensive Income",
+    "aliases": [
+      "其他綜合損益"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:綜合損益總額": {
+    "canonical_name": "financial_statement:綜合損益總額",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "綜合損益總額",
+    "description_en": "Total Comprehensive Income",
+    "aliases": [
+      "綜合損益總額"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:營業活動之現金流量": {
+    "canonical_name": "financial_statement:營業活動之現金流量",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業活動之現金流量",
+    "description_en": "Cash Flow from Operations",
+    "aliases": [
+      "營業活動之現金流量"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:本期淨利現金流": {
+    "canonical_name": "financial_statement:本期淨利現金流",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "本期淨利現金流",
+    "description_en": "Net Income Cash Flow",
+    "aliases": [
+      "本期淨利現金流"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:折舊費用": {
+    "canonical_name": "financial_statement:折舊費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "折舊費用",
+    "description_en": "Depreciation Expense",
+    "aliases": [
+      "折舊費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:攤銷費用": {
+    "canonical_name": "financial_statement:攤銷費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "攤銷費用",
+    "description_en": "Amortization Expense",
+    "aliases": [
+      "攤銷費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:壞帳費用": {
+    "canonical_name": "financial_statement:壞帳費用",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "壞帳費用",
+    "description_en": "Bad Debt Expense",
+    "aliases": [
+      "壞帳費用"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:存貨跌價損失": {
+    "canonical_name": "financial_statement:存貨跌價損失",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "存貨跌價損失",
+    "description_en": "Inventory Write-down",
+    "aliases": [
+      "存貨跌價損失"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應收帳款減少": {
+    "canonical_name": "financial_statement:應收帳款減少",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應收帳款減少",
+    "description_en": "Decrease in Accounts Receivable",
+    "aliases": [
+      "應收帳款減少"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:存貨減少": {
+    "canonical_name": "financial_statement:存貨減少",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "存貨減少",
+    "description_en": "Decrease in Inventory",
+    "aliases": [
+      "存貨減少"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應付帳款增加": {
+    "canonical_name": "financial_statement:應付帳款增加",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應付帳款增加",
+    "description_en": "Increase in Accounts Payable",
+    "aliases": [
+      "應付帳款增加"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:應付費用增加": {
+    "canonical_name": "financial_statement:應付費用增加",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "應付費用增加",
+    "description_en": "Increase in Accrued Expenses",
+    "aliases": [
+      "應付費用增加"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:收取之利息": {
+    "canonical_name": "financial_statement:收取之利息",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "收取之利息",
+    "description_en": "Interest Received",
+    "aliases": [
+      "收取之利息"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:收取之股利": {
+    "canonical_name": "financial_statement:收取之股利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "收取之股利",
+    "description_en": "Dividends Received",
+    "aliases": [
+      "收取之股利"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:支付之利息": {
+    "canonical_name": "financial_statement:支付之利息",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "支付之利息",
+    "description_en": "Interest Paid",
+    "aliases": [
+      "支付之利息"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:支付之所得稅": {
+    "canonical_name": "financial_statement:支付之所得稅",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "支付之所得稅",
+    "description_en": "Income Taxes Paid",
+    "aliases": [
+      "支付之所得稅"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:營業活動淨現金流入": {
+    "canonical_name": "financial_statement:營業活動淨現金流入",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "營業活動淨現金流入",
+    "description_en": "Net Cash from Operating Activities",
+    "aliases": [
+      "營業活動淨現金流入"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:取得固定資產": {
+    "canonical_name": "financial_statement:取得固定資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "取得固定資產",
+    "description_en": "Acquisition of Fixed Assets",
+    "aliases": [
+      "取得固定資產"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:處分固定資產": {
+    "canonical_name": "financial_statement:處分固定資產",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "處分固定資產",
+    "description_en": "Disposal of Fixed Assets",
+    "aliases": [
+      "處分固定資產"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:取得投資": {
+    "canonical_name": "financial_statement:取得投資",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "取得投資",
+    "description_en": "Acquisition of Investments",
+    "aliases": [
+      "取得投資"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:處分投資": {
+    "canonical_name": "financial_statement:處分投資",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "處分投資",
+    "description_en": "Disposal of Investments",
+    "aliases": [
+      "處分投資"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:取得子公司": {
+    "canonical_name": "financial_statement:取得子公司",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "取得子公司",
+    "description_en": "Acquisition of Subsidiaries",
+    "aliases": [
+      "取得子公司"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:投資活動淨現金流出": {
+    "canonical_name": "financial_statement:投資活動淨現金流出",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "投資活動淨現金流出",
+    "description_en": "Net Cash from Investing Activities",
+    "aliases": [
+      "投資活動淨現金流出"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:短期借款增加": {
+    "canonical_name": "financial_statement:短期借款增加",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "短期借款增加",
+    "description_en": "Increase in Short-term Loans",
+    "aliases": [
+      "短期借款增加"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:短期借款減少": {
+    "canonical_name": "financial_statement:短期借款減少",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "短期借款減少",
+    "description_en": "Decrease in Short-term Loans",
+    "aliases": [
+      "短期借款減少"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:長期借款增加": {
+    "canonical_name": "financial_statement:長期借款增加",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "長期借款增加",
+    "description_en": "Increase in Long-term Loans",
+    "aliases": [
+      "長期借款增加"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:長期借款減少": {
+    "canonical_name": "financial_statement:長期借款減少",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "長期借款減少",
+    "description_en": "Decrease in Long-term Loans",
+    "aliases": [
+      "長期借款減少"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:發行公司債": {
+    "canonical_name": "financial_statement:發行公司債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "發行公司債",
+    "description_en": "Issuance of Corporate Bonds",
+    "aliases": [
+      "發行公司債"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:償還公司債": {
+    "canonical_name": "financial_statement:償還公司債",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "償還公司債",
+    "description_en": "Repayment of Corporate Bonds",
+    "aliases": [
+      "償還公司債"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:發行股票": {
+    "canonical_name": "financial_statement:發行股票",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "發行股票",
+    "description_en": "Issuance of Shares",
+    "aliases": [
+      "發行股票"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:庫藏股買回": {
+    "canonical_name": "financial_statement:庫藏股買回",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "庫藏股買回",
+    "description_en": "Repurchase of Treasury Stock",
+    "aliases": [
+      "庫藏股買回"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:發放現金股利": {
+    "canonical_name": "financial_statement:發放現金股利",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "發放現金股利",
+    "description_en": "Payment of Cash Dividends",
+    "aliases": [
+      "發放現金股利"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:融資活動淨現金流入": {
+    "canonical_name": "financial_statement:融資活動淨現金流入",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "融資活動淨現金流入",
+    "description_en": "Net Cash from Financing Activities",
+    "aliases": [
+      "融資活動淨現金流入"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:匯率變動影響數": {
+    "canonical_name": "financial_statement:匯率變動影響數",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "匯率變動影響數",
+    "description_en": "Effect of Exchange Rate Changes",
+    "aliases": [
+      "匯率變動影響數"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:現金增加數": {
+    "canonical_name": "financial_statement:現金增加數",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "現金增加數",
+    "description_en": "Net Increase in Cash",
+    "aliases": [
+      "現金增加數"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:期初現金": {
+    "canonical_name": "financial_statement:期初現金",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "期初現金",
+    "description_en": "Beginning Cash Balance",
+    "aliases": [
+      "期初現金"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:期末現金": {
+    "canonical_name": "financial_statement:期末現金",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "期末現金",
+    "description_en": "Ending Cash Balance",
+    "aliases": [
+      "期末現金"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:自由現金流量比率": {
+    "canonical_name": "financial_statement:自由現金流量比率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "自由現金流量比率",
+    "description_en": "Free Cash Flow Ratio",
+    "aliases": [
+      "自由現金流量比率"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:現金流量充當比率": {
+    "canonical_name": "financial_statement:現金流量充當比率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "現金流量充當比率",
+    "description_en": "Cash Flow Adequacy Ratio",
+    "aliases": [
+      "現金流量充當比率"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  },
+  "financial_statement:現金再投資比率": {
+    "canonical_name": "financial_statement:現金再投資比率",
+    "category": "fundamental",
+    "frequency": "quarterly",
+    "dtype": "float",
+    "description_zh": "現金再投資比率",
+    "description_en": "Cash Reinvestment Ratio",
+    "aliases": [
+      "現金再投資比率"
+    ],
+    "example_values": null,
+    "valid_range": [
+      -100000.0,
+      200000.0
+    ]
+  }
+}
