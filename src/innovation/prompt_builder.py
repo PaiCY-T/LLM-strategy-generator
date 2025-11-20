@@ -6,7 +6,7 @@ Creates modification and creation prompts that incorporate:
 - Failure pattern extraction from historical failures
 - FinLab API constraints and requirements
 - Few-shot examples for guidance
-- Token budget management (<2000 tokens)
+- Token budget management (<100K tokens, well within Gemini 2.5 Flash 1M limit)
 
 Requirements: 3.1, 3.2, 3.3
 """
@@ -18,9 +18,9 @@ from pathlib import Path
 
 
 # Token budget constraints
-MAX_PROMPT_TOKENS = 2000  # Stay under 2000 tokens
+MAX_PROMPT_TOKENS = 100000  # Gemini 2.5 Flash actual limit: 1,048,576 tokens (using ~10% for safety)
 CHARS_PER_TOKEN = 4  # Rough estimate: 1 token ≈ 4 characters
-MAX_PROMPT_CHARS = MAX_PROMPT_TOKENS * CHARS_PER_TOKEN  # ~8000 chars
+MAX_PROMPT_CHARS = MAX_PROMPT_TOKENS * CHARS_PER_TOKEN  # ~400,000 chars
 
 # Liquidity requirement (million TWD)
 MIN_LIQUIDITY_MILLIONS = 150
@@ -376,11 +376,7 @@ def strategy(data):
     return position
 ```
 
-**Data Access** (Taiwan Stock Market):
-- Price: `data.get('price:收盤價')`, `data.get('price:開盤價')`, `data.get('price:成交量')`
-- Fundamentals: `data.get('fundamental_features:ROE稅後')`, `data.get('fundamental_features:本益比')`,
-  `data.get('fundamental_features:營收成長率')`, `data.get('fundamental_features:負債比率')`
-- Technical: Use pandas operations (`.rolling()`, `.shift()`, `.rank()`, etc.)
+{self._build_api_documentation_section()}
 
 **Critical Rules**:
 1. No external imports - use only built-in pandas/numpy operations
@@ -393,6 +389,88 @@ def strategy(data):
 - Code must be executable without syntax errors
 - Must handle edge cases (zero divisions, missing data)
 - Must be vectorized (no loops over stocks)"""
+
+    def _build_api_documentation_section(self) -> str:
+        """
+        Build complete API documentation section with ALL 160 fields.
+
+        Requirements:
+        - REQ-1: Complete field catalog in prompts
+        - Task 1.2: Python list format, usage examples, hallucination warning
+
+        Returns:
+            API documentation with:
+            - All 160 fields in Python list format
+            - data.get() usage examples
+            - Field name hallucination warning
+        """
+        # Load field catalog
+        catalog_path = Path(__file__).parent.parent.parent / "tests" / "fixtures" / "finlab_fields.json"
+        try:
+            with open(catalog_path, 'r', encoding='utf-8') as f:
+                field_catalog = json.load(f)
+        except FileNotFoundError:
+            # Fallback to basic documentation if catalog not available
+            return self._build_basic_api_documentation()
+
+        # Build field list in Python format
+        field_names = sorted(field_catalog.keys())
+
+        # Create Python list representation
+        field_list_lines = ["VALID_FIELDS = ["]
+        for field in field_names:
+            field_list_lines.append(f"    '{field}',")
+        field_list_lines.append("]")
+
+        field_list_str = "\n".join(field_list_lines)
+
+        # Build complete section
+        return f"""**Data Access** (Taiwan Stock Market):
+
+**CRITICAL WARNING**: Use ONLY these exact field names from the list below.
+- Do NOT invent, create, or hallucinate field names
+- Do NOT modify existing field names
+- Using invalid or non-existent field names will cause runtime errors and strategy failure
+
+**Complete Field Catalog** (160 verified fields):
+
+Use only field names from the list below. Any field not in this list is INVALID.
+
+```python
+{field_list_str}
+```
+
+**Usage Examples**:
+
+```python
+# Example 1: Get closing price
+close_price = data.get('price:收盤價')
+
+# Example 2: Get ROE with shift to avoid look-ahead bias
+roe = data.get('fundamental_features:ROE').shift(1)
+
+# Example 3: Get financial statement data
+cash = data.get('financial_statement:現金')
+
+# Example 4: Combine multiple fields
+revenue = data.get('fundamental_features:營業收入').shift(1)
+assets = data.get('fundamental_features:總資產').shift(1)
+roa = revenue / assets
+```
+
+**Field Name Validation Rules**:
+- ✅ ONLY use field names from VALID_FIELDS list above
+- ✅ Must use exact field names (case-sensitive, including category prefix)
+- ❌ Do NOT create or invent new field names
+- ❌ Do NOT modify field names (e.g., changing 'price:收盤價' to 'price:close')
+- ❌ Invalid fields will cause KeyError at runtime and strategy rejection"""
+
+    def _build_basic_api_documentation(self) -> str:
+        """Fallback API documentation if field catalog not available."""
+        return """**Data Access** (Taiwan Stock Market):
+- Price: `data.get('price:收盤價')`, `data.get('price:開盤價')`, `data.get('price:成交股數')`
+- Fundamentals: `data.get('fundamental_features:ROE稅後')`, `data.get('fundamental_features:本益比')`
+- Technical: Use pandas operations (`.rolling()`, `.shift()`, `.rank()`, etc.)"""
 
     def _format_failure_avoidance(self, failure_list: List[str]) -> str:
         """Format failure patterns to avoid."""
@@ -428,7 +506,7 @@ def strategy(data):
     quality_growth = (roe > 15) & (growth > 0.1)
 
     # Add liquidity filter
-    volume = data.get('price:成交量')
+    volume = data.get('price:成交股數')
     liquidity = volume.rolling(20).mean() > 150_000_000
 
     return quality_growth & liquidity
@@ -460,7 +538,7 @@ def strategy(data):
     ranked = value_score.rank(pct=True, ascending=False)
 
     # Liquidity filter
-    volume = data.get('price:成交量')
+    volume = data.get('price:成交股數')
     liquidity = volume.rolling(20).mean() > 150_000_000
 
     return (ranked > 0.8) & liquidity
