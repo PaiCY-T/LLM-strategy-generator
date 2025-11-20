@@ -331,3 +331,127 @@ class TestPromptBuilderIntegration:
         # Basic structure checks
         assert len(prompt) > 1000, "Prompt too short"
         assert "def strategy(data):" in prompt, "Missing strategy function signature"
+
+
+# ============================================================================
+# Task 1.2.5 Tests - System Prompt with Chain of Thought
+# ============================================================================
+
+class TestSystemPrompt:
+    """Tests for Task 1.2.5: System prompt with Chain of Thought guidance."""
+
+    def test_system_prompt_exists(self, prompt_builder):
+        """
+        Test that system prompt section exists in creation prompt.
+
+        Requirements:
+        - Task 1.2.5: Add system prompt as first section
+        - REQ-1: Missing element from audit
+
+        Verifies:
+        - System prompt is present in creation prompt
+        - System prompt appears before other sections
+        """
+        prompt = prompt_builder.build_creation_prompt(
+            champion_approach="Momentum-based with ROE filter"
+        )
+
+        # System prompt should be the very first section (first ~500 chars)
+        first_section = prompt[:500]
+
+        # Check for system prompt markers - should be explicit
+        assert "# System Prompt" in prompt or "## System Prompt" in prompt, \
+            "System prompt section header should be present"
+
+        # Check it appears early
+        assert ("expert" in first_section.lower() or "specialist" in first_section.lower()), \
+            "System prompt should define LLM expertise/role in first section"
+
+    def test_system_prompt_includes_cot(self, prompt_builder):
+        """
+        Test that system prompt includes Chain of Thought instructions.
+
+        Requirements:
+        - Task 1.2.5: Add Chain of Thought workflow instructions
+
+        Verifies:
+        - CoT workflow steps are present
+        - Multiple step indicators (numbered or structured)
+        - Workflow guides LLM through structured thinking
+        """
+        prompt = prompt_builder.build_creation_prompt(
+            champion_approach="Momentum-based with ROE filter"
+        )
+
+        # Check for Chain of Thought indicators
+        cot_indicators = [
+            "step" in prompt.lower() and ("1" in prompt or "2" in prompt),
+            "analyze" in prompt.lower() and "plan" in prompt.lower(),
+            "workflow" in prompt.lower() or "process" in prompt.lower(),
+        ]
+
+        assert sum(cot_indicators) >= 2, \
+            "System prompt should include Chain of Thought workflow with structured steps"
+
+    def test_system_prompt_defines_persona(self, prompt_builder):
+        """
+        Test that system prompt clearly defines LLM persona and goals.
+
+        Requirements:
+        - Task 1.2.5: Define LLM persona and primary goals
+
+        Verifies:
+        - Clear role definition (e.g., "Expert Quantitative Trading Strategy Developer")
+        - Primary responsibilities listed
+        - Critical rules or constraints mentioned
+        """
+        prompt = prompt_builder.build_creation_prompt(
+            champion_approach="Momentum-based with ROE filter"
+        )
+
+        first_section = prompt[:2000]
+
+        # Check for persona definition
+        persona_indicators = [
+            "expert" in first_section.lower(),
+            "developer" in first_section.lower() or "specialist" in first_section.lower(),
+            "trading" in first_section.lower() or "strategy" in first_section.lower(),
+            "responsibilities" in first_section.lower() or "primary" in first_section.lower(),
+        ]
+
+        assert sum(persona_indicators) >= 3, \
+            "System prompt should clearly define LLM persona with role and responsibilities"
+
+    def test_system_prompt_is_first_section(self, prompt_builder):
+        """
+        Test that system prompt appears before other sections.
+
+        Requirements:
+        - Task 1.2.5: Integrate system prompt as first section
+
+        Verifies:
+        - System prompt comes before API documentation
+        - System prompt comes before champion context
+        - System prompt is at the very beginning
+        """
+        prompt = prompt_builder.build_creation_prompt(
+            champion_approach="Momentum-based with ROE filter"
+        )
+
+        # Find positions of different sections
+        system_prompt_keywords = ["expert", "persona", "role", "responsibilities"]
+        api_doc_position = prompt.lower().find("data access") if "data access" in prompt.lower() else prompt.lower().find("valid_fields")
+        champion_position = prompt.lower().find("champion approach")
+
+        # System prompt indicators should appear before API docs and champion
+        system_positions = [prompt.lower().find(kw) for kw in system_prompt_keywords if kw in prompt.lower()]
+
+        if system_positions and api_doc_position > 0:
+            min_system_pos = min(pos for pos in system_positions if pos >= 0)
+            assert min_system_pos < api_doc_position, \
+                "System prompt should appear before API documentation"
+
+        if system_positions and champion_position > 0:
+            min_system_pos = min(pos for pos in system_positions if pos >= 0)
+            assert min_system_pos < champion_position, \
+                "System prompt should appear before champion context"
