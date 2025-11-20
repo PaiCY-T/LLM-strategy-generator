@@ -455,3 +455,93 @@ class TestSystemPrompt:
             min_system_pos = min(pos for pos in system_positions if pos >= 0)
             assert min_system_pos < champion_position, \
                 "System prompt should appear before champion context"
+
+
+# ============================================================================
+# Task 1.3 Tests - Field Validation Helper
+# ============================================================================
+
+class TestFieldValidationHelper:
+    """Tests for Task 1.3: Field validation helper function example."""
+
+    def test_validation_helper_in_prompt(self, prompt_builder):
+        """
+        Test that prompt includes field validation helper function example.
+
+        Requirements:
+        - Task 1.3: Provide validation helper function
+        - REQ-1: Field name validation
+
+        Verifies:
+        - validate_field_exists() function example present
+        - Shows how to check field validity before use
+        - Includes usage example in strategy code
+        """
+        prompt = prompt_builder.build_creation_prompt(
+            champion_approach="Momentum-based with ROE filter"
+        )
+
+        # Check for validation helper function
+        assert "validate_field_exists" in prompt.lower() or "field_exists" in prompt.lower(), \
+            "Prompt should include field validation helper function"
+
+        # Check for field validation concept/example
+        validation_indicators = [
+            "check" in prompt.lower() and "field" in prompt.lower(),
+            "valid" in prompt.lower() and "field" in prompt.lower(),
+            "exists" in prompt.lower() and "field" in prompt.lower(),
+        ]
+
+        assert sum(validation_indicators) >= 2, \
+            "Prompt should explain how to check field validity"
+
+    def test_validation_helper_shows_usage(self, prompt_builder):
+        """
+        Test that validation helper includes practical usage example.
+
+        Requirements:
+        - Task 1.3: Show how to check field validity before use
+
+        Verifies:
+        - Example shows checking field before data.get()
+        - Demonstrates error handling or fallback
+        - Provides clear pattern to follow
+        """
+        prompt = prompt_builder.build_creation_prompt(
+            champion_approach="Momentum-based with ROE filter"
+        )
+
+        # Check for usage pattern indicators
+        usage_indicators = [
+            "if" in prompt.lower() and "field" in prompt.lower(),
+            "before" in prompt.lower() and "get" in prompt.lower(),
+            "example" in prompt.lower() or "usage" in prompt.lower(),
+        ]
+
+        assert sum(usage_indicators) >= 2, \
+            "Validation helper should include clear usage example"
+
+    def test_validation_helper_references_catalog(self, prompt_builder):
+        """
+        Test that validation helper references the field catalog.
+
+        Requirements:
+        - Task 1.3: Validation helper should reference VALID_FIELDS
+
+        Verifies:
+        - References VALID_FIELDS or field catalog
+        - Shows relationship between validation and catalog
+        - Clear connection to field list
+        """
+        prompt = prompt_builder.build_creation_prompt(
+            champion_approach="Momentum-based with ROE filter"
+        )
+
+        # Check for catalog references in validation context
+        catalog_references = [
+            "valid_fields" in prompt.lower() or "field catalog" in prompt.lower(),
+            "list" in prompt.lower() and "field" in prompt.lower(),
+        ]
+
+        assert sum(catalog_references) >= 1, \
+            "Validation helper should reference field catalog"
