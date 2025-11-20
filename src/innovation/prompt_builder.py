@@ -251,7 +251,7 @@ class PromptBuilder:
 
         try:
             with open(path, 'r', encoding='utf-8') as f:
-                patterns = json.load(f)
+                patterns: List[Dict[str, Any]] = json.load(f)
 
             # Cache for future use
             self._cached_failure_patterns = patterns
@@ -394,35 +394,34 @@ def strategy(data):
         """
         Build complete API documentation section with ALL 160 fields.
 
+        This method creates comprehensive API documentation that includes:
+        1. Complete field catalog (160 fields) in Python list format
+        2. Usage examples demonstrating data.get() with proper shift() usage
+        3. Field name hallucination warnings to prevent invalid field usage
+
         Requirements:
-        - REQ-1: Complete field catalog in prompts
+        - REQ-1: Complete field catalog in prompts (Critical Fix #1)
         - Task 1.2: Python list format, usage examples, hallucination warning
 
         Returns:
-            API documentation with:
-            - All 160 fields in Python list format
-            - data.get() usage examples
-            - Field name hallucination warning
+            str: Complete API documentation section with field catalog, examples,
+                 and validation warnings. Falls back to basic documentation if
+                 field catalog file is not available.
+
+        Example output structure:
+            **Data Access** (Taiwan Stock Market):
+            **CRITICAL WARNING**: Use ONLY these exact field names...
+            VALID_FIELDS = ['price:收盤價', 'price:開盤價', ...]
+            **Usage Examples**: data.get('price:收盤價'), ...
+            **Field Name Validation Rules**: Do NOT invent...
         """
-        # Load field catalog
-        catalog_path = Path(__file__).parent.parent.parent / "tests" / "fixtures" / "finlab_fields.json"
-        try:
-            with open(catalog_path, 'r', encoding='utf-8') as f:
-                field_catalog = json.load(f)
-        except FileNotFoundError:
-            # Fallback to basic documentation if catalog not available
+        # Load field catalog from fixtures
+        field_catalog = self._load_field_catalog()
+        if not field_catalog:
             return self._build_basic_api_documentation()
 
-        # Build field list in Python format
-        field_names = sorted(field_catalog.keys())
-
-        # Create Python list representation
-        field_list_lines = ["VALID_FIELDS = ["]
-        for field in field_names:
-            field_list_lines.append(f"    '{field}',")
-        field_list_lines.append("]")
-
-        field_list_str = "\n".join(field_list_lines)
+        # Build Python list representation of all fields
+        field_list_str = self._format_field_list_as_python(field_catalog)
 
         # Build complete section
         return f"""**Data Access** (Taiwan Stock Market):
@@ -465,8 +464,86 @@ roa = revenue / assets
 - ❌ Do NOT modify field names (e.g., changing 'price:收盤價' to 'price:close')
 - ❌ Invalid fields will cause KeyError at runtime and strategy rejection"""
 
+    def _load_field_catalog(self) -> Optional[Dict[str, Any]]:
+        """
+        Load field catalog from JSON fixture file.
+
+        The field catalog contains metadata for all 160 valid fields:
+        - 7 price fields
+        - 52 fundamental_features fields
+        - 101 financial_statement fields
+
+        Returns:
+            Optional[Dict[str, Any]]: Field catalog dictionary, or None if file not found.
+
+        Example return:
+            {
+                "price:收盤價": {"category": "price", "dtype": "float", ...},
+                "fundamental_features:ROE": {...},
+                ...
+            }
+        """
+        catalog_path = Path(__file__).parent.parent.parent / "tests" / "fixtures" / "finlab_fields.json"
+        try:
+            with open(catalog_path, 'r', encoding='utf-8') as f:
+                catalog: Dict[str, Any] = json.load(f)
+                return catalog
+        except FileNotFoundError:
+            return None
+        except json.JSONDecodeError:
+            return None
+
+    def _format_field_list_as_python(self, field_catalog: Dict[str, Any]) -> str:
+        """
+        Format field catalog as Python list string.
+
+        Converts field catalog dictionary into a Python list representation
+        suitable for inclusion in prompts. Fields are sorted alphabetically
+        for consistency.
+
+        Args:
+            field_catalog: Dictionary of field metadata keyed by field name
+
+        Returns:
+            str: Python list representation with proper formatting:
+                 VALID_FIELDS = [
+                     'field1',
+                     'field2',
+                     ...
+                 ]
+
+        Example:
+            >>> catalog = {"price:收盤價": {...}, "price:開盤價": {...}}
+            >>> result = builder._format_field_list_as_python(catalog)
+            >>> "VALID_FIELDS = [" in result
+            True
+            >>> "'price:收盤價'," in result
+            True
+        """
+        field_names = sorted(field_catalog.keys())
+
+        # Create Python list representation
+        field_list_lines = ["VALID_FIELDS = ["]
+        for field in field_names:
+            field_list_lines.append(f"    '{field}',")
+        field_list_lines.append("]")
+
+        return "\n".join(field_list_lines)
+
     def _build_basic_api_documentation(self) -> str:
-        """Fallback API documentation if field catalog not available."""
+        """
+        Fallback API documentation when field catalog is unavailable.
+
+        Provides minimal API documentation with a few example fields.
+        This is used when the field catalog JSON file cannot be loaded.
+
+        Returns:
+            str: Basic API documentation with example fields
+
+        Note:
+            This fallback should rarely be used. The main _build_api_documentation_section()
+            should load the complete 160-field catalog from fixtures.
+        """
         return """**Data Access** (Taiwan Stock Market):
 - Price: `data.get('price:收盤價')`, `data.get('price:開盤價')`, `data.get('price:成交股數')`
 - Fundamentals: `data.get('fundamental_features:ROE稅後')`, `data.get('fundamental_features:本益比')`
