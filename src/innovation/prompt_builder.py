@@ -128,16 +128,19 @@ class PromptBuilder:
         if failure_patterns is None:
             failure_patterns = self.extract_failure_patterns()
 
-        # Build prompt sections - System Prompt MUST be first
+        # Build prompt sections - Phase 1.1 Golden Template ordering
+        # PART 1: Golden Template (framework FIRST)
+        # PART 2: Simplified CoT (how to use)
+        # PART 3: Task context (what to do)
+        # PART 4: APPENDIX (reference materials LAST)
         prompt_parts = [
-            self._build_system_prompt(),  # NEW: System prompt as first section
-            self._get_creation_header(),
+            self._build_golden_template(),  # PART 1: Framework FIRST
+            self._build_simplified_cot(),   # PART 2: How to use template
+            self._get_creation_header(),    # PART 3: Task description
             self._format_champion_inspiration(champion_approach),
             self._format_innovation_directive(innovation_directive),
-            self._format_constraints(),
             self._format_failure_avoidance(self._format_failure_patterns(failure_patterns[:5])),
-            self._get_creation_example(),
-            self._get_output_format()
+            self._build_appendix()  # PART 4: Reference materials LAST (160 fields, API, validation)
         ]
 
         # Combine and truncate if needed
@@ -671,6 +674,141 @@ def strategy(data):
 ```
 
 **Best Practice**: Always check field validity before calling `data.get()` to prevent KeyError at runtime."""
+
+    def _build_golden_template(self) -> str:
+        """
+        Build Golden Template section with immutable code structure.
+
+        Creates the core framework that LLM must fill, with clear START/END markers
+        and immutable backtest execution section.
+
+        Phase 1.1 improvement: Framework FIRST to prevent LLM from forgetting sim() call.
+
+        Returns:
+            str: Golden Template section (~300 tokens)
+        """
+        return """# ===================================================================
+# PART 1: GOLDEN TEMPLATE - Your Code Framework
+# ===================================================================
+
+**CRITICAL RULE**: You MUST use this EXACT template structure. Do NOT deviate.
+
+```python
+def strategy(data):
+    \"\"\"Trading strategy logic.\"\"\"
+    # ==========================================================
+    # START: Your strategy logic EXCLUSIVELY goes in this block
+    #
+    # Instructions (NO concrete code examples - think for yourself):
+    # 1. Load required data fields using data.get('field_name')
+    # 2. Calculate technical indicators (e.g., moving averages, ratios)
+    # 3. Define entry/exit conditions (boolean filters or scoring logic)
+    # 4. Handle NaN values with .fillna(False) or .fillna(0)
+    # 5. Return a boolean position series
+    #
+    # ==========================================================
+
+    # Your code here (replace this comment with your strategy logic)
+
+    # ==========================================================
+    # END: Your strategy logic
+    # ==========================================================
+
+    return position
+
+# -----------------------------------------------------------------------
+# Golden Template: Backtest Execution Section
+# DO NOT MODIFY ANYTHING BELOW THIS LINE - THIS PART IS IMMUTABLE
+# -----------------------------------------------------------------------
+position = strategy(data)
+position = position.loc[start_date:end_date]
+report = sim(position, fee_ratio=fee_ratio, tax_ratio=tax_ratio, resample="M")
+```
+
+**Your Task**: Fill ONLY the section between START and END markers.
+
+**Environment Variables** (provided by FinLab platform):
+- `data`: DataFrame with all market data fields (see PART 4: APPENDIX for field catalog)
+- `start_date`, `end_date`: Backtest date range
+- `fee_ratio`, `tax_ratio`: Transaction costs
+- `sim()`: Backtesting simulation function
+
+**Output Structure**:
+Your output should be ONLY the Python code shown above, with the section between START/END markers filled with your strategy logic.
+"""
+
+    def _build_simplified_cot(self) -> str:
+        """
+        Build simplified Chain of Thought guidance focused on template filling.
+
+        Phase 1.1 improvement: Concrete 4-step process instead of abstract 5-step.
+        Framework-oriented approach that references APPENDIX for details.
+
+        Returns:
+            str: Simplified CoT section (~200 tokens)
+        """
+        return """# ===================================================================
+# PART 2: HOW TO USE THE TEMPLATE - Simplified 4-Step Process
+# ===================================================================
+
+## Step 1: Understand the Golden Template Structure
+- **Part 1**: Your strategy logic (between START/END markers only)
+- **Part 2**: Backtest execution (NEVER modify - already complete)
+- **Your job**: Fill Part 1 with strategy logic
+
+## Step 2: Identify Required Data Fields
+- **Question**: What market data do you need for this strategy?
+- **Action**: Check **PART 4: APPENDIX** section below for the complete field catalog
+- **Rule**: Copy field names EXACTLY as shown in the catalog (e.g., 'price:收盤價')
+
+## Step 3: Plan Your Strategy Logic (Pseudocode First)
+- **Entry logic**: When should the strategy buy stocks?
+- **Exit logic**: When should it sell or avoid stocks?
+- **Risk filters**: What quality/liquidity constraints apply?
+- **Tip**: Write pseudocode or comments before coding
+
+## Step 4: Implement Inside the Template
+- **Convert** Step 3 pseudocode to Python code
+- **Use** data.get(), .shift(1) for lag, .fillna() for NaN
+- **Place** your code EXCLUSIVELY between START/END markers
+- **Return** a boolean position series
+"""
+
+    def _build_appendix(self) -> str:
+        """
+        Build APPENDIX section with reference materials.
+
+        Phase 1.1 improvement: Consolidate all reference materials at the END
+        so LLM focuses on framework first, consults references when needed.
+
+        Consolidates:
+        - Complete field catalog (160 fields from Phase 1.1)
+        - API documentation (data.get() usage)
+        - Validation helpers (field checking examples)
+
+        Returns:
+            str: Complete APPENDIX section (~2,600 tokens)
+        """
+        # Get field catalog and API docs
+        api_docs = self._build_api_documentation_section()
+        validation_helpers = self._build_validation_helpers()
+
+        return f"""# ===================================================================
+# PART 4: APPENDIX - Reference Materials
+# ===================================================================
+
+**Purpose**: Comprehensive reference for field names, API usage, and validation.
+**When to use**: Consult this section when selecting data fields or validating field names.
+
+## A. Complete Field Catalog & API Documentation
+
+{api_docs}
+
+## B. Field Validation Helpers
+
+{validation_helpers}
+
+**End of APPENDIX** - Return to your strategy implementation in the Golden Template."""
 
     def _build_basic_api_documentation(self) -> str:
         """

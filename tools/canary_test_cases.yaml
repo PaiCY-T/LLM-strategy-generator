@@ -1,0 +1,75 @@
+# Tier2 Canary Test Cases for Phase 1.1
+# ======================================
+# 3 cases × 3 runs = 9 tests
+# Overall threshold: >60% success rate
+
+canary_tests:
+  simple:
+    name: "5日20日移動平均交叉動量策略"
+    description: "Create a momentum strategy using 5-day and 20-day moving average crossover"
+    complexity: low
+    expected_success: 0.80  # >80%
+    champion_approach: |
+      Baseline momentum strategy:
+      - Use closing price moving averages (5-day and 20-day)
+      - Generate buy signal when 5MA crosses above 20MA
+      - Generate sell signal when 5MA crosses below 20MA
+      - Simple trend-following logic
+    innovation_directive: |
+      Create a momentum crossover strategy using short and long moving averages.
+      Keep it simple and focus on clear entry/exit signals.
+
+  medium:
+    name: "ROE+營收成長+價格動量組合策略"
+    description: "Multi-factor strategy combining ROE, revenue growth, and price momentum"
+    complexity: medium
+    expected_success: 0.60  # >60%
+    champion_approach: |
+      Champion multi-factor approach:
+      - Quality filter: ROE > 10%
+      - Growth filter: Revenue YoY growth > 0%
+      - Momentum filter: 20-day price change > 0%
+      - Combine all three factors with AND logic
+      - Rank by composite score
+    innovation_directive: |
+      Combine fundamental quality (ROE), growth (revenue), and momentum factors.
+      Use at least 3 different data categories from the field catalog.
+
+  complex:
+    name: "產業別動態權重sector rotation策略"
+    description: "Dynamic sector rotation with industry-relative momentum"
+    complexity: high
+    expected_success: 0.40  # >40%
+    champion_approach: |
+      Advanced sector rotation:
+      - Calculate industry-relative momentum scores
+      - Identify top-performing sectors dynamically
+      - Within top sectors, select best stocks by fundamentals
+      - Rebalance when sector leadership changes
+      - Use industry classification for grouping
+    innovation_directive: |
+      Create a sector rotation strategy that dynamically allocates to best-performing industries.
+      Select stocks within winning sectors based on fundamentals.
+      This requires cross-sectional ranking and industry grouping logic.
+
+# Test configuration
+test_config:
+  runs_per_case: 3
+  total_tests: 9
+  overall_threshold: 0.60
+  model: "google/gemini-2.5-flash"
+
+# Expected outcomes
+expected_outcomes:
+  simple:
+    min_success: 2  # out of 3 runs
+    target_rate: 0.80
+  medium:
+    min_success: 2  # out of 3 runs
+    target_rate: 0.60
+  complex:
+    min_success: 1  # out of 3 runs
+    target_rate: 0.40
+  overall:
+    min_success: 6  # out of 9 total
+    target_rate: 0.60
