@@ -108,8 +108,7 @@ class TestPromptAntiPatternGuidance:
         from src.innovation.prompt_builder import PromptBuilder
         builder = PromptBuilder()
         prompt = builder.build_creation_prompt(
-            strategy_goal="test",
-            market_context="test"
+            champion_approach="test momentum strategy"
         )
 
         # Assert
@@ -127,8 +126,7 @@ class TestPromptAntiPatternGuidance:
         from src.innovation.prompt_builder import PromptBuilder
         builder = PromptBuilder()
         prompt = builder.build_creation_prompt(
-            strategy_goal="test",
-            market_context="test"
+            champion_approach="test momentum strategy"
         )
 
         # Assert - should show is_largest() as correct pattern

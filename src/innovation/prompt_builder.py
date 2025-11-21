@@ -677,64 +677,109 @@ def strategy(data):
 
     def _build_golden_template(self) -> str:
         """
-        Build Golden Template section with immutable code structure.
+        Build Golden Template with FIXED structure + multi-type micro-examples.
 
-        Creates the core framework that LLM must fill, with clear START/END markers
-        and immutable backtest execution section.
+        Phase 1.1.2: Show the fixed code pattern with multiple strategy types
+        to avoid LLM being constrained to one factor type.
 
-        Phase 1.1 improvement: Framework FIRST to prevent LLM from forgetting sim() call.
+        Fixed structure (MUST follow):
+        1. from finlab import data, backtest
+        2. data.get() for loading
+        3. conditions with &
+        4. .is_largest(N) or .is_smallest(N)
+        5. backtest.sim()
 
         Returns:
-            str: Golden Template section (~300 tokens)
+            str: Golden Template section with multi-type examples (~500 tokens)
         """
         return """# ===================================================================
-# PART 1: GOLDEN TEMPLATE - Your Code Framework
+# PART 1: GOLDEN TEMPLATE - Fixed Structure, Free Logic
 # ===================================================================
 
-**CRITICAL RULE**: You MUST use this EXACT template structure. Do NOT deviate.
+**CRITICAL**: Output ONLY raw Python code. NO markdown, NO imports, NO function definitions.
+
+## ⛔ STRICT FIELD WHITELIST - USE ONLY THESE EXACT FIELD NAMES:
 
 ```python
-def strategy(data):
-    \"\"\"Trading strategy logic.\"\"\"
-    # ==========================================================
-    # START: Your strategy logic EXCLUSIVELY goes in this block
-    #
-    # Instructions (NO concrete code examples - think for yourself):
-    # 1. Load required data fields using data.get('field_name')
-    # 2. Calculate technical indicators (e.g., moving averages, ratios)
-    # 3. Define entry/exit conditions (boolean filters or scoring logic)
-    # 4. Handle NaN values with .fillna(False) or .fillna(0)
-    # 5. Return a boolean position series
-    #
-    # ==========================================================
+# === PRICE DATA (no shift needed) ===
+close = data.get('price:收盤價')
+vol = data.get('price:成交股數')
+high = data.get('price:最高價')
+low = data.get('price:最低價')
+open_price = data.get('price:開盤價')
 
-    # Your code here (replace this comment with your strategy logic)
+# === FUNDAMENTALS (MUST add .shift(1) to avoid look-ahead!) ===
+roe = data.get('fundamental_features:ROE稅後').shift(1)       # ROE = ROE稅後
+eps = data.get('fundamental_features:每股稅後淨利').shift(1)   # EPS = 每股稅後淨利
+margin = data.get('fundamental_features:營業利益率').shift(1)  # Profit Margin
+debt = data.get('fundamental_features:負債比率').shift(1)      # Debt Ratio
 
-    # ==========================================================
-    # END: Your strategy logic
-    # ==========================================================
+# === VALUATION RATIOS (MUST add .shift(1)) ===
+pb = data.get('price_earning_ratio:股價淨值比').shift(1)       # P/B Ratio
+pe = data.get('price_earning_ratio:本益比').shift(1)           # P/E Ratio
 
-    return position
+# === MONTHLY REVENUE (MUST add .shift(1)) ===
+rev = data.get('monthly_revenue:當月營收').shift(1)             # Monthly Revenue
+rev_yoy = data.get('monthly_revenue:去年同月增減(%)').shift(1)  # Revenue YoY Growth %
+```
 
-# -----------------------------------------------------------------------
-# Golden Template: Backtest Execution Section
-# DO NOT MODIFY ANYTHING BELOW THIS LINE - THIS PART IS IMMUTABLE
-# -----------------------------------------------------------------------
-position = strategy(data)
+⚠️ **NOTE**: Only use the fields listed above! Do NOT use institutional investor fields as they are not available.
+
+## ❌ FORBIDDEN - These field names DO NOT EXIST:
+- `fundamental_features:ROE` ← WRONG! Use `fundamental_features:ROE稅後`
+- `fundamental_features:本益比` ← WRONG! Use `price_earning_ratio:本益比`
+- `fundamental_features:股價淨值比` ← WRONG! Use `price_earning_ratio:股價淨值比`
+- `fundamental_features:營業收入` ← WRONG! Use `monthly_revenue:當月營收`
+- `institutional_investors_trading_summary:*` ← WRONG! This category doesn't exist!
+- `institutional_investors:*` ← WRONG! This category doesn't exist!
+- ANY field name not in the whitelist above!
+
+## ❌ FORBIDDEN - Method parameters that DO NOT EXIST:
+- `is_largest(N, by=...)` ← WRONG! Only takes ONE argument: `is_largest(N)`
+- `is_smallest(N, criterion=...)` ← WRONG! Only takes ONE argument: `is_smallest(N)`
+
+## ❌ FORBIDDEN - Anti-patterns that cause DataFrame comparison errors:
+- `.where(df == df.max())` ← WRONG! Causes "Can only compare identically-labeled DataFrame" error
+- `.where(condition).fillna(False)` followed by complex comparison ← WRONG! Avoid this pattern
+- `position = position.where(rank == rank.max())` ← WRONG! Don't use .where() for selection
+
+### ✅ CORRECT pattern for top-N selection:
+```python
+# GOOD: Simple boolean conditions with is_largest()
+cond1 = (close > close.average(20))
+cond2 = (roe > 10)
+position = (cond1 & cond2).is_largest(10)  # This is the CORRECT pattern!
+```
+
+## Fixed Code Structure:
+
+```python
+# === STEP 1: Load Data (MUST use exact field names from APPENDIX) ===
+close = data.get('price:收盤價')
+vol = data.get('price:成交股數')
+
+# === STEP 2: Calculate Indicators ===
+sma20 = close.average(20)
+
+# === STEP 3: Define Conditions ===
+cond1 = (close > sma20)
+cond2 = (vol.average(5) >= 50*1000)
+
+# === STEP 4: Combine & Select ===
+position = (cond1 & cond2).is_largest(10)  # ONLY one argument!
+
+# === STEP 5: Filter & Backtest (FIXED - copy exactly) ===
 position = position.loc[start_date:end_date]
 report = sim(position, fee_ratio=fee_ratio, tax_ratio=tax_ratio, resample="M")
 ```
 
-**Your Task**: Fill ONLY the section between START and END markers.
-
-**Environment Variables** (provided by FinLab platform):
-- `data`: DataFrame with all market data fields (see PART 4: APPENDIX for field catalog)
-- `start_date`, `end_date`: Backtest date range
-- `fee_ratio`, `tax_ratio`: Transaction costs
-- `sim()`: Backtesting simulation function
-
-**Output Structure**:
-Your output should be ONLY the Python code shown above, with the section between START/END markers filled with your strategy logic.
+## MUST Rules:
+1. **NO imports** - `data` and `sim` are already provided
+2. **NO def/class** - raw code only
+3. **MUST have**: `position = ...` and `report = sim(...)`
+4. **MUST copy exactly**: `position = position.loc[start_date:end_date]`
+5. **Output**: Raw Python code only, absolutely NO markdown code blocks
+6. **FIELD NAMES**: Use ONLY fields from the WHITELIST above! NO EXCEPTIONS!
 """
 
     def _build_simplified_cot(self) -> str:
@@ -758,8 +803,8 @@ Your output should be ONLY the Python code shown above, with the section between
 
 ## Step 2: Identify Required Data Fields
 - **Question**: What market data do you need for this strategy?
-- **Action**: Check **PART 4: APPENDIX** section below for the complete field catalog
-- **Rule**: Copy field names EXACTLY as shown in the catalog (e.g., 'price:收盤價')
+- **Action**: Use ONLY fields from the **WHITELIST** in PART 1 above!
+- **Rule**: Copy field names EXACTLY as shown (e.g., 'price:收盤價', 'fundamental_features:ROE稅後')
 
 ## Step 3: Plan Your Strategy Logic (Pseudocode First)
 - **Entry logic**: When should the strategy buy stocks?
