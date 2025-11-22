@@ -1,0 +1,363 @@
+"""UnifiedLoop - Unified Learning Loop Architecture.
+
+Integrates the best features of AutonomousLoop (Template Mode, JSON Parameter Output)
+and LearningLoop (Learning Feedback, Modular Architecture) into a single unified architecture.
+
+This module implements the Facade Pattern, providing a unified API that internally
+delegates to LearningLoop while supporting Template Mode through TemplateIterationExecutor.
+
+Design Philosophy:
+    - Composition over Inheritance: UnifiedLoop wraps LearningLoop
+    - Strategy Pattern: Switches between StandardIterationExecutor and TemplateIterationExecutor
+    - Backward Compatibility: Provides AutonomousLoop-compatible API
+    - Dependency Injection: All components configurable
+
+Example Usage:
+    ```python
+    from src.learning.unified_loop import UnifiedLoop
+
+    # Template Mode with JSON Parameter Output
+    loop = UnifiedLoop(
+        max_iterations=100,
+        template_mode=True,
+        template_name="Momentum",
+        use_json_mode=True,
+        enable_learning=True
+    )
+
+    # Run loop (delegates to LearningLoop)
+    result = loop.run()
+
+    # Access champion (backward compatible)
+    champion = loop.champion
+    print(f"Champion Sharpe: {champion.metrics['sharpe_ratio']}")
+
+    # Access history (backward compatible)
+    history = loop.history
+    recent = history.load_recent(N=10)
+    ```
+
+Architecture:
+    ```
+    UnifiedLoop (Facade, <200 lines)
+         ↓ delegates to
+    LearningLoop (Orchestrator, <250 lines)
+         ↓ uses
+    IterationExecutor (Strategy Pattern)
+         ├── StandardIterationExecutor (existing)
+         └── TemplateIterationExecutor (new)
+    ```
+
+See Also:
+    - src/learning/learning_loop.py: Core orchestrator
+    - src/learning/unified_config.py: Configuration
+    - src/learning/template_iteration_executor.py: Template Mode executor
+    - .spec-workflow/specs/unified-loop-refactor/design.md: Architecture design
+"""
+
+import logging
+from typing import Any, Dict, Optional
+
+from src.learning.learning_loop import LearningLoop
+from src.learning.unified_config import UnifiedConfig, ConfigurationError
+
+logger = logging.getLogger(__name__)
+
+
+class UnifiedLoop:
+    """Unified Loop implementing Facade Pattern over LearningLoop.
+
+    Provides a unified API that integrates Template Mode, JSON Parameter Output,
+    and Learning Feedback while maintaining backward compatibility with AutonomousLoop.
+
+    Key Features:
+        - Template Mode: Uses TemplateIterationExecutor for parameter generation
+        - JSON Parameter Output: LLM outputs JSON format, Pydantic validation
+        - Learning Feedback: FeedbackGenerator provides performance feedback
+        - Backward Compatible: Same API as AutonomousLoop
+
+    Design:
+        - Facade Pattern: Thin wrapper (~200 lines) over LearningLoop
+        - Strategy Pattern: Switches IterationExecutor based on template_mode
+        - Dependency Injection: TemplateIterationExecutor injected after init
+
+    Attributes:
+        config (UnifiedConfig): Unified configuration
+        learning_loop (LearningLoop): Core orchestrator
+        template_mode (bool): Whether Template Mode is enabled
+        use_json_mode (bool): Whether JSON Parameter Output is enabled
+
+    Example:
+        >>> loop = UnifiedLoop(
+        ...     max_iterations=50,
+        ...     template_mode=True,
+        ...     template_name="Momentum",
+        ...     use_json_mode=True
+        ... )
+        >>> result = loop.run()
+        >>> print(f"Iterations completed: {result.get('iterations_completed')}")
+    """
+
+    def __init__(
+        self,
+        model: str = "gemini-2.5-flash",
+        max_iterations: int = 10,
+        template_mode: bool = False,
+        template_name: str = "Momentum",
+        use_json_mode: bool = False,
+        enable_learning: bool = True,
+        history_file: str = "artifacts/data/iterations.jsonl",
+        champion_file: str = "artifacts/data/champion.json",
+        config_file: str = "config/learning_system.yaml",
+        timeout_seconds: int = 420,
+        **kwargs
+    ):
+        """Initialize UnifiedLoop.
+
+        Args:
+            model: LLM model name (e.g., "gemini-2.5-flash")
+            max_iterations: Maximum iterations to run
+            template_mode: Enable Template Mode (uses TemplateIterationExecutor)
+            template_name: Template name (required if template_mode=True)
+            use_json_mode: Enable JSON Parameter Output (requires template_mode=True)
+            enable_learning: Enable Learning Feedback system
+            history_file: Path to JSONL history file
+            champion_file: Path to champion JSON file
+            config_file: Path to YAML config file
+            timeout_seconds: Backtest timeout in seconds
+            **kwargs: Additional configuration parameters
+
+        Raises:
+            ConfigurationError: If configuration is invalid
+            RuntimeError: If component initialization fails
+
+        Example:
+            >>> loop = UnifiedLoop(
+            ...     max_iterations=100,
+            ...     template_mode=True,
+            ...     template_name="Momentum",
+            ...     use_json_mode=True
+            ... )
+        """
+        logger.info("=" * 60)
+        logger.info("UnifiedLoop Initialization")
+        logger.info("=" * 60)
+
+        # Build UnifiedConfig
+        self.config = self._build_unified_config(
+            model=model,
+            max_iterations=max_iterations,
+            template_mode=template_mode,
+            template_name=template_name,
+            use_json_mode=use_json_mode,
+            enable_learning=enable_learning,
+            history_file=history_file,
+            champion_file=champion_file,
+            config_file=config_file,
+            timeout_seconds=timeout_seconds,
+            **kwargs
+        )
+
+        # Store template settings
+        self.template_mode = self.config.template_mode
+        self.use_json_mode = self.config.use_json_mode
+
+        logger.info(f"Configuration:")
+        logger.info(f"  Template Mode: {self.template_mode}")
+        logger.info(f"  JSON Mode: {self.use_json_mode}")
+        logger.info(f"  Learning Enabled: {self.config.enable_learning}")
+        logger.info(f"  Max Iterations: {self.config.max_iterations}")
+
+        # Convert to LearningConfig and initialize LearningLoop
+        learning_config = self.config.to_learning_config()
+        self.learning_loop = LearningLoop(config=learning_config)
+
+        logger.info("✓ LearningLoop initialized")
+
+        # If Template Mode, inject TemplateIterationExecutor
+        if self.template_mode:
+            logger.info(f"✓ Template Mode enabled: {self.config.template_name}")
+            self._inject_template_executor()
+        else:
+            logger.info("✓ Standard Mode (LLM/Factor Graph)")
+
+        logger.info("=" * 60)
+        logger.info("UnifiedLoop initialization complete")
+        logger.info("=" * 60)
+
+    def _build_unified_config(self, **kwargs) -> UnifiedConfig:
+        """Build UnifiedConfig from keyword arguments.
+
+        Filters and maps keyword arguments to UnifiedConfig attributes.
+
+        Args:
+            **kwargs: Configuration parameters
+
+        Returns:
+            UnifiedConfig: Validated configuration
+
+        Raises:
+            ConfigurationError: If configuration is invalid
+        """
+        # Extract known parameters for UnifiedConfig
+        config_kwargs = {
+            k: v for k, v in kwargs.items()
+            if k in UnifiedConfig.__dataclass_fields__
+        }
+
+        # Add explicit parameters
+        for key in ['model', 'max_iterations', 'template_mode', 'template_name',
+                    'use_json_mode', 'enable_learning', 'history_file',
+                    'champion_file', 'config_file', 'timeout_seconds']:
+            if key in kwargs:
+                # Map 'model' to 'llm_model' for UnifiedConfig
+                if key == 'model':
+                    config_kwargs['llm_model'] = kwargs[key]
+                else:
+                    config_kwargs[key] = kwargs[key]
+
+        try:
+            config = UnifiedConfig(**config_kwargs)
+            logger.debug("UnifiedConfig created successfully")
+            return config
+        except Exception as e:
+            logger.error(f"Failed to create UnifiedConfig: {e}")
+            raise ConfigurationError(f"Invalid configuration: {e}") from e
+
+    def _inject_template_executor(self) -> None:
+        """Inject TemplateIterationExecutor to replace StandardIterationExecutor.
+
+        This method implements the Strategy Pattern, switching the iteration executor
+        from StandardIterationExecutor to TemplateIterationExecutor when Template Mode
+        is enabled.
+
+        Note:
+            TemplateIterationExecutor will be implemented in Week 1.2.1.
+            For now, this logs a warning that Template Mode requires the executor.
+
+        Raises:
+            RuntimeError: If TemplateIterationExecutor cannot be initialized
+        """
+        try:
+            # Import here to avoid circular dependency
+            # Note: This will be implemented in Week 1.2.1
+            try:
+                from src.learning.template_iteration_executor import TemplateIterationExecutor
+
+                # Create TemplateIterationExecutor
+                template_executor = TemplateIterationExecutor(
+                    llm_client=self.learning_loop.llm_client,
+                    feedback_generator=self.learning_loop.feedback_generator,
+                    backtest_executor=self.learning_loop.backtest_executor,
+                    champion_tracker=self.learning_loop.champion_tracker,
+                    history=self.learning_loop.history,
+                    template_name=self.config.template_name,
+                    use_json_mode=self.config.use_json_mode,
+                    config=self.config.to_dict()
+                )
+
+                # Inject executor
+                self.learning_loop.iteration_executor = template_executor
+
+                logger.info(
+                    f"✓ TemplateIterationExecutor injected "
+                    f"(template={self.config.template_name}, json_mode={self.config.use_json_mode})"
+                )
+
+            except ImportError:
+                logger.warning(
+                    "⚠️  TemplateIterationExecutor not yet implemented (Week 1.2.1)"
+                )
+                logger.warning("   UnifiedLoop will use StandardIterationExecutor for now")
+
+        except Exception as e:
+            logger.error(f"Failed to inject TemplateIterationExecutor: {e}")
+            raise RuntimeError(f"Template Mode initialization failed: {e}") from e
+
+    def run(self) -> Dict[str, Any]:
+        """Run learning loop iterations.
+
+        Delegates execution to LearningLoop, which handles:
+        - Iteration loop management
+        - SIGINT handling
+        - Progress tracking
+        - Summary report generation
+
+        Returns:
+            Dict containing:
+                - iterations_completed (int): Number of iterations run
+                - champion (Optional[ChampionRecord]): Current champion
+                - interrupted (bool): Whether loop was interrupted
+
+        Example:
+            >>> loop = UnifiedLoop(max_iterations=50)
+            >>> result = loop.run()
+            >>> print(f"Completed {result['iterations_completed']} iterations")
+        """
+        logger.info("\n" + "=" * 60)
+        logger.info("Starting UnifiedLoop Execution")
+        logger.info("=" * 60)
+
+        try:
+            # Delegate to LearningLoop
+            self.learning_loop.run()
+
+            # Build result summary
+            all_records = self.learning_loop.history.get_all()
+            iterations_completed = len(all_records)
+            champion = self.learning_loop.champion_tracker.champion
+
+            result = {
+                "iterations_completed": iterations_completed,
+                "champion": champion,
+                "interrupted": self.learning_loop.interrupted
+            }
+
+            logger.info("\n" + "=" * 60)
+            logger.info("UnifiedLoop Execution Complete")
+            logger.info("=" * 60)
+            logger.info(f"Total Iterations: {iterations_completed}")
+            if champion:
+                logger.info(f"Champion Sharpe: {champion.metrics.get('sharpe_ratio', 'N/A')}")
+            logger.info("=" * 60)
+
+            return result
+
+        except Exception as e:
+            logger.error(f"UnifiedLoop execution failed: {e}", exc_info=True)
+            raise
+
+    @property
+    def champion(self):
+        """Access current champion strategy (backward compatible).
+
+        Provides AutonomousLoop-compatible API for accessing champion.
+
+        Returns:
+            Optional[ChampionRecord]: Current champion or None
+
+        Example:
+            >>> loop = UnifiedLoop()
+            >>> loop.run()
+            >>> if loop.champion:
+            ...     print(f"Champion Sharpe: {loop.champion.metrics['sharpe_ratio']}")
+        """
+        return self.learning_loop.champion_tracker.champion
+
+    @property
+    def history(self):
+        """Access iteration history (backward compatible).
+
+        Provides AutonomousLoop-compatible API for accessing history.
+
+        Returns:
+            IterationHistory: History manager
+
+        Example:
+            >>> loop = UnifiedLoop()
+            >>> loop.run()
+            >>> recent = loop.history.load_recent(N=5)
+            >>> for record in recent:
+            ...     print(f"Iteration {record.iteration_num}: {record.classification_level}")
+        """
+        return self.learning_loop.history
