@@ -9,4 +9,12 @@ artifacts/
 artifacts/working/backups/failure_patterns.json
 artifacts/working/backups/
 
-artifacts/working/backups/
+# Type checking cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Environment variables (contains API keys and secrets)
+.env
+.env.local
+.env.*.local
