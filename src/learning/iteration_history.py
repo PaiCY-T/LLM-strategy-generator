@@ -129,7 +129,8 @@ class IterationRecord:
 
     Attributes:
         iteration_num (int): Iteration number (0-indexed). Must be non-negative.
-        generation_method (str): How strategy was generated ("llm" or "factor_graph").
+        generation_method (str): How strategy was generated.
+            Options: "llm", "factor_graph", or "template" (UnifiedLoop).
             Default: "llm" for backward compatibility.
         strategy_code (str | None): Generated strategy Python code (for LLM strategies).
         strategy_id (str | None): Strategy ID (for Factor Graph strategies).
@@ -229,9 +230,10 @@ class IterationRecord:
             )
 
         # Validate generation_method
-        if self.generation_method not in ("llm", "factor_graph"):
+        valid_methods = ("llm", "factor_graph", "template")
+        if self.generation_method not in valid_methods:
             raise ValueError(
-                f"generation_method must be 'llm' or 'factor_graph', "
+                f"generation_method must be one of {valid_methods}, "
                 f"got '{self.generation_method}'"
             )
 
@@ -244,6 +246,16 @@ class IterationRecord:
                 )
             if not self.strategy_code.strip():
                 raise ValueError("LLM strategy_code cannot be empty")
+
+        # Validate Template strategy (similar to LLM, generates code)
+        if self.generation_method == "template":
+            if not isinstance(self.strategy_code, str):
+                raise ValueError(
+                    f"Template strategy must have strategy_code as str, "
+                    f"got {type(self.strategy_code).__name__}"
+                )
+            if not self.strategy_code.strip():
+                raise ValueError("Template strategy_code cannot be empty")
 
         # Validate Factor Graph strategy
         if self.generation_method == "factor_graph":
