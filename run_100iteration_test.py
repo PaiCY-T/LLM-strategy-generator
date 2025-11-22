@@ -2,23 +2,40 @@
 """
 100-Iteration Production Validation Test Run
 
-Runs 100 iterations of the autonomous learning loop using ExtendedTestHarness
-with automatic checkpointing, retry logic, and comprehensive statistical analysis.
+Runs 100 iterations of the learning loop with automatic checkpointing,
+retry logic, and comprehensive statistical analysis.
 
-This is a balanced validation run to verify long-term stability of Phase 1 + Phase 2
-implementations while avoiding memory constraints.
+Supports both AutonomousLoop and UnifiedLoop for comparison testing.
 
 Usage:
-    python3 run_100iteration_test.py [resume_checkpoint]
+    python3 run_100iteration_test.py [options]
 
-Arguments:
-    resume_checkpoint: Optional path to checkpoint file for resuming test
+Options:
+    --loop-type {autonomous,unified}  Type of loop to use (default: autonomous)
+    --template-mode                   Enable Template Mode (UnifiedLoop only)
+    --use-json-mode                   Enable JSON Parameter Output (requires --template-mode)
+    --resume CHECKPOINT               Path to checkpoint file for resuming test
+    --help                            Show this help message
+
+Examples:
+    # Run AutonomousLoop (baseline)
+    python3 run_100iteration_test.py --loop-type autonomous
+
+    # Run UnifiedLoop with Template Mode
+    python3 run_100iteration_test.py --loop-type unified --template-mode
+
+    # Run UnifiedLoop with Template Mode + JSON Mode
+    python3 run_100iteration_test.py --loop-type unified --template-mode --use-json-mode
+
+    # Resume from checkpoint
+    python3 run_100iteration_test.py --loop-type unified --resume checkpoints/checkpoint_iter_50.json
 """
 
 import os
 import sys
 import logging
 import json
+import argparse
 from datetime import datetime
 from pathlib import Path
 
@@ -27,6 +44,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'artifacts', 'working
 sys.path.insert(0, os.path.dirname(__file__))
 
 from tests.integration.extended_test_harness import ExtendedTestHarness
+from tests.integration.unified_test_harness import UnifiedTestHarness
 
 
 def setup_logging():
@@ -294,18 +312,26 @@ def print_colored_report(report: dict, logger: logging.Logger, metrics: dict = N
     logger.info("=" * 80)
 
 
-def run_100iteration_test(resume_from: str = None):
-    """Run 100-iteration test with ExtendedTestHarness.
+def run_100iteration_test(
+    loop_type: str = "autonomous",
+    template_mode: bool = False,
+    use_json_mode: bool = False,
+    resume_from: str = None
+):
+    """Run 100-iteration test with ExtendedTestHarness or UnifiedTestHarness.
 
     Main test orchestration function that:
     - Sets up logging
-    - Loads Finlab data
-    - Initializes ExtendedTestHarness
+    - Loads Finlab data (if using AutonomousLoop)
+    - Initializes appropriate test harness based on loop_type
     - Executes 100-iteration test run
     - Generates statistical report
     - Prints production readiness assessment
 
     Args:
+        loop_type: Type of loop to use ("autonomous" or "unified")
+        template_mode: Enable Template Mode (UnifiedLoop only)
+        use_json_mode: Enable JSON Parameter Output (requires template_mode)
         resume_from: Optional path to checkpoint file for resuming test
 
     Returns:
@@ -320,9 +346,16 @@ def run_100iteration_test(resume_from: str = None):
     logger.info("100-ITERATION PRODUCTION TEST - START")
     logger.info("=" * 80)
     logger.info(f"Timestamp: {datetime.now().isoformat()}")
+    logger.info(f"Loop type: {loop_type}")
     logger.info(f"Model: google/gemini-2.5-flash")
     logger.info(f"Target iterations: 100")
     logger.info(f"Checkpoint interval: 10")
+
+    if loop_type == "unified":
+        logger.info(f"Template mode: {template_mode}")
+        if template_mode:
+            logger.info(f"JSON mode: {use_json_mode}")
+
     logger.info(f"Log file: {log_file}")
 
     if resume_from:
@@ -341,29 +374,53 @@ def run_100iteration_test(resume_from: str = None):
 
     logger.info("")
 
-    # Load Finlab data
-    try:
-        data = load_finlab_data()
-    except Exception as e:
-        logger.error(f"❌ Data loading failed: {e}")
-        logger.error("Cannot proceed without data")
-        return {
-            'success': False,
-            'error': str(e),
-            'log_file': log_file
-        }
+    # Load Finlab data (only for AutonomousLoop)
+    data = None
+    if loop_type == "autonomous":
+        try:
+            data = load_finlab_data()
+        except Exception as e:
+            logger.error(f"❌ Data loading failed: {e}")
+            logger.error("Cannot proceed without data")
+            return {
+                'success': False,
+                'error': str(e),
+                'log_file': log_file
+            }
 
-    # Initialize ExtendedTestHarness
-    logger.info("Initializing ExtendedTestHarness...")
+    # Initialize appropriate test harness based on loop_type
+    logger.info(f"Initializing test harness for {loop_type} loop...")
     try:
-        checkpoint_dir = 'checkpoints_100iteration'
-        harness = ExtendedTestHarness(
-            model='google/gemini-2.5-flash',
-            target_iterations=100,
-            checkpoint_interval=10,
-            checkpoint_dir=checkpoint_dir
-        )
-        logger.info(f"✅ ExtendedTestHarness initialized (checkpoints: {checkpoint_dir})")
+        checkpoint_dir = f'checkpoints_100iteration_{loop_type}'
+
+        if loop_type == "autonomous":
+            harness = ExtendedTestHarness(
+                model='google/gemini-2.5-flash',
+                target_iterations=100,
+                checkpoint_interval=10,
+                checkpoint_dir=checkpoint_dir
+            )
+            logger.info(f"✅ ExtendedTestHarness initialized (checkpoints: {checkpoint_dir})")
+
+        elif loop_type == "unified":
+            harness = UnifiedTestHarness(
+                model='gemini-2.5-flash',
+                target_iterations=100,
+                checkpoint_interval=10,
+                checkpoint_dir=checkpoint_dir,
+                template_mode=template_mode,
+                template_name="Momentum",  # Default template
+                use_json_mode=use_json_mode,
+                enable_learning=True
+            )
+            logger.info(f"✅ UnifiedTestHarness initialized (checkpoints: {checkpoint_dir})")
+            if template_mode:
+                logger.info(f"   Template Mode: enabled (template: Momentum)")
+                logger.info(f"   JSON Mode: {'enabled' if use_json_mode else 'disabled'}")
+
+        else:
+            raise ValueError(f"Invalid loop_type: {loop_type}. Must be 'autonomous' or 'unified'")
+
     except Exception as e:
         logger.error(f"❌ Harness initialization failed: {e}")
         return {
@@ -380,10 +437,16 @@ def run_100iteration_test(resume_from: str = None):
     start_time = datetime.now()
 
     try:
-        results = harness.run_test(
-            data=data,
-            resume_from_checkpoint=resume_from
-        )
+        # Run test (AutonomousLoop needs data, UnifiedLoop does not)
+        if loop_type == "autonomous":
+            results = harness.run_test(
+                data=data,
+                resume_from_checkpoint=resume_from
+            )
+        else:  # unified
+            results = harness.run_test(
+                resume_from_checkpoint=resume_from
+            )
 
         end_time = datetime.now()
         total_duration = (end_time - start_time).total_seconds()
@@ -452,7 +515,7 @@ def main():
     """Main entry point for 100-iteration production test.
 
     Handles:
-    - Command-line argument parsing for checkpoint resume
+    - Command-line argument parsing
     - Test execution coordination
     - KeyboardInterrupt graceful handling
     - Exit codes for CI/CD integration
@@ -465,18 +528,85 @@ def main():
     """
     try:
         # Parse command-line arguments
-        resume_from = None
+        parser = argparse.ArgumentParser(
+            description="100-iteration production validation test",
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            epilog="""
+Examples:
+  # Run AutonomousLoop (baseline)
+  python3 run_100iteration_test.py --loop-type autonomous
 
-        if len(sys.argv) > 1:
-            resume_from = sys.argv[1]
-            if not os.path.exists(resume_from):
-                print(f"\n❌ Checkpoint file not found: {resume_from}")
-                print("Starting fresh test run instead")
-                resume_from = None
+  # Run UnifiedLoop with Template Mode
+  python3 run_100iteration_test.py --loop-type unified --template-mode
 
-        print("\n🚀 Starting 100-iteration production test...\n")
+  # Run UnifiedLoop with Template Mode + JSON Mode
+  python3 run_100iteration_test.py --loop-type unified --template-mode --use-json-mode
 
-        results = run_100iteration_test(resume_from=resume_from)
+  # Resume from checkpoint
+  python3 run_100iteration_test.py --loop-type unified --resume checkpoints/checkpoint_iter_50.json
+            """
+        )
+
+        parser.add_argument(
+            '--loop-type',
+            type=str,
+            choices=['autonomous', 'unified'],
+            default='autonomous',
+            help='Type of loop to use (default: autonomous)'
+        )
+
+        parser.add_argument(
+            '--template-mode',
+            action='store_true',
+            help='Enable Template Mode (UnifiedLoop only)'
+        )
+
+        parser.add_argument(
+            '--use-json-mode',
+            action='store_true',
+            help='Enable JSON Parameter Output (requires --template-mode, UnifiedLoop only)'
+        )
+
+        parser.add_argument(
+            '--resume',
+            type=str,
+            default=None,
+            metavar='CHECKPOINT',
+            help='Path to checkpoint file for resuming test'
+        )
+
+        args = parser.parse_args()
+
+        # Validate arguments
+        if args.use_json_mode and not args.template_mode:
+            parser.error("--use-json-mode requires --template-mode")
+
+        if (args.template_mode or args.use_json_mode) and args.loop_type != 'unified':
+            parser.error("--template-mode and --use-json-mode only work with --loop-type unified")
+
+        # Check resume checkpoint exists
+        resume_from = args.resume
+        if resume_from and not os.path.exists(resume_from):
+            print(f"\n❌ Checkpoint file not found: {resume_from}")
+            print("Starting fresh test run instead")
+            resume_from = None
+
+        # Print start message
+        loop_desc = f"{args.loop_type.capitalize()}Loop"
+        if args.loop_type == "unified" and args.template_mode:
+            mode_desc = " with Template Mode"
+            if args.use_json_mode:
+                mode_desc += " + JSON Mode"
+            loop_desc += mode_desc
+
+        print(f"\n🚀 Starting 100-iteration production test ({loop_desc})...\n")
+
+        results = run_100iteration_test(
+            loop_type=args.loop_type,
+            template_mode=args.template_mode,
+            use_json_mode=args.use_json_mode,
+            resume_from=resume_from
+        )
 
         if results.get('success'):
             statistical_report = results.get('statistical_report', {})
@@ -508,7 +638,10 @@ def main():
     except KeyboardInterrupt:
         print("\n\n⚠️  Test interrupted by user")
         print("\nTo resume from last checkpoint:")
-        print("  python run_100iteration_test.py checkpoints_100iteration/checkpoint_iter_<N>.json")
+        print("  python run_100iteration_test.py --loop-type <TYPE> --resume checkpoints_100iteration_<TYPE>/checkpoint_iter_<N>.json")
+        print("\nExamples:")
+        print("  python run_100iteration_test.py --loop-type autonomous --resume checkpoints_100iteration_autonomous/checkpoint_iter_50.json")
+        print("  python run_100iteration_test.py --loop-type unified --template-mode --resume checkpoints_100iteration_unified/unified_checkpoint_iter_50.json")
         print("\nNote: Checkpoints are saved every 10 iterations")
         sys.exit(2)
 
