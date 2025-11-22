@@ -1,0 +1,70 @@
+# Pilot Run: Hybrid Mode (20 iterations)
+
+experiment:
+  name: "pilot-hybrid-20"
+  version: "1.0.0"
+  description: "Pilot run: 30% LLM + 70% Factor Graph, 20 iterations"
+
+# Hybrid Group
+groups:
+  hybrid:
+    name: "Hybrid"
+    innovation_rate: 0.30  # 30% LLM, 70% Factor Graph
+    description: "Current production configuration"
+
+# Pilot Phase: 20 iterations
+phases:
+  pilot:
+    iterations_per_run: 20
+    num_runs: 1
+    total_iterations: 20
+    description: "Quick 20-iteration pilot test"
+
+# Novelty System Configuration (3-Layer Weighted)
+novelty:
+  weights:
+    factor_diversity: 0.30
+    combination_patterns: 0.40
+    logic_complexity: 0.30
+  baseline_file: "artifacts/data/champion.json"
+  template_dir: "strategies/factor_graph_templates/"
+
+# Statistical Testing
+statistics:
+  significance_level: 0.05
+  tests:
+    - mann_whitney_u
+    - mann_kendall
+    - sliding_window
+
+# Go/No-Go Decision Criteria
+decision_criteria:
+  min_criteria_met: 2
+  criteria:
+    - name: "Statistical Signal"
+      test: "Mann-Whitney U p < 0.1 (exploratory)"
+    - name: "Novelty Advantage"
+      test: "LLM-Only avg novelty > FG-Only + 15%"
+    - name: "Execution Stability"
+      test: "Failure rate < 5%"
+    - name: "Champion Quality"
+      test: "At least 1 champion with Sharpe > 0.8"
+
+# Storage Configuration
+storage:
+  results_dir: "artifacts/experiments/pilot_hybrid_20/"
+  format: "jsonl"
+
+# Execution Configuration
+execution:
+  timeout_seconds: 420
+  continue_on_error: false
+  max_parallel_groups: 1
+  paths:
+    learning_config: "config/learning_system.yaml"
+    results_dir: "experiments/llm_learning_validation/results/pilot_hybrid_20"
+    template_dir: "LLM-strategy-generator/factor_graph/templates"
+
+# Experimental Features
+experimental:
+  use_factor_graph: true  # Enable Factor Graph for hybrid mode

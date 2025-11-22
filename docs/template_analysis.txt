@@ -1,0 +1,172 @@
+# Template Strategy Composition Analysis
+# Generated: 2025-11-16
+# Purpose: Identify how many factors each Factor Graph template uses
+
+===================================================================
+## EXECUTIVE SUMMARY
+===================================================================
+
+**Finding**: Factor Graph templates use **3 factors** each
+
+**Template Definition Location**: `src/learning/iteration_executor.py` line 720-758
+
+**Template Composition** (from `_generate_template_strategy()` method):
+- Factor 1: **momentum_factor** (root, no dependencies)
+  - Parameter: momentum_period = 20
+  - Category: MOMENTUM
+
+- Factor 2: **breakout_factor** (entry signal, independent)
+  - Parameter: entry_window = 20
+  - Category: TURTLE
+
+- Factor 3: **rolling_trailing_stop_factor** (stateless exit signal)
+  - Parameters: trail_percent = 0.10, lookback_periods = 20
+  - Dependencies: [momentum_factor, breakout_factor]
+  - Category: EXIT
+
+===================================================================
+## FACTOR COMPLEXITY ASSESSMENT
+===================================================================
+
+**Factor Count**: 3 factors per template (SIMPLE - well within acceptable range)
+
+**Dependency Depth**:
+- Level 0 (root factors): 2 factors (momentum, breakout)
+- Level 1 (dependent factors): 1 factor (rolling_trailing_stop)
+- **Total Depth**: 2 levels (SIMPLE)
+
+**Expected Execution Time** (based on Phase 2.0 architecture):
+- Factor execution: <1 second per factor (vectorized operations)
+- Total for 3 factors: <3 seconds
+- **Predicted total execution time**: <5 seconds including validation
+
+===================================================================
+## COMPARISON WITH AVAILABLE FACTORS
+===================================================================
+
+**Available in Factor Library**: 13 factors total
+- Momentum Factors: 4
+- Turtle Factors: 4
+- Exit Factors: 5
+
+**Template Usage**: 3 out of 13 factors (23%)
+
+**Complexity Level**: **LOW**
+- Using only 23% of available factors
+- Simple 2-level dependency structure
+- No complex factor interactions
+
+===================================================================
+## DIAGNOSTIC CONCLUSION
+===================================================================
+
+**Is complexity the issue?** **NO**
+
+The template strategies are intentionally simple (only 3 factors), which rules out:
+❌ Too many factors causing exponential computation
+❌ Deep dependency chains causing sequential bottlenecks
+❌ Complex factor interactions causing combinatorial explosion
+
+**Implication**: If Factor Graph is timing out with only 3 simple factors, the problem is likely:
+1. **Factor implementation issues** - One or more of the 3 factors has inefficient computation
+2. **Data loading issues** - Container creation or matrix operations are slow
+3. **Infrastructure issues** - System resource problems (memory, CPU)
+
+**Next Step**: Task 1.3 minimal test will isolate whether the issue is:
+- A) Specific factor implementation (if single factor fails)
+- B) Graph execution infrastructure (if single factor succeeds but 3-factor template fails)
+- C) System resources (if even single factor hangs)
+
+===================================================================
+## TEMPLATE VARIATION
+===================================================================
+
+**NOTE**: The current implementation generates the SAME template for all iterations.
+
+From `iteration_executor.py` line 728:
+```python
+strategy_id = f"template_{iteration_num}"
+```
+
+All templates use:
+- template_0: momentum + breakout + rolling_trailing_stop (3 factors)
+- template_1: momentum + breakout + rolling_trailing_stop (3 factors)
+- template_2: momentum + breakout + rolling_trailing_stop (3 factors)
+
+**Recommendation**: This is acceptable for Phase 1-2 diagnosis, but Phase 2 improvements should add template variety.
+
+===================================================================
+## FACTOR DETAILS
+===================================================================
+
+### Factor 1: momentum_factor
+- **Source**: `src/factor_library/momentum_factors.py`
+- **Computation**: Price momentum using rolling mean of returns
+- **Parameters**: momentum_period=20 (lookback window)
+- **Expected Performance**: O(N*M) where N=dates, M=symbols (vectorized Pandas)
+- **Risk Level**: LOW (standard Pandas operations)
+
+### Factor 2: breakout_factor
+- **Source**: `src/factor_library/turtle_factors.py`
+- **Computation**: N-day high/low breakout detection
+- **Parameters**: entry_window=20 (breakout period)
+- **Expected Performance**: O(N*M) (vectorized rolling max/min)
+- **Risk Level**: LOW (efficient Pandas rolling operations)
+
+### Factor 3: rolling_trailing_stop_factor
+- **Source**: `src/factor_library/stateless_exit_factors.py`
+- **Computation**: Trailing stop using rolling window approximation
+- **Parameters**: trail_percent=0.10, lookback_periods=20
+- **Dependencies**: Depends on momentum and breakout outputs
+- **Expected Performance**: O(N*M) (rolling operations)
+- **Risk Level**: MEDIUM (newer implementation, stateless design)
+
+===================================================================
+## DIAGNOSTIC PRIORITY
+===================================================================
+
+Based on this analysis, diagnostic priority for Task 1.3 and beyond:
+
+**Priority 1** (CRITICAL):
+- Test `rolling_trailing_stop_factor` in isolation
+  - Newest factor with dependencies
+  - Stateless approximation logic (Phase 2 fix)
+  - Could have implementation issues
+
+**Priority 2** (HIGH):
+- Test `momentum_factor` in isolation
+  - Most basic factor, should be fastest
+  - If this fails, indicates infrastructure issue
+
+**Priority 3** (MEDIUM):
+- Test `breakout_factor` in isolation
+  - Standard turtle implementation
+  - Should be reliable
+
+**Priority 4** (LOW):
+- Test combinations (2 factors, then 3 factors)
+  - Identify if issue is factor interaction
+
+===================================================================
+## FILES ANALYZED
+===================================================================
+
+1. `/src/learning/iteration_executor.py` - Template generation (line 720-758)
+2. `/src/factor_library/registry.py` - Available factors documentation
+3. `/src/utils/template_registry.py` - Template class management
+4. `/src/factor_graph/strategy.py` - Strategy DAG execution
+
+===================================================================
+## NEXT STEPS
+===================================================================
+
+**Task 1.1**: ✅ COMPLETE - Timing instrumentation added to strategy.py
+**Task 1.2**: ✅ COMPLETE - Template analysis shows 3 factors (low complexity)
+**Task 1.3**: READY - Create minimal test with 1 factor (recommend momentum_factor)
+
+**Hypothesis Update**: Complexity is NOT the root cause. Focus shifts to:
+- Individual factor implementation efficiency
+- Data container operations
+- System resource constraints
+
+End of Template Analysis Report

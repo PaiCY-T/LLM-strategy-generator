@@ -1,0 +1,82 @@
+{
+  "total_tests": 9,
+  "successful": 8,
+  "pass_rate": 0.8888888888888888,
+  "threshold": 0.6,
+  "passed_tier2": true,
+  "results": [
+    {
+      "case": "simple",
+      "run": 1,
+      "success": true,
+      "sharpe_ratio": 0.5570305126034567,
+      "error": null,
+      "code_length": 2272
+    },
+    {
+      "case": "simple",
+      "run": 2,
+      "success": true,
+      "sharpe_ratio": 0.44499018688263947,
+      "error": null,
+      "code_length": 2368
+    },
+    {
+      "case": "simple",
+      "run": 3,
+      "success": true,
+      "sharpe_ratio": 0.7331590361435558,
+      "error": null,
+      "code_length": 1898
+    },
+    {
+      "case": "medium",
+      "run": 1,
+      "success": false,
+      "sharpe_ratio": null,
+      "error": "ValidationError",
+      "code_length": 2710
+    },
+    {
+      "case": "medium",
+      "run": 2,
+      "success": true,
+      "sharpe_ratio": 0.08440028362970896,
+      "error": null,
+      "code_length": 2906
+    },
+    {
+      "case": "medium",
+      "run": 3,
+      "success": true,
+      "sharpe_ratio": 0.5278891208878891,
+      "error": null,
+      "code_length": 3271
+    },
+    {
+      "case": "complex",
+      "run": 1,
+      "success": true,
+      "sharpe_ratio": 0.744393500297,
+      "error": null,
+      "code_length": 2644
+    },
+    {
+      "case": "complex",
+      "run": 2,
+      "success": true,
+      "sharpe_ratio": 0.7780562007556434,
+      "error": null,
+      "code_length": 2450
+    },
+    {
+      "case": "complex",
+      "run": 3,
+      "success": true,
+      "sharpe_ratio": 0.7293692184592833,
+      "error": null,
+      "code_length": 2455
+    }
+  ],
+  "timestamp": "2025-11-21T12:59:55.727147"
+}

@@ -1,0 +1,665 @@
+# Strategy Pattern Schema Definition
+# Version: 1.0
+# Task: 16.3 - Central Schema Definition File
+# Coverage: Top 5 patterns representing 84% of successful strategies
+#
+# This schema defines the structure, parameters, and validation constraints
+# for the 5 most common strategy patterns identified in Task 15.3.
+#
+# Integration with Layer 1 (DataFieldManifest):
+# - Uses canonical field names from src/config/data_fields.py
+# - Includes common aliases for LLM compatibility
+# - References COMMON_CORRECTIONS for auto-correction
+#
+# Pattern Coverage:
+# 1. Pure Momentum (18% coverage)
+# 2. Momentum + Exit Strategy (18% coverage)
+# 3. Turtle Breakout (16% coverage)
+# 4. Multi-Factor Scoring (16% coverage)
+# 5. Complex Combination (16% coverage)
+
+version: "1.0"
+last_updated: "2025-11-18"
+
+# =============================================================================
+# Pattern 1: Pure Momentum (18% coverage)
+# =============================================================================
+# Fast breakout strategy based on price momentum
+# Performance: Sharpe 0.301, Return 41.6%, MaxDD -32.2%
+# Example IDs: template_0, template_6, template_12, template_18, template_24
+
+patterns:
+  pure_momentum:
+    name: "Pure Momentum"
+    type: "momentum"
+    description: "Fast breakout strategy using price momentum with rolling mean returns"
+    coverage: 0.18
+
+    # Required data fields with Layer 1 integration
+    required_fields:
+      - field: "price:收盤價"
+        aliases: ["close", "closing_price", "收盤價", "closing"]
+        usage: "Signal generation - momentum calculation"
+        category: "price"
+
+      - field: "price:成交金額"
+        aliases: ["volume", "trading_value", "turnover", "成交金額"]
+        usage: "Volume filtering - minimum liquidity requirement"
+        category: "price"
+        note: "CRITICAL: This is trading VALUE (金額), not shares (股數)"
+
+    # Optional data fields for enhancement
+    optional_fields:
+      - field: "price:最高價"
+        aliases: ["high", "highest", "最高價"]
+        usage: "Alternative signal generation"
+
+      - field: "price:最低價"
+        aliases: ["low", "lowest", "最低價"]
+        usage: "Support level detection"
+
+    # Strategy parameters with validation
+    parameters:
+      momentum_period:
+        type: "integer"
+        description: "Lookback period for momentum calculation"
+        default: 20
+        range: [10, 60]
+        unit: "trading_days"
+
+      entry_threshold:
+        type: "float"
+        description: "Momentum threshold for entry signal"
+        default: 0.02
+        range: [0.01, 0.10]
+        unit: "percentage"
+
+      min_volume:
+        type: "float"
+        description: "Minimum trading value for liquidity filter"
+        default: 1000000.0
+        range: [100000.0, 10000000.0]
+        unit: "currency"
+
+    # Entry logic definition
+    logic:
+      entry:
+        description: "Enter when momentum exceeds threshold with sufficient volume"
+        formula: "(price.pct_change(momentum_period).rolling(5).mean() > entry_threshold) & (volume > min_volume)"
+        dependencies: ["price:收盤價", "price:成交金額"]
+
+      exit:
+        description: "No explicit exit - position held until rebalance"
+        formula: "None"
+        dependencies: []
+
+    # Validation constraints
+    constraints:
+      - type: "data_quality"
+        check: "No NaN values in price field"
+        severity: "critical"
+
+      - type: "parameter"
+        check: "momentum_period < total_backtest_days"
+        severity: "critical"
+
+      - type: "performance"
+        check: "min_volume filter must exclude <5% of universe"
+        severity: "warning"
+
+  # =============================================================================
+  # Pattern 2: Momentum + Exit Strategy (18% coverage)
+  # =============================================================================
+  # Momentum strategy with trailing stop loss for risk management
+  # Performance: Sharpe 0.301, Return 41.6%, MaxDD -32.2%
+  # Example IDs: template_1, template_7, template_13, template_19, template_25
+
+  momentum_exit:
+    name: "Momentum + Exit Strategy"
+    type: "momentum_with_exit"
+    description: "Momentum strategy with trailing stop loss for downside protection"
+    coverage: 0.18
+
+    required_fields:
+      - field: "price:收盤價"
+        aliases: ["close", "closing_price", "收盤價"]
+        usage: "Entry signal and stop loss calculation"
+        category: "price"
+
+      - field: "price:成交金額"
+        aliases: ["volume", "trading_value", "turnover"]
+        usage: "Liquidity filtering"
+        category: "price"
+
+    optional_fields:
+      - field: "price:最高價"
+        aliases: ["high", "highest"]
+        usage: "Trailing stop calculation - track peak price"
+
+    parameters:
+      momentum_period:
+        type: "integer"
+        description: "Momentum calculation period"
+        default: 20
+        range: [10, 60]
+        unit: "trading_days"
+
+      entry_threshold:
+        type: "float"
+        description: "Momentum threshold for entry"
+        default: 0.02
+        range: [0.01, 0.10]
+        unit: "percentage"
+
+      trailing_stop_pct:
+        type: "float"
+        description: "Trailing stop distance from peak price"
+        default: 0.10
+        range: [0.05, 0.30]
+        unit: "percentage"
+
+      min_volume:
+        type: "float"
+        description: "Minimum trading value"
+        default: 1000000.0
+        range: [100000.0, 10000000.0]
+        unit: "currency"
+
+    logic:
+      entry:
+        description: "Momentum breakout with volume filter"
+        formula: "(price.pct_change(momentum_period).rolling(5).mean() > entry_threshold) & (volume > min_volume)"
+        dependencies: ["price:收盤價", "price:成交金額"]
+
+      exit:
+        description: "Exit when price drops below trailing stop"
+        formula: "price < peak_price * (1 - trailing_stop_pct)"
+        dependencies: ["price:收盤價", "price:最高價"]
+
+    constraints:
+      - type: "data_quality"
+        check: "No NaN in price and volume"
+        severity: "critical"
+
+      - type: "logic"
+        check: "trailing_stop_pct must be less than expected max drawdown"
+        severity: "warning"
+
+      - type: "parameter"
+        check: "entry_threshold > 0 and trailing_stop_pct > 0"
+        severity: "critical"
+
+  # =============================================================================
+  # Pattern 3: Turtle Breakout (16% coverage)
+  # =============================================================================
+  # Channel breakout strategy following Turtle Trading rules
+  # Performance: Sharpe 0.301, Return 41.6%, MaxDD -32.2%
+  # Example IDs: template_2, template_8, template_14, template_20, template_26
+
+  turtle_breakout:
+    name: "Turtle Breakout"
+    type: "breakout"
+    description: "N-day high/low breakout with ATR-based position sizing and stop loss"
+    coverage: 0.16
+
+    required_fields:
+      - field: "price:收盤價"
+        aliases: ["close", "closing_price"]
+        usage: "Breakout detection and stop loss"
+        category: "price"
+
+      - field: "price:最高價"
+        aliases: ["high", "highest"]
+        usage: "N-day high for entry breakout"
+        category: "price"
+
+      - field: "price:最低價"
+        aliases: ["low", "lowest"]
+        usage: "N-day low for exit breakout and ATR calculation"
+        category: "price"
+
+      - field: "price:成交金額"
+        aliases: ["volume", "trading_value"]
+        usage: "Volume confirmation"
+        category: "price"
+
+    parameters:
+      breakout_period:
+        type: "integer"
+        description: "N-day period for breakout detection"
+        default: 20
+        range: [10, 55]
+        unit: "trading_days"
+        note: "Classic Turtle uses 20-day for entry, 55-day for exit"
+
+      atr_period:
+        type: "integer"
+        description: "Period for ATR calculation"
+        default: 14
+        range: [7, 30]
+        unit: "trading_days"
+
+      atr_stop_multiplier:
+        type: "float"
+        description: "ATR multiplier for stop loss distance"
+        default: 2.0
+        range: [1.0, 4.0]
+        unit: "multiplier"
+
+      min_volume:
+        type: "float"
+        description: "Minimum trading value for breakout validity"
+        default: 1000000.0
+        range: [100000.0, 10000000.0]
+        unit: "currency"
+
+    logic:
+      entry:
+        description: "Enter when price breaks above N-day high with volume"
+        formula: "(close > high.rolling(breakout_period).max().shift(1)) & (volume > min_volume)"
+        dependencies: ["price:收盤價", "price:最高價", "price:成交金額"]
+
+      exit:
+        description: "Exit when price hits ATR-based stop loss"
+        formula: "close < (entry_price - atr * atr_stop_multiplier)"
+        dependencies: ["price:收盤價", "price:最高價", "price:最低價"]
+        note: "ATR = average true range over atr_period"
+
+    constraints:
+      - type: "data_quality"
+        check: "High >= Low >= Close for all periods"
+        severity: "critical"
+
+      - type: "parameter"
+        check: "breakout_period > atr_period for stability"
+        severity: "warning"
+
+      - type: "logic"
+        check: "ATR calculation requires minimum history of atr_period + 1"
+        severity: "critical"
+
+  # =============================================================================
+  # Pattern 4: Multi-Factor Scoring (16% coverage)
+  # =============================================================================
+  # Factor-based scoring system combining multiple signals
+  # Performance: Sharpe 0.301, Return 41.6%, MaxDD -32.2%
+  # Example IDs: template_3, template_9, template_15, template_21, template_27
+
+  multi_factor_scoring:
+    name: "Multi-Factor Scoring"
+    type: "factor_scoring"
+    description: "Combines multiple factors (momentum, value, quality) with weighted scoring"
+    coverage: 0.16
+
+    required_fields:
+      - field: "price:收盤價"
+        aliases: ["close", "closing_price"]
+        usage: "Momentum factor calculation"
+        category: "price"
+
+      - field: "fundamental_features:本益比"
+        aliases: ["pe_ratio", "PE", "本益比"]
+        usage: "Value factor - inverse PE scoring"
+        category: "fundamental"
+
+      - field: "fundamental_features:ROE"
+        aliases: ["roe", "return_on_equity", "ROE", "股東權益報酬率"]
+        usage: "Quality factor - profitability screening"
+        category: "fundamental"
+
+      - field: "price:成交金額"
+        aliases: ["volume", "trading_value"]
+        usage: "Liquidity screening"
+        category: "price"
+
+    optional_fields:
+      - field: "fundamental_features:股價淨值比"
+        aliases: ["pb_ratio", "PB", "股價淨值比"]
+        usage: "Additional value factor"
+
+      - field: "fundamental_features:殖利率"
+        aliases: ["dividend_yield", "殖利率", "現金殖利率"]
+        usage: "Income factor"
+
+    parameters:
+      momentum_weight:
+        type: "float"
+        description: "Weight for momentum factor in composite score"
+        default: 0.4
+        range: [0.0, 1.0]
+        unit: "weight"
+
+      value_weight:
+        type: "float"
+        description: "Weight for value factor (inverse PE)"
+        default: 0.3
+        range: [0.0, 1.0]
+        unit: "weight"
+
+      quality_weight:
+        type: "float"
+        description: "Weight for quality factor (ROE)"
+        default: 0.3
+        range: [0.0, 1.0]
+        unit: "weight"
+        note: "Weights should sum to 1.0"
+
+      momentum_period:
+        type: "integer"
+        description: "Lookback for momentum calculation"
+        default: 20
+        range: [10, 60]
+        unit: "trading_days"
+
+      top_n_pct:
+        type: "float"
+        description: "Select top N% by composite score"
+        default: 0.10
+        range: [0.05, 0.30]
+        unit: "percentage"
+
+      min_roe:
+        type: "float"
+        description: "Minimum ROE threshold for quality screen"
+        default: 0.10
+        range: [0.05, 0.30]
+        unit: "percentage"
+
+    logic:
+      entry:
+        description: "Rank stocks by weighted composite score, select top N%"
+        formula: |
+          momentum_score = price.pct_change(momentum_period).rank(pct=True)
+          value_score = (1 / pe_ratio).rank(pct=True)
+          quality_score = roe.rank(pct=True)
+          composite = (momentum_weight * momentum_score +
+                      value_weight * value_score +
+                      quality_weight * quality_score)
+          entry = (composite >= (1 - top_n_pct)) & (roe > min_roe)
+        dependencies: ["price:收盤價", "fundamental_features:本益比", "fundamental_features:ROE"]
+
+      exit:
+        description: "Exit positions falling out of top N% on rebalance"
+        formula: "composite < (1 - top_n_pct)"
+        dependencies: ["price:收盤價", "fundamental_features:本益比", "fundamental_features:ROE"]
+
+    constraints:
+      - type: "parameter"
+        check: "momentum_weight + value_weight + quality_weight == 1.0"
+        severity: "critical"
+        tolerance: 0.01
+
+      - type: "data_quality"
+        check: "PE ratio > 0 for value scoring"
+        severity: "critical"
+
+      - type: "data_quality"
+        check: "ROE values available and valid"
+        severity: "critical"
+
+      - type: "logic"
+        check: "Composite score calculation produces valid rankings"
+        severity: "critical"
+
+  # =============================================================================
+  # Pattern 5: Complex Combination (16% coverage)
+  # =============================================================================
+  # Multi-strategy combination with adaptive weighting
+  # Performance: Sharpe 0.301, Return 41.6%, MaxDD -32.2%
+  # Example IDs: template_4, template_10, template_16, template_22, template_28
+
+  complex_combination:
+    name: "Complex Combination"
+    type: "hybrid"
+    description: "Combines momentum, breakout, and factor scoring with regime detection"
+    coverage: 0.16
+
+    required_fields:
+      - field: "price:收盤價"
+        aliases: ["close", "closing_price"]
+        usage: "All sub-strategies - momentum, breakout, scoring"
+        category: "price"
+
+      - field: "price:最高價"
+        aliases: ["high", "highest"]
+        usage: "Breakout detection"
+        category: "price"
+
+      - field: "price:最低價"
+        aliases: ["low", "lowest"]
+        usage: "Volatility calculation and risk management"
+        category: "price"
+
+      - field: "price:成交金額"
+        aliases: ["volume", "trading_value"]
+        usage: "Volume filtering and regime detection"
+        category: "price"
+
+      - field: "fundamental_features:本益比"
+        aliases: ["pe_ratio", "PE"]
+        usage: "Value component in factor scoring"
+        category: "fundamental"
+
+      - field: "fundamental_features:ROE"
+        aliases: ["roe", "return_on_equity", "ROE"]
+        usage: "Quality component in factor scoring"
+        category: "fundamental"
+
+    optional_fields:
+      - field: "fundamental_features:殖利率"
+        aliases: ["dividend_yield", "殖利率"]
+        usage: "Income factor for defensive regime"
+
+    parameters:
+      # Momentum sub-strategy
+      momentum_period:
+        type: "integer"
+        description: "Momentum lookback period"
+        default: 20
+        range: [10, 60]
+        unit: "trading_days"
+
+      momentum_weight:
+        type: "float"
+        description: "Weight for momentum sub-strategy"
+        default: 0.4
+        range: [0.0, 1.0]
+        unit: "weight"
+
+      # Breakout sub-strategy
+      breakout_period:
+        type: "integer"
+        description: "Breakout detection period"
+        default: 20
+        range: [10, 55]
+        unit: "trading_days"
+
+      breakout_weight:
+        type: "float"
+        description: "Weight for breakout sub-strategy"
+        default: 0.3
+        range: [0.0, 1.0]
+        unit: "weight"
+
+      # Factor scoring sub-strategy
+      factor_score_weight:
+        type: "float"
+        description: "Weight for factor scoring sub-strategy"
+        default: 0.3
+        range: [0.0, 1.0]
+        unit: "weight"
+        note: "Strategy weights should sum to 1.0"
+
+      # Risk management
+      volatility_period:
+        type: "integer"
+        description: "Period for volatility calculation"
+        default: 20
+        range: [10, 60]
+        unit: "trading_days"
+
+      max_volatility:
+        type: "float"
+        description: "Maximum allowed volatility for position entry"
+        default: 0.30
+        range: [0.10, 0.50]
+        unit: "annualized_std"
+
+      # Regime detection
+      regime_detection:
+        type: "boolean"
+        description: "Enable adaptive strategy weighting by market regime"
+        default: true
+
+      regime_period:
+        type: "integer"
+        description: "Period for regime classification"
+        default: 60
+        range: [30, 120]
+        unit: "trading_days"
+
+    logic:
+      entry:
+        description: "Weighted combination of momentum, breakout, and factor signals"
+        formula: |
+          # Individual sub-strategy signals
+          momentum_signal = (price.pct_change(momentum_period) > 0.02)
+          breakout_signal = (close > high.rolling(breakout_period).max().shift(1))
+          factor_signal = (composite_score >= 0.8)  # Top 20%
+
+          # Volatility filter
+          volatility = close.pct_change().rolling(volatility_period).std() * sqrt(252)
+          vol_filter = (volatility < max_volatility)
+
+          # Regime detection (optional)
+          if regime_detection:
+              market_regime = detect_regime(close, volume, regime_period)
+              weights = adjust_weights(market_regime, [momentum_weight, breakout_weight, factor_score_weight])
+          else:
+              weights = [momentum_weight, breakout_weight, factor_score_weight]
+
+          # Weighted combination
+          combined_score = (weights[0] * momentum_signal +
+                           weights[1] * breakout_signal +
+                           weights[2] * factor_signal)
+
+          entry = (combined_score > 0.5) & vol_filter
+        dependencies:
+          - "price:收盤價"
+          - "price:最高價"
+          - "price:最低價"
+          - "price:成交金額"
+          - "fundamental_features:本益比"
+          - "fundamental_features:ROE"
+
+      exit:
+        description: "Exit when combined score falls below threshold or volatility spikes"
+        formula: |
+          volatility_spike = (volatility > max_volatility * 1.5)
+          score_decline = (combined_score < 0.3)
+          exit = volatility_spike | score_decline
+        dependencies:
+          - "price:收盤價"
+          - "price:最低價"
+
+    constraints:
+      - type: "parameter"
+        check: "momentum_weight + breakout_weight + factor_score_weight == 1.0"
+        severity: "critical"
+        tolerance: 0.01
+
+      - type: "data_quality"
+        check: "All required fields available without excessive NaN"
+        severity: "critical"
+        max_nan_pct: 0.10
+
+      - type: "logic"
+        check: "Regime detection function produces valid classifications"
+        severity: "warning"
+
+      - type: "performance"
+        check: "Individual sub-strategies show positive correlation with combined strategy"
+        severity: "warning"
+
+      - type: "parameter"
+        check: "volatility_period <= min(momentum_period, breakout_period)"
+        severity: "warning"
+
+# =============================================================================
+# Common Field Corrections (Layer 1 Integration)
+# =============================================================================
+# Auto-correction mapping for common LLM field naming errors
+# Sourced from DataFieldManifest.COMMON_CORRECTIONS (29.4% error rate)
+
+field_corrections:
+  # Trading value vs shares confusion (most common)
+  "price:成交量": "price:成交金額"
+  "成交量": "price:成交金額"
+  "trading_volume": "price:成交金額"
+  "turnover": "price:成交金額"
+  "volume_amount": "price:成交金額"
+
+  # Price field variations
+  "close_value": "price:收盤價"
+  "closing": "price:收盤價"
+  "收盤": "price:收盤價"
+  "opening": "price:開盤價"
+  "開盤": "price:開盤價"
+  "highest": "price:最高價"
+  "lowest": "price:最低價"
+
+  # Fundamental ratio variations
+  "pe_ratio": "fundamental_features:本益比"
+  "pb_ratio": "fundamental_features:股價淨值比"
+  "roe_ratio": "fundamental_features:ROE"
+  "roa_ratio": "fundamental_features:ROA"
+  "股東權益報酬率": "fundamental_features:ROE"
+  "資產報酬率": "fundamental_features:ROA"
+  "現金殖利率": "fundamental_features:殖利率"
+
+  # Shares field (not value)
+  "volume_shares": "price:成交股數"
+  "share_volume": "price:成交股數"
+
+# =============================================================================
+# Validation Rules (Global)
+# =============================================================================
+# Cross-pattern validation constraints
+
+validation:
+  data_quality:
+    max_nan_percentage: 0.05  # Maximum 5% NaN values in required fields
+    min_history_days: 252     # Minimum 1 year of historical data
+
+  performance_bounds:
+    min_sharpe_ratio: -0.5    # Reject strategies with excessive risk
+    max_drawdown: -0.60       # Maximum acceptable drawdown -60%
+    min_win_rate: 0.30        # At least 30% winning trades
+
+  parameter_consistency:
+    - check: "All period parameters > 0"
+      severity: "critical"
+    - check: "All weight parameters in [0, 1]"
+      severity: "critical"
+    - check: "All percentage thresholds in [0, 1]"
+      severity: "critical"
+
+# =============================================================================
+# Metadata
+# =============================================================================
+
+metadata:
+  schema_version: "1.0"
+  created_date: "2025-11-18"
+  task_reference: "16.3 - Central Schema Definition"
+  coverage_analysis: "docs/PATTERN_COVERAGE_ANALYSIS.md"
+  layer1_integration: "src/config/data_fields.py"
+  total_patterns: 5
+  total_coverage: 0.84
+
+  notes:
+    - "Schemas based on analysis of 50 successful Factor Graph strategies"
+    - "Field names follow Layer 1 canonical naming from DataFieldManifest"
+    - "All aliases support LLM field name variations and corrections"
+    - "Parameter ranges derived from empirical strategy performance data"
+    - "Validation constraints ensure minimum quality and risk management"

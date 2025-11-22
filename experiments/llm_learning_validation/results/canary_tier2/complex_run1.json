@@ -1,0 +1,18 @@
+{
+  "case": "complex",
+  "run": 1,
+  "complexity": "high",
+  "strategy_code": "close = data.get('price:\u6536\u76e4\u50f9')\nvol = data.get('price:\u6210\u4ea4\u80a1\u6578')\nhigh = data.get('price:\u6700\u9ad8\u50f9')\nlow = data.get('price:\u6700\u4f4e\u50f9')\nopen_price = data.get('price:\u958b\u76e4\u50f9')\n\nroe = data.get('fundamental_features:ROE\u7a05\u5f8c').shift(1)\neps = data.get('fundamental_features:\u6bcf\u80a1\u7a05\u5f8c\u6de8\u5229').shift(1)\nmargin = data.get('fundamental_features:\u71df\u696d\u5229\u76ca\u7387').shift(1)\ndebt = data.get('fundamental_features:\u8ca0\u50b5\u6bd4\u7387').shift(1)\n\npb = data.get('price_earning_ratio:\u80a1\u50f9\u6de8\u503c\u6bd4').shift(1)\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4').shift(1)\n\nrev = data.get('monthly_revenue:\u7576\u6708\u71df\u6536').shift(1)\nrev_yoy = data.get('monthly_revenue:\u53bb\u5e74\u540c\u6708\u589e\u6e1b(%)').shift(1)\n\n# === STEP 2: Calculate Indicators ===\n\n# Momentum: 3-month price change\nmom3m = (close / close.shift(60) - 1).fillna(0)\n\n# Value: Inverse of P/E ratio, capped to avoid extreme values\nvalue_score = (1 / pe).where(pe > 0).fillna(0) # Avoid division by zero and negative PE\n\n# Quality: ROE and Profit Margin\nquality_score = (roe / 100 + margin / 100).fillna(0) # Convert percentage to decimal\n\n# Growth: Revenue YoY growth\ngrowth_score = (rev_yoy / 100).fillna(0) # Convert percentage to decimal\n\n# Liquidity: Average daily trading volume over 20 days\navg_vol = vol.average(20)\n\n# Combine factors into a composite score\n# Assign weights based on perceived importance for a growth-at-reasonable-price strategy\n# Momentum: 40%, Growth: 30%, Quality: 20%, Value: 10%\ncomposite_score = (\n    mom3m * 0.4 +\n    growth_score * 0.3 +\n    quality_score * 0.2 +\n    value_score * 0.1\n)\n\n# === STEP 3: Define Conditions ===\n\n# Condition 1: Sufficient liquidity (average daily volume > 1000 shares)\ncond_liquidity = (avg_vol >= 1000)\n\n# Condition 2: Positive composite score\ncond_composite_score = (composite_score > 0)\n\n# Condition 3: Price above 20-day simple moving average (short-term trend)\nsma20 = close.average(20)\ncond_price_trend = (close > sma20)\n\n# Condition 4: Debt ratio not too high (e.g., less than 70%)\ncond_debt_ratio = (debt < 70).fillna(True) # Fill NaN with True to not penalize missing data\n\n# Condition 5: Positive EPS\ncond_eps = (eps > 0).fillna(False)\n\n# === STEP 4: Combine & Select ===\n# Combine all conditions\ncombined_conditions = cond_liquidity & cond_composite_score & cond_price_trend & cond_debt_ratio & cond_eps\n\n# Rank stocks based on the composite score among those meeting the combined conditions\n# Select the top 20 stocks\nposition = combined_conditions.where(combined_conditions).rank(axis=1, method='first', ascending=False)\nposition = (position <= 20)\n\n# === STEP 5: Filter & Backtest (FIXED - copy exactly) ===\nposition = position.loc[start_date:end_date]\nreport = sim(position, fee_ratio=fee_ratio, tax_ratio=tax_ratio, resample=\"M\")",
+  "execution_result": {
+    "success": true,
+    "sharpe_ratio": 0.744393500297,
+    "error_type": null,
+    "error_message": null,
+    "metrics": {
+      "sharpe_ratio": 0.744393500297,
+      "total_return": 1.1341389353913907,
+      "max_drawdown": -0.2226481683064686
+    }
+  },
+  "timestamp": "2025-11-21T12:59:08.893551"
+}

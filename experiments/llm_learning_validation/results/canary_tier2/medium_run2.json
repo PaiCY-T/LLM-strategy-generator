@@ -1,0 +1,18 @@
+{
+  "case": "medium",
+  "run": 2,
+  "complexity": "medium",
+  "strategy_code": "# === STEP 1: Load Data (MUST use exact field names from APPENDIX) ===\nclose = data.get('price:\u6536\u76e4\u50f9')\nvol = data.get('price:\u6210\u4ea4\u80a1\u6578')\nhigh = data.get('price:\u6700\u9ad8\u50f9')\nlow = data.get('price:\u6700\u4f4e\u50f9')\nopen_price = data.get('price:\u958b\u76e4\u50f9')\n\n# Fundamentals (MUST add .shift(1))\nroe = data.get('fundamental_features:ROE\u7a05\u5f8c').shift(1)       # ROE = ROE\u7a05\u5f8c\neps = data.get('fundamental_features:\u6bcf\u80a1\u7a05\u5f8c\u6de8\u5229').shift(1)   # EPS = \u6bcf\u80a1\u7a05\u5f8c\u6de8\u5229\nmargin = data.get('fundamental_features:\u71df\u696d\u5229\u76ca\u7387').shift(1)  # Profit Margin\ndebt = data.get('fundamental_features:\u8ca0\u50b5\u6bd4\u7387').shift(1)      # Debt Ratio\n\n# Valuation Ratios (MUST add .shift(1))\npb = data.get('price_earning_ratio:\u80a1\u50f9\u6de8\u503c\u6bd4').shift(1)       # P/B Ratio\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4').shift(1)           # P/E Ratio\n\n# Monthly Revenue (MUST add .shift(1))\nrev = data.get('monthly_revenue:\u7576\u6708\u71df\u6536').shift(1)             # Monthly Revenue\nrev_yoy = data.get('monthly_revenue:\u53bb\u5e74\u540c\u6708\u589e\u6e1b(%)').shift(1)  # Revenue YoY Growth %\n\n# === STEP 2: Calculate Indicators ===\n\n# 1. Momentum: 5-day price change\nprice_change_5d = (close - close.shift(5)) / close.shift(5)\n\n# 2. Volatility: Standard deviation of daily returns over 20 days\ndaily_returns = close.pct_change()\nvolatility = daily_returns.rolling(20).std()\n\n# 3. Liquidity: Average daily volume over 20 days\navg_vol_20d = vol.average(20)\n\n# === STEP 3: Define Conditions ===\n\n# Condition 1: Quality Filter (ROE and Profit Margin)\n# ROE > 10% and Profit Margin > 5%\ncond_quality = (roe > 10) & (margin > 5)\n\n# Condition 2: Growth Filter (Revenue YoY Growth)\n# Revenue YoY growth > 10%\ncond_growth = (rev_yoy > 10)\n\n# Condition 3: Momentum Filter (Positive 5-day price change)\n# Price increased over the last 5 days\ncond_momentum = (price_change_5d > 0)\n\n# Condition 4: Value Filter (P/B Ratio and P/E Ratio)\n# P/B < 3 and P/E < 20 (avoiding extremely high valuations)\ncond_value = (pb < 3) & (pe < 20)\n\n# Condition 5: Liquidity Filter\n# Average daily volume over 20 days must be at least 500k shares\ncond_liquidity = (avg_vol_20d >= 500 * 1000)\n\n# Condition 6: Low Volatility Filter\n# Volatility should be below its 200-day average\ncond_low_volatility = (volatility < volatility.average(200))\n\n\n# === STEP 4: Combine & Select ===\n# Combine all conditions: quality, growth, momentum, value, liquidity, and low volatility\n# We'll select stocks that meet all these criteria.\n# Then, we'll rank them by a composite score if needed, but for simplicity, we first filter.\ncombined_conditions = cond_quality & cond_growth & cond_momentum & cond_value & cond_liquidity & cond_low_volatility\n\n# Select the top 10 stocks that meet all combined conditions.\n# If fewer than 10 stocks meet the conditions, it will select all of them.\nposition = combined_conditions.is_largest(10)\n\n# === STEP 5: Filter & Backtest (FIXED - copy exactly) ===\nposition = position.loc[start_date:end_date]\nreport = sim(position, fee_ratio=fee_ratio, tax_ratio=tax_ratio, resample=\"M\")",
+  "execution_result": {
+    "success": true,
+    "sharpe_ratio": 0.08440028362970896,
+    "error_type": null,
+    "error_message": null,
+    "metrics": {
+      "sharpe_ratio": 0.08440028362970896,
+      "total_return": 0.15225830582874122,
+      "max_drawdown": -0.367572661216361
+    }
+  },
+  "timestamp": "2025-11-21T12:58:25.898891"
+}

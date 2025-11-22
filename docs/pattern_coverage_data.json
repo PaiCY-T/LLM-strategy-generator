@@ -1,0 +1,117 @@
+{
+  "total_strategies": 50,
+  "pattern_counts": {
+    "Pure Momentum": 9,
+    "Momentum + Exit Strategy": 9,
+    "Turtle Breakout": 8,
+    "Multi-Factor Scoring": 8,
+    "Complex Combination": 8,
+    "Hybrid Strategy": 8
+  },
+  "top_5_patterns": [
+    [
+      "Pure Momentum",
+      9
+    ],
+    [
+      "Momentum + Exit Strategy",
+      9
+    ],
+    [
+      "Turtle Breakout",
+      8
+    ],
+    [
+      "Multi-Factor Scoring",
+      8
+    ],
+    [
+      "Complex Combination",
+      8
+    ]
+  ],
+  "top_5_coverage": 42,
+  "coverage_percentage": 84.0,
+  "pattern_avg_metrics": {
+    "Pure Momentum": {
+      "avg_sharpe": 0.3011689369853631,
+      "avg_return": 0.41634872158815306,
+      "avg_drawdown": -0.3223806564771579,
+      "count": 9
+    },
+    "Momentum + Exit Strategy": {
+      "avg_sharpe": 0.3011689369853631,
+      "avg_return": 0.41634872158815306,
+      "avg_drawdown": -0.3223806564771579,
+      "count": 9
+    },
+    "Turtle Breakout": {
+      "avg_sharpe": 0.3011689369853631,
+      "avg_return": 0.41634872158815306,
+      "avg_drawdown": -0.3223806564771579,
+      "count": 8
+    },
+    "Multi-Factor Scoring": {
+      "avg_sharpe": 0.3011689369853631,
+      "avg_return": 0.41634872158815306,
+      "avg_drawdown": -0.3223806564771579,
+      "count": 8
+    },
+    "Complex Combination": {
+      "avg_sharpe": 0.3011689369853631,
+      "avg_return": 0.41634872158815306,
+      "avg_drawdown": -0.3223806564771579,
+      "count": 8
+    },
+    "Hybrid Strategy": {
+      "avg_sharpe": 0.3011689369853631,
+      "avg_return": 0.41634872158815306,
+      "avg_drawdown": -0.3223806564771579,
+      "count": 8
+    }
+  },
+  "pattern_strategies": {
+    "Pure Momentum": [
+      "template_0",
+      "template_6",
+      "template_12",
+      "template_18",
+      "template_24"
+    ],
+    "Momentum + Exit Strategy": [
+      "template_1",
+      "template_7",
+      "template_13",
+      "template_19",
+      "template_25"
+    ],
+    "Turtle Breakout": [
+      "template_2",
+      "template_8",
+      "template_14",
+      "template_20",
+      "template_26"
+    ],
+    "Multi-Factor Scoring": [
+      "template_3",
+      "template_9",
+      "template_15",
+      "template_21",
+      "template_27"
+    ],
+    "Complex Combination": [
+      "template_4",
+      "template_10",
+      "template_16",
+      "template_22",
+      "template_28"
+    ],
+    "Hybrid Strategy": [
+      "template_5",
+      "template_11",
+      "template_17",
+      "template_23",
+      "template_29"
+    ]
+  }
+}

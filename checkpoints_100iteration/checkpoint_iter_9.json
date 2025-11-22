@@ -1,0 +1,224 @@
+{
+  "iteration_number": 9,
+  "timestamp": "2025-11-22T06:10:43.069130",
+  "sharpes": [
+    -0.09189153262226984,
+    0.47059647988533065,
+    0.7830318741650771,
+    0.7745174862219022,
+    0.1313022130442138,
+    0.439315168430324,
+    0.5297263854220511,
+    -0.21225921280900922,
+    0.6617168257332343,
+    0.7238792425936917
+  ],
+  "durations": [
+    39.65499782562256,
+    10.563344717025757,
+    12.688370704650879,
+    10.135469198226929,
+    8.612168312072754,
+    8.678163528442383,
+    8.848074436187744,
+    8.03864073753357,
+    8.703422546386719,
+    10.498183012008667
+  ],
+  "champion_updates": [
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "iteration_records": [
+    {
+      "iteration": 0,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 39.65499782562256,
+      "sharpe": -0.09189153262226984,
+      "metrics": {
+        "annual_return": -0.04234112144371127,
+        "sharpe_ratio": -0.09189153262226984,
+        "max_drawdown": -0.6400310033299077,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 1,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 10.563344717025757,
+      "sharpe": 0.47059647988533065,
+      "metrics": {
+        "annual_return": 0.12036328931833862,
+        "sharpe_ratio": 0.47059647988533065,
+        "max_drawdown": -0.5133568833809627,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 2,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 12.688370704650879,
+      "sharpe": 0.7830318741650771,
+      "metrics": {
+        "annual_return": 0.23725112825988548,
+        "sharpe_ratio": 0.7830318741650771,
+        "max_drawdown": -0.6353226746513819,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 3,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 10.135469198226929,
+      "sharpe": 0.7745174862219022,
+      "metrics": {
+        "annual_return": 0.2547257165430943,
+        "sharpe_ratio": 0.7745174862219022,
+        "max_drawdown": -0.6413025739376845,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": true,
+      "retry_count": 0
+    },
+    {
+      "iteration": 4,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 8.612168312072754,
+      "sharpe": 0.1313022130442138,
+      "metrics": {
+        "annual_return": 0.021635427932798157,
+        "sharpe_ratio": 0.1313022130442138,
+        "max_drawdown": -0.6352452170104477,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 5,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 8.678163528442383,
+      "sharpe": 0.439315168430324,
+      "metrics": {
+        "annual_return": 0.10927285525697061,
+        "sharpe_ratio": 0.439315168430324,
+        "max_drawdown": -0.43510698794286984,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 6,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 8.848074436187744,
+      "sharpe": 0.5297263854220511,
+      "metrics": {
+        "annual_return": 0.14094593830904234,
+        "sharpe_ratio": 0.5297263854220511,
+        "max_drawdown": -0.5366989067783774,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 7,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 8.03864073753357,
+      "sharpe": -0.21225921280900922,
+      "metrics": {
+        "annual_return": -0.059643601096275534,
+        "sharpe_ratio": -0.21225921280900922,
+        "max_drawdown": -0.6529305293799403,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 8,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 8.703422546386719,
+      "sharpe": 0.6617168257332343,
+      "metrics": {
+        "annual_return": 0.20470915828455705,
+        "sharpe_ratio": 0.6617168257332343,
+        "max_drawdown": -0.6731001540456898,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    },
+    {
+      "iteration": 9,
+      "success": true,
+      "status": "SUCCESS",
+      "duration_seconds": 10.498183012008667,
+      "sharpe": 0.7238792425936917,
+      "metrics": {
+        "annual_return": 0.20389190207621022,
+        "sharpe_ratio": 0.7238792425936917,
+        "max_drawdown": -0.6670595925302985,
+        "success": false
+      },
+      "champion_iteration": 3,
+      "champion_sharpe": 2.5604600394789623,
+      "champion_updated": false,
+      "retry_count": 0
+    }
+  ],
+  "champion_state": {
+    "sharpe": 2.5604600394789623,
+    "iteration": 3,
+    "metrics": {
+      "total_return": -0.2215752911489399,
+      "annual_return": 0.2257798618295586,
+      "sharpe_ratio": 2.5604600394789623,
+      "max_drawdown": -0.16699112669862057,
+      "win_rate": 0.23850480201015906,
+      "position_count": 252
+    }
+  }
+}

@@ -1,0 +1,43 @@
+# Phase 1 Validation - Hybrid Mode (20 iterations)
+# Fresh test with Phase 1 improvements applied
+# 70% LLM, 30% Factor Graph
+
+learning_loop:
+  max_iterations: 20
+  continue_on_error: false
+
+  history:
+    file: experiments/llm_learning_validation/results/phase1_hybrid_20/innovations.jsonl
+    window: 5
+
+  champion:
+    file: experiments/llm_learning_validation/results/phase1_hybrid_20/champion.json
+
+  backtest:
+    timeout_seconds: 900
+    resample: M
+
+  logging:
+    log_dir: experiments/llm_learning_validation/results/phase1_hybrid_20/logs
+    log_level: INFO
+    log_to_file: true
+    log_to_console: true
+
+# Enable LLM with 70% innovation rate (hybrid)
+llm:
+  enabled: true
+  innovation_rate: 0.7  # 70% LLM, 30% Factor Graph
+  provider: openrouter
+  model: ${LLM_MODEL:google/gemini-2.5-flash}
+
+  generation:
+    max_tokens: 2000
+    temperature: 0.7
+    timeout: 60
+
+  fallback:
+    enabled: true  # Fallback to Factor Graph enabled in hybrid mode
+    max_retries: 3
+    retry_delay: 2
+
+  mode: structured

@@ -1,0 +1,33 @@
+# Hybrid Mode (50 iterations)
+# 50% LLM, 50% Factor Graph
+# Purpose: Validate both paths work together
+
+learning_loop:
+  max_iterations: 50
+  continue_on_error: false
+
+  history:
+    file: experiments/llm_learning_validation/results/hybrid_50/innovations.jsonl
+    window: 5
+
+  champion:
+    file: experiments/llm_learning_validation/results/hybrid_50/champion.json
+
+  backtest:
+    timeout_seconds: 60  # Should complete quickly for both paths
+    resample: M  # 月度重新平衡
+
+  logging:
+    log_dir: experiments/llm_learning_validation/results/hybrid_50/logs
+    log_level: INFO
+    log_to_file: true
+    log_to_console: true
+
+# Enable LLM for hybrid mode
+llm:
+  enabled: true
+  innovation_rate: 0.5  # 50% LLM, 50% Factor Graph
+  model: "gpt-4o-mini"
+  temperature: 0.8
+  max_tokens: 2000
+  api_key_env_var: "OPENAI_API_KEY"

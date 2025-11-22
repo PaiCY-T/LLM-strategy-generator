@@ -1,0 +1,18 @@
+{
+  "case": "complex",
+  "run": 3,
+  "complexity": "high",
+  "strategy_code": "# === STEP 1: Load Data (MUST use exact field names from APPENDIX) ===\nclose = data.get('price:\u6536\u76e4\u50f9')\nvol = data.get('price:\u6210\u4ea4\u80a1\u6578')\nhigh = data.get('price:\u6700\u9ad8\u50f9')\nlow = data.get('price:\u6700\u4f4e\u50f9')\nopen_price = data.get('price:\u958b\u76e4\u50f9')\n\nroe = data.get('fundamental_features:ROE\u7a05\u5f8c').shift(1)\neps = data.get('fundamental_features:\u6bcf\u80a1\u7a05\u5f8c\u6de8\u5229').shift(1)\nmargin = data.get('fundamental_features:\u71df\u696d\u5229\u76ca\u7387').shift(1)\ndebt = data.get('fundamental_features:\u8ca0\u50b5\u6bd4\u7387').shift(1)\n\npb = data.get('price_earning_ratio:\u80a1\u50f9\u6de8\u503c\u6bd4').shift(1)\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4').shift(1)\n\nrev = data.get('monthly_revenue:\u7576\u6708\u71df\u6536').shift(1)\nrev_yoy = data.get('monthly_revenue:\u53bb\u5e74\u540c\u6708\u589e\u6e1b(%)').shift(1)\n\n# === STEP 2: Calculate Indicators ===\n\n# Momentum: 3-month price change\nprice_change_3m = close.pct_change(60) # Assuming 20 trading days per month, 3 months = 60 days\n\n# Value: Inverse of P/E ratio, capped to avoid extreme values\ninverse_pe = (1 / pe).where(pe > 0, 0) # Avoid division by zero and negative PE\n\n# Quality: ROE and Profit Margin\nquality_score = roe * margin\n\n# Growth: Revenue YoY Growth\ngrowth_score = rev_yoy\n\n# Liquidity filter: Average daily volume over 20 days\navg_vol_20d = vol.average(20)\n\n# Combine factors with custom weights (example weights)\n# Normalize factors to avoid dominance of one factor\n# Rank each factor cross-sectionally\nrank_price_change = price_change_3m.rank(axis=1, pct=True)\nrank_inverse_pe = inverse_pe.rank(axis=1, pct=True)\nrank_quality = quality_score.rank(axis=1, pct=True)\nrank_growth = growth_score.rank(axis=1, pct=True)\n\n# Composite score\ncomposite_score = (\n    0.3 * rank_price_change +\n    0.2 * rank_inverse_pe +\n    0.3 * rank_quality +\n    0.2 * rank_growth\n)\n\n# === STEP 3: Define Conditions ===\n\n# Condition 1: Minimum liquidity\ncond_liquidity = (avg_vol_20d >= 50000) # Increased liquidity threshold\n\n# Condition 2: Positive EPS\ncond_eps_positive = (eps > 0)\n\n# Condition 3: ROE must be positive\ncond_roe_positive = (roe > 0)\n\n# === STEP 4: Combine & Select ===\n\n# Apply fundamental and liquidity filters first\nfiltered_stocks = cond_liquidity & cond_eps_positive & cond_roe_positive\n\n# Apply the composite score to the filtered stocks\n# Select the top 20 stocks based on the composite score\nposition = composite_score.where(filtered_stocks).is_largest(20)\n\n# === STEP 5: Filter & Backtest (FIXED - copy exactly) ===\nposition = position.loc[start_date:end_date]\nreport = sim(position, fee_ratio=fee_ratio, tax_ratio=tax_ratio, resample=\"M\")",
+  "execution_result": {
+    "success": true,
+    "sharpe_ratio": 0.7293692184592833,
+    "error_type": null,
+    "error_message": null,
+    "metrics": {
+      "sharpe_ratio": 0.7293692184592833,
+      "total_return": 1.9242975302092247,
+      "max_drawdown": -0.3691121957908031
+    }
+  },
+  "timestamp": "2025-11-21T12:59:55.720448"
+}

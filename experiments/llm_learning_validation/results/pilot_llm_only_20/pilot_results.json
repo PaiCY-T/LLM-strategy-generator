@@ -1,0 +1,14 @@
+{
+  "llm_only": {
+    "group_name": "llm_only",
+    "innovation_rate": 1.0,
+    "num_runs": 1,
+    "iterations_per_run": 20,
+    "runs": [
+      {
+        "run_id": "llm_only_run1",
+        "error": "LLM returned an empty or whitespace-only response"
+      }
+    ]
+  }
+}

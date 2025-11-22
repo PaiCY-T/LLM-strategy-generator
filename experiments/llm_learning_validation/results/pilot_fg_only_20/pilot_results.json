@@ -1,0 +1,14 @@
+{
+  "fg_only": {
+    "group_name": "fg_only",
+    "innovation_rate": 0.0,
+    "num_runs": 1,
+    "iterations_per_run": 20,
+    "runs": [
+      {
+        "run_id": "fg_only_run1",
+        "error": "'StrategyMetrics' object has no attribute 'get'"
+      }
+    ]
+  }
+}
