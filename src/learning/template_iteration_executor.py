@@ -60,6 +60,8 @@ from src.generators.template_parameter_generator import (
     TemplateParameterGenerator,
     ParameterGenerationContext
 )
+from src.sandbox.docker_executor import DockerExecutor
+from src.sandbox.docker_config import DockerConfig
 
 logger = logging.getLogger(__name__)
 
@@ -92,6 +94,7 @@ class TemplateIterationExecutor:
         template_param_generator (TemplateParameterGenerator): Parameter generator
         metrics_extractor (MetricsExtractor): Metrics extraction
         success_classifier (SuccessClassifier): Success classification
+        docker_executor (Optional[DockerExecutor]): Docker sandbox executor (Week 3.2)
 
     Example:
         >>> executor = TemplateIterationExecutor(
@@ -167,9 +170,33 @@ class TemplateIterationExecutor:
         self.metrics_extractor = MetricsExtractor()
         self.success_classifier = SuccessClassifier()
 
+        # Initialize Docker sandbox executor (Week 3.2.1)
+        self.docker_executor = None
+        docker_enabled = config.get("use_docker", False)
+        if docker_enabled:
+            try:
+                docker_config = DockerConfig.from_yaml()
+                self.docker_executor = DockerExecutor(config=docker_config)
+                logger.info(
+                    f"✓ DockerExecutor initialized: "
+                    f"image={docker_config.image[:30]}..., "
+                    f"memory={docker_config.memory_limit}, "
+                    f"cpu={docker_config.cpu_limit}, "
+                    f"timeout={docker_config.timeout_seconds}s"
+                )
+            except Exception as e:
+                logger.warning(
+                    f"Failed to initialize DockerExecutor: {e}. "
+                    f"Falling back to direct execution."
+                )
+                self.docker_executor = None
+        else:
+            logger.info("Docker sandbox disabled (use_docker=False)")
+
         logger.info(
             f"TemplateIterationExecutor initialized: {template_name}, "
-            f"JSON mode: {use_json_mode}"
+            f"JSON mode: {use_json_mode}, "
+            f"Docker: {self.docker_executor is not None}"
         )
 
     def execute_iteration(self, iteration_num: int, **kwargs) -> IterationRecord:
@@ -246,10 +273,45 @@ class TemplateIterationExecutor:
                 params=params
             )
 
-        # Step 6: Execute strategy
+        # Step 6: Execute strategy (with Docker sandbox if enabled)
         try:
-            execution_result = self.backtest_executor.execute(strategy_code)
-            logger.info(f"✓ Strategy execution: {execution_result.get('status', 'unknown')}")
+            if self.docker_executor:
+                # Execute in Docker sandbox (Week 3.2.1)
+                logger.info("Executing strategy in Docker sandbox...")
+                docker_result = self.docker_executor.execute(
+                    code=strategy_code,
+                    timeout=self.config.get("timeout_seconds", 600),
+                    validate=True  # Enable SecurityValidator
+                )
+
+                # Convert Docker result to backtest format
+                if docker_result['success']:
+                    execution_result = {
+                        'status': 'success',
+                        'signal': docker_result.get('signal'),
+                        'execution_time': docker_result.get('execution_time', 0),
+                        'docker_executed': True,
+                        'validated': docker_result.get('validated', False)
+                    }
+                    logger.info(
+                        f"✓ Docker execution successful "
+                        f"(time={docker_result.get('execution_time', 0):.1f}s, "
+                        f"validated={docker_result.get('validated', False)})"
+                    )
+                else:
+                    execution_result = {
+                        'status': 'error',
+                        'error': docker_result.get('error', 'Unknown Docker error'),
+                        'execution_time': docker_result.get('execution_time', 0),
+                        'docker_executed': True,
+                        'validated': docker_result.get('validated', False)
+                    }
+                    logger.warning(f"Docker execution failed: {docker_result.get('error', 'Unknown')}")
+            else:
+                # Direct execution (no Docker)
+                execution_result = self.backtest_executor.execute(strategy_code)
+                execution_result['docker_executed'] = False
+                logger.info(f"✓ Direct execution: {execution_result.get('status', 'unknown')}")
         except Exception as e:
             logger.error(f"Strategy execution failed: {e}")
             return self._create_error_record(
