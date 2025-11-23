@@ -1,0 +1,3344 @@
+{
+  "timestamp": "2025-11-20T13:22:01.193029",
+  "total_datasets": 307,
+  "success_count": 36,
+  "fail_count": 0,
+  "skip_count": 271,
+  "cache_stats": {
+    "hits": 36,
+    "misses": 36,
+    "loads": 36,
+    "total_requests": 72,
+    "hit_rate": 0.5,
+    "miss_rate": 0.5,
+    "cache_size": 36,
+    "cached_keys": [
+      "etl:adj_close",
+      "etl:adj_high",
+      "etl:adj_low",
+      "etl:adj_open",
+      "etl:broker_transactions:top15_buy",
+      "etl:broker_transactions:top15_sell",
+      "etl:market_value",
+      "margin_balance:融資券總買進",
+      "margin_balance:融資券總賣出",
+      "margin_balance:現金(券)總償還",
+      "margin_balance:融資券總餘額",
+      "tw_business_indicators_details:領先指標綜合指數(點)",
+      "tw_business_indicators_details:領先指標不含趨勢指數(點)",
+      "tw_business_indicators_details:外銷訂單動向指數(以家數計)",
+      "tw_business_indicators_details:貨幣總計數 M1B(百萬元)",
+      "tw_business_indicators_details:股價指數(Index 1966=100)",
+      "tw_business_indicators_details:工業及服務業受僱員工淨進入率",
+      "tw_business_indicators_details:建築物開工樓地板面積(千平方公尺)",
+      "tw_business_indicators_details:半導體設備進口值(新台幣百萬元)",
+      "tw_business_indicators_details:同時指標綜合指數(點)",
+      "tw_business_indicators_details:同時指標不含趨勢指數(點)",
+      "tw_business_indicators_details:工業生產指數(Index 2016=100)",
+      "tw_business_indicators_details:電力(企業)總用電量(十億度)",
+      "tw_business_indicators_details:製造業銷售量指數(Index 2016=100)",
+      "tw_business_indicators_details:批發、零售及餐飲業營業額(十億元)",
+      "tw_business_indicators_details:非農業部門就業人數(千人)",
+      "tw_business_indicators_details:海關出口值(十億元)",
+      "tw_business_indicators_details:機械及電機設備進口值(十億元)",
+      "tw_business_indicators_details:落後指標綜合指數(點)",
+      "tw_business_indicators_details:落後指標不含趨勢指數(點)",
+      "tw_business_indicators_details:失業率",
+      "tw_business_indicators_details:製造業單位產出勞動成本指數(Index 2016=100)",
+      "tw_business_indicators_details:金融業隔夜拆款利率(年息百分比)",
+      "tw_business_indicators_details:全體金融機構放款與投資(10億元)",
+      "tw_business_indicators_details:製造業存貨價值(千元)",
+      "price:成交金額"
+    ],
+    "avg_load_time": 1.406316916147868,
+    "total_load_time": 50.62740898132324
+  },
+  "results": [
+    {
+      "success": true,
+      "key": "etl:adj_close",
+      "name": "adj_close",
+      "shape": [
+        4571,
+        2666
+      ],
+      "error": null,
+      "load_time": 0.0023946762084960938,
+      "cache_hit": true,
+      "index": 1,
+      "type": "float",
+      "key_type": "etl",
+      "download_key": "etl:adj_close"
+    },
+    {
+      "success": true,
+      "key": "etl:adj_high",
+      "name": "adj_high",
+      "shape": [
+        4571,
+        2666
+      ],
+      "error": null,
+      "load_time": 2.0972254276275635,
+      "cache_hit": true,
+      "index": 2,
+      "type": "float",
+      "key_type": "etl",
+      "download_key": "etl:adj_high"
+    },
+    {
+      "success": true,
+      "key": "etl:adj_low",
+      "name": "adj_low",
+      "shape": [
+        4571,
+        2666
+      ],
+      "error": null,
+      "load_time": 2.146804094314575,
+      "cache_hit": true,
+      "index": 3,
+      "type": "float",
+      "key_type": "etl",
+      "download_key": "etl:adj_low"
+    },
+    {
+      "success": true,
+      "key": "etl:adj_open",
+      "name": "adj_open",
+      "shape": [
+        4571,
+        2666
+      ],
+      "error": null,
+      "load_time": 2.30285906791687,
+      "cache_hit": true,
+      "index": 4,
+      "type": "float",
+      "key_type": "etl",
+      "download_key": "etl:adj_open"
+    },
+    {
+      "success": true,
+      "key": "etl:broker_transactions:top15_buy",
+      "name": "buy",
+      "shape": [
+        1919,
+        2387
+      ],
+      "error": null,
+      "load_time": 5.064697980880737,
+      "cache_hit": true,
+      "index": 5,
+      "type": "int",
+      "key_type": "etl",
+      "download_key": "etl:broker_transactions:top15_buy"
+    },
+    {
+      "success": true,
+      "key": "etl:broker_transactions:top15_sell",
+      "name": "sell",
+      "shape": [
+        1919,
+        2387
+      ],
+      "error": null,
+      "load_time": 4.658929109573364,
+      "cache_hit": true,
+      "index": 6,
+      "type": "int",
+      "key_type": "etl",
+      "download_key": "etl:broker_transactions:top15_sell"
+    },
+    {
+      "index": 7,
+      "name": "一年內到期長期負債",
+      "key": "financial_statement:一年內到期長期負債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 8,
+      "name": "不動產廠房及設備",
+      "key": "financial_statement:不動產廠房及設備",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 9,
+      "name": "使用權資產",
+      "key": "financial_statement:使用權資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 10,
+      "name": "保留盈餘",
+      "key": "financial_statement:保留盈餘",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 11,
+      "name": "停業單位損益",
+      "key": "financial_statement:停業單位損益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 12,
+      "name": "償還公司債",
+      "key": "financial_statement:償還公司債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 13,
+      "name": "償還長期借款",
+      "key": "financial_statement:償還長期借款",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 14,
+      "name": "共同控制下前手權益",
+      "key": "financial_statement:共同控制下前手權益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 15,
+      "name": "其他應付款",
+      "key": "financial_statement:其他應付款",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 16,
+      "name": "其他應收款",
+      "key": "financial_statement:其他應收款",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 17,
+      "name": "其他投資活動",
+      "key": "financial_statement:其他投資活動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 18,
+      "name": "其他收益及費損淨額",
+      "key": "financial_statement:其他收益及費損淨額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 19,
+      "name": "其他權益",
+      "key": "financial_statement:其他權益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 20,
+      "name": "其他流動資產",
+      "key": "financial_statement:其他流動資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 21,
+      "name": "其他非流動資產",
+      "key": "financial_statement:其他非流動資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 22,
+      "name": "利息收入",
+      "key": "financial_statement:利息收入",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 23,
+      "name": "利息費用",
+      "key": "financial_statement:利息費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 24,
+      "name": "取得不動產_廠房及設備",
+      "key": "financial_statement:取得不動產_廠房及設備",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 25,
+      "name": "取得無形資產",
+      "key": "financial_statement:取得無形資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 26,
+      "name": "取得透過其他綜合損益按公允價值衡量之金融資產",
+      "key": "financial_statement:取得透過其他綜合損益按公允價值衡量之金融資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 27,
+      "name": "合併前非屬共同控制股權",
+      "key": "financial_statement:合併前非屬共同控制股權",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 28,
+      "name": "合併前非屬共同控制股權損益",
+      "key": "financial_statement:合併前非屬共同控制股權損益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 29,
+      "name": "合併總損益",
+      "key": "financial_statement:合併總損益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 30,
+      "name": "合約負債_流動",
+      "key": "financial_statement:合約負債_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 31,
+      "name": "合約負債_非流動",
+      "key": "financial_statement:合約負債_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 32,
+      "name": "合約資產_流動",
+      "key": "financial_statement:合約資產_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 33,
+      "name": "合約資產_非流動",
+      "key": "financial_statement:合約資產_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 34,
+      "name": "呆帳費用提列_轉列收入_數",
+      "key": "financial_statement:呆帳費用提列_轉列收入_數",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 35,
+      "name": "商譽及無形資產合計",
+      "key": "financial_statement:商譽及無形資產合計",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 36,
+      "name": "存入保證金增加",
+      "key": "financial_statement:存入保證金增加",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 37,
+      "name": "存入保證金減少",
+      "key": "financial_statement:存入保證金減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 38,
+      "name": "存貨",
+      "key": "financial_statement:存貨",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 39,
+      "name": "存貨_增加_減少",
+      "key": "financial_statement:存貨_增加_減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 40,
+      "name": "已實現銷貨損失_利益",
+      "key": "financial_statement:已實現銷貨損失_利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 41,
+      "name": "庫藏股票帳面值",
+      "key": "financial_statement:庫藏股票帳面值",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 42,
+      "name": "待出售非流動資產",
+      "key": "financial_statement:待出售非流動資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 43,
+      "name": "待分配股票股利",
+      "key": "financial_statement:待分配股票股利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 44,
+      "name": "應付公司債_非流動",
+      "key": "financial_statement:應付公司債_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 45,
+      "name": "應付商業本票∕承兌匯票",
+      "key": "financial_statement:應付商業本票∕承兌匯票",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 46,
+      "name": "應付帳款_關係人增加_減少",
+      "key": "financial_statement:應付帳款_關係人增加_減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 47,
+      "name": "應付帳款及票據",
+      "key": "financial_statement:應付帳款及票據",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 48,
+      "name": "應付帳款增加_減少",
+      "key": "financial_statement:應付帳款增加_減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 49,
+      "name": "應付短期票券增加",
+      "key": "financial_statement:應付短期票券增加",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 50,
+      "name": "應付短期票券減少",
+      "key": "financial_statement:應付短期票券減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 51,
+      "name": "應收帳款_增加_減少",
+      "key": "financial_statement:應收帳款_增加_減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 52,
+      "name": "應收帳款_關係人_增加_減少",
+      "key": "financial_statement:應收帳款_關係人_增加_減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 53,
+      "name": "應收帳款及票據",
+      "key": "financial_statement:應收帳款及票據",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 54,
+      "name": "應計退休金負債",
+      "key": "financial_statement:應計退休金負債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 55,
+      "name": "所得稅費用",
+      "key": "financial_statement:所得稅費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 56,
+      "name": "投資性不動產淨額",
+      "key": "financial_statement:投資性不動產淨額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 57,
+      "name": "投資活動之淨現金流入_流出",
+      "key": "financial_statement:投資活動之淨現金流入_流出",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 58,
+      "name": "折舊費用",
+      "key": "financial_statement:折舊費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 59,
+      "name": "按攤銷後成本衡量之金融負債_流動",
+      "key": "financial_statement:按攤銷後成本衡量之金融負債_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 60,
+      "name": "按攤銷後成本衡量之金融負債_非流動",
+      "key": "financial_statement:按攤銷後成本衡量之金融負債_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 61,
+      "name": "按攤銷後成本衡量之金融資產_流動",
+      "key": "financial_statement:按攤銷後成本衡量之金融資產_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 62,
+      "name": "按攤銷後成本衡量之金融資產_非流動",
+      "key": "financial_statement:按攤銷後成本衡量之金融資產_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 63,
+      "name": "採權益法之長期股權投資",
+      "key": "financial_statement:採權益法之長期股權投資",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 64,
+      "name": "採權益法之關聯企業及合資損益之份額",
+      "key": "financial_statement:採權益法之關聯企業及合資損益之份額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 65,
+      "name": "採用權益法認列之關聯企業及合資損失_利益_之份額",
+      "key": "financial_statement:採用權益法認列之關聯企業及合資損失_利益_之份額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 66,
+      "name": "推銷費用",
+      "key": "financial_statement:推銷費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 67,
+      "name": "換股權利證書",
+      "key": "financial_statement:換股權利證書",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 68,
+      "name": "攤銷費用",
+      "key": "financial_statement:攤銷費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 69,
+      "name": "支付之利息",
+      "key": "financial_statement:支付之利息",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 70,
+      "name": "收取之利息",
+      "key": "financial_statement:收取之利息",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 71,
+      "name": "收取之股利",
+      "key": "financial_statement:收取之股利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 72,
+      "name": "收益費損項目合計",
+      "key": "financial_statement:收益費損項目合計",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 73,
+      "name": "普通股股本",
+      "key": "financial_statement:普通股股本",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 74,
+      "name": "期初現金及約當現金餘額",
+      "key": "financial_statement:期初現金及約當現金餘額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 75,
+      "name": "期末現金及約當現金餘額",
+      "key": "financial_statement:期末現金及約當現金餘額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 76,
+      "name": "未分配盈餘",
+      "key": "financial_statement:未分配盈餘",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 77,
+      "name": "未實現外幣兌換損失_利益",
+      "key": "financial_statement:未實現外幣兌換損失_利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 78,
+      "name": "未實現銷貨利益_損失",
+      "key": "financial_statement:未實現銷貨利益_損失",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 79,
+      "name": "本期現金及約當現金增加_減少_數",
+      "key": "financial_statement:本期現金及約當現金增加_減少_數",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 80,
+      "name": "本期稅前淨利_淨損",
+      "key": "financial_statement:本期稅前淨利_淨損",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 81,
+      "name": "本期綜合損益總額",
+      "key": "financial_statement:本期綜合損益總額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 82,
+      "name": "歸屬共同控制下前手權益淨利_損",
+      "key": "financial_statement:歸屬共同控制下前手權益淨利_損",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 83,
+      "name": "歸屬母公司淨利_損",
+      "key": "financial_statement:歸屬母公司淨利_損",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 84,
+      "name": "歸屬非控制權益淨利_損",
+      "key": "financial_statement:歸屬非控制權益淨利_損",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 85,
+      "name": "母公司股東權益合計",
+      "key": "financial_statement:母公司股東權益合計",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 86,
+      "name": "每股盈餘",
+      "key": "financial_statement:每股盈餘",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 87,
+      "name": "法定盈餘公積",
+      "key": "financial_statement:法定盈餘公積",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 88,
+      "name": "流動負債_financial_statement",
+      "key": "financial_statement:流動負債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 89,
+      "name": "流動資產_financial_statement",
+      "key": "financial_statement:流動資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 90,
+      "name": "營業利益_financial_statement",
+      "key": "financial_statement:營業利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 91,
+      "name": "營業外收入及支出",
+      "key": "financial_statement:營業外收入及支出",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 92,
+      "name": "營業成本",
+      "key": "financial_statement:營業成本",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 93,
+      "name": "營業收入淨額",
+      "key": "financial_statement:營業收入淨額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 94,
+      "name": "營業毛利",
+      "key": "financial_statement:營業毛利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 95,
+      "name": "營業活動之淨現金流入_流出",
+      "key": "financial_statement:營業活動之淨現金流入_流出",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 96,
+      "name": "營業費用",
+      "key": "financial_statement:營業費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 97,
+      "name": "營運產生之現金流入_流出",
+      "key": "financial_statement:營運產生之現金流入_流出",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 98,
+      "name": "特別股股本",
+      "key": "financial_statement:特別股股本",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 99,
+      "name": "特別股負債_流動",
+      "key": "financial_statement:特別股負債_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 100,
+      "name": "特別股負債_非流動",
+      "key": "financial_statement:特別股負債_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 101,
+      "name": "現金及約當現金",
+      "key": "financial_statement:現金及約當現金",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 102,
+      "name": "當期所得稅負債",
+      "key": "financial_statement:當期所得稅負債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 103,
+      "name": "當期所得稅資產_流動",
+      "key": "financial_statement:當期所得稅資產_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 104,
+      "name": "發放現金股利",
+      "key": "financial_statement:發放現金股利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 105,
+      "name": "發行公司債",
+      "key": "financial_statement:發行公司債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 106,
+      "name": "短期借款",
+      "key": "financial_statement:短期借款",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 107,
+      "name": "短期借款增加",
+      "key": "financial_statement:短期借款增加",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 108,
+      "name": "短期借款減少",
+      "key": "financial_statement:短期借款減少",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 109,
+      "name": "研究發展費",
+      "key": "financial_statement:研究發展費",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 110,
+      "name": "租賃負債_非流動",
+      "key": "financial_statement:租賃負債_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 111,
+      "name": "租賃負債─流動",
+      "key": "financial_statement:租賃負債─流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 112,
+      "name": "稅前淨利",
+      "key": "financial_statement:稅前淨利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 113,
+      "name": "管理費用",
+      "key": "financial_statement:管理費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 114,
+      "name": "籌資活動之淨現金流入_流出",
+      "key": "financial_statement:籌資活動之淨現金流入_流出",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 115,
+      "name": "綜合損益歸屬共同控制下前手權益",
+      "key": "financial_statement:綜合損益歸屬共同控制下前手權益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 116,
+      "name": "綜合損益歸屬母公司",
+      "key": "financial_statement:綜合損益歸屬母公司",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 117,
+      "name": "綜合損益歸屬非控制權益",
+      "key": "financial_statement:綜合損益歸屬非控制權益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 118,
+      "name": "繼續營業單位損益",
+      "key": "financial_statement:繼續營業單位損益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 119,
+      "name": "繼續營業單位稅前淨利_淨損",
+      "key": "financial_statement:繼續營業單位稅前淨利_淨損",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 120,
+      "name": "股利收入",
+      "key": "financial_statement:股利收入",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 121,
+      "name": "股本",
+      "key": "financial_statement:股本",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 122,
+      "name": "股東權益總額",
+      "key": "financial_statement:股東權益總額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 123,
+      "name": "與待出售非流動資產直接相關之負債",
+      "key": "financial_statement:與待出售非流動資產直接相關之負債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 124,
+      "name": "與營業活動相關之負債之淨變動合計",
+      "key": "financial_statement:與營業活動相關之負債之淨變動合計",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 125,
+      "name": "與營業活動相關之資產之淨變動合計",
+      "key": "financial_statement:與營業活動相關之資產之淨變動合計",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 126,
+      "name": "舉借長期借款",
+      "key": "financial_statement:舉借長期借款",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 127,
+      "name": "處分不動產_廠房及設備",
+      "key": "financial_statement:處分不動產_廠房及設備",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 128,
+      "name": "處分及報廢不動產_廠房及設備損失_利益",
+      "key": "financial_statement:處分及報廢不動產_廠房及設備損失_利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 129,
+      "name": "處分投資損失_利益",
+      "key": "financial_statement:處分投資損失_利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 130,
+      "name": "處分無形資產",
+      "key": "financial_statement:處分無形資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 131,
+      "name": "處分無形資產損失_利益",
+      "key": "financial_statement:處分無形資產損失_利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 132,
+      "name": "處分透過其他綜合損益按公允價值衡量之金融資產",
+      "key": "financial_statement:處分透過其他綜合損益按公允價值衡量之金融資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 133,
+      "name": "負債及股東權益總額",
+      "key": "financial_statement:負債及股東權益總額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 134,
+      "name": "負債準備_流動",
+      "key": "financial_statement:負債準備_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 135,
+      "name": "負債準備_非流動",
+      "key": "financial_statement:負債準備_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 136,
+      "name": "負債總額",
+      "key": "financial_statement:負債總額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 137,
+      "name": "財務成本",
+      "key": "financial_statement:財務成本",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 138,
+      "name": "資本公積合計",
+      "key": "financial_statement:資本公積合計",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 139,
+      "name": "資產總額",
+      "key": "financial_statement:資產總額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 140,
+      "name": "資產負債表帳列之現金及約當現金",
+      "key": "financial_statement:資產負債表帳列之現金及約當現金",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 141,
+      "name": "退還_支付_之所得稅",
+      "key": "financial_statement:退還_支付_之所得稅",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 142,
+      "name": "透過其他綜合損益按公允價值衡量之金融資產_流動",
+      "key": "financial_statement:透過其他綜合損益按公允價值衡量之金融資產_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 143,
+      "name": "透過其他綜合損益按公允價值衡量之金融資產_非流動",
+      "key": "financial_statement:透過其他綜合損益按公允價值衡量之金融資產_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 144,
+      "name": "透過損益按公允價值衡量之金融負債_流動",
+      "key": "financial_statement:透過損益按公允價值衡量之金融負債_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 145,
+      "name": "透過損益按公允價值衡量之金融負債_非流動",
+      "key": "financial_statement:透過損益按公允價值衡量之金融負債_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 146,
+      "name": "透過損益按公允價值衡量之金融資產_流動",
+      "key": "financial_statement:透過損益按公允價值衡量之金融資產_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 147,
+      "name": "透過損益按公允價值衡量之金融資產_非流動",
+      "key": "financial_statement:透過損益按公允價值衡量之金融資產_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 148,
+      "name": "透過損益按公允價值衡量金融資產及負債之淨損失_利益",
+      "key": "financial_statement:透過損益按公允價值衡量金融資產及負債之淨損失_利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 149,
+      "name": "遞延所得稅",
+      "key": "financial_statement:遞延所得稅",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 150,
+      "name": "遞延所得稅資產",
+      "key": "financial_statement:遞延所得稅資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 151,
+      "name": "遞延貸項",
+      "key": "financial_statement:遞延貸項",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 152,
+      "name": "遞延資產合計",
+      "key": "financial_statement:遞延資產合計",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 153,
+      "name": "避險之金融負債_流動",
+      "key": "financial_statement:避險之金融負債_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 154,
+      "name": "避險之金融負債_非流動",
+      "key": "financial_statement:避險之金融負債_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 155,
+      "name": "避險之金融資產_流動",
+      "key": "financial_statement:避險之金融資產_流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 156,
+      "name": "避險之金融資產_非流動",
+      "key": "financial_statement:避險之金融資產_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 157,
+      "name": "銀行借款_非流動",
+      "key": "financial_statement:銀行借款_非流動",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 158,
+      "name": "非控制權益",
+      "key": "financial_statement:非控制權益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 159,
+      "name": "非流動負債",
+      "key": "financial_statement:非流動負債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 160,
+      "name": "非流動資產",
+      "key": "financial_statement:非流動資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 161,
+      "name": "非金融資產減損迴轉利益",
+      "key": "financial_statement:非金融資產減損迴轉利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 162,
+      "name": "預付投資款",
+      "key": "financial_statement:預付投資款",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 163,
+      "name": "預收股款",
+      "key": "financial_statement:預收股款",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 164,
+      "name": "預期信用減損_損失_利益_營業費用",
+      "key": "financial_statement:預期信用減損_損失_利益_營業費用",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 165,
+      "name": "EBITDA",
+      "key": "fundamental_features:EBITDA",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 166,
+      "name": "ROA稅後息前",
+      "key": "fundamental_features:ROA稅後息前",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 167,
+      "name": "ROA綜合損益",
+      "key": "fundamental_features:ROA綜合損益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 168,
+      "name": "ROE稅後",
+      "key": "fundamental_features:ROE稅後",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 169,
+      "name": "ROE綜合損益",
+      "key": "fundamental_features:ROE綜合損益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 170,
+      "name": "利息支出率",
+      "key": "fundamental_features:利息支出率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 171,
+      "name": "取得不動產廠房及設備",
+      "key": "fundamental_features:取得不動產廠房及設備",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 172,
+      "name": "固定資產週轉次數",
+      "key": "fundamental_features:固定資產週轉次數",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 173,
+      "name": "存貨週轉率",
+      "key": "fundamental_features:存貨週轉率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 174,
+      "name": "應收帳款週轉率",
+      "key": "fundamental_features:應收帳款週轉率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 175,
+      "name": "折舊",
+      "key": "fundamental_features:折舊",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 176,
+      "name": "推銷費用率",
+      "key": "fundamental_features:推銷費用率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 177,
+      "name": "業外收支營收率",
+      "key": "fundamental_features:業外收支營收率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 178,
+      "name": "歸屬母公司淨利",
+      "key": "fundamental_features:歸屬母公司淨利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 179,
+      "name": "每股營業利益",
+      "key": "fundamental_features:每股營業利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 180,
+      "name": "每股營業額",
+      "key": "fundamental_features:每股營業額",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 181,
+      "name": "每股現金流量",
+      "key": "fundamental_features:每股現金流量",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 182,
+      "name": "每股稅前淨利",
+      "key": "fundamental_features:每股稅前淨利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 183,
+      "name": "每股稅後淨利",
+      "key": "fundamental_features:每股稅後淨利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 184,
+      "name": "每股綜合損益",
+      "key": "fundamental_features:每股綜合損益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 185,
+      "name": "流動比率",
+      "key": "fundamental_features:流動比率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 186,
+      "name": "流動負債_fundamental_features",
+      "key": "fundamental_features:流動負債",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 187,
+      "name": "流動資產_fundamental_features",
+      "key": "fundamental_features:流動資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 188,
+      "name": "淨值成長率",
+      "key": "fundamental_features:淨值成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 189,
+      "name": "淨值週轉率次數",
+      "key": "fundamental_features:淨值週轉率次數",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 190,
+      "name": "淨值除資產",
+      "key": "fundamental_features:淨值除資產",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 191,
+      "name": "營收成長率",
+      "key": "fundamental_features:營收成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 192,
+      "name": "營業利益_fundamental_features",
+      "key": "fundamental_features:營業利益",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 193,
+      "name": "營業利益成長率",
+      "key": "fundamental_features:營業利益成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 194,
+      "name": "營業利益率",
+      "key": "fundamental_features:營業利益率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 195,
+      "name": "營業毛利成長率",
+      "key": "fundamental_features:營業毛利成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 196,
+      "name": "營業毛利率",
+      "key": "fundamental_features:營業毛利率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 197,
+      "name": "營業費用率",
+      "key": "fundamental_features:營業費用率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 198,
+      "name": "營運現金流",
+      "key": "fundamental_features:營運現金流",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 199,
+      "name": "營運資金",
+      "key": "fundamental_features:營運資金",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 200,
+      "name": "現金流量比率",
+      "key": "fundamental_features:現金流量比率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 201,
+      "name": "研究發展費用率",
+      "key": "fundamental_features:研究發展費用率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 202,
+      "name": "稅前息前折舊前淨利率",
+      "key": "fundamental_features:稅前息前折舊前淨利率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 203,
+      "name": "稅前淨利成長率",
+      "key": "fundamental_features:稅前淨利成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 204,
+      "name": "稅前淨利率",
+      "key": "fundamental_features:稅前淨利率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 205,
+      "name": "稅後淨利成長率",
+      "key": "fundamental_features:稅後淨利成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 206,
+      "name": "稅後淨利率",
+      "key": "fundamental_features:稅後淨利率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 207,
+      "name": "稅率",
+      "key": "fundamental_features:稅率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 208,
+      "name": "管理費用率",
+      "key": "fundamental_features:管理費用率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 209,
+      "name": "經常利益成長率",
+      "key": "fundamental_features:經常利益成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 210,
+      "name": "經常稅後淨利",
+      "key": "fundamental_features:經常稅後淨利",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 211,
+      "name": "總負債除總淨值",
+      "key": "fundamental_features:總負債除總淨值",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 212,
+      "name": "總資產週轉次數",
+      "key": "fundamental_features:總資產週轉次數",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 213,
+      "name": "自由現金流量",
+      "key": "fundamental_features:自由現金流量",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 214,
+      "name": "貝里比率",
+      "key": "fundamental_features:貝里比率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 215,
+      "name": "負債比率",
+      "key": "fundamental_features:負債比率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 216,
+      "name": "資產總額成長率",
+      "key": "fundamental_features:資產總額成長率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 217,
+      "name": "速動比率",
+      "key": "fundamental_features:速動比率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 218,
+      "name": "外資自營商買賣超股數",
+      "key": "institutional_investors_trading_summary:外資自營商買賣超股數",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 219,
+      "name": "外資自營商買進股數",
+      "key": "institutional_investors_trading_summary:外資自營商買進股數",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 220,
+      "name": "外資自營商賣出股數",
+      "key": "institutional_investors_trading_summary:外資自營商賣出股數",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 221,
+      "name": "外陸資買賣超股數(不含外資自營商)",
+      "key": "institutional_investors_trading_summary:外陸資買賣超股數(不含外資自營商)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 222,
+      "name": "外陸資買進股數(不含外資自營商)",
+      "key": "institutional_investors_trading_summary:外陸資買進股數(不含外資自營商)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 223,
+      "name": "外陸資賣出股數(不含外資自營商)",
+      "key": "institutional_investors_trading_summary:外陸資賣出股數(不含外資自營商)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 224,
+      "name": "投信買賣超股數",
+      "key": "institutional_investors_trading_summary:投信買賣超股數",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 225,
+      "name": "投信買進股數",
+      "key": "institutional_investors_trading_summary:投信買進股數",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 226,
+      "name": "投信賣出股數",
+      "key": "institutional_investors_trading_summary:投信賣出股數",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 227,
+      "name": "自營商買賣超股數(自行買賣)",
+      "key": "institutional_investors_trading_summary:自營商買賣超股數(自行買賣)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 228,
+      "name": "自營商買賣超股數(避險)",
+      "key": "institutional_investors_trading_summary:自營商買賣超股數(避險)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 229,
+      "name": "自營商買進股數(自行買賣)",
+      "key": "institutional_investors_trading_summary:自營商買進股數(自行買賣)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 230,
+      "name": "自營商買進股數(避險)",
+      "key": "institutional_investors_trading_summary:自營商買進股數(避險)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 231,
+      "name": "自營商賣出股數(自行買賣)",
+      "key": "institutional_investors_trading_summary:自營商賣出股數(自行買賣)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 232,
+      "name": "自營商賣出股數(避險)",
+      "key": "institutional_investors_trading_summary:自營商賣出股數(避險)",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 233,
+      "name": "融券今日餘額",
+      "key": "margin_transactions:融券今日餘額",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 234,
+      "name": "融券使用率",
+      "key": "margin_transactions:融券使用率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 235,
+      "name": "融券前日餘額",
+      "key": "margin_transactions:融券前日餘額",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 236,
+      "name": "融券現券償還",
+      "key": "margin_transactions:融券現券償還",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 237,
+      "name": "融券買進",
+      "key": "margin_transactions:融券買進",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 238,
+      "name": "融券賣出",
+      "key": "margin_transactions:融券賣出",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 239,
+      "name": "融券限額",
+      "key": "margin_transactions:融券限額",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 240,
+      "name": "融資今日餘額",
+      "key": "margin_transactions:融資今日餘額",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 241,
+      "name": "融資使用率",
+      "key": "margin_transactions:融資使用率",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 242,
+      "name": "融資前日餘額",
+      "key": "margin_transactions:融資前日餘額",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 243,
+      "name": "融資現金償還",
+      "key": "margin_transactions:融資現金償還",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 244,
+      "name": "融資買進",
+      "key": "margin_transactions:融資買進",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 245,
+      "name": "融資賣出",
+      "key": "margin_transactions:融資賣出",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 246,
+      "name": "融資限額",
+      "key": "margin_transactions:融資限額",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 247,
+      "name": "註記",
+      "key": "margin_transactions:註記",
+      "type": "str",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 248,
+      "name": "資券互抵",
+      "key": "margin_transactions:資券互抵",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 249,
+      "name": "上月比較增減(%)_monthly_revenue",
+      "key": "monthly_revenue:上月比較增減(%)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 250,
+      "name": "上月營收_monthly_revenue",
+      "key": "monthly_revenue:上月營收",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 251,
+      "name": "前期比較增減(%)_monthly_revenue",
+      "key": "monthly_revenue:前期比較增減(%)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 252,
+      "name": "去年同月增減(%)_monthly_revenue",
+      "key": "monthly_revenue:去年同月增減(%)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 253,
+      "name": "去年當月營收_monthly_revenue",
+      "key": "monthly_revenue:去年當月營收",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 254,
+      "name": "去年累計營收_monthly_revenue",
+      "key": "monthly_revenue:去年累計營收",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 255,
+      "name": "當月營收_monthly_revenue",
+      "key": "monthly_revenue:當月營收",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 256,
+      "name": "當月累計營收_monthly_revenue",
+      "key": "monthly_revenue:當月累計營收",
+      "type": "int",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 257,
+      "name": "本益比",
+      "key": "price_earning_ratio:本益比",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 258,
+      "name": "殖利率(%)",
+      "key": "price_earning_ratio:殖利率(%)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 259,
+      "name": "股價淨值比",
+      "key": "price_earning_ratio:股價淨值比",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 260,
+      "name": "growth",
+      "key": "quality_factor_z_score:growth",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 261,
+      "name": "profitability",
+      "key": "quality_factor_z_score:profitability",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 262,
+      "name": "safety",
+      "key": "quality_factor_z_score:safety",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 263,
+      "name": "上月比較增減(%)_rotc_monthly_revenue",
+      "key": "rotc_monthly_revenue:上月比較增減(%)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 264,
+      "name": "上月營收_rotc_monthly_revenue",
+      "key": "rotc_monthly_revenue:上月營收",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 265,
+      "name": "前期比較增減(%)_rotc_monthly_revenue",
+      "key": "rotc_monthly_revenue:前期比較增減(%)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 266,
+      "name": "去年同月增減(%)_rotc_monthly_revenue",
+      "key": "rotc_monthly_revenue:去年同月增減(%)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 267,
+      "name": "去年當月營收_rotc_monthly_revenue",
+      "key": "rotc_monthly_revenue:去年當月營收",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 268,
+      "name": "去年累計營收_rotc_monthly_revenue",
+      "key": "rotc_monthly_revenue:去年累計營收",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 269,
+      "name": "當月營收_rotc_monthly_revenue",
+      "key": "quality_factor_",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 270,
+      "name": "當月累計營收_rotc_monthly_revenue",
+      "key": "rotc_monthly_revenue:當月累計營收",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 271,
+      "name": "同時指標不含趨勢指數(點)",
+      "key": "tw_business_indicators:同時指標不含趨勢指數(點)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 272,
+      "name": "同時指標綜合指數(點)",
+      "key": "tw_business_indicators:同時指標綜合指數(點)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 273,
+      "name": "景氣對策信號(分)",
+      "key": "tw_business_indicators:景氣對策信號(分)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 274,
+      "name": "落後指標不含趨勢指數(點)",
+      "key": "tw_business_indicators:落後指標不含趨勢指數(點)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 275,
+      "name": "落後指標綜合指數(點)",
+      "key": "tw_business_indicators:落後指標綜合指數(點)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 276,
+      "name": "領先指標不含趨勢指數(點)",
+      "key": "tw_business_indicators:領先指標不含趨勢指數(點)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "index": 277,
+      "name": "領先指標綜合指數(點)",
+      "key": "tw_business_indicators:領先指標綜合指數(點)",
+      "type": "float",
+      "key_type": "other",
+      "success": false,
+      "skipped": true,
+      "error": "Unsupported format"
+    },
+    {
+      "success": true,
+      "key": "etl:market_value",
+      "name": "market_value",
+      "shape": [
+        3308,
+        2033
+      ],
+      "error": null,
+      "load_time": 1.7564270496368408,
+      "cache_hit": true,
+      "index": 278,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('etl:market_value')"
+    },
+    {
+      "success": true,
+      "key": "margin_balance:融資券總買進",
+      "name": "融資券總買進",
+      "shape": [
+        4642,
+        6
+      ],
+      "error": null,
+      "load_time": 1.0484695434570312,
+      "cache_hit": true,
+      "index": 279,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('margin_balance:融資券總買進')"
+    },
+    {
+      "success": true,
+      "key": "margin_balance:融資券總賣出",
+      "name": "融資券總賣出",
+      "shape": [
+        4642,
+        6
+      ],
+      "error": null,
+      "load_time": 1.120877742767334,
+      "cache_hit": true,
+      "index": 280,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('margin_balance:融資券總賣出')"
+    },
+    {
+      "success": true,
+      "key": "margin_balance:現金(券)總償還",
+      "name": "現金(券)總償還",
+      "shape": [
+        4642,
+        6
+      ],
+      "error": null,
+      "load_time": 1.1152904033660889,
+      "cache_hit": true,
+      "index": 281,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('margin_balance:現金(券)總償還')"
+    },
+    {
+      "success": true,
+      "key": "margin_balance:融資券總餘額",
+      "name": "融資券總餘額",
+      "shape": [
+        4642,
+        6
+      ],
+      "error": null,
+      "load_time": 1.1709222793579102,
+      "cache_hit": true,
+      "index": 282,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('margin_balance:融資券總餘額')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:領先指標綜合指數(點)",
+      "name": "領先指標綜合指數(點)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.2235970497131348,
+      "cache_hit": true,
+      "index": 283,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:領先指標綜合指數(點)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:領先指標不含趨勢指數(點)",
+      "name": "領先指標不含趨勢指數(點)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.1784296035766602,
+      "cache_hit": true,
+      "index": 284,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:領先指標不含趨勢指數(點)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:外銷訂單動向指數(以家數計)",
+      "name": "外銷訂單動向指數(以家數計)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9637136459350586,
+      "cache_hit": true,
+      "index": 285,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:外銷訂單動向指數(以家數計)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:貨幣總計數 M1B(百萬元)",
+      "name": "貨幣總計數 M1B(百萬元)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9566435813903809,
+      "cache_hit": true,
+      "index": 286,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:貨幣總計數 M1B(百萬元)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:股價指數(Index 1966=100)",
+      "name": "股價指數(Index 1966=100)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.0786421298980713,
+      "cache_hit": true,
+      "index": 287,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:股價指數(Index 1966=100)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:工業及服務業受僱員工淨進入率",
+      "name": "工業及服務業受僱員工淨進入率",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.0668470859527588,
+      "cache_hit": true,
+      "index": 288,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:工業及服務業受僱員工淨進入率')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:建築物開工樓地板面積(千平方公尺)",
+      "name": "建築物開工樓地板面積(千平方公尺)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9942185878753662,
+      "cache_hit": true,
+      "index": 289,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:建築物開工樓地板面積(千平方公尺)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:半導體設備進口值(新台幣百萬元)",
+      "name": "半導體設備進口值(新台幣百萬元)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.0385551452636719,
+      "cache_hit": true,
+      "index": 290,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:半導體設備進口值(新台幣百萬元)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:同時指標綜合指數(點)",
+      "name": "同時指標綜合指數(點)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.1677358150482178,
+      "cache_hit": true,
+      "index": 291,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:同時指標綜合指數(點)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:同時指標不含趨勢指數(點)",
+      "name": "同時指標不含趨勢指數(點)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.0969395637512207,
+      "cache_hit": true,
+      "index": 292,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:同時指標不含趨勢指數(點)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:工業生產指數(Index 2016=100)",
+      "name": "工業生產指數(Index 2016=100)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9312827587127686,
+      "cache_hit": true,
+      "index": 293,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:工業生產指數(Index 2016=100)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:電力(企業)總用電量(十億度)",
+      "name": "電力(企業)總用電量(十億度)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.0464911460876465,
+      "cache_hit": true,
+      "index": 294,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:電力(企業)總用電量(十億度)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:製造業銷售量指數(Index 2016=100)",
+      "name": "製造業銷售量指數(Index 2016=100)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.1722395420074463,
+      "cache_hit": true,
+      "index": 295,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:製造業銷售量指數(Index 2016=100)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:批發、零售及餐飲業營業額(十億元)",
+      "name": "批發、零售及餐飲業營業額(十億元)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9540724754333496,
+      "cache_hit": true,
+      "index": 296,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:批發、零售及餐飲業營業額(十億元)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:非農業部門就業人數(千人)",
+      "name": "非農業部門就業人數(千人)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9884655475616455,
+      "cache_hit": true,
+      "index": 297,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:非農業部門就業人數(千人)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:海關出口值(十億元)",
+      "name": "海關出口值(十億元)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9283339977264404,
+      "cache_hit": true,
+      "index": 298,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:海關出口值(十億元)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:機械及電機設備進口值(十億元)",
+      "name": "機械及電機設備進口值(十億元)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.9664931297302246,
+      "cache_hit": true,
+      "index": 299,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:機械及電機設備進口值(十億元)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:落後指標綜合指數(點)",
+      "name": "落後指標綜合指數(點)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.083432912826538,
+      "cache_hit": true,
+      "index": 300,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:落後指標綜合指數(點)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:落後指標不含趨勢指數(點)",
+      "name": "落後指標不含趨勢指數(點)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.0640106201171875,
+      "cache_hit": true,
+      "index": 301,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:落後指標不含趨勢指數(點)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:失業率",
+      "name": "失業率",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.085352897644043,
+      "cache_hit": true,
+      "index": 302,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:失業率')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:製造業單位產出勞動成本指數(Index 2016=100)",
+      "name": "製造業單位產出勞動成本指數(Index 2016=100)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.12180495262146,
+      "cache_hit": true,
+      "index": 303,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:製造業單位產出勞動成本指數(Index 2016=100)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:金融業隔夜拆款利率(年息百分比)",
+      "name": "金融業隔夜拆款利率(年息百分比)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.089134931564331,
+      "cache_hit": true,
+      "index": 304,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:金融業隔夜拆款利率(年息百分比)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:全體金融機構放款與投資(10億元)",
+      "name": "全體金融機構放款與投資(10億元)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 1.5252716541290283,
+      "cache_hit": true,
+      "index": 305,
+      "type": "float",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:全體金融機構放款與投資(10億元)')"
+    },
+    {
+      "success": true,
+      "key": "tw_business_indicators_details:製造業存貨價值(千元)",
+      "name": "製造業存貨價值(千元)",
+      "shape": [
+        859,
+        1
+      ],
+      "error": null,
+      "load_time": 0.8684041500091553,
+      "cache_hit": true,
+      "index": 306,
+      "type": "",
+      "key_type": "data.get",
+      "download_key": "data.get('tw_business_indicators_details:製造業存貨價值(千元)')"
+    },
+    {
+      "success": true,
+      "key": "price:成交金額",
+      "name": "成交金額",
+      "shape": [
+        4571,
+        2666
+      ],
+      "error": null,
+      "load_time": 2.552760124206543,
+      "cache_hit": true,
+      "index": 307,
+      "type": "int",
+      "key_type": "data.get",
+      "download_key": "data.get('price:成交金額')"
+    }
+  ]
+}

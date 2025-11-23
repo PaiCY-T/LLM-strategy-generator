@@ -1,0 +1,43 @@
+# Phase 1 Validation - Factor Graph Only Mode (20 iterations)
+# Fresh test with Phase 1 improvements applied
+# 0% LLM, 100% Factor Graph
+
+learning_loop:
+  max_iterations: 20
+  continue_on_error: false
+
+  history:
+    file: experiments/llm_learning_validation/results/phase1_fg_only_20/innovations.jsonl
+    window: 5
+
+  champion:
+    file: experiments/llm_learning_validation/results/phase1_fg_only_20/champion.json
+
+  backtest:
+    timeout_seconds: 900
+    resample: M
+
+  logging:
+    log_dir: experiments/llm_learning_validation/results/phase1_fg_only_20/logs
+    log_level: INFO
+    log_to_file: true
+    log_to_console: true
+
+# Disable LLM, use Factor Graph only
+llm:
+  enabled: false  # Factor Graph only
+  innovation_rate: 0.0  # 0% LLM, 100% Factor Graph
+  provider: openrouter
+  model: ${LLM_MODEL:google/gemini-2.5-flash}
+
+  generation:
+    max_tokens: 2000
+    temperature: 0.7
+    timeout: 60
+
+  fallback:
+    enabled: false
+    max_retries: 3
+    retry_delay: 2
+
+  mode: structured

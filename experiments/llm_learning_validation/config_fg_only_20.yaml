@@ -1,0 +1,28 @@
+# Factor Graph Only Mode (20 iterations)
+# 0% LLM, 100% Factor Graph
+
+learning_loop:
+  max_iterations: 20
+  continue_on_error: false
+
+  history:
+    file: experiments/llm_learning_validation/results/fg_only_20/innovations.jsonl
+    window: 5
+
+  champion:
+    file: experiments/llm_learning_validation/results/fg_only_20/champion.json
+
+  backtest:
+    timeout_seconds: 900  # 延長至 15 分鐘，配合月度重新平衡
+    resample: M  # 保持月度重新平衡（符合週/月交易系統設計）
+
+  logging:
+    log_dir: experiments/llm_learning_validation/results/fg_only_20/logs
+    log_level: INFO
+    log_to_file: true
+    log_to_console: true
+
+# Disable LLM for Factor Graph only mode
+llm:
+  enabled: false
+  innovation_rate: 0.0  # 0% LLM

@@ -1,0 +1,18 @@
+{
+  "case": "complex",
+  "run": 2,
+  "complexity": "high",
+  "strategy_code": "close = data.get('price:\u6536\u76e4\u50f9')\nvol = data.get('price:\u6210\u4ea4\u80a1\u6578')\nhigh = data.get('price:\u6700\u9ad8\u50f9')\nlow = data.get('price:\u6700\u4f4e\u50f9')\nopen_price = data.get('price:\u958b\u76e4\u50f9')\n\nroe = data.get('fundamental_features:ROE\u7a05\u5f8c').shift(1)\neps = data.get('fundamental_features:\u6bcf\u80a1\u7a05\u5f8c\u6de8\u5229').shift(1)\nmargin = data.get('fundamental_features:\u71df\u696d\u5229\u76ca\u7387').shift(1)\ndebt = data.get('fundamental_features:\u8ca0\u50b5\u6bd4\u7387').shift(1)\n\npb = data.get('price_earning_ratio:\u80a1\u50f9\u6de8\u503c\u6bd4').shift(1)\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4').shift(1)\n\nrev = data.get('monthly_revenue:\u7576\u6708\u71df\u6536').shift(1)\nrev_yoy = data.get('monthly_revenue:\u53bb\u5e74\u540c\u6708\u589e\u6e1b(%)').shift(1)\n\n# === STEP 2: Calculate Indicators ===\n\n# Momentum: 3-month momentum\nmomentum_3m = (close / close.shift(60) - 1).fillna(0)\n\n# Value: Inverse of P/E ratio, higher is better\nvalue_metric = (1 / pe).fillna(0)\n\n# Quality: ROE and Profit Margin\nquality_metric = (roe + margin).fillna(0)\n\n# Growth: Revenue YoY Growth\ngrowth_metric = rev_yoy.fillna(0)\n\n# Combine factors into a composite score\n# Normalize factors to avoid one factor dominating\n# Using rank to normalize cross-sectionally\nmomentum_rank = momentum_3m.rank(axis=1, pct=True)\nvalue_rank = value_metric.rank(axis=1, pct=True)\nquality_rank = quality_metric.rank(axis=1, pct=True)\ngrowth_rank = growth_metric.rank(axis=1, pct=True)\n\n# Composite score (equal weighting for simplicity)\ncomposite_score = (momentum_rank + value_rank + quality_rank + growth_rank) / 4\n\n# === STEP 3: Define Conditions ===\n\n# Liquidity filter: Average daily volume over 20 days\navg_vol_20d = vol.average(20)\ncond_liquidity = (avg_vol_20d >= 50000) # Minimum 50,000 shares traded daily\n\n# Price filter: Close price above 10 NTD (avoid micro-caps)\ncond_price = (close > 10)\n\n# Fundamental filters (using raw values)\ncond_roe = (roe > 5) # Positive ROE\ncond_margin = (margin > 0) # Positive profit margin\ncond_debt = (debt < 80) # Debt ratio less than 80%\n\n# Combine all conditions\ncombined_conditions = cond_liquidity & cond_price & cond_roe & cond_margin & cond_debt\n\n# === STEP 4: Combine & Select ===\n\n# Apply conditions to the composite score\nfiltered_scores = composite_score.where(combined_conditions)\n\n# Select top N stocks based on the filtered composite score\n# Using is_largest to select top 10 stocks\nposition = filtered_scores.is_largest(10)\n\n# === STEP 5: Filter & Backtest (FIXED - copy exactly) ===\nposition = position.loc[start_date:end_date]\nreport = sim(position, fee_ratio=fee_ratio, tax_ratio=tax_ratio, resample=\"M\")",
+  "execution_result": {
+    "success": true,
+    "sharpe_ratio": 0.7780562007556434,
+    "error_type": null,
+    "error_message": null,
+    "metrics": {
+      "sharpe_ratio": 0.7780562007556434,
+      "total_return": 2.3153939459968043,
+      "max_drawdown": -0.40750621921787056
+    }
+  },
+  "timestamp": "2025-11-21T12:59:32.316082"
+}

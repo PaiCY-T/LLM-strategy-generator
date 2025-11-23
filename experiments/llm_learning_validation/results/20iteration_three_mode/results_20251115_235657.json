@@ -1,0 +1,59 @@
+{
+  "test_name": "60-iteration-three-mode-test",
+  "test_date": "2025-11-15T23:56:57.792693",
+  "overall_duration_seconds": 483.305551,
+  "total_iterations": 60,
+  "modes": [
+    {
+      "mode_name": "Factor Graph Only",
+      "config_path": "experiments/llm_learning_validation/config_fg_only_20.yaml",
+      "duration_seconds": 87.700562,
+      "total_iterations": 20,
+      "successful_iterations": 0,
+      "success_rate": 0.0,
+      "level_0_count": 20,
+      "level_1_count": 0,
+      "level_2_count": 0,
+      "level_3_count": 0,
+      "avg_sharpe": 0.0,
+      "best_sharpe": 0.0,
+      "champion_sharpe": 0.0,
+      "errors": 0,
+      "timestamp": "2025-11-15T23:58:25.556859"
+    },
+    {
+      "mode_name": "LLM Only",
+      "config_path": "experiments/llm_learning_validation/config_llm_only_20.yaml",
+      "duration_seconds": 223.696079,
+      "total_iterations": 20,
+      "successful_iterations": 5,
+      "success_rate": 0.25,
+      "level_0_count": 15,
+      "level_1_count": 0,
+      "level_2_count": 0,
+      "level_3_count": 5,
+      "avg_sharpe": 0.28520276555627666,
+      "best_sharpe": 0.6154437725124838,
+      "champion_sharpe": 0.0,
+      "errors": 0,
+      "timestamp": "2025-11-16T00:02:09.322091"
+    },
+    {
+      "mode_name": "Hybrid",
+      "config_path": "experiments/llm_learning_validation/config_hybrid_20.yaml",
+      "duration_seconds": 171.677379,
+      "total_iterations": 20,
+      "successful_iterations": 3,
+      "success_rate": 0.15,
+      "level_0_count": 17,
+      "level_1_count": 0,
+      "level_2_count": 0,
+      "level_3_count": 3,
+      "avg_sharpe": 0.4080643336941457,
+      "best_sharpe": 0.511820828066671,
+      "champion_sharpe": 0.0,
+      "errors": 0,
+      "timestamp": "2025-11-16T00:05:01.094857"
+    }
+  ]
+}

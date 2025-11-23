@@ -1,0 +1,29 @@
+# Factor Graph Only Mode (50 iterations)
+# 0% LLM, 100% Factor Graph
+# Purpose: Validate multiprocessing pickle fix stability
+
+learning_loop:
+  max_iterations: 50
+  continue_on_error: false
+
+  history:
+    file: experiments/llm_learning_validation/results/fg_only_50/innovations.jsonl
+    window: 5
+
+  champion:
+    file: experiments/llm_learning_validation/results/fg_only_50/champion.json
+
+  backtest:
+    timeout_seconds: 60  # 修復後應在 60 秒內完成
+    resample: M  # 月度重新平衡（符合週/月交易系統設計）
+
+  logging:
+    log_dir: experiments/llm_learning_validation/results/fg_only_50/logs
+    log_level: INFO
+    log_to_file: true
+    log_to_console: true
+
+# Disable LLM for Factor Graph only mode
+llm:
+  enabled: false
+  innovation_rate: 0.0  # 0% LLM

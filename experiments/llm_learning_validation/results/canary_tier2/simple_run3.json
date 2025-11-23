@@ -1,0 +1,18 @@
+{
+  "case": "simple",
+  "run": 3,
+  "complexity": "low",
+  "strategy_code": "close = data.get('price:\u6536\u76e4\u50f9')\nvol = data.get('price:\u6210\u4ea4\u80a1\u6578')\nhigh = data.get('price:\u6700\u9ad8\u50f9')\nlow = data.get('price:\u6700\u4f4e\u50f9')\nopen_price = data.get('price:\u958b\u76e4\u50f9')\n\nroe = data.get('fundamental_features:ROE\u7a05\u5f8c').shift(1)\neps = data.get('fundamental_features:\u6bcf\u80a1\u7a05\u5f8c\u6de8\u5229').shift(1)\nmargin = data.get('fundamental_features:\u71df\u696d\u5229\u76ca\u7387').shift(1)\ndebt = data.get('fundamental_features:\u8ca0\u50b5\u6bd4\u7387').shift(1)\n\npb = data.get('price_earning_ratio:\u80a1\u50f9\u6de8\u503c\u6bd4').shift(1)\npe = data.get('price_earning_ratio:\u672c\u76ca\u6bd4').shift(1)\n\nrev = data.get('monthly_revenue:\u7576\u6708\u71df\u6536').shift(1)\nrev_yoy = data.get('monthly_revenue:\u53bb\u5e74\u540c\u6708\u589e\u6e1b(%)').shift(1)\n\n# === STEP 2: Calculate Indicators ===\n# Short-term Moving Average (e.g., 5-day SMA)\nsma_short = close.average(5)\n# Long-term Moving Average (e.g., 20-day SMA)\nsma_long = close.average(20)\n\n# Volume Moving Average (for liquidity filter)\nvol_avg_5d = vol.average(5)\n\n# === STEP 3: Define Conditions ===\n# Condition 1: Short-term MA crosses above Long-term MA (Buy signal)\n# We need to check if sma_short was below sma_long yesterday and is above today\ncond_crossover_buy = (sma_short > sma_long) & (sma_short.shift(1) <= sma_long.shift(1))\n\n# Condition 2: Sufficient liquidity (average daily volume > 50,000 shares)\ncond_liquidity = (vol_avg_5d >= 50 * 1000)\n\n# Condition 3: Basic profitability (ROE > 0)\ncond_profitability = (roe > 0)\n\n# Condition 4: Revenue YoY growth positive\ncond_rev_growth = (rev_yoy > 0)\n\n# === STEP 4: Combine & Select ===\n# Combine all conditions\n# We are looking for stocks where the short MA just crossed above the long MA,\n# have sufficient liquidity, are profitable, and show positive revenue growth.\nposition = (cond_crossover_buy & cond_liquidity & cond_profitability & cond_rev_growth).is_largest(10)\n\n# === STEP 5: Filter & Backtest (FIXED - copy exactly) ===\nposition = position.loc[start_date:end_date]\nreport = sim(position, fee_ratio=fee_ratio, tax_ratio=tax_ratio, resample=\"M\")",
+  "execution_result": {
+    "success": true,
+    "sharpe_ratio": 0.7331590361435558,
+    "error_type": null,
+    "error_message": null,
+    "metrics": {
+      "sharpe_ratio": 0.7331590361435558,
+      "total_return": 1.6588330272283196,
+      "max_drawdown": -0.30370553407847467
+    }
+  },
+  "timestamp": "2025-11-21T12:57:41.894012"
+}

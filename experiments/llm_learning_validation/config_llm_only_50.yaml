@@ -1,0 +1,33 @@
+# LLM Only Mode (50 iterations)
+# 100% LLM, 0% Factor Graph
+# Purpose: Validate if LLM path has same pickle issue
+
+learning_loop:
+  max_iterations: 50
+  continue_on_error: false
+
+  history:
+    file: experiments/llm_learning_validation/results/llm_only_50/innovations.jsonl
+    window: 5
+
+  champion:
+    file: experiments/llm_learning_validation/results/llm_only_50/champion.json
+
+  backtest:
+    timeout_seconds: 60  # Should complete quickly if fix works
+    resample: M  # 月度重新平衡
+
+  logging:
+    log_dir: experiments/llm_learning_validation/results/llm_only_50/logs
+    log_level: INFO
+    log_to_file: true
+    log_to_console: true
+
+# Enable LLM for LLM-only mode
+llm:
+  enabled: true
+  innovation_rate: 1.0  # 100% LLM
+  model: "gpt-4o-mini"
+  temperature: 0.8
+  max_tokens: 2000
+  api_key_env_var: "OPENAI_API_KEY"
