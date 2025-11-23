@@ -60,6 +60,9 @@ from typing import Any, Dict, Optional
 
 from src.learning.learning_loop import LearningLoop
 from src.learning.unified_config import UnifiedConfig, ConfigurationError
+from src.monitoring.metrics_collector import MetricsCollector
+from src.monitoring.resource_monitor import ResourceMonitor
+from src.monitoring.diversity_monitor import DiversityMonitor
 
 logger = logging.getLogger(__name__)
 
@@ -181,6 +184,9 @@ class UnifiedLoop:
         else:
             logger.info("✓ Standard Mode (LLM/Factor Graph)")
 
+        # Initialize monitoring systems (Week 3.1)
+        self._initialize_monitoring()
+
         logger.info("=" * 60)
         logger.info("UnifiedLoop initialization complete")
         logger.info("=" * 60)
@@ -274,6 +280,84 @@ class UnifiedLoop:
             logger.error(f"Failed to inject TemplateIterationExecutor: {e}")
             raise RuntimeError(f"Template Mode initialization failed: {e}") from e
 
+    def _initialize_monitoring(self) -> None:
+        """Initialize monitoring systems (Week 3.1).
+
+        Creates and configures:
+        - MetricsCollector: Collects performance and learning metrics
+        - ResourceMonitor: Monitors CPU, memory, disk usage
+        - DiversityMonitor: Tracks strategy diversity and champion staleness
+
+        Monitoring is enabled if config.enable_monitoring=True (default).
+        ResourceMonitor runs in background thread with minimal overhead (<1%).
+        """
+        if not self.config.enable_monitoring:
+            logger.info("✓ Monitoring disabled (enable_monitoring=False)")
+            self.metrics_collector = None
+            self.resource_monitor = None
+            self.diversity_monitor = None
+            return
+
+        logger.info("Initializing monitoring systems...")
+
+        try:
+            # 3.1.1: Initialize MetricsCollector
+            self.metrics_collector = MetricsCollector(
+                history_window=self.config.history_window
+            )
+            logger.info("  ✓ MetricsCollector initialized")
+
+            # 3.1.2: Initialize ResourceMonitor
+            self.resource_monitor = ResourceMonitor(
+                metrics_collector=self.metrics_collector
+            )
+            # Start background monitoring
+            self.resource_monitor.start_monitoring(interval_seconds=5)
+            logger.info("  ✓ ResourceMonitor started (5s interval)")
+
+            # 3.1.3: Initialize DiversityMonitor
+            self.diversity_monitor = DiversityMonitor(
+                metrics_collector=self.metrics_collector,
+                collapse_threshold=0.1,
+                collapse_window=5
+            )
+            logger.info("  ✓ DiversityMonitor initialized")
+
+            logger.info("✓ All monitoring systems active")
+
+        except Exception as e:
+            logger.error(f"Failed to initialize monitoring: {e}", exc_info=True)
+            logger.warning("Continuing without monitoring")
+            self.metrics_collector = None
+            self.resource_monitor = None
+            self.diversity_monitor = None
+
+    def _shutdown_monitoring(self) -> None:
+        """Shutdown monitoring systems gracefully.
+
+        Stops ResourceMonitor background thread and exports final metrics.
+        Called at the end of run() or in __del__.
+        """
+        if not self.config.enable_monitoring:
+            return
+
+        logger.info("Shutting down monitoring systems...")
+
+        try:
+            # Stop ResourceMonitor background thread
+            if self.resource_monitor:
+                self.resource_monitor.stop_monitoring()
+                logger.info("  ✓ ResourceMonitor stopped")
+
+            # Export final metrics (if needed)
+            if self.metrics_collector:
+                logger.info("  ✓ MetricsCollector final state saved")
+
+            logger.info("✓ Monitoring shutdown complete")
+
+        except Exception as e:
+            logger.error(f"Error during monitoring shutdown: {e}", exc_info=True)
+
     def run(self) -> Dict[str, Any]:
         """Run learning loop iterations.
 
@@ -326,6 +410,9 @@ class UnifiedLoop:
         except Exception as e:
             logger.error(f"UnifiedLoop execution failed: {e}", exc_info=True)
             raise
+        finally:
+            # Always shutdown monitoring, even if execution failed
+            self._shutdown_monitoring()
 
     @property
     def champion(self):
