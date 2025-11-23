@@ -129,7 +129,8 @@ class IterationRecord:
 
     Attributes:
         iteration_num (int): Iteration number (0-indexed). Must be non-negative.
-        generation_method (str): How strategy was generated ("llm" or "factor_graph").
+        generation_method (str): How strategy was generated.
+            Options: "llm", "factor_graph", or "template" (UnifiedLoop).
             Default: "llm" for backward compatibility.
         strategy_code (str | None): Generated strategy Python code (for LLM strategies).
         strategy_id (str | None): Strategy ID (for Factor Graph strategies).
@@ -153,6 +154,10 @@ class IterationRecord:
             Default: False
         feedback_used (str | None): Feedback text provided to LLM for this iteration.
             Stored for post-hoc analysis of learning trajectory. Default: None
+        template_name (str | None): Template name if using Template Mode.
+            Default: None. Examples: "Momentum", "Factor", "Turtle"
+        json_mode (bool): Whether JSON Parameter Output mode was used.
+            Default: False. Only relevant when template_name is set.
 
     Validation:
         - For LLM: strategy_code must be non-empty string
@@ -200,6 +205,8 @@ class IterationRecord:
     timestamp: str = ""
     champion_updated: bool = False
     feedback_used: Optional[str] = None
+    template_name: Optional[str] = None  # Template name (e.g., "Momentum", "Factor")
+    json_mode: bool = False  # Whether JSON Parameter Output mode was used
 
     def __post_init__(self) -> None:
         """Validate record fields after initialization (Task 1.2)."""
@@ -223,9 +230,10 @@ class IterationRecord:
             )
 
         # Validate generation_method
-        if self.generation_method not in ("llm", "factor_graph"):
+        valid_methods = ("llm", "factor_graph", "template")
+        if self.generation_method not in valid_methods:
             raise ValueError(
-                f"generation_method must be 'llm' or 'factor_graph', "
+                f"generation_method must be one of {valid_methods}, "
                 f"got '{self.generation_method}'"
             )
 
@@ -238,6 +246,16 @@ class IterationRecord:
                 )
             if not self.strategy_code.strip():
                 raise ValueError("LLM strategy_code cannot be empty")
+
+        # Validate Template strategy (similar to LLM, generates code)
+        if self.generation_method == "template":
+            if not isinstance(self.strategy_code, str):
+                raise ValueError(
+                    f"Template strategy must have strategy_code as str, "
+                    f"got {type(self.strategy_code).__name__}"
+                )
+            if not self.strategy_code.strip():
+                raise ValueError("Template strategy_code cannot be empty")
 
         # Validate Factor Graph strategy
         if self.generation_method == "factor_graph":
@@ -370,7 +388,8 @@ class IterationRecord:
         known_fields = {
             'iteration_num', 'generation_method', 'strategy_code', 'strategy_id',
             'strategy_generation', 'execution_result', 'metrics',
-            'classification_level', 'timestamp', 'champion_updated', 'feedback_used'
+            'classification_level', 'timestamp', 'champion_updated', 'feedback_used',
+            'template_name', 'json_mode'  # Added for UnifiedLoop refactoring
         }
         filtered_data = {k: v for k, v in data.items() if k in known_fields}
 

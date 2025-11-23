@@ -1,4 +1,5 @@
 ﻿__pycache__/
+.pytest_cache/
 .venv/
 venv/
 artifacts/
@@ -9,27 +10,4 @@ artifacts/
 artifacts/working/backups/failure_patterns.json
 artifacts/working/backups/
 
-# Type checking cache
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Test coverage
-.coverage
-.coverage.*
-htmlcov/
-.pytest_cache/
-
-# Claude Code
-.claude/
-.claude-task-agent-prompt.md
-
-# Generated strategies (test outputs)
-generated_strategy_*.py
-iteration_history.json
-checkpoints_*/
-
-# Environment variables (contains API keys and secrets)
-.env
-.env.local
-.env.*.local
+artifacts/working/backups/
