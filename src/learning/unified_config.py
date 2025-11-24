@@ -57,7 +57,7 @@ class UnifiedConfig:
     """Unified configuration for UnifiedLoop.
 
     Integrates parameters from AutonomousLoop and LearningLoop, adding support
-    for Template Mode, JSON Parameter Output, and Learning Feedback.
+    for Template Mode, JSON Parameter Output, Hybrid Mode, and Learning Feedback.
 
     Attributes:
         === Loop Control ===
@@ -77,6 +77,13 @@ class UnifiedConfig:
 
         === JSON Parameter Output Parameters ===
         use_json_mode: Enable JSON Parameter Output (requires template_mode=True)
+
+        === Hybrid Mode Parameters ===
+        innovation_rate: LLM probability percentage (0.0-100.0)
+            - 100.0: Pure LLM mode (100% LLM generation)
+            - 50.0: Hybrid mode (50% LLM, 50% Factor Graph)
+            - 0.0: Pure Factor Graph mode (100% Factor Graph)
+            Default: 100.0 (backward compatible with pure LLM mode)
 
         === Learning Feedback Parameters ===
         enable_learning: Enable Learning Feedback system
@@ -106,6 +113,29 @@ class UnifiedConfig:
         log_level: Logging level (DEBUG/INFO/WARNING/ERROR/CRITICAL)
         log_to_file: Write logs to file
         log_to_console: Write logs to console
+
+    Validation Rules:
+        - innovation_rate must be in range [0.0, 100.0]
+        - use_json_mode=True requires template_mode=True AND innovation_rate=100.0
+        - template_mode=True requires template_name to be specified
+        - max_iterations must be in range [1, 1000]
+
+    Example:
+        >>> # Pure LLM mode (default)
+        >>> config = UnifiedConfig(max_iterations=100)
+        >>> assert config.innovation_rate == 100.0
+
+        >>> # Hybrid mode (50% LLM, 50% Factor Graph)
+        >>> config = UnifiedConfig(
+        ...     max_iterations=100,
+        ...     innovation_rate=50.0
+        ... )
+
+        >>> # Pure Factor Graph mode
+        >>> config = UnifiedConfig(
+        ...     max_iterations=100,
+        ...     innovation_rate=0.0
+        ... )
     """
 
     # === Loop Control ===
@@ -125,6 +155,12 @@ class UnifiedConfig:
 
     # === JSON Parameter Output Parameters ===
     use_json_mode: bool = False
+
+    # === Hybrid Mode Parameters ===
+    innovation_rate: float = 100.0  # 0.0-100.0, LLM probability %
+    # 100.0 = Pure LLM mode (default, backward compatible)
+    # 50.0 = Hybrid mode (50% LLM, 50% Factor Graph)
+    # 0.0 = Pure Factor Graph mode
 
     # === Learning Feedback Parameters ===
     enable_learning: bool = True
@@ -164,27 +200,75 @@ class UnifiedConfig:
 
         Raises:
             ConfigurationError: If any parameter is invalid
+            ValueError: If numeric parameter is out of range
         """
-        # 1. Template Mode validation
+        self._validate_template_mode()
+        self._validate_innovation_rate()
+        self._validate_json_mode_compatibility()
+        self._validate_file_paths()
+        self._validate_iteration_count()
+
+    def _validate_template_mode(self) -> None:
+        """Validate Template Mode configuration.
+
+        Raises:
+            ConfigurationError: If template_mode=True but template_name is not set
+        """
         if self.template_mode and not self.template_name:
             raise ConfigurationError(
                 "template_mode=True requires template_name to be specified"
             )
 
-        # 2. JSON Mode requires Template Mode
+    def _validate_innovation_rate(self) -> None:
+        """Validate innovation_rate parameter.
+
+        Raises:
+            ValueError: If innovation_rate is not in range [0.0, 100.0]
+        """
+        if not 0.0 <= self.innovation_rate <= 100.0:
+            raise ValueError(
+                f"innovation_rate must be between 0.0 and 100.0, got {self.innovation_rate}"
+            )
+
+    def _validate_json_mode_compatibility(self) -> None:
+        """Validate JSON Mode compatibility with other parameters.
+
+        JSON Mode requires:
+        - template_mode=True
+        - innovation_rate=100.0 (pure template mode, no LLM mixing)
+
+        Raises:
+            ConfigurationError: If JSON Mode requirements are not met
+        """
         if self.use_json_mode and not self.template_mode:
             raise ConfigurationError(
                 "use_json_mode=True requires template_mode=True"
             )
 
-        # 3. File paths required
+        if self.use_json_mode and self.innovation_rate < 100.0:
+            raise ConfigurationError(
+                f"use_json_mode=True requires innovation_rate=100 (pure template mode). "
+                f"Got innovation_rate={self.innovation_rate}"
+            )
+
+    def _validate_file_paths(self) -> None:
+        """Validate required file paths.
+
+        Raises:
+            ConfigurationError: If required file paths are not set
+        """
         if not self.history_file:
             raise ConfigurationError("history_file is required")
 
         if not self.champion_file:
             raise ConfigurationError("champion_file is required")
 
-        # 4. Iteration count
+    def _validate_iteration_count(self) -> None:
+        """Validate iteration count range.
+
+        Raises:
+            ConfigurationError: If iteration count is invalid
+        """
         if self.max_iterations <= 0:
             raise ConfigurationError(
                 f"max_iterations must be > 0, got {self.max_iterations}"
@@ -224,7 +308,7 @@ class UnifiedConfig:
 
             # Innovation Mode (mapped from template settings)
             innovation_mode=self.enable_learning,
-            innovation_rate=100 if self.template_mode else 100,  # Template or LLM
+            innovation_rate=int(self.innovation_rate),  # Convert float to int for LearningConfig
             llm_retry_count=3,
 
             # Backtest Configuration
@@ -272,6 +356,9 @@ class UnifiedConfig:
 
             # JSON Parameter Output
             "use_json_mode": self.use_json_mode,
+
+            # Hybrid Mode
+            "innovation_rate": self.innovation_rate,
 
             # Learning Feedback
             "enable_learning": self.enable_learning,

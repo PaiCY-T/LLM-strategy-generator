@@ -170,6 +170,7 @@ class UnifiedLoop:
         logger.info(f"  JSON Mode: {self.use_json_mode}")
         logger.info(f"  Learning Enabled: {self.config.enable_learning}")
         logger.info(f"  Max Iterations: {self.config.max_iterations}")
+        logger.info(f"  Innovation Rate: {self.config.innovation_rate:.1f}% (LLM probability)")
 
         # Convert to LearningConfig and initialize LearningLoop
         learning_config = self.config.to_learning_config()
@@ -182,7 +183,13 @@ class UnifiedLoop:
             logger.info(f"✓ Template Mode enabled: {self.config.template_name}")
             self._inject_template_executor()
         else:
-            logger.info("✓ Standard Mode (LLM/Factor Graph)")
+            # Log generation mode based on innovation_rate
+            if self.config.innovation_rate >= 100.0:
+                logger.info("✓ Pure LLM Mode (innovation_rate=100%)")
+            elif self.config.innovation_rate <= 0.0:
+                logger.info("✓ Pure Factor Graph Mode (innovation_rate=0%)")
+            else:
+                logger.info(f"✓ Hybrid Mode (LLM={self.config.innovation_rate:.1f}%, FG={100-self.config.innovation_rate:.1f}%)")
 
         # Initialize monitoring systems (Week 3.1)
         self._initialize_monitoring()
