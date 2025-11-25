@@ -1210,6 +1210,7 @@ class IterationExecutor:
         strategy_generation: Optional[int],
         metrics: Dict[str, float],
         classification_level: str,
+        strategy: Optional[Any] = None,  # Factor Graph Strategy DAG object (Spec A Task 4.2 fix)
     ) -> bool:
         """Update champion if current strategy is better.
 
@@ -1221,6 +1222,7 @@ class IterationExecutor:
             strategy_generation: Strategy generation (for Factor Graph)
             metrics: Performance metrics
             classification_level: Success level
+            strategy: Strategy DAG object (for Factor Graph, required by ChampionTracker)
 
         Returns:
             True if champion was updated, False otherwise
@@ -1234,6 +1236,17 @@ class IterationExecutor:
             if not metrics or "sharpe_ratio" not in metrics:
                 return False
 
+            # For Factor Graph mode, retrieve strategy from registry if not provided
+            # This fixes Spec A Task 4.2 bug where strategy object was not passed
+            if generation_method == "factor_graph" and strategy is None and strategy_id:
+                strategy = self._strategy_registry.get(strategy_id)
+                if strategy is None:
+                    logger.warning(
+                        f"Factor Graph strategy {strategy_id} not found in registry. "
+                        "Cannot update champion."
+                    )
+                    return False
+
             # Update champion using hybrid architecture
             # Pass ALL parameters for both LLM and Factor Graph support
             updated = self.champion_tracker.update_champion(
@@ -1241,6 +1254,7 @@ class IterationExecutor:
                 metrics=metrics,
                 generation_method=generation_method,  # "llm" or "factor_graph"
                 code=strategy_code,                   # For LLM (None for Factor Graph)
+                strategy=strategy,                    # For Factor Graph (None for LLM) - Spec A Task 4.2 fix
                 strategy_id=strategy_id,              # For Factor Graph (None for LLM)
                 strategy_generation=strategy_generation  # For Factor Graph (None for LLM)
             )
