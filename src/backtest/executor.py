@@ -410,13 +410,20 @@ class BacktestExecutor:
         result_queue = mp.Queue()  # type: mp.Queue
 
         # Create process that will execute strategy in isolation
+        # Note: finlab modules are imported inside subprocess to avoid pickle serialization issues
+        print(f"[MAIN] Creating subprocess...", flush=True)
+        create_start = time.time()
         process = mp.Process(
             target=self._execute_strategy_in_process,
-            args=(strategy, data, sim, result_queue, start_date, end_date, fee_ratio, tax_ratio, resample),
+            args=(strategy, result_queue, start_date, end_date, fee_ratio, tax_ratio, resample),
         )
+        print(f"[MAIN] Process created in {time.time() - create_start:.2f}s", flush=True)
 
         start_time = time.time()
+        print(f"[MAIN] Starting subprocess...", flush=True)
+        start_start = time.time()
         process.start()
+        print(f"[MAIN] Process started in {time.time() - start_start:.2f}s", flush=True)
 
         # Wait for process to complete or timeout
         process.join(timeout=execution_timeout)
@@ -461,8 +468,6 @@ class BacktestExecutor:
     @staticmethod
     def _execute_strategy_in_process(
         strategy: Any,  # Factor Graph Strategy object
-        data: Any,
-        sim: Any,
         result_queue: Any,  # mp.Queue
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
@@ -480,10 +485,13 @@ class BacktestExecutor:
             - Returns Dates×Symbols position matrix directly
             - Uses FinLabDataFrame container internally
 
+        Multiprocessing Fix (2025-11-17):
+            - Import finlab.data AND finlab.backtest inside subprocess to avoid pickle serialization
+            - Python modules and some function objects cannot be pickled correctly
+            - Local import is safe because finlab manages its own singleton state
+
         Args:
             strategy: Factor Graph Strategy object (Phase 2.0 matrix-native)
-            data: finlab.data module (passed to strategy.to_pipeline())
-            sim: finlab.backtest.sim function
             result_queue: Queue for passing ExecutionResult back to parent
             start_date: Optional backtest start date
             end_date: Optional backtest end date
@@ -494,22 +502,35 @@ class BacktestExecutor:
         start_time = time.time()
 
         try:
+            # [DEBUG] Import timing
+            import_start = time.time()
+            # Import finlab modules inside subprocess to avoid multiprocessing pickle issues
+            # Module objects and some functions cannot be pickled correctly
+            from finlab import data, backtest
+            print(f"[SUBPROCESS] Import finlab modules: {time.time() - import_start:.2f}s", flush=True)
+
             # Step 1: Execute strategy DAG to get position signals (Phase 2.0)
             # to_pipeline() now accepts data module and returns position matrix
+            pipeline_start = time.time()
             positions_df = strategy.to_pipeline(data)
+            print(f"[SUBPROCESS] to_pipeline(): {time.time() - pipeline_start:.2f}s", flush=True)
 
             # Step 2: Filter by date range
+            filter_start = time.time()
             start = start_date or "2018-01-01"
             end = end_date or "2024-12-31"
             positions_df = positions_df.loc[start:end]
+            print(f"[SUBPROCESS] Date filtering: {time.time() - filter_start:.2f}s", flush=True)
 
             # Step 3: Run backtest via sim()
-            report = sim(
+            sim_start = time.time()
+            report = backtest.sim(
                 positions_df,
                 fee_ratio=fee_ratio if fee_ratio is not None else 0.001425,
                 tax_ratio=tax_ratio if tax_ratio is not None else 0.003,
                 resample=resample,  # Configurable rebalancing frequency
             )
+            print(f"[SUBPROCESS] backtest.sim(): {time.time() - sim_start:.2f}s", flush=True)
 
             # Step 4: Extract metrics from report
             sharpe_ratio = float("nan")
@@ -528,14 +549,18 @@ class BacktestExecutor:
                 pass
 
             # Create success result
+            # NOTE: Don't pass report object - it may contain unpicklable objects
+            print(f"[SUBPROCESS] Creating ExecutionResult...", flush=True)
+            result_start = time.time()
             result = ExecutionResult(
                 success=True,
                 sharpe_ratio=sharpe_ratio if not pd.isna(sharpe_ratio) else None,
                 total_return=total_return if not pd.isna(total_return) else None,
                 max_drawdown=max_drawdown if not pd.isna(max_drawdown) else None,
                 execution_time=time.time() - start_time,
-                report=report,  # Include report for further analysis
+                report=None,  # Don't include report - may be unpicklable
             )
+            print(f"[SUBPROCESS] ExecutionResult created in {time.time() - result_start:.2f}s", flush=True)
 
         except Exception as e:
             # Catch all exceptions with full stack trace
@@ -548,7 +573,11 @@ class BacktestExecutor:
             )
 
         # Pass result back to parent via Queue
+        print(f"[SUBPROCESS] Putting result in queue...", flush=True)
+        queue_start = time.time()
         result_queue.put(result)
+        print(f"[SUBPROCESS] Result queued in {time.time() - queue_start:.2f}s", flush=True)
+        print(f"[SUBPROCESS] Total execution: {time.time() - start_time:.2f}s", flush=True)
 
 
 def _extract_metric(

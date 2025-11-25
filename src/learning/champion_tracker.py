@@ -185,22 +185,23 @@ class ChampionStrategy:
             ValueError: If validation fails with descriptive error message
         """
         # Validate generation_method
-        if self.generation_method not in ["llm", "factor_graph"]:
+        valid_methods = ["llm", "factor_graph", "template"]
+        if self.generation_method not in valid_methods:
             raise ValueError(
-                f"generation_method must be 'llm' or 'factor_graph', "
+                f"generation_method must be one of {valid_methods}, "
                 f"got '{self.generation_method}'"
             )
 
-        # Validate LLM-specific fields
-        if self.generation_method == "llm":
+        # Validate LLM and Template-specific fields (both generate code)
+        if self.generation_method in ["llm", "template"]:
             if not self.code:
                 raise ValueError(
-                    "LLM champion must have code. "
-                    "Provide code parameter when generation_method='llm'"
+                    f"{self.generation_method.upper()} champion must have code. "
+                    f"Provide code parameter when generation_method='{self.generation_method}'"
                 )
             if self.strategy_id or self.strategy_generation is not None:
                 raise ValueError(
-                    "LLM champion should not have strategy_id or strategy_generation. "
+                    f"{self.generation_method.upper()} champion should not have strategy_id or strategy_generation. "
                     "These fields are for factor_graph champions only"
                 )
 
@@ -216,6 +217,10 @@ class ChampionStrategy:
                     "Factor Graph champion should not have code. "
                     "code field is for llm champions only"
                 )
+
+        # Convert metrics dict to StrategyMetrics if needed (Phase 3.3 type safety)
+        if isinstance(self.metrics, dict):
+            object.__setattr__(self, 'metrics', StrategyMetrics.from_dict(self.metrics))
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization.
@@ -277,6 +282,10 @@ class ChampionStrategy:
         # Backward compatibility: success_patterns might be None in old format
         if data['success_patterns'] is None:
             data['success_patterns'] = []
+
+        # Convert metrics dict to StrategyMetrics object (Phase 3.3 type safety)
+        if isinstance(data.get('metrics'), dict):
+            data['metrics'] = StrategyMetrics.from_dict(data['metrics'])
 
         return ChampionStrategy(**data)
 

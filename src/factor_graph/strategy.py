@@ -12,8 +12,11 @@ from typing import Callable, Dict, List, Optional, Set
 import networkx as nx
 import pandas as pd
 import copy
+import logging
 
 from .factor import Factor
+
+logger = logging.getLogger(__name__)
 
 
 class Strategy:
@@ -516,21 +519,29 @@ class Strategy:
             available_columns.update(factor.outputs)
 
         # Check 3: At least one position signal factor (from lines 562-576)
+        # NOTE: Check container matrices (after naming adapter transformation)
+        # instead of factor.outputs (semantic names) to support Factor Library
         position_signal_names = ["position", "positions", "signal", "signals"]
-        all_outputs = []
-        for factor in self.factors.values():
-            all_outputs.extend(factor.outputs)
+
+        # Get actual matrices in container (after naming adapter layer transformation)
+        actual_matrices = container.list_matrices()
 
         has_position_signal = any(
             output in position_signal_names
-            for output in all_outputs
+            for output in actual_matrices
         )
 
         if not has_position_signal:
+            # Also collect factor outputs for error message
+            all_factor_outputs = []
+            for factor in self.factors.values():
+                all_factor_outputs.extend(factor.outputs)
+
             raise ValueError(
                 f"Strategy must have at least one factor producing position signals "
                 f"(columns: {position_signal_names}). "
-                f"Current outputs: {sorted(all_outputs)}."
+                f"Factor outputs: {sorted(all_factor_outputs)}. "
+                f"Container matrices: {sorted(actual_matrices)}."
             )
 
         return True
@@ -593,44 +604,190 @@ class Strategy:
             - Factors receive container instead of DataFrame
             - Returns 'position' matrix instead of accumulated DataFrame
         """
-        # Static validation (before container creation)
-        if not skip_validation:
-            self.validate_structure()
+        # ==============================================================================
+        # PHASE 1: Validation (Diagnostic timing added 2025-11-16)
+        # ==============================================================================
+        import time
+        from datetime import datetime
 
-        # Phase 2: Create FinLabDataFrame container
-        from src.factor_graph.finlab_dataframe import FinLabDataFrame
-        container = FinLabDataFrame(data_module=data_module)
+        phase_start = time.time()
+        logger.info(f"[TIMING] Phase 1 START: Validation at {datetime.now()}")
 
-        # Execute factors in topological order
         try:
-            topo_order = list(nx.topological_sort(self.dag))
-        except nx.NetworkXError as e:
-            raise ValueError(
-                f"Cannot compute topological sort for strategy '{self.id}': {str(e)}"
-            ) from e
+            # Static validation (before container creation)
+            if not skip_validation:
+                self.validate_structure()
 
-        # Execute each factor sequentially, container passed and returned
-        for factor_id in topo_order:
-            factor = self.factors[factor_id]
+            phase_time = time.time() - phase_start
+            logger.info(f"[TIMING] Phase 1 COMPLETE: Validation in {phase_time:.2f}s")
+
+        except Exception as e:
+            phase_time = time.time() - phase_start
+            logger.error(f"[TIMING] Phase 1 FAILED after {phase_time:.2f}s: {e}")
+            raise
+
+        # ==============================================================================
+        # PHASE 2: Container Creation (Diagnostic timing added 2025-11-16)
+        # ==============================================================================
+        phase_start = time.time()
+        logger.info(f"[TIMING] Phase 2 START: Container creation at {datetime.now()}")
+
+        try:
+            # Phase 2: Create FinLabDataFrame container
+            from src.factor_graph.finlab_dataframe import FinLabDataFrame
+            container = FinLabDataFrame(data_module=data_module)
+
+            phase_time = time.time() - phase_start
+            logger.info(f"[TIMING] Phase 2 COMPLETE: Container created in {phase_time:.2f}s")
+
+        except Exception as e:
+            phase_time = time.time() - phase_start
+            logger.error(f"[TIMING] Phase 2 FAILED after {phase_time:.2f}s: {e}")
+            raise
+
+        # ==============================================================================
+        # PHASE 3: Graph Execution (SUSPECT - Diagnostic timing added 2025-11-16)
+        # ==============================================================================
+        phase_start = time.time()
+        logger.info(f"[TIMING] Phase 3 START: Graph execution at {datetime.now()}")
+        logger.info(f"[TIMING] Factor count: {len(self.factors)}")
+
+        try:
+            # Execute factors in topological order
             try:
-                container = factor.execute(container)
-            except Exception as e:
-                raise RuntimeError(
-                    f"Pipeline execution failed at factor '{factor_id}' ({factor.name}): {str(e)}"
+                topo_order = list(nx.topological_sort(self.dag))
+                logger.info(f"[TIMING] Execution order: {topo_order}")
+            except nx.NetworkXError as e:
+                raise ValueError(
+                    f"Cannot compute topological sort for strategy '{self.id}': {str(e)}"
                 ) from e
 
-        # Runtime validation (after container populated)
-        if not skip_validation:
-            self.validate_data(container)
+            # Execute each factor sequentially, container passed and returned
+            for i, factor_id in enumerate(topo_order, 1):
+                factor = self.factors[factor_id]
+                factor_start = time.time()
+                logger.info(f"[TIMING] Factor {i}/{len(topo_order)}: {factor_id} START at {datetime.now()}")
 
-        # Phase 2: Extract final 'position' matrix from container
-        if not container.has_matrix('position'):
-            raise KeyError(
-                f"Strategy '{self.id}' did not produce 'position' matrix. "
-                f"Available matrices: {container.list_matrices()}"
-            )
+                try:
+                    container = factor.execute(container)
+                    factor_time = time.time() - factor_start
+                    logger.info(f"[TIMING] Factor {factor_id} COMPLETE in {factor_time:.2f}s")
 
-        return container.get_matrix('position')
+                    # Check if any factor takes excessively long
+                    if factor_time > 60:
+                        logger.warning(f"[TIMING] ⚠️  Factor {factor_id} took {factor_time:.2f}s (>60s threshold)")
+
+                except Exception as e:
+                    factor_time = time.time() - factor_start
+                    logger.error(f"[TIMING] Factor {factor_id} FAILED after {factor_time:.2f}s: {e}")
+                    raise RuntimeError(
+                        f"Pipeline execution failed at factor '{factor_id}' ({factor.name}): {str(e)}"
+                    ) from e
+
+            phase_time = time.time() - phase_start
+            logger.info(f"[TIMING] Phase 3 COMPLETE: Graph executed in {phase_time:.2f}s")
+
+        except Exception as e:
+            phase_time = time.time() - phase_start
+            logger.error(f"[TIMING] Phase 3 FAILED after {phase_time:.2f}s: {e}")
+            raise
+
+        # ==============================================================================
+        # PHASE 4: Naming Adapter + Validation (Diagnostic timing added 2025-11-16)
+        # ==============================================================================
+        phase_start = time.time()
+        logger.info(f"[TIMING] Phase 4 START: Naming adapter + validation at {datetime.now()}")
+
+        try:
+            # ============================================================================
+            # NAMING ADAPTER LAYER - Maps Factor Library semantic names to FinLab generic names
+            # ============================================================================
+            # Problem: Factor Library outputs semantic names ('breakout_signal', 'momentum')
+            # but FinLab validation requires generic names ('signal', 'position')
+            # Solution: Transform semantic names to generic names before validation
+
+            # Define semantic → generic name mapping for all Factor Library factors
+            SIGNAL_NAME_MAPPING = {
+                # Entry Signals → 'signal'
+                'breakout_signal': 'signal',
+                'dual_ma_filter': 'signal',
+
+                # Momentum Indicators → 'signal'
+                'momentum': 'signal',
+                'ma_filter': 'signal',
+                'revenue_catalyst': 'signal',
+                'earnings_catalyst': 'signal',
+
+                # Exit Signals → 'exit_signal'
+                'trailing_stop_signal': 'exit_signal',
+                'time_exit_signal': 'exit_signal',
+                'volatility_stop_signal': 'exit_signal',
+                'profit_target_signal': 'exit_signal',
+                'rolling_trailing_stop_signal': 'exit_signal',
+                'rolling_profit_target_signal': 'exit_signal',
+                'final_exit_signal': 'exit_signal',
+                'stop_loss_level': 'exit_signal',
+            }
+
+            # Apply naming transformation
+            for semantic_name, generic_name in SIGNAL_NAME_MAPPING.items():
+                if container.has_matrix(semantic_name):
+                    matrix = container.get_matrix(semantic_name)
+
+                    # Handle signal combination logic
+                    if generic_name == 'signal':
+                        # Entry signal - convert to position
+                        if not container.has_matrix('position'):
+                            # First entry signal becomes position
+                            container.add_matrix('position', matrix)
+                            logger.debug(f"Adapter: Converted '{semantic_name}' → 'position' (first entry signal)")
+                        else:
+                            # Combine multiple entry signals with AND logic (conservative)
+                            existing = container.get_matrix('position')
+                            # Convert to bool to ensure type compatibility for & operator
+                            combined = existing.astype(bool) & matrix.astype(bool)
+                            container.update_matrix('position', combined)
+                            logger.debug(f"Adapter: Combined '{semantic_name}' with existing position (AND logic)")
+
+                    elif generic_name == 'exit_signal':
+                        # Exit signal - apply to position (remove positions where exit signal is True)
+                        if container.has_matrix('position'):
+                            position = container.get_matrix('position')
+                            # Exit when signal is True: position = position & ~exit_signal
+                            # Convert to bool to ensure type compatibility for & operator
+                            updated_position = position.astype(bool) & ~matrix.astype(bool)
+                            container.update_matrix('position', updated_position)
+                            logger.debug(f"Adapter: Applied exit signal '{semantic_name}' to position")
+                        else:
+                            logger.warning(f"Adapter: Exit signal '{semantic_name}' found but no position matrix exists")
+
+            logger.debug(f"Adapter: Final matrices after transformation: {container.list_matrices()}")
+            # ============================================================================
+            # END NAMING ADAPTER LAYER
+            # ============================================================================
+
+            # Runtime validation (after container populated)
+            if not skip_validation:
+                self.validate_data(container)
+
+            # Extract final 'position' matrix from container
+            if not container.has_matrix('position'):
+                raise KeyError(
+                    f"Strategy '{self.id}' did not produce 'position' matrix. "
+                    f"Available matrices: {container.list_matrices()}"
+                )
+
+            result = container.get_matrix('position')
+
+            phase_time = time.time() - phase_start
+            logger.info(f"[TIMING] Phase 4 COMPLETE: Naming adapter + validation in {phase_time:.2f}s")
+
+            return result
+
+        except Exception as e:
+            phase_time = time.time() - phase_start
+            logger.error(f"[TIMING] Phase 4 FAILED after {phase_time:.2f}s: {e}")
+            raise
 
     def validate(self) -> bool:
         """Validate strategy structure (backward compatible).

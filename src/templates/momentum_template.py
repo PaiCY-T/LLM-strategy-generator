@@ -604,7 +604,9 @@ class MomentumTemplate(BaseTemplate):
 
         Returns:
             Dict: Metrics dictionary with keys:
+                - 'execution_success' (bool): True if metrics extracted successfully
                 - 'annual_return' (float): Annual return as decimal
+                - 'total_return' (float): Same as annual_return (StrategyMetrics compatibility)
                 - 'sharpe_ratio' (float): Sharpe ratio
                 - 'max_drawdown' (float): Max drawdown as negative decimal
 
@@ -614,8 +616,11 @@ class MomentumTemplate(BaseTemplate):
         try:
             # Extract metrics using report.metrics API (consistent with other templates)
             # This is more robust than dictionary access
+            # Bug #9 fix: Include execution_success and total_return for StrategyMetrics.from_dict()
             metrics = {
+                'execution_success': True,  # Required for SuccessClassifier
                 'annual_return': report.metrics.annual_return(),
+                'total_return': report.metrics.annual_return(),  # StrategyMetrics expects this key
                 'sharpe_ratio': report.metrics.sharpe_ratio(),
                 'max_drawdown': report.metrics.max_drawdown()
             }

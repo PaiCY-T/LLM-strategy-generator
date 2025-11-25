@@ -28,12 +28,20 @@ Usage:
     parameters = generator.generate_parameters(context)
 """
 from dataclasses import dataclass
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Tuple
 import logging
 import os
 
 # Configure logging
 logger = logging.getLogger(__name__)
+
+# JSON Parameter Output imports (Phase 1.1 feature)
+from src.generators.template_code_generator import TemplateCodeGenerator, GenerationResult
+from src.generators.json_prompt_builder import JsonPromptBuilder
+from src.feedback.structured_error import StructuredErrorFeedback
+
+# Constants for JSON mode
+MAX_RETRIES = 3
 
 
 @dataclass
@@ -60,7 +68,7 @@ class TemplateParameterGenerator:
         generate_parameters: Generate a parameter combination
     """
 
-    def __init__(self, template_name="Momentum", model="gemini-2.5-flash", exploration_interval=5):
+    def __init__(self, template_name="Momentum", model="gemini-2.5-flash", exploration_interval=5, use_json_mode=False):
         """
         Initialize the TemplateParameterGenerator.
 
@@ -68,13 +76,22 @@ class TemplateParameterGenerator:
             template_name (str): Name of the template to use. Default: "Momentum"
             model (str): AI model to use for parameter generation. Default: "gemini-2.5-flash"
             exploration_interval (int): Interval for exploration vs exploitation. Default: 5
+            use_json_mode (bool): Use JSON Parameter Output mode (Phase 1.1). Default: False
         """
         self.template_name = template_name
         self.model = model
         self.exploration_interval = exploration_interval
+        self.use_json_mode = use_json_mode
         from src.templates.momentum_template import MomentumTemplate
         self.template = MomentumTemplate()
         self.param_grid = self.template.PARAM_GRID
+
+        # Initialize JSON mode components if enabled
+        if self.use_json_mode:
+            self.code_generator = TemplateCodeGenerator(self.template)
+            self.prompt_builder = JsonPromptBuilder()
+            self.error_feedback = StructuredErrorFeedback()
+            logger.info("JSON Parameter Output mode enabled")
 
     def _build_prompt(self, context):
         """
@@ -487,9 +504,8 @@ class TemplateParameterGenerator:
         """
         Call LLM directly to generate parameter selection (bypassing code generation).
 
-        This method calls the LLM API directly with only the parameter selection
-        prompt, avoiding conflicts with strategy code generation templates.
-        It uses dynamic temperature control for exploration vs exploitation.
+        This method calls the unified LLM API with dynamic temperature control
+        for exploration vs exploitation.
 
         Args:
             prompt (str): Formatted prompt for parameter selection
@@ -502,26 +518,13 @@ class TemplateParameterGenerator:
             RuntimeError: If LLM API call fails after retries
         """
         # Temperature control for exploration vs exploitation
-        # Higher temperature = more exploration
-        # Lower temperature = more exploitation (closer to champion)
         is_exploration = self._should_force_exploration(iteration_num)
         temperature = 1.0 if is_exploration else 0.7
 
         logger.info(f"Calling LLM for parameters (iteration={iteration_num}, "
                    f"exploration={is_exploration}, temperature={temperature})")
 
-        # Try Google AI first, fallback to OpenRouter
-        try:
-            print("🎯 Attempting Google AI (primary)...")
-            return self._call_google_ai(prompt, temperature)
-        except Exception as e:
-            print(f"⚠️ Google AI failed: {e}")
-            print("🔄 Falling back to OpenRouter...")
-            try:
-                return self._call_openrouter(prompt, temperature)
-            except Exception as e2:
-                print(f"❌ OpenRouter fallback also failed: {e2}")
-                raise RuntimeError(f"Both APIs failed. Google AI: {e}, OpenRouter: {e2}")
+        return self._call_llm_api(prompt, temperature)
 
     def _call_google_ai(self, prompt, temperature):
         """Call Google AI API directly with parameter selection prompt."""
@@ -684,3 +687,190 @@ class TemplateParameterGenerator:
             error_msg = f"Unexpected error during parameter generation: {str(e)}"
             logger.error(error_msg, exc_info=True)
             raise RuntimeError(error_msg) from e
+
+    def generate_parameters_json_mode(self, context) -> Tuple[Dict[str, Any], str]:
+        """
+        Generate parameters using JSON Parameter Output mode with retry logic.
+
+        This method implements the Phase 1.1 JSON Parameter Output Architecture:
+        1. Build JSON-only prompt using JsonPromptBuilder
+        2. Call LLM for JSON parameter output
+        3. Validate using Pydantic Schema via TemplateCodeGenerator
+        4. Retry with structured error feedback if validation fails
+
+        Args:
+            context (ParameterGenerationContext): Generation context
+
+        Returns:
+            Tuple[Dict[str, Any], str]: (validated_params_dict, generated_code)
+
+        Raises:
+            ValueError: If all retries fail
+        """
+        logger.info(f"Starting JSON mode parameter generation (iteration={context.iteration_num})")
+
+        # Build initial prompt
+        is_exploration = self._should_force_exploration(context.iteration_num)
+
+        # Build performance context with champion info
+        performance_parts = [f"Iteration {context.iteration_num}"]
+        performance_parts.append("exploration mode" if is_exploration else "exploitation mode")
+        if context.champion_params:
+            performance_parts.append(f"Champion Sharpe: {context.champion_sharpe:.4f}")
+            performance_parts.append(f"Champion params: {context.champion_params}")
+        performance_context = ", ".join(performance_parts)
+
+        prompt = self.prompt_builder.build_prompt(
+            template_name=self.template_name,
+            feedback_context=context.feedback_history or "",
+            performance_context=performance_context
+        )
+
+        last_errors = []
+
+        for attempt in range(MAX_RETRIES):
+            logger.info(f"JSON mode attempt {attempt + 1}/{MAX_RETRIES}")
+
+            try:
+                # Call LLM for JSON output
+                temperature = 1.0 if is_exploration else 0.7
+                response = self._call_llm_for_json(prompt, temperature)
+
+                # Validate and generate code using TemplateCodeGenerator
+                result = self.code_generator.generate(response)
+
+                if result.success:
+                    logger.info(f"JSON mode succeeded on attempt {attempt + 1}")
+                    return result.params.model_dump(), result.code
+
+                # Validation failed - prepare retry with structured feedback
+                last_errors = result.errors
+                logger.warning(f"JSON mode validation failed: {result.errors}")
+
+                # Use StructuredErrorFeedback for richer error context
+                # Convert simple error strings to ValidationErrorDetail format
+                error_details = self._convert_errors_to_details(result.errors)
+                feedback = self.error_feedback.format_errors(error_details)
+
+                prompt = self.prompt_builder.build_prompt(
+                    template_name=self.template_name,
+                    feedback_context=feedback,
+                    performance_context=f"Retry {attempt + 1} - please fix errors"
+                )
+
+            except Exception as e:
+                logger.error(f"JSON mode attempt {attempt + 1} failed: {e}")
+                last_errors = [str(e)]
+
+        # All retries failed
+        error_msg = f"JSON mode failed after {MAX_RETRIES} retries. Last errors: {last_errors}"
+        logger.error(error_msg)
+        raise ValueError(error_msg)
+
+    def _convert_errors_to_details(self, errors: list) -> list:
+        """
+        Convert simple error strings to ValidationErrorDetail objects.
+
+        This bridges the gap between TemplateCodeGenerator's error format
+        and StructuredErrorFeedback's rich error details.
+
+        Args:
+            errors: List of error strings from GenerationResult
+
+        Returns:
+            List of ValidationErrorDetail objects with enhanced context
+        """
+        from src.feedback.structured_error import ValidationErrorDetail
+
+        error_details = []
+        for error_str in errors:
+            # Parse error string to extract field info
+            field_path = "unknown"
+            error_type = "validation_error"
+            given_value = None
+            allowed_values = []
+            suggestion = error_str
+
+            # Try to extract field path from error (format: "**field**: message")
+            if "**" in error_str:
+                try:
+                    field_path = error_str.split("**")[1]
+                    # Get allowed values from PARAM_ALLOWED_VALUES if available
+                    field_name = field_path.split(".")[-1]
+                    allowed_values = self.error_feedback.PARAM_ALLOWED_VALUES.get(
+                        field_name, []
+                    )
+                except (IndexError, KeyError):
+                    pass
+
+            # Determine error type from message
+            if "Invalid value" in error_str or "literal" in error_str.lower():
+                error_type = "invalid_value"
+            elif "Missing" in error_str:
+                error_type = "missing_field"
+            elif "too short" in error_str.lower():
+                error_type = "string_too_short"
+            elif "too long" in error_str.lower():
+                error_type = "string_too_long"
+
+            error_details.append(ValidationErrorDetail(
+                field_path=field_path,
+                error_type=error_type,
+                given_value=given_value,
+                allowed_values=allowed_values,
+                suggestion=suggestion
+            ))
+
+        return error_details
+
+    def _call_llm_api(self, prompt: str, temperature: float) -> str:
+        """
+        Unified LLM API call with smart fallback.
+
+        Implements quota-aware switching between Google AI and OpenRouter:
+        - Primary: Google AI (free tier, 250 req/day)
+        - Fallback: OpenRouter (paid, unlimited)
+        - Auto-switches on 429 quota errors
+
+        Args:
+            prompt: The prompt to send to the LLM
+            temperature: Temperature for generation (0.0-1.0)
+
+        Returns:
+            str: LLM response text
+
+        Raises:
+            RuntimeError: If all API calls fail
+        """
+        # Check if we should skip Google AI (quota exhausted)
+        if not getattr(self, '_google_quota_exhausted', False):
+            try:
+                return self._call_google_ai(prompt, temperature)
+            except Exception as e:
+                error_str = str(e)
+                if '429' in error_str or 'quota' in error_str.lower() or 'rate' in error_str.lower():
+                    logger.warning(f"Google AI quota exhausted: {e}")
+                    self._google_quota_exhausted = True
+                else:
+                    logger.warning(f"Google AI failed: {e}")
+
+        # Fallback to OpenRouter
+        try:
+            return self._call_openrouter(prompt, temperature)
+        except Exception as e:
+            logger.error(f"OpenRouter fallback failed: {e}")
+            raise RuntimeError(f"All LLM APIs failed: {e}")
+
+    def _call_llm_for_json(self, prompt: str, temperature: float) -> str:
+        """
+        Call LLM specifically for JSON output.
+
+        Args:
+            prompt: JSON-only prompt
+            temperature: Temperature for generation
+
+        Returns:
+            str: LLM response containing JSON
+        """
+        logger.debug("Calling LLM for JSON output")
+        return self._call_llm_api(prompt, temperature)

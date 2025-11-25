@@ -25,17 +25,20 @@ class LLMConfig:
 
 
 class LLMClient:
-    """Unified LLM client supporting multiple providers."""
+    """Unified LLM client supporting multiple providers with automatic fallback."""
 
-    def __init__(self, config: LLMConfig):
+    def __init__(self, config: LLMConfig, fallback_config: Optional[LLMConfig] = None):
         """
-        Initialize LLM client.
+        Initialize LLM client with optional fallback.
 
         Args:
-            config: LLM provider configuration
+            config: Primary LLM provider configuration
+            fallback_config: Optional fallback provider (e.g., OpenRouter when Gemini quota exceeded)
         """
         self.config = config
         self.provider = config.provider.lower()
+        self.fallback_config = fallback_config
+        self._quota_exhausted = False  # Track if primary API quota is exhausted
 
         # Provider-specific endpoints
         self.endpoints = {
@@ -46,73 +49,102 @@ class LLMClient:
 
     def generate(self, prompt: str, max_retries: int = 3) -> Optional[str]:
         """
-        Generate text from LLM.
+        Generate text from LLM with automatic fallback.
+
+        Implements quota-aware switching:
+        1. Try primary provider (e.g., Gemini)
+        2. If quota exhausted (429/rate limit), switch to fallback (e.g., OpenRouter)
+        3. Retry with exponential backoff for transient errors
 
         Args:
             prompt: Input prompt
-            max_retries: Maximum retry attempts
+            max_retries: Maximum retry attempts per provider
 
         Returns:
-            Generated text or None if failed
+            Generated text or None if all providers failed
         """
-        for attempt in range(max_retries):
-            try:
-                if self.provider == 'openrouter':
-                    response = self._call_openrouter(prompt)
-                elif self.provider == 'gemini':
-                    response = self._call_gemini(prompt)
-                elif self.provider == 'openai':
-                    response = self._call_openai(prompt)
-                else:
-                    raise ValueError(f"Unsupported provider: {self.provider}")
+        # Try primary provider (unless quota already exhausted)
+        if not self._quota_exhausted:
+            for attempt in range(max_retries):
+                try:
+                    response = self._call_provider(self.config, self.provider, prompt)
+                    return response
 
-                return response
+                except Exception as e:
+                    error_str = str(e)
 
-            except requests.exceptions.RequestException as req_e:
-                # Log generic error without exposing API keys or request details
-                print(f"⚠️  LLM API call failed (attempt {attempt + 1}/{max_retries}): Network/API error ({type(req_e).__name__})")
-                if attempt < max_retries - 1:
-                    time.sleep(2 ** attempt)  # Exponential backoff
-                else:
-                    return None
-            except Exception as e:
-                # Catch-all for unexpected errors, sanitize output
-                print(f"⚠️  LLM API call failed (attempt {attempt + 1}/{max_retries}): Unexpected error ({type(e).__name__})")
-                if attempt < max_retries - 1:
-                    time.sleep(2 ** attempt)  # Exponential backoff
-                else:
-                    return None
+                    # Check for quota/rate limit errors
+                    if '429' in error_str or 'quota' in error_str.lower() or 'rate' in error_str.lower():
+                        print(f"⚠️  {self.provider.upper()} quota exhausted: {e}")
+                        self._quota_exhausted = True
+                        break  # Don't retry, switch to fallback immediately
 
+                    # Network/transient errors - retry with backoff
+                    print(f"⚠️  {self.provider.upper()} API call failed (attempt {attempt + 1}/{max_retries}): {type(e).__name__}")
+                    if attempt < max_retries - 1:
+                        time.sleep(2 ** attempt)  # Exponential backoff
+                    else:
+                        # No more retries for primary provider
+                        if not self.fallback_config:
+                            return None
+
+        # Try fallback provider if available
+        if self.fallback_config:
+            fallback_provider = self.fallback_config.provider.lower()
+            print(f"🔄 Switching to fallback provider: {fallback_provider.upper()}")
+
+            for attempt in range(max_retries):
+                try:
+                    response = self._call_provider(self.fallback_config, fallback_provider, prompt)
+                    return response
+
+                except Exception as e:
+                    print(f"⚠️  {fallback_provider.upper()} API call failed (attempt {attempt + 1}/{max_retries}): {type(e).__name__}")
+                    if attempt < max_retries - 1:
+                        time.sleep(2 ** attempt)  # Exponential backoff
+
+        # All providers failed
         return None
 
-    def _call_openrouter(self, prompt: str) -> str:
+    def _call_provider(self, config: LLMConfig, provider: str, prompt: str) -> str:
+        """Call specific LLM provider with given configuration."""
+        if provider == 'openrouter':
+            return self._call_openrouter(prompt, config)
+        elif provider == 'gemini':
+            return self._call_gemini(prompt, config)
+        elif provider == 'openai':
+            return self._call_openai(prompt, config)
+        else:
+            raise ValueError(f"Unsupported provider: {provider}")
+
+    def _call_openrouter(self, prompt: str, config: LLMConfig) -> str:
         """Call OpenRouter API."""
         headers = {
-            'Authorization': f'Bearer {self.config.api_key}',
+            'Authorization': f'Bearer {config.api_key}',
             'Content-Type': 'application/json'
         }
 
         payload = {
-            'model': self.config.model,
+            'model': config.model,
             'messages': [{'role': 'user', 'content': prompt}],
-            'temperature': self.config.temperature,
-            'max_tokens': self.config.max_tokens
+            'temperature': config.temperature,
+            'max_tokens': config.max_tokens
         }
 
         response = requests.post(
             self.endpoints['openrouter'],
             headers=headers,
             json=payload,
-            timeout=self.config.timeout
+            timeout=config.timeout
         )
         response.raise_for_status()
 
         data = response.json()
         return data['choices'][0]['message']['content']
 
-    def _call_gemini(self, prompt: str) -> str:
-        """Call Google Gemini API."""
-        url = self.endpoints['gemini'].format(model=self.config.model)
+    def _call_gemini(self, prompt: str, config: LLMConfig) -> str:
+        """Call Google Gemini API with robust error handling."""
+        url = self.endpoints['gemini'].format(model=config.model)
 
         headers = {
             'Content-Type': 'application/json'
@@ -123,44 +155,64 @@ class LLMClient:
                 'parts': [{'text': prompt}]
             }],
             'generationConfig': {
-                'temperature': self.config.temperature,
-                'maxOutputTokens': self.config.max_tokens
+                'temperature': config.temperature,
+                'maxOutputTokens': config.max_tokens
             }
         }
 
-        params = {'key': self.config.api_key}
+        params = {'key': config.api_key}
 
         response = requests.post(
             url,
             headers=headers,
             json=payload,
             params=params,
-            timeout=self.config.timeout
+            timeout=config.timeout
         )
         response.raise_for_status()
 
         data = response.json()
-        return data['candidates'][0]['content']['parts'][0]['text']
 
-    def _call_openai(self, prompt: str) -> str:
+        # Robust response validation
+        if not data.get('candidates'):
+            raise ValueError("Gemini API returned empty candidates (rate limit or quota exceeded)")
+
+        candidate = data['candidates'][0]
+
+        # Check for safety filter blocking
+        if 'content' not in candidate:
+            finish_reason = candidate.get('finishReason', 'UNKNOWN')
+            raise ValueError(f"Gemini API blocked response: {finish_reason}")
+
+        content = candidate['content']
+        if not content or 'parts' not in content or not content['parts']:
+            raise ValueError("Gemini API returned empty content")
+
+        text = content['parts'][0].get('text', '')
+        if not text.strip():
+            raise ValueError("Gemini API returned empty text")
+
+        return text
+
+    def _call_openai(self, prompt: str, config: LLMConfig) -> str:
         """Call OpenAI API (o3, GPT-4, etc.)."""
         headers = {
-            'Authorization': f'Bearer {self.config.api_key}',
+            'Authorization': f'Bearer {config.api_key}',
             'Content-Type': 'application/json'
         }
 
         payload = {
-            'model': self.config.model,
+            'model': config.model,
             'messages': [{'role': 'user', 'content': prompt}],
-            'temperature': self.config.temperature,
-            'max_tokens': self.config.max_tokens
+            'temperature': config.temperature,
+            'max_tokens': config.max_tokens
         }
 
         response = requests.post(
             self.endpoints['openai'],
             headers=headers,
             json=payload,
-            timeout=self.config.timeout
+            timeout=config.timeout
         )
         response.raise_for_status()
 
@@ -215,24 +267,55 @@ factor = (data.get('fundamental_features:營收成長率') * data.get('fundament
 
 def create_llm_client(use_mock: bool = False) -> LLMClient:
     """
-    Factory function to create LLM client.
+    Factory function to create LLM client with automatic fallback.
 
     Args:
         use_mock: If True, return MockLLMClient for testing
 
     Returns:
-        LLMClient or MockLLMClient instance
+        LLMClient or MockLLMClient instance with fallback configuration
+
+    Notes:
+        - If GOOGLE_API_KEY is set, uses Gemini with OpenRouter as fallback
+        - If only OPENROUTER_API_KEY is set, uses OpenRouter directly
+        - If only OPENAI_API_KEY is set, uses OpenAI directly
     """
     if use_mock:
         return MockLLMClient()
 
     # Try to get API key from environment
-    # Priority: OPENROUTER > GOOGLE > OPENAI
+    # Priority: GOOGLE (with OpenRouter fallback) > OPENROUTER > OPENAI
     openrouter_key = os.getenv('OPENROUTER_API_KEY')
     google_key = os.getenv('GOOGLE_API_KEY')
     openai_key = os.getenv('OPENAI_API_KEY')
 
-    if openrouter_key:
+    # Strategy: Use Gemini (free) with OpenRouter (paid) as fallback
+    if google_key:
+        primary_config = LLMConfig(
+            provider='gemini',
+            model='gemini-2.5-flash',
+            api_key=google_key,
+            temperature=0.7,
+            max_tokens=2000
+        )
+
+        # Set up OpenRouter as fallback if available
+        fallback_config = None
+        if openrouter_key:
+            fallback_config = LLMConfig(
+                provider='openrouter',
+                model='google/gemini-2.5-flash',
+                api_key=openrouter_key,
+                temperature=0.7,
+                max_tokens=2000
+            )
+            print("✅ Using Gemini (free) with OpenRouter fallback")
+        else:
+            print("✅ Using Gemini (free) without fallback")
+
+        return LLMClient(primary_config, fallback_config=fallback_config)
+
+    elif openrouter_key:
         config = LLMConfig(
             provider='openrouter',
             model='google/gemini-2.5-flash',  # Fast and capable
@@ -240,16 +323,7 @@ def create_llm_client(use_mock: bool = False) -> LLMClient:
             temperature=0.7,
             max_tokens=2000
         )
-        return LLMClient(config)
-
-    elif google_key:
-        config = LLMConfig(
-            provider='gemini',
-            model='gemini-2.5-flash',
-            api_key=google_key,
-            temperature=0.7,
-            max_tokens=2000
-        )
+        print("✅ Using OpenRouter (paid)")
         return LLMClient(config)
 
     elif openai_key:
@@ -260,6 +334,7 @@ def create_llm_client(use_mock: bool = False) -> LLMClient:
             temperature=0.7,
             max_tokens=2000
         )
+        print("✅ Using OpenAI")
         return LLMClient(config)
 
     else:

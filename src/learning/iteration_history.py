@@ -254,7 +254,12 @@ class IterationRecord:
                     f"Template strategy must have strategy_code as str, "
                     f"got {type(self.strategy_code).__name__}"
                 )
-            if not self.strategy_code.strip():
+            # Allow empty code for error records
+            is_error_record = (
+                isinstance(self.execution_result, dict) and
+                self.execution_result.get('status') == 'error'
+            )
+            if not self.strategy_code.strip() and not is_error_record:
                 raise ValueError("Template strategy_code cannot be empty")
 
         # Validate Factor Graph strategy

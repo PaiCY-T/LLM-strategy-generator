@@ -499,6 +499,10 @@ class FactorRegistry:
             create_profit_target_factor,
             create_composite_exit_factor,
         )
+        from .stateless_exit_factors import (
+            create_rolling_trailing_stop_factor,
+            create_rolling_profit_target_factor,
+        )
 
         # Register Momentum Factors
         self.register_factor(
@@ -627,4 +631,29 @@ class FactorRegistry:
             description="Combines multiple exit signals with OR logic",
             parameters={"exit_signals": []},
             parameter_ranges={}  # No range validation for list parameter
+        )
+
+        # Register Stateless Exit Factors (Phase 2 - No positions/entry_price dependency)
+        self.register_factor(
+            name="rolling_trailing_stop_factor",
+            factory=create_rolling_trailing_stop_factor,
+            category=FactorCategory.EXIT,
+            description="Stateless trailing stop using rolling window approximation",
+            parameters={"trail_percent": 0.10, "lookback_periods": 20},
+            parameter_ranges={
+                "trail_percent": (0.01, 0.50),
+                "lookback_periods": (5, 100)
+            }
+        )
+
+        self.register_factor(
+            name="rolling_profit_target_factor",
+            factory=create_rolling_profit_target_factor,
+            category=FactorCategory.EXIT,
+            description="Stateless profit target using rolling window approximation",
+            parameters={"target_percent": 0.30, "lookback_periods": 20},
+            parameter_ranges={
+                "target_percent": (0.05, 2.0),
+                "lookback_periods": (5, 100)
+            }
         )

@@ -260,81 +260,45 @@ class TemplateIterationExecutor:
                 params={}
             )
 
-        # Step 5: Generate strategy code
+        # Step 5: Execute strategy directly via template (no code generation in template mode)
         try:
-            strategy_code = self._generate_code(params)
-            logger.info(f"✓ Generated strategy code ({len(strategy_code)} chars)")
-            logger.debug(f"Code preview:\n{strategy_code[:500]}...")
+            logger.info(f"Executing template strategy with params: {params}")
+            report, metrics_dict = self.template_param_generator.template.generate_strategy(params)
+
+            # Metrics already extracted by template - convert to StrategyMetrics format
+            from src.backtest.metrics import StrategyMetrics
+            metrics = StrategyMetrics.from_dict(metrics_dict)
+
+            # Build execution_result for compatibility with SuccessClassifier
+            execution_result = {
+                'success': metrics_dict.get('success', False),
+                'sharpe_ratio': metrics_dict.get('sharpe_ratio'),
+                'total_return': metrics_dict.get('annual_return'),
+                'max_drawdown': metrics_dict.get('max_drawdown'),
+                # Note: 'report' removed - finlab.Report object is not JSON serializable
+                # and is never used downstream (Bug #7 fix)
+                'template_executed': True
+            }
+            logger.info(f"✓ Template execution successful (Sharpe={metrics.sharpe_ratio:.3f})")
+
+            # No strategy_code for template mode - store parameters as reference
+            strategy_code = f"# Template: {self.template_name}\n# Parameters: {params}"
+
         except Exception as e:
-            logger.error(f"Code generation failed: {e}")
+            logger.error(f"Template execution failed: {e}")
             return self._create_error_record(
                 iteration_num,
-                f"Code generation error: {e}",
+                f"Template execution error: {e}",
                 params=params
             )
 
-        # Step 6: Execute strategy (with Docker sandbox if enabled)
-        try:
-            if self.docker_executor:
-                # Execute in Docker sandbox (Week 3.2.1)
-                logger.info("Executing strategy in Docker sandbox...")
-                docker_result = self.docker_executor.execute(
-                    code=strategy_code,
-                    timeout=self.config.get("timeout_seconds", 600),
-                    validate=True  # Enable SecurityValidator
-                )
-
-                # Convert Docker result to backtest format
-                if docker_result['success']:
-                    execution_result = {
-                        'status': 'success',
-                        'signal': docker_result.get('signal'),
-                        'execution_time': docker_result.get('execution_time', 0),
-                        'docker_executed': True,
-                        'validated': docker_result.get('validated', False)
-                    }
-                    logger.info(
-                        f"✓ Docker execution successful "
-                        f"(time={docker_result.get('execution_time', 0):.1f}s, "
-                        f"validated={docker_result.get('validated', False)})"
-                    )
-                else:
-                    execution_result = {
-                        'status': 'error',
-                        'error': docker_result.get('error', 'Unknown Docker error'),
-                        'execution_time': docker_result.get('execution_time', 0),
-                        'docker_executed': True,
-                        'validated': docker_result.get('validated', False)
-                    }
-                    logger.warning(f"Docker execution failed: {docker_result.get('error', 'Unknown')}")
-            else:
-                # Direct execution (no Docker)
-                execution_result = self.backtest_executor.execute(strategy_code)
-                execution_result['docker_executed'] = False
-                logger.info(f"✓ Direct execution: {execution_result.get('status', 'unknown')}")
-        except Exception as e:
-            logger.error(f"Strategy execution failed: {e}")
-            return self._create_error_record(
-                iteration_num,
-                f"Execution error: {e}",
-                params=params,
-                code=strategy_code
-            )
-
-        # Step 7: Extract metrics
-        try:
-            metrics = self.metrics_extractor.extract(execution_result)
-            logger.info(f"✓ Extracted metrics: Sharpe={metrics.sharpe_ratio:.3f}")
-        except Exception as e:
-            logger.warning(f"Metrics extraction failed: {e}")
-            metrics = None
-
         # Step 8: Classify success
         try:
-            classification_level = self.success_classifier.classify(
-                execution_result=execution_result,
-                metrics=metrics
-            )
+            # Bug #6 fix: Use classify_single() instead of classify()
+            # SuccessClassifier API: classify_single(StrategyMetrics) -> ClassificationResult
+            # ClassificationResult.level is int (0-3), convert to string format "LEVEL_N"
+            classification_result = self.success_classifier.classify_single(metrics)
+            classification_level = f"LEVEL_{classification_result.level}"
             logger.info(f"✓ Classification: {classification_level}")
         except Exception as e:
             logger.error(f"Classification failed: {e}")
@@ -402,7 +366,7 @@ class TemplateIterationExecutor:
         """
         # Get champion context
         champion = self.champion_tracker.champion
-        champion_params = champion.params if champion else None
+        champion_params = champion.parameters if champion else None
         champion_sharpe = champion.metrics.get("sharpe_ratio") if champion and champion.metrics else None
 
         # Build context
@@ -420,26 +384,6 @@ class TemplateIterationExecutor:
         except Exception as e:
             logger.error(f"TemplateParameterGenerator.generate_parameters failed: {e}")
             raise
-
-    def _generate_code(self, params: Dict[str, Any]) -> str:
-        """Generate strategy code from template and parameters.
-
-        Args:
-            params: Parameter dictionary
-
-        Returns:
-            str: Generated strategy code
-
-        Raises:
-            Exception: If code generation fails
-        """
-        try:
-            # Use template's generate_code method
-            code = self.template_param_generator.template.generate_code(params)
-            return code
-        except Exception as e:
-            logger.error(f"Template code generation failed: {e}")
-            raise RuntimeError(f"Code generation failed: {e}") from e
 
     def _create_error_record(
         self,

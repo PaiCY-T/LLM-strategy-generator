@@ -74,6 +74,7 @@ from .stationary_bootstrap import (
     stationary_bootstrap_detailed
 )
 from .dynamic_threshold import DynamicThresholdCalculator
+from .validation_result import ValidationResult as FieldValidationResult, FieldError, FieldWarning
 
 __all__ = [
     'TemplateValidator',
@@ -102,5 +103,9 @@ __all__ = [
     'stationary_bootstrap',
     'stationary_bootstrap_detailed',
     # v1.1 Dynamic Threshold (Task 1.1.3)
-    'DynamicThresholdCalculator'
+    'DynamicThresholdCalculator',
+    # Layer 2 Field Validator Data Structures (Task 8.3)
+    'FieldValidationResult',
+    'FieldError',
+    'FieldWarning'
 ]

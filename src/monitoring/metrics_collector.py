@@ -513,6 +513,64 @@ class MetricsCollector:
             unit="seconds"
         )
 
+        # ====================
+        # Validation Infrastructure Metrics (Task 6.5)
+        # ====================
+        self._register_metric(
+            "validation_field_error_rate",
+            MetricType.GAUGE,
+            "Percentage of strategies with field errors",
+            unit="percentage"
+        )
+
+        self._register_metric(
+            "validation_llm_success_rate",
+            MetricType.GAUGE,
+            "Percentage of successful LLM validations",
+            unit="percentage"
+        )
+
+        self._register_metric(
+            "validation_total_latency_ms",
+            MetricType.HISTOGRAM,
+            "Total validation latency across all layers",
+            unit="milliseconds"
+        )
+
+        self._register_metric(
+            "validation_layer1_latency_ms",
+            MetricType.HISTOGRAM,
+            "Layer 1 (DataFieldManifest) validation latency",
+            unit="milliseconds"
+        )
+
+        self._register_metric(
+            "validation_layer2_latency_ms",
+            MetricType.HISTOGRAM,
+            "Layer 2 (FieldValidator) validation latency",
+            unit="milliseconds"
+        )
+
+        self._register_metric(
+            "validation_layer3_latency_ms",
+            MetricType.HISTOGRAM,
+            "Layer 3 (SchemaValidator) validation latency",
+            unit="milliseconds"
+        )
+
+        self._register_metric(
+            "validation_circuit_breaker_triggers",
+            MetricType.COUNTER,
+            "Total number of validation circuit breaker activations"
+        )
+
+        self._register_metric(
+            "validation_error_signatures_unique",
+            MetricType.GAUGE,
+            "Number of unique error signatures tracked",
+            unit="count"
+        )
+
     def _register_metric(self, name: str, metric_type: MetricType, help_text: str, unit: str = "") -> None:
         """Register a new metric definition."""
         self.metrics[name] = Metric(
@@ -955,6 +1013,148 @@ class MetricsCollector:
         # Record duration if provided
         if duration is not None:
             self.metrics["exit_mutation_duration_seconds"].add_value(duration)
+
+    # ====================
+    # Validation Infrastructure Metrics Recording (Task 6.5)
+    # ====================
+
+    def record_validation_field_errors(self, total_strategies: int, strategies_with_errors: int) -> None:
+        """Record field error rate for validation monitoring.
+
+        Args:
+            total_strategies: Total number of strategies validated
+            strategies_with_errors: Number of strategies that had field errors
+        """
+        if total_strategies > 0:
+            error_rate = (strategies_with_errors / total_strategies) * 100
+            self.metrics["validation_field_error_rate"].add_value(error_rate)
+
+    def record_llm_validation_success(self, total_attempts: int, successful_validations: int) -> None:
+        """Record LLM validation success rate.
+
+        Args:
+            total_attempts: Total number of LLM generation attempts
+            successful_validations: Number of attempts that passed validation
+        """
+        if total_attempts > 0:
+            success_rate = (successful_validations / total_attempts) * 100
+            self.metrics["validation_llm_success_rate"].add_value(success_rate)
+
+    def record_validation_latency(
+        self,
+        total_ms: float,
+        layer1_ms: float = 0.0,
+        layer2_ms: float = 0.0,
+        layer3_ms: float = 0.0
+    ) -> None:
+        """Record validation latency metrics.
+
+        Args:
+            total_ms: Total validation latency in milliseconds
+            layer1_ms: Layer 1 (DataFieldManifest) latency in milliseconds
+            layer2_ms: Layer 2 (FieldValidator) latency in milliseconds
+            layer3_ms: Layer 3 (SchemaValidator) latency in milliseconds
+        """
+        self.metrics["validation_total_latency_ms"].add_value(total_ms)
+        if layer1_ms > 0:
+            self.metrics["validation_layer1_latency_ms"].add_value(layer1_ms)
+        if layer2_ms > 0:
+            self.metrics["validation_layer2_latency_ms"].add_value(layer2_ms)
+        if layer3_ms > 0:
+            self.metrics["validation_layer3_latency_ms"].add_value(layer3_ms)
+
+    def record_circuit_breaker_trigger(self) -> None:
+        """Record validation circuit breaker activation."""
+        current = self.metrics["validation_circuit_breaker_triggers"].get_latest() or 0
+        self.metrics["validation_circuit_breaker_triggers"].add_value(current + 1)
+
+    def record_unique_error_signatures(self, count: int) -> None:
+        """Record number of unique error signatures.
+
+        Args:
+            count: Number of unique error signatures currently tracked
+        """
+        self.metrics["validation_error_signatures_unique"].add_value(count)
+
+    def get_validation_latency_p99(self) -> float:
+        """Calculate P99 validation latency.
+
+        Returns:
+            P99 latency in milliseconds, or 0.0 if insufficient data
+        """
+        latency_metric = self.metrics["validation_total_latency_ms"]
+        if not latency_metric.values or len(latency_metric.values) < 2:
+            return 0.0
+
+        import numpy as np
+        latencies = [v.value for v in latency_metric.values]
+        return np.percentile(latencies, 99)
+
+    def export_cloudwatch(self) -> str:
+        """Export metrics in CloudWatch JSON format.
+
+        Returns:
+            CloudWatch-compatible JSON string
+
+        Example output:
+            {
+                "Namespace": "StrategyValidation",
+                "MetricData": [
+                    {
+                        "MetricName": "FieldErrorRate",
+                        "Value": 5.0,
+                        "Unit": "Percent",
+                        "Timestamp": "2025-01-18T12:00:00Z"
+                    }
+                ]
+            }
+        """
+        from datetime import datetime
+
+        metric_data = []
+
+        # Map our metrics to CloudWatch format
+        cloudwatch_mappings = {
+            "validation_field_error_rate": ("FieldErrorRate", "Percent"),
+            "validation_llm_success_rate": ("LLMSuccessRate", "Percent"),
+            "validation_total_latency_ms": ("TotalLatency", "Milliseconds"),
+            "validation_layer1_latency_ms": ("Layer1Latency", "Milliseconds"),
+            "validation_layer2_latency_ms": ("Layer2Latency", "Milliseconds"),
+            "validation_layer3_latency_ms": ("Layer3Latency", "Milliseconds"),
+            "validation_circuit_breaker_triggers": ("CircuitBreakerTriggers", "Count"),
+            "validation_error_signatures_unique": ("UniqueErrorSignatures", "Count"),
+        }
+
+        for metric_name, metric in self.metrics.items():
+            if metric_name not in cloudwatch_mappings or not metric.values:
+                continue
+
+            cw_name, cw_unit = cloudwatch_mappings[metric_name]
+            latest = metric.values[-1]
+
+            metric_datum = {
+                "MetricName": cw_name,
+                "Value": latest.value,
+                "Unit": cw_unit,
+                "Timestamp": datetime.fromtimestamp(latest.timestamp).isoformat() + "Z"
+            }
+
+            # Add dimensions if labels present
+            if latest.labels:
+                metric_datum["Dimensions"] = [
+                    {"Name": k, "Value": v}
+                    for k, v in latest.labels.items()
+                ]
+
+            metric_data.append(metric_datum)
+
+        cloudwatch_output = {
+            "Namespace": "StrategyValidation",
+            "MetricData": metric_data
+        }
+
+        import json
+        return json.dumps(cloudwatch_output, indent=2)
 
     # ====================
     # Metric Export
