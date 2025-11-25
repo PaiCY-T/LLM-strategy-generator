@@ -264,6 +264,7 @@ def mock_data_cache(monkeypatch):
     # Mapping from dataset keys to fixture filenames
     fixture_map = {
         'price:收盤價': 'price_收盤價.parquet',
+        'etl:adj_close': 'price_收盤價.parquet',  # Adjusted close price (same as 收盤價)
         'price:成交股數': 'price_成交股數.parquet',
         'monthly_revenue:當月營收': 'monthly_revenue_當月營收.parquet',
         'monthly_revenue:去年同月增減(%)': 'monthly_revenue_去年同月增減(pct).parquet',

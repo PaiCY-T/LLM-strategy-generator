@@ -1786,3 +1786,96 @@ class HallOfFameRepository:
             'validation_errors': validation_errors,
             'success_rate': success_rate
         }
+
+    def save_strategy(self, strategy, tier: str) -> None:
+        """
+        Save Factor Graph Strategy to tier-based storage.
+
+        Uses Strategy.to_dict() for serialization and saves to tier-based
+        JSON file (champion_strategy.json, contender_strategy.json, etc.).
+
+        Args:
+            strategy: Strategy object to persist (from src.evolution.types)
+            tier: Storage tier ('champions', 'contenders', 'archive')
+
+        Raises:
+            ValueError: If tier is invalid
+
+        Example:
+            >>> from src.evolution.types import Strategy
+            >>> repo = HallOfFameRepository()
+            >>> repo.save_strategy(strategy, tier='champions')
+        """
+        # Validate tier
+        tier_path = self._get_tier_path(tier)
+
+        # Serialize strategy using to_dict()
+        try:
+            strategy_dict = strategy.to_dict()
+        except Exception as e:
+            _logger.error(f"Failed to serialize strategy {strategy.id}: {e}")
+            raise
+
+        # Save to tier-based file (e.g., champion_strategy.json)
+        filename = f"{tier[:-1]}_strategy.json"  # Remove 's' from plural tier name
+        file_path = tier_path / filename
+
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(strategy_dict, f, indent=2, ensure_ascii=False)
+            _logger.info(f"Saved strategy {strategy.id} to {tier}/{filename}")
+        except (IOError, OSError) as e:
+            _logger.error(f"Failed to save strategy to {file_path}: {e}")
+            raise
+
+    def load_strategy(self, tier: str):
+        """
+        Load Factor Graph Strategy from tier-based storage.
+
+        Uses Strategy.from_dict() for deserialization and loads from tier-based
+        JSON file (champion_strategy.json, contender_strategy.json, etc.).
+
+        Args:
+            tier: Storage tier to load from ('champions', 'contenders', 'archive')
+
+        Returns:
+            Strategy object if found and valid, None otherwise
+
+        Example:
+            >>> repo = HallOfFameRepository()
+            >>> strategy = repo.load_strategy(tier='champions')
+            >>> if strategy:
+            ...     print(f"Loaded: {strategy.id}")
+        """
+        # Import Strategy here to avoid circular dependency
+        from src.evolution.types import Strategy
+
+        # Validate tier
+        tier_path = self._get_tier_path(tier)
+
+        # Load from tier-based file
+        filename = f"{tier[:-1]}_strategy.json"  # Remove 's' from plural tier name
+        file_path = tier_path / filename
+
+        if not file_path.exists():
+            _logger.debug(f"No strategy file found at {file_path}")
+            return None
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                strategy_dict = json.load(f)
+
+            # Deserialize using Strategy.from_dict()
+            strategy = Strategy.from_dict(strategy_dict)
+            _logger.info(f"Loaded strategy {strategy.id} from {tier}/{filename}")
+            return strategy
+
+        except json.JSONDecodeError as e:
+            _logger.error(f"Failed to parse JSON from {file_path}: {e}")
+            return None
+        except (IOError, OSError) as e:
+            _logger.error(f"Failed to load strategy from {file_path}: {e}")
+            return None
+        except Exception as e:
+            _logger.error(f"Failed to deserialize strategy from {file_path}: {e}")
+            return None
