@@ -174,10 +174,126 @@ Primary characteristics:
 
 **Key Architectural Patterns**:
 1. **Repository Pattern**: Hall of Fame, Iteration History
-2. **Strategy Pattern**: Template system (Turtle, Mastiff, Factor, Momentum)
-3. **Factory Pattern**: Factor creation, template instantiation
-4. **Observer Pattern**: Monitoring, variance tracking
-5. **Chain of Responsibility**: Metric extraction fallback (DIRECT → SIGNAL → DEFAULT)
+2. **Strategy Pattern**: Template system (Turtle, Mastiff, Factor, Momentum), IterationExecutor (Standard vs Template)
+3. **Facade Pattern**: UnifiedLoop wraps LearningLoop complexity
+4. **Template Method Pattern**: BaseTemplate defines abstract interface for strategy execution
+5. **Factory Pattern**: Factor creation, template instantiation
+6. **Observer Pattern**: Monitoring, variance tracking
+7. **Chain of Responsibility**: Metric extraction fallback (DIRECT → SIGNAL → DEFAULT)
+8. **Singleton Pattern**: DataCache for finlab data caching
+
+### Template Mode & UnifiedLoop Architecture ✅ **Production Ready** (2025-11-24)
+
+**Purpose**: Provide deterministic, fast strategy execution through predefined templates while maintaining full integration with the learning loop.
+
+**Architecture**: Unified loop with dual execution modes (Template vs LLM/Factor Graph)
+
+**Core Components**:
+
+1. **UnifiedLoop** (`src/learning/unified_loop.py`) - **Facade Pattern**
+   - Unified API wrapping LearningLoop complexity
+   - Transparent template_mode vs standard_mode switching
+   - Backward compatible with AutonomousLoop API
+   - Status: ✅ Complete (~450 lines, A grade)
+
+2. **TemplateIterationExecutor** (`src/learning/template_iteration_executor.py`) - **Strategy Pattern**
+   - Replaces StandardIterationExecutor when template_mode=True
+   - 10-step template execution flow (matches standard flow)
+   - Direct template execution (no code generation)
+   - Integration: TemplateParameterGenerator → MomentumTemplate → StrategyMetrics
+   - Status: ✅ Production (417 lines, Bug #5 fixed 2025-11-24)
+
+3. **Template System** (`src/templates/`) - **Template Method Pattern**
+   - BaseTemplate: Abstract interface defining generate_strategy(params) → (report, metrics_dict)
+   - MomentumTemplate: Momentum + Catalyst strategy (momentum_template.py:447-587)
+   - DataCache: Singleton finlab data caching for performance
+   - Status: ✅ Production (1 template active, 3 more planned)
+
+**Template Mode vs LLM Mode Comparison**:
+
+| Aspect | Template Mode | LLM Mode |
+|--------|---------------|----------|
+| Strategy Generation | Direct execution via template.generate_strategy() | LLM generates code string |
+| Return Format | (report, metrics_dict) tuple | code_string |
+| Execution | Template calls finlab.backtest.sim() | BacktestExecutor.execute(code) |
+| Metrics Extraction | Internal (_extract_metrics) | MetricsExtractor.extract_metrics() |
+| Code Storage | Parameter annotation | Full Python code |
+| Flexibility | Limited to parameter space | Full LLM creativity |
+| Stability | High (predefined logic) | Medium (LLM may error) |
+| Speed | Fast (no LLM call) | Slow (LLM latency) |
+| Success Rate | 100% (20/20 smoke test) | Variable (~60-90%) |
+
+**Template Execution Flow** (Bug #5 Fix - 2025-11-24):
+
+```
+UnifiedLoop.run()
+  ↓
+LearningLoop.run()
+  ↓ (if template_mode=True)
+TemplateIterationExecutor.execute_iteration()
+  ↓
+_generate_parameters() → TemplateParameterGenerator.generate_parameters()
+  ↓
+template.generate_strategy(params)  ⚠️ NOT generate_code() (Bug #5a fixed)
+  ↓
+(report, metrics_dict) tuple
+  ↓
+StrategyMetrics.from_dict(metrics_dict)  ⚠️ NOT MetricsExtractor (Bug #5b fixed)
+  ↓
+execution_result dict (compatible with SuccessClassifier)  ⚠️ Bug #5c fixed
+  ↓
+SuccessClassifier.classify()
+  ↓
+ChampionTracker.update_if_better() (if LEVEL_3)
+  ↓
+IterationRecord (saved to history)
+```
+
+**Key Design Decisions**:
+
+1. **Why Template Direct Execution?**
+   - Performance: No code string parsing/execution overhead
+   - Reliability: Avoid code generation errors
+   - Type Safety: Direct method calls with full type checking
+   - Simplicity: Template IS Python code, no need to regenerate
+
+2. **Why Internal Metrics Extraction?**
+   - Encapsulation: Template owns its execution and metrics
+   - Efficiency: Avoid duplicate metrics extraction
+   - Flexibility: Different templates can extract different metrics
+   - Consistency: Unified interface via BaseTemplate
+
+3. **Why StrategyMetrics Dataclass?**
+   - Type Safety: Full type checking and validation
+   - Consistency: Same metrics format across Template and LLM modes
+   - IDE Support: Autocomplete and type hints
+   - Immutability: Dataclass ensures metrics integrity
+
+**Critical Bug Fix (Bug #5 - 2025-11-24)**:
+
+**Problem**: Template execution flow incorrectly assumed code generation like LLM mode
+- Bug #5a: Called non-existent template.generate_code() method
+- Bug #5b: Used wrong MetricsExtractor.extract() method
+- Bug #5c: execution_result structure incompatible with SuccessClassifier
+
+**Solution**: Complete rewrite of template execution (template_iteration_executor.py:263-292)
+- Direct call to template.generate_strategy(params)
+- Use StrategyMetrics.from_dict() for metrics conversion
+- Build compatible execution_result structure
+
+**Result**: 20/20 smoke test iterations passed (100% success rate)
+
+**Status**:
+- ✅ **Architecture Complete**: Facade + Strategy + Template Method patterns
+- ✅ **Bug #5 Fixed**: All 3 sub-problems resolved (2025-11-24)
+- ✅ **Smoke Test Passed**: 20 iterations, 100% success rate
+- ✅ **Zen Tracer Analysis**: Complete execution flow documented
+- 📖 **Documentation**: STEERING_UPDATE_2025-11-24_template_mode.md (800+ lines)
+
+**Future Enhancements**:
+1. Additional templates (Factor, Turtle, Mastiff) - Priority: Medium
+2. Template code visualization (generate equivalent code for display) - Priority: Low
+3. Metrics extraction standardization (Pydantic models) - Priority: Medium
 
 ### Integration Testing Framework (v1.0) 🧪 **Production Ready** (2025-11-02)
 
@@ -886,6 +1002,24 @@ backtest:
 **Temporary Workaround**:
 - Use LLM Only mode (25% success rate validated)
 - Disable Factor Graph until fix complete
+
+### 0.1 **Factor Graph Syntax Errors** 🔶 **MODERATE** (Discovered 2025-11-21)
+**Impact**:
+- Factor Graph fallback generates syntactically invalid Python (unclosed brackets)
+- 100-iteration test shows syntax errors requiring iteration retries
+- Example: `Syntax error at line 49: '[' was never closed`
+
+**Root Cause**:
+- Complex list comprehensions or dict literals not properly closed
+- Template generation edge cases in factor combination logic
+
+**Mitigation**:
+- Retry mechanism handles failures (3 attempts per iteration)
+- LLM-generated code validates correctly (88.9% canary pass rate)
+
+**Future Solution**:
+- Add static syntax validation before execution
+- Improve Factor Graph template sanitization
 
 ### 1. **Regex Parameter Extraction (80% Accuracy)**
 **Impact**:

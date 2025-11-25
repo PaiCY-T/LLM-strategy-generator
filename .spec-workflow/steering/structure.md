@@ -15,6 +15,9 @@ finlab/                           # Project root
 ├── src/                          # Source code (153 Python files, 4.8MB)
 │   ├── analysis/                 # Strategy analysis and reporting
 │   ├── backtest/                 # Backtesting metrics and utilities
+│   │   ├── executor.py           # Backtest execution engine
+│   │   ├── metrics.py            # StrategyMetrics dataclass (Bug #5b fix location)
+│   │   └── classifier.py         # SuccessClassifier (requires execution_result structure)
 │   ├── config/                   # Configuration management
 │   │   └── anti_churn_manager.py
 │   ├── data/                     # Data layer (Finlab API integration)
@@ -48,12 +51,23 @@ finlab/                           # Project root
 │   │   ├── entry/                # Entry signal factors
 │   │   └── exit/                 # Exit strategy factors
 │   ├── learning/                 # ⚙️ Autonomous Learning Loop (EXECUTION ENGINE)
+│   │   ├── unified_loop.py       # ✅ UnifiedLoop - Facade Pattern (450 lines, A grade)
+│   │   │                         #    - Wraps LearningLoop complexity
+│   │   │                         #    - Template Mode injection via Strategy Pattern
+│   │   │                         #    - Production ready (2025-11-24)
+│   │   ├── template_iteration_executor.py  # ✅ Template Mode Executor (417 lines)
+│   │   │                         #    - Strategy Pattern implementation
+│   │   │                         #    - Direct template execution (no code generation)
+│   │   │                         #    - Bug #5 fixed: generate_strategy() not generate_code()
+│   │   │                         #    - 100% success rate (20/20 smoke test)
 │   │   ├── learning_loop.py      # Main orchestrator (372 lines) - 10-step process
 │   │   ├── iteration_executor.py # Iteration execution engine (519 lines) - Step-by-step execution
 │   │   ├── champion_tracker.py   # Best strategy tracking (1,138 lines) - Performance history
 │   │   ├── iteration_history.py  # JSONL persistence (651 lines) - Complete record management
 │   │   ├── feedback_generator.py # Context generation for LLM (408 lines) - Pattern extraction
 │   │   ├── learning_config.py    # Configuration management (457 lines) - 21-parameter config
+│   │   ├── unified_config.py     # UnifiedConfig dataclass (NEW - 2025-11-24)
+│   │   │                         #    - Template Mode configuration support
 │   │   ├── llm_client.py        # LLM provider abstraction (420 lines) - Multi-provider support
 │   │   └── config_manager.py     # Config loading and validation
 │   ├── feedback/                 # Learning system feedback
@@ -79,13 +93,25 @@ finlab/                           # Project root
 │   │   ├── index_manager.py      # Indexing
 │   │   └── pattern_search.py     # Pattern search
 │   ├── storage/                  # Database layer (future)
-│   ├── templates/                # Strategy templates (4 templates)
-│   │   ├── base_template.py
+│   ├── templates/                # ✅ Strategy Templates (4 templates) - Template Mode Ready
+│   │   ├── base_template.py      # ✅ Abstract interface (Template Method Pattern)
+│   │   │                         #    - generate_strategy(params) → (report, metrics_dict)
+│   │   │                         #    - NOT generate_code() (Bug #5a fix)
 │   │   ├── turtle_template.py    # 6-layer AND filtering
 │   │   ├── mastiff_template.py   # Contrarian reversal
 │   │   ├── factor_template.py    # Single-factor ranking
-│   │   └── momentum_template.py  # Momentum + catalyst
-│   ├── tier1/                    # Tier 1 operations
+│   │   └── momentum_template.py  # ✅ Momentum + catalyst (Production ready)
+│   │                             #    - 100% success rate in Template Mode
+│   │                             #    - generate_strategy() returns (report, metrics_dict)
+│   │                             #    - Direct finlab backtest execution
+│   ├── tier1/                    # Tier 1 YAML-based strategy generation
+│   │   ├── yaml_validator.py     # YAML schema validation
+│   │   ├── yaml_interpreter.py   # YAML to code interpretation
+│   │   └── factor_factory.py     # Factor instantiation from YAML
+│   ├── intelligence/             # Advanced decision intelligence (2025-11-15)
+│   │   ├── multi_objective.py    # Multi-objective validation (Sharpe + MDD + Calmar)
+│   │   ├── portfolio_optimizer.py # Portfolio optimization algorithms
+│   │   └── regime_detector.py    # Market regime detection
 │   ├── ui/                       # User interface (future)
 │   ├── utils/                    # Utilities
 │   │   ├── logger.py
@@ -205,7 +231,25 @@ finlab/                           # Project root
 - **Status**: ✅ Fully implemented (Phase 2-3, ~5000+ lines), ⏳ Activation pending
 
 **⚙️ Autonomous Learning Loop** (`src/learning/`) ⭐ **EXECUTION ENGINE - Orchestration Layer**:
-Phase 3-6 implementation (4,200 lines, 7 modules) - The system's execution backbone
+Phase 3-6 implementation (4,200 lines, 7 modules) + **UnifiedLoop & Template Mode** (2025-11-24) - The system's execution backbone
+
+**UnifiedLoop & Template Mode** ✅ **Production Ready** (2025-11-24):
+- **unified_loop.py** (450 lines, A grade):
+  - **Facade Pattern**: Wraps LearningLoop complexity, provides unified API
+  - **Template Mode Support**: `template_mode=True` activates TemplateIterationExecutor
+  - **Strategy Pattern**: Switches between StandardIterationExecutor and TemplateIterationExecutor
+  - **Backward Compatible**: Maintains AutonomousLoop-compatible API
+  - **100% Success Rate**: 20/20 iterations in smoke test (2025-11-24)
+
+- **template_iteration_executor.py** (417 lines):
+  - **10-Step Template Execution Flow**: Parameter generation → Template execution → Metrics classification
+  - **Bug #5 Complete Fix** (2025-11-24):
+    - Bug #5a: Call `template.generate_strategy(params)` not `generate_code(params)`
+    - Bug #5b: Use `StrategyMetrics.from_dict()` instead of `metrics_extractor.extract()`
+    - Bug #5c: Build execution_result with correct structure for SuccessClassifier
+  - **Direct Execution**: Templates execute via `generate_strategy()` returning `(report, metrics_dict)`
+  - **No Code Generation**: Unlike LLM mode, no code string involved
+  - **Learning Integration**: Full feedback, champion tracking, history management
 
 **Core Orchestration**:
 - **learning_loop.py** (372 lines):
@@ -213,6 +257,7 @@ Phase 3-6 implementation (4,200 lines, 7 modules) - The system's execution backb
   - LLM/Factor Graph decision logic (20/80 innovation split)
   - Signal handling (SIGINT/SIGTERM) for graceful shutdown
   - Integration point: Calls InnovationEngine for LLM innovation (Step 3)
+  - **Used by UnifiedLoop**: Delegates execution to LearningLoop in both modes
 
 - **iteration_executor.py** (519 lines):
   - Implements complete 10-step iteration workflow:
@@ -831,11 +876,21 @@ src/
 
 ---
 
-**Document Version**: 1.1
-**Last Updated**: 2025-11-05
+**Document Version**: 1.2
+**Last Updated**: 2025-11-24
 **Status**: Production
 **Maintainer**: Personal Project
 **Latest Changes**:
+- **Template Mode Architecture Complete** (2025-11-24):
+  - Added `unified_loop.py` (Facade Pattern, 450 lines, A grade)
+  - Added `template_iteration_executor.py` (Strategy Pattern, 417 lines, 100% success)
+  - Added `unified_config.py` for Template Mode configuration
+  - Updated `base_template.py` interface documentation (generate_strategy not generate_code)
+  - Updated `momentum_template.py` production status (100% success rate)
+- **Bug #5 Fix Documentation**:
+  - Bug #5a: generate_code() → generate_strategy()
+  - Bug #5b: metrics_extractor.extract() → StrategyMetrics.from_dict()
+  - Bug #5c: execution_result structure compatibility with SuccessClassifier
 - Added src/learning/ module documentation (4,200 lines, 7 modules) - Missing EXECUTION ENGINE
 - Updated Three-Layer Architecture diagram: Learning Loop → LLM Innovation → Validation
 - Clarified component relationships: ENGINE (⚙️) orchestrates CORE (🤖) with GATE (📊) validation

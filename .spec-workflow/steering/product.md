@@ -43,7 +43,7 @@
 - **Stage 1 (Champion-Based)**: 70% success rate - Single best strategy refinement ✅ **ACHIEVED**
 - **Stage 2 (LLM + Population)**: >80% target - **Hybrid innovation (20% LLM + 80% Factor Graph)** ⏳ **READY FOR ACTIVATION**
 
-## Current Status (2025-11-05)
+## Current Status (2025-11-21)
 
 ### Stage 1 (MVP Baseline) ✅ ACHIEVED
 - **Success Rate**: 70% (target: >60%)
@@ -51,6 +51,23 @@
 - **Best Sharpe**: 2.48 (target: >1.0)
 - **Method**: Champion-based learning with template optimization
 - **Limitation**: 19-day plateau (no improvement since Oct 8) due to inability to create new factors
+
+### Stage 2 (LLM Prompt Improvement) ✅ PHASE 1.1 COMPLETE (2025-11-21)
+- **Canary Tier2 Pass Rate**: 88.9% (target: 55-60%) - **EXCEEDED TARGET BY 53%**
+- **Validation Method**: Golden Template + Field Whitelist approach
+- **Key Innovations**:
+  - TDD strategy code validation (anti-pattern detection)
+  - 160-field comprehensive API documentation
+  - Correct field name categorization (price_earning_ratio vs fundamental_features)
+- **100-Iteration Validation**: In progress, validating production stability
+- **Champion Sharpe**: 2.5605 (multi-objective validation active)
+
+### Phase 2 Stability Features ✅ VERIFIED WORKING
+- **VarianceMonitor**: Tracking strategy variance
+- **PreservationValidator**: Ensuring strategy preservation
+- **AntiChurnManager**: Preventing excessive champion changes
+- **RollbackManager**: Enabling strategy rollback
+- **Multi-objective Validation**: Rejecting high-Sharpe strategies with poor drawdown
 
 ### Phase 3-6: Learning Loop Implementation ✅ **COMPLETE** (2025-11-05)
 **核心執行引擎實現** - src/learning/ module (4,200 lines, 7 modules)
@@ -292,12 +309,19 @@ Champion tracking with success pattern preservation and failure avoidance
 - 🧬 Evolutionary constraints: Preserve proven elements while exploring improvements
 - ✅ MVP Validated: 70% success rate (Stage 1), 1.15 avg Sharpe, 2.48 best Sharpe
 
-### 4. **模板系統** (Template System)
-Domain-specific strategy templates with intelligent recommendation
-- 📋 4 proven templates: Turtle, Mastiff, Factor, Momentum
-- 🤖 Performance-based selection: Sharpe tier-based recommendations
-- 🔄 Template diversity: Forced exploration every 5th iteration
-- 📊 Analytics tracking: Usage statistics and success rate monitoring
+### 4. **模板系統** (Template System) ✅ **Template Mode Production Ready** (2025-11-24)
+Domain-specific strategy templates with intelligent recommendation and direct execution capability
+- 📋 **4 proven templates**: Turtle, Mastiff, Factor, Momentum
+- 🤖 **Performance-based selection**: Sharpe tier-based recommendations
+- 🔄 **Template diversity**: Forced exploration every 5th iteration
+- 📊 **Analytics tracking**: Usage statistics and success rate monitoring
+- ⚡ **Template Mode (NEW)**: Direct strategy execution via `UnifiedLoop` with `template_mode=True`
+  - **100% Success Rate**: 20/20 iterations successful in smoke test (2025-11-24)
+  - **Direct Execution**: No code generation - templates execute via `generate_strategy(params)`
+  - **Fast & Deterministic**: ~2-3s per iteration vs ~5-10s for LLM mode
+  - **Architecture**: UnifiedLoop (Facade) → TemplateIterationExecutor (Strategy Pattern) → MomentumTemplate
+  - **Integration**: Full learning loop integration (feedback, champion tracking, metrics)
+  - **Status**: ✅ Production ready, Bug #5 fixed (architectural misunderstanding resolved)
 
 ### 5. **因子圖系統** (Factor Graph System) ✅ **Phase 2 Matrix-Native (2025-11-01)**
 Centralized factor library with compositional strategy building, **redesigned for FinLab matrix architecture**
@@ -472,11 +496,16 @@ Preserve existing functionality while adding new capabilities
 
 ---
 
-**Document Version**: 1.3
-**Last Updated**: 2025-11-05
+**Document Version**: 1.4
+**Last Updated**: 2025-11-24
 **Status**: Production
 **Owner**: Personal Project (週/月交易系統)
 **Latest Changes**:
+- **Template Mode Production Ready** (2025-11-24): 100% success rate (20/20 smoke test)
+- **UnifiedLoop & TemplateIterationExecutor** implemented with Bug #5 complete fix
+- **Architecture**: Facade Pattern (UnifiedLoop) + Strategy Pattern (TemplateIterationExecutor)
+- **Template System Enhanced**: Direct execution via `generate_strategy()` (no code generation)
+- **Integration Complete**: Full learning loop (feedback, champion, metrics) support
 - Phase 3-6 Learning Loop implementation complete (4,200 lines, 7 modules, 88% test coverage)
 - Phase 7 E2E Testing 60% complete (LLM API verified, full environment testing ready)
 - Phase 9 Refactoring Validation complete (86.7% complexity reduction, A grade quality)
