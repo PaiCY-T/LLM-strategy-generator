@@ -74,7 +74,7 @@ def create_test_learning_config(
                 'enabled': True,
                 'provider': 'openrouter',
                 'model': 'gemini-2.5-flash',
-                'api_key': 'test-key',
+                'api_key': get_test_api_key(),  # Load from environment variable
                 'timeout': 30,
                 'max_tokens': 2000,
                 'temperature': 0.7,

@@ -212,3 +212,16 @@ watchdog>=6.0.0
 # Platform notes:
 # - TA-Lib requires system library: brew install ta-lib (macOS) or apt-get install ta-lib (Ubuntu)
 # - Some packages may need build tools: gcc, g++, python3-dev
+
+# =============================================================================
+# TDD Implementation Dependencies (Added for Unified Improvement Roadmap)
+# =============================================================================
+
+# P0.2: ASHA Hyperparameter Optimization
+optuna>=3.0.0
+
+# NOTE: scipy, pytest-benchmark, and memory-profiler are already defined above
+# with compatible or more restrictive versions:
+# - scipy>=1.15.0 (line 14, more restrictive than >=1.7.0)
+# - pytest-benchmark>=5.1.0 (line 97, more restrictive than >=3.4.1)
+# - memory-profiler>=0.61.0 (line 147, more restrictive than >=0.60.0)

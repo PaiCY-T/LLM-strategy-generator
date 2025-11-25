@@ -47,7 +47,10 @@ class ExtendedTestHarness:
         model: str = "gemini-2.5-flash",  # Primary: Google AI, Fallback: OpenRouter
         target_iterations: int = 50,
         checkpoint_interval: int = 10,
-        checkpoint_dir: str = "checkpoints"
+        checkpoint_dir: str = "checkpoints",
+        template_mode: bool = True,  # Default to template mode for better preservation
+        template_name: str = "Momentum",
+        use_json_mode: bool = False  # Phase 1.1 JSON Parameter Output mode
     ):
         """Initialize Extended Test Harness.
 
@@ -56,17 +59,26 @@ class ExtendedTestHarness:
             target_iterations: Number of iterations to run (50-200)
             checkpoint_interval: Save checkpoint every N iterations
             checkpoint_dir: Directory path for checkpoint files
+            template_mode: If True, use template-guided mode for consistent param preservation
+            template_name: Template name to use when template_mode=True
+            use_json_mode: If True, use JSON Parameter Output mode (Phase 1.1)
         """
         self.model = model
         self.target_iterations = target_iterations
         self.checkpoint_interval = checkpoint_interval
         self.checkpoint_dir = Path(checkpoint_dir)
+        self.template_mode = template_mode
+        self.template_name = template_name
+        self.use_json_mode = use_json_mode
 
-        # Initialize AutonomousLoop instance
+        # Initialize AutonomousLoop instance with template mode for better preservation
         self.loop = AutonomousLoop(
             model=self.model,
             max_iterations=target_iterations,
-            history_file='iteration_history.json'
+            history_file='iteration_history.json',
+            template_mode=template_mode,
+            template_name=template_name,
+            use_json_mode=use_json_mode
         )
 
         # Initialize result tracking lists
@@ -87,6 +99,10 @@ class ExtendedTestHarness:
         self.logger.info(f"  Target iterations: {self.target_iterations}")
         self.logger.info(f"  Checkpoint interval: {self.checkpoint_interval}")
         self.logger.info(f"  Checkpoint dir: {self.checkpoint_dir}")
+        self.logger.info(f"  Template mode: {self.template_mode}")
+        self.logger.info(f"  JSON mode: {self.use_json_mode}")
+        if self.template_mode:
+            self.logger.info(f"  Template name: {self.template_name}")
 
     def _setup_logging(self) -> None:
         """Configure logging for test harness output.

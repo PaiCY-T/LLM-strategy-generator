@@ -1,13 +1,56 @@
-﻿__pycache__/
-.pytest_cache/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
 .venv/
 venv/
+ENV/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Artifacts
 artifacts/
-*.log
-*.tmp
-*.pkl
-.ipynb_checkpoints/
-artifacts/working/backups/failure_patterns.json
 artifacts/working/backups/
 
-artifacts/working/backups/
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.pkl
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Test artifacts and generated files
+generated_strategy_loop_iter*.py
+iteration_history.json
+checkpoints_*/
+
+# Mypy cache
+.mypy_cache/
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

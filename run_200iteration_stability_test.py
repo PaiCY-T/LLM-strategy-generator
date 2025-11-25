@@ -191,6 +191,8 @@ def run_stability_test(args: argparse.Namespace) -> Dict[str, Any]:
     try:
         harness = UnifiedTestHarness(
             model=args.model,
+            target_iterations=200,  # REQUIRED: Target iteration count
+            template_mode=True,  # REQUIRED for use_json_mode
             template_name=args.template,
             use_json_mode=True,
             enable_learning=True,
@@ -215,14 +217,11 @@ def run_stability_test(args: argparse.Namespace) -> Dict[str, Any]:
         if args.resume:
             # Resume from checkpoint
             logger.info(f"Resuming from checkpoint: {args.resume}")
-            result = harness.run_test(
-                target_iterations=200,
-                resume_from_checkpoint=args.resume
-            )
+            result = harness.run_test(resume_from_checkpoint=args.resume)
         else:
             # Fresh start
             logger.info("Starting fresh 200-iteration test")
-            result = harness.run_test(target_iterations=200)
+            result = harness.run_test()
 
         # Calculate duration
         duration_seconds = time.time() - start_time

@@ -15,6 +15,7 @@ Overall Threshold: >60% success rate
 """
 
 import sys
+import os
 import yaml
 import json
 import logging
@@ -25,11 +26,9 @@ from typing import Dict, List, Tuple
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.learning.learning_config import LearningConfig
 from src.innovation.prompt_builder import PromptBuilder
-from src.innovation.llm_client import LLMClient
-from src.execution.iteration_executor import IterationExecutor
-from src.execution.backtest_runner import BacktestRunner
+from src.innovation.llm_client import LLMClient, LLMConfig
+from src.backtest.executor import BacktestExecutor
 
 logging.basicConfig(
     level=logging.INFO,
@@ -65,30 +64,51 @@ def run_single_canary_test(
     """
     logger.info(f"Running {case_name} - Run {run_number}/3")
 
-    # Load base config
-    base_config_path = "experiments/llm_learning_validation/config_phase1_llm_only_20.yaml"
-    config = LearningConfig.from_yaml(base_config_path)
+    # Load finlab data and sim
+    try:
+        from finlab import data
+        from finlab.backtest import sim
+    except ImportError as e:
+        logger.error(f"Failed to import finlab: {e}")
+        return {
+            'case': case_name,
+            'run': run_number,
+            'success': False,
+            'error': 'FinlabImportError',
+            'code_length': 0
+        }
 
     # Initialize components
-    prompt_builder = PromptBuilder(
-        max_tokens=config.prompt.max_tokens,
-        field_catalog_path=config.prompt.field_catalog_path
-    )
+    prompt_builder = PromptBuilder()
 
-    llm_client = LLMClient(
-        provider=config.llm.provider,
-        model=config.llm.model,
-        temperature=config.llm.temperature,
-        max_tokens=config.llm.max_tokens
-    )
+    # Get API key from environment
+    api_key = os.environ.get('OPENROUTER_API_KEY', '')
+    if not api_key:
+        logger.error("OPENROUTER_API_KEY not set")
+        return {
+            'case': case_name,
+            'run': run_number,
+            'success': False,
+            'error': 'MissingAPIKey',
+            'code_length': 0
+        }
 
-    backtest_runner = BacktestRunner(
-        data_path=config.backtest.data_path,
-        start_date=config.backtest.start_date,
-        end_date=config.backtest.end_date,
-        fee_ratio=config.backtest.fee_ratio,
-        tax_ratio=config.backtest.tax_ratio
+    llm_config = LLMConfig(
+        provider='openrouter',
+        model='google/gemini-2.5-flash',
+        api_key=api_key,
+        temperature=0.7,
+        max_tokens=8000
     )
+    llm_client = LLMClient(llm_config)
+
+    backtest_executor = BacktestExecutor(timeout=420)
+
+    # Backtest parameters
+    start_date = "2018-01-01"
+    end_date = "2024-12-31"
+    fee_ratio = 0.001425
+    tax_ratio = 0.003
 
     # Generate strategy
     try:
@@ -115,7 +135,20 @@ def run_single_canary_test(
 
         # Execute backtest
         logger.info("Executing backtest...")
-        result = backtest_runner.run_backtest(strategy_code)
+        execution_result = backtest_executor.execute(
+            strategy_code=strategy_code,
+            data=data,
+            sim=sim,
+            start_date=start_date,
+            end_date=end_date,
+            fee_ratio=fee_ratio,
+            tax_ratio=tax_ratio
+        )
+
+        # Extract metrics - ExecutionResult has direct attributes, not metrics dict
+        success = execution_result.success
+        sharpe_ratio = execution_result.sharpe_ratio if success else None
+        error_type = execution_result.error_type if not success else None
 
         # Save result
         output_file = output_dir / f"{case_name}_run{run_number}.json"
@@ -125,16 +158,26 @@ def run_single_canary_test(
                 'run': run_number,
                 'complexity': case_config['complexity'],
                 'strategy_code': strategy_code,
-                'execution_result': result,
+                'execution_result': {
+                    'success': success,
+                    'sharpe_ratio': sharpe_ratio,
+                    'error_type': error_type,
+                    'error_message': execution_result.error_message if not success else None,
+                    'metrics': {
+                        'sharpe_ratio': execution_result.sharpe_ratio,
+                        'total_return': execution_result.total_return,
+                        'max_drawdown': execution_result.max_drawdown
+                    } if success else {}
+                },
                 'timestamp': datetime.now().isoformat()
             }, f, indent=2)
 
         return {
             'case': case_name,
             'run': run_number,
-            'success': result.get('success', False),
-            'sharpe_ratio': result.get('sharpe_ratio'),
-            'error': result.get('error_type') if not result.get('success') else None,
+            'success': success,
+            'sharpe_ratio': sharpe_ratio,
+            'error': error_type,
             'code_length': len(strategy_code)
         }
 

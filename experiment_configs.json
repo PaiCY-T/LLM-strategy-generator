@@ -2,22 +2,22 @@
   "configs": [
     {
       "iteration_num": 0,
-      "timestamp": "2025-11-03T07:14:10.689564",
+      "timestamp": "2025-11-21T05:13:01.993820",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 2
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -36,22 +36,22 @@
     },
     {
       "iteration_num": 1,
-      "timestamp": "2025-11-03T07:14:17.350629",
+      "timestamp": "2025-11-21T05:20:03.406637",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 1
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -70,22 +70,22 @@
     },
     {
       "iteration_num": 2,
-      "timestamp": "2025-11-02T10:25:23.270506",
+      "timestamp": "2025-11-21T05:20:28.948769",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -104,22 +104,22 @@
     },
     {
       "iteration_num": 3,
-      "timestamp": "2025-11-03T07:14:22.452562",
+      "timestamp": "2025-11-21T05:23:16.342511",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 1
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -138,22 +138,22 @@
     },
     {
       "iteration_num": 4,
-      "timestamp": "2025-11-02T10:26:08.723727",
+      "timestamp": "2025-11-21T05:30:06.008326",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -172,22 +172,22 @@
     },
     {
       "iteration_num": 5,
-      "timestamp": "2025-11-02T10:27:21.195892",
+      "timestamp": "2025-11-21T05:31:09.408777",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -206,22 +206,22 @@
     },
     {
       "iteration_num": 6,
-      "timestamp": "2025-11-02T10:27:29.019205",
+      "timestamp": "2025-11-21T05:34:55.777739",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -240,22 +240,22 @@
     },
     {
       "iteration_num": 7,
-      "timestamp": "2025-11-02T10:27:55.256702",
+      "timestamp": "2025-11-21T05:35:38.215482",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -274,22 +274,22 @@
     },
     {
       "iteration_num": 8,
-      "timestamp": "2025-11-02T10:29:29.566009",
+      "timestamp": "2025-11-21T05:41:46.061714",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -308,22 +308,22 @@
     },
     {
       "iteration_num": 9,
-      "timestamp": "2025-11-02T10:29:56.566302",
+      "timestamp": "2025-11-21T05:44:37.706794",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -342,22 +342,22 @@
     },
     {
       "iteration_num": 10,
-      "timestamp": "2025-11-02T10:30:18.388902",
+      "timestamp": "2025-11-21T05:46:13.349619",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -376,22 +376,22 @@
     },
     {
       "iteration_num": 11,
-      "timestamp": "2025-11-02T10:31:14.554328",
+      "timestamp": "2025-11-21T05:49:13.215617",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -410,22 +410,22 @@
     },
     {
       "iteration_num": 12,
-      "timestamp": "2025-11-02T10:31:22.481645",
+      "timestamp": "2025-11-21T05:53:15.731030",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -444,22 +444,22 @@
     },
     {
       "iteration_num": 13,
-      "timestamp": "2025-11-02T10:33:00.145244",
+      "timestamp": "2025-11-21T05:54:47.883141",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -478,22 +478,22 @@
     },
     {
       "iteration_num": 14,
-      "timestamp": "2025-11-02T10:33:57.283139",
+      "timestamp": "2025-11-21T05:57:33.299933",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -512,22 +512,22 @@
     },
     {
       "iteration_num": 15,
-      "timestamp": "2025-11-02T10:35:15.632582",
+      "timestamp": "2025-11-21T06:03:11.881476",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -546,22 +546,22 @@
     },
     {
       "iteration_num": 16,
-      "timestamp": "2025-11-02T10:36:02.239981",
+      "timestamp": "2025-11-21T06:08:43.777355",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -580,22 +580,22 @@
     },
     {
       "iteration_num": 17,
-      "timestamp": "2025-11-02T10:36:52.707546",
+      "timestamp": "2025-11-21T06:10:18.765065",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -614,22 +614,22 @@
     },
     {
       "iteration_num": 18,
-      "timestamp": "2025-11-02T10:37:24.163361",
+      "timestamp": "2025-11-21T06:14:07.194554",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -648,22 +648,22 @@
     },
     {
       "iteration_num": 19,
-      "timestamp": "2025-11-02T10:38:40.308743",
+      "timestamp": "2025-11-21T06:15:26.078973",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -682,22 +682,22 @@
     },
     {
       "iteration_num": 20,
-      "timestamp": "2025-11-02T10:40:04.377326",
+      "timestamp": "2025-11-21T06:16:09.463132",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -716,22 +716,22 @@
     },
     {
       "iteration_num": 21,
-      "timestamp": "2025-11-02T10:41:51.515041",
+      "timestamp": "2025-11-21T06:29:16.558543",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -750,22 +750,22 @@
     },
     {
       "iteration_num": 22,
-      "timestamp": "2025-11-02T10:44:37.425193",
+      "timestamp": "2025-11-21T06:32:30.972807",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -784,22 +784,22 @@
     },
     {
       "iteration_num": 23,
-      "timestamp": "2025-11-02T10:45:59.446839",
+      "timestamp": "2025-11-21T06:34:28.588820",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -818,22 +818,22 @@
     },
     {
       "iteration_num": 24,
-      "timestamp": "2025-11-02T10:48:23.531055",
+      "timestamp": "2025-11-21T06:36:50.276637",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -852,22 +852,22 @@
     },
     {
       "iteration_num": 25,
-      "timestamp": "2025-11-02T10:48:29.366430",
+      "timestamp": "2025-11-21T06:41:40.702095",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -886,22 +886,22 @@
     },
     {
       "iteration_num": 26,
-      "timestamp": "2025-11-02T10:51:35.287275",
+      "timestamp": "2025-11-21T06:53:41.142636",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -920,22 +920,22 @@
     },
     {
       "iteration_num": 27,
-      "timestamp": "2025-11-02T10:52:53.153525",
+      "timestamp": "2025-11-21T06:56:14.349719",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -954,22 +954,22 @@
     },
     {
       "iteration_num": 28,
-      "timestamp": "2025-11-02T10:52:57.969120",
+      "timestamp": "2025-11-21T06:58:52.611150",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -988,22 +988,22 @@
     },
     {
       "iteration_num": 29,
-      "timestamp": "2025-11-02T10:54:16.616359",
+      "timestamp": "2025-11-21T07:00:44.971656",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:70967f435e0f21ba5192c15dd433ba426bda3cd76487781c45ad56a4c28aa213"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 30
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1022,22 +1022,22 @@
     },
     {
       "iteration_num": 30,
-      "timestamp": "2025-10-16T17:08:27.755887",
+      "timestamp": "2025-11-21T07:03:23.323854",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1056,22 +1056,22 @@
     },
     {
       "iteration_num": 31,
-      "timestamp": "2025-10-16T17:09:13.603001",
+      "timestamp": "2025-11-21T07:08:26.339922",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1090,22 +1090,22 @@
     },
     {
       "iteration_num": 32,
-      "timestamp": "2025-10-16T17:10:00.551245",
+      "timestamp": "2025-11-21T07:12:39.557194",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1124,22 +1124,22 @@
     },
     {
       "iteration_num": 33,
-      "timestamp": "2025-10-16T17:10:44.757473",
+      "timestamp": "2025-11-21T07:14:44.927888",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1158,22 +1158,22 @@
     },
     {
       "iteration_num": 34,
-      "timestamp": "2025-10-16T17:11:35.723608",
+      "timestamp": "2025-11-21T07:16:53.753207",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1192,22 +1192,22 @@
     },
     {
       "iteration_num": 35,
-      "timestamp": "2025-10-16T17:12:19.333104",
+      "timestamp": "2025-11-21T07:19:08.866236",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1226,22 +1226,22 @@
     },
     {
       "iteration_num": 36,
-      "timestamp": "2025-10-16T17:13:08.380862",
+      "timestamp": "2025-11-21T07:22:33.441792",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1260,22 +1260,22 @@
     },
     {
       "iteration_num": 37,
-      "timestamp": "2025-10-16T17:14:46.402963",
+      "timestamp": "2025-11-21T07:28:12.316000",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1294,22 +1294,22 @@
     },
     {
       "iteration_num": 38,
-      "timestamp": "2025-10-16T17:15:39.398292",
+      "timestamp": "2025-11-21T07:29:25.909158",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1328,22 +1328,22 @@
     },
     {
       "iteration_num": 39,
-      "timestamp": "2025-10-16T17:16:33.003372",
+      "timestamp": "2025-11-21T07:33:28.029078",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1362,22 +1362,22 @@
     },
     {
       "iteration_num": 40,
-      "timestamp": "2025-10-16T17:17:19.189160",
+      "timestamp": "2025-11-21T07:37:17.770970",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1396,22 +1396,22 @@
     },
     {
       "iteration_num": 41,
-      "timestamp": "2025-10-16T17:18:09.587875",
+      "timestamp": "2025-11-21T07:40:00.799279",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1430,22 +1430,22 @@
     },
     {
       "iteration_num": 42,
-      "timestamp": "2025-10-16T17:18:52.411016",
+      "timestamp": "2025-11-21T07:41:54.534013",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1464,22 +1464,22 @@
     },
     {
       "iteration_num": 43,
-      "timestamp": "2025-10-16T17:19:38.859020",
+      "timestamp": "2025-11-21T07:42:48.931290",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1498,22 +1498,22 @@
     },
     {
       "iteration_num": 44,
-      "timestamp": "2025-10-16T17:20:42.572944",
+      "timestamp": "2025-11-21T07:48:20.803596",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1532,22 +1532,22 @@
     },
     {
       "iteration_num": 45,
-      "timestamp": "2025-10-16T17:21:25.224082",
+      "timestamp": "2025-11-21T07:52:43.601686",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1566,22 +1566,22 @@
     },
     {
       "iteration_num": 46,
-      "timestamp": "2025-10-16T17:22:10.268802",
+      "timestamp": "2025-11-21T07:55:52.017153",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1600,22 +1600,22 @@
     },
     {
       "iteration_num": 47,
-      "timestamp": "2025-10-16T17:22:53.781712",
+      "timestamp": "2025-11-21T07:59:16.109351",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1634,22 +1634,22 @@
     },
     {
       "iteration_num": 48,
-      "timestamp": "2025-10-16T17:23:39.166512",
+      "timestamp": "2025-11-21T08:02:51.356735",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1668,22 +1668,22 @@
     },
     {
       "iteration_num": 49,
-      "timestamp": "2025-10-16T17:24:22.041676",
+      "timestamp": "2025-11-21T08:03:40.328498",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1702,22 +1702,22 @@
     },
     {
       "iteration_num": 50,
-      "timestamp": "2025-10-16T17:35:16.704734",
+      "timestamp": "2025-11-21T08:06:01.126367",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1736,22 +1736,22 @@
     },
     {
       "iteration_num": 51,
-      "timestamp": "2025-10-16T17:36:00.253395",
+      "timestamp": "2025-11-21T08:11:15.788374",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1770,22 +1770,22 @@
     },
     {
       "iteration_num": 52,
-      "timestamp": "2025-10-16T17:36:46.711550",
+      "timestamp": "2025-11-21T08:13:12.639102",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1804,22 +1804,22 @@
     },
     {
       "iteration_num": 53,
-      "timestamp": "2025-10-16T17:38:05.400211",
+      "timestamp": "2025-11-21T08:17:11.308089",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1838,22 +1838,22 @@
     },
     {
       "iteration_num": 54,
-      "timestamp": "2025-10-16T17:39:02.185111",
+      "timestamp": "2025-11-21T08:18:02.202308",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1872,22 +1872,22 @@
     },
     {
       "iteration_num": 55,
-      "timestamp": "2025-10-16T17:39:52.434792",
+      "timestamp": "2025-11-21T08:22:11.851965",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1906,22 +1906,22 @@
     },
     {
       "iteration_num": 56,
-      "timestamp": "2025-10-16T17:40:35.666482",
+      "timestamp": "2025-11-21T08:24:44.833967",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1940,22 +1940,22 @@
     },
     {
       "iteration_num": 57,
-      "timestamp": "2025-10-16T17:41:30.095730",
+      "timestamp": "2025-11-21T08:29:13.727562",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -1974,22 +1974,22 @@
     },
     {
       "iteration_num": 58,
-      "timestamp": "2025-10-16T17:42:14.583055",
+      "timestamp": "2025-11-21T08:32:27.679594",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2008,22 +2008,22 @@
     },
     {
       "iteration_num": 59,
-      "timestamp": "2025-10-16T17:43:05.062628",
+      "timestamp": "2025-11-21T08:33:36.907101",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2042,22 +2042,22 @@
     },
     {
       "iteration_num": 60,
-      "timestamp": "2025-10-16T17:43:58.897724",
+      "timestamp": "2025-11-21T08:38:03.363378",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2076,22 +2076,22 @@
     },
     {
       "iteration_num": 61,
-      "timestamp": "2025-10-16T17:44:52.434160",
+      "timestamp": "2025-11-21T08:41:04.828584",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2110,22 +2110,22 @@
     },
     {
       "iteration_num": 62,
-      "timestamp": "2025-10-16T17:45:35.806306",
+      "timestamp": "2025-11-21T08:46:14.584261",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2144,22 +2144,22 @@
     },
     {
       "iteration_num": 63,
-      "timestamp": "2025-10-16T17:46:26.375446",
+      "timestamp": "2025-11-21T08:50:56.671487",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2178,22 +2178,22 @@
     },
     {
       "iteration_num": 64,
-      "timestamp": "2025-10-16T17:47:14.661643",
+      "timestamp": "2025-11-21T08:56:07.654057",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2212,22 +2212,22 @@
     },
     {
       "iteration_num": 65,
-      "timestamp": "2025-10-16T17:48:39.874971",
+      "timestamp": "2025-11-21T08:58:44.795465",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2246,22 +2246,22 @@
     },
     {
       "iteration_num": 66,
-      "timestamp": "2025-10-16T17:49:28.653391",
+      "timestamp": "2025-11-21T08:59:27.056189",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2280,22 +2280,22 @@
     },
     {
       "iteration_num": 67,
-      "timestamp": "2025-10-16T17:50:18.849960",
+      "timestamp": "2025-11-21T09:03:51.506017",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2314,22 +2314,22 @@
     },
     {
       "iteration_num": 68,
-      "timestamp": "2025-10-16T17:51:06.728004",
+      "timestamp": "2025-11-21T09:06:32.638193",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2348,22 +2348,22 @@
     },
     {
       "iteration_num": 69,
-      "timestamp": "2025-10-16T17:52:36.550615",
+      "timestamp": "2025-11-21T09:09:09.663718",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2382,22 +2382,22 @@
     },
     {
       "iteration_num": 70,
-      "timestamp": "2025-10-16T17:53:26.544380",
+      "timestamp": "2025-11-21T09:12:14.142316",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2416,22 +2416,22 @@
     },
     {
       "iteration_num": 71,
-      "timestamp": "2025-10-16T17:54:12.395533",
+      "timestamp": "2025-11-21T09:13:59.694503",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2450,22 +2450,22 @@
     },
     {
       "iteration_num": 72,
-      "timestamp": "2025-10-16T17:55:00.707882",
+      "timestamp": "2025-11-21T09:17:38.621781",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2484,22 +2484,22 @@
     },
     {
       "iteration_num": 73,
-      "timestamp": "2025-10-16T17:55:48.193552",
+      "timestamp": "2025-11-21T09:19:53.413036",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2518,22 +2518,22 @@
     },
     {
       "iteration_num": 74,
-      "timestamp": "2025-10-16T17:56:36.694282",
+      "timestamp": "2025-11-21T09:22:59.486436",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2552,22 +2552,22 @@
     },
     {
       "iteration_num": 75,
-      "timestamp": "2025-10-16T17:57:29.313487",
+      "timestamp": "2025-11-21T09:25:51.631150",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2586,22 +2586,22 @@
     },
     {
       "iteration_num": 76,
-      "timestamp": "2025-10-16T17:58:12.447047",
+      "timestamp": "2025-11-21T09:28:56.533721",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2620,22 +2620,22 @@
     },
     {
       "iteration_num": 77,
-      "timestamp": "2025-10-16T17:58:55.870632",
+      "timestamp": "2025-11-21T09:31:38.925807",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2654,22 +2654,22 @@
     },
     {
       "iteration_num": 78,
-      "timestamp": "2025-10-16T17:59:43.688583",
+      "timestamp": "2025-11-21T09:34:50.548513",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2688,22 +2688,22 @@
     },
     {
       "iteration_num": 79,
-      "timestamp": "2025-10-16T18:00:47.492247",
+      "timestamp": "2025-11-21T09:37:42.661411",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2722,22 +2722,22 @@
     },
     {
       "iteration_num": 80,
-      "timestamp": "2025-10-16T18:01:32.514516",
+      "timestamp": "2025-11-21T09:40:35.601027",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2756,22 +2756,22 @@
     },
     {
       "iteration_num": 81,
-      "timestamp": "2025-10-16T18:02:23.998115",
+      "timestamp": "2025-11-21T09:43:19.186037",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2790,22 +2790,22 @@
     },
     {
       "iteration_num": 82,
-      "timestamp": "2025-10-16T18:03:09.749138",
+      "timestamp": "2025-11-21T09:45:45.807419",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2824,22 +2824,22 @@
     },
     {
       "iteration_num": 83,
-      "timestamp": "2025-10-16T18:03:58.797175",
+      "timestamp": "2025-11-21T09:46:17.531498",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2858,22 +2858,22 @@
     },
     {
       "iteration_num": 84,
-      "timestamp": "2025-10-16T18:04:47.381402",
+      "timestamp": "2025-11-21T09:48:26.195076",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2892,22 +2892,22 @@
     },
     {
       "iteration_num": 85,
-      "timestamp": "2025-10-16T18:05:31.515711",
+      "timestamp": "2025-11-21T09:49:54.940960",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2926,22 +2926,22 @@
     },
     {
       "iteration_num": 86,
-      "timestamp": "2025-10-16T18:06:18.150606",
+      "timestamp": "2025-11-21T09:51:26.125417",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2960,22 +2960,22 @@
     },
     {
       "iteration_num": 87,
-      "timestamp": "2025-10-16T18:07:13.173029",
+      "timestamp": "2025-11-21T09:53:06.615815",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -2994,22 +2994,22 @@
     },
     {
       "iteration_num": 88,
-      "timestamp": "2025-10-16T18:07:56.906476",
+      "timestamp": "2025-11-21T09:54:41.097717",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3028,22 +3028,22 @@
     },
     {
       "iteration_num": 89,
-      "timestamp": "2025-10-16T18:08:44.580894",
+      "timestamp": "2025-11-21T09:56:12.845721",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3062,22 +3062,22 @@
     },
     {
       "iteration_num": 90,
-      "timestamp": "2025-10-16T18:09:31.624433",
+      "timestamp": "2025-11-21T09:57:49.050601",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3096,22 +3096,22 @@
     },
     {
       "iteration_num": 91,
-      "timestamp": "2025-10-16T18:10:18.960032",
+      "timestamp": "2025-11-21T09:59:23.330337",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3130,22 +3130,22 @@
     },
     {
       "iteration_num": 92,
-      "timestamp": "2025-10-16T18:11:09.907847",
+      "timestamp": "2025-11-21T10:01:00.251022",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3164,22 +3164,22 @@
     },
     {
       "iteration_num": 93,
-      "timestamp": "2025-10-16T18:11:56.124689",
+      "timestamp": "2025-11-21T10:02:33.493545",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3198,22 +3198,22 @@
     },
     {
       "iteration_num": 94,
-      "timestamp": "2025-10-16T18:12:46.039200",
+      "timestamp": "2025-11-21T10:04:08.886931",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3232,22 +3232,22 @@
     },
     {
       "iteration_num": 95,
-      "timestamp": "2025-10-16T18:14:13.914271",
+      "timestamp": "2025-11-21T10:05:50.179166",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3266,22 +3266,22 @@
     },
     {
       "iteration_num": 96,
-      "timestamp": "2025-10-16T18:15:01.258250",
+      "timestamp": "2025-11-21T10:07:20.583468",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3300,22 +3300,22 @@
     },
     {
       "iteration_num": 97,
-      "timestamp": "2025-10-16T18:15:50.043789",
+      "timestamp": "2025-11-21T10:08:54.707227",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3334,22 +3334,22 @@
     },
     {
       "iteration_num": 98,
-      "timestamp": "2025-10-16T18:16:43.208481",
+      "timestamp": "2025-11-21T10:10:27.040687",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -3368,22 +3368,22 @@
     },
     {
       "iteration_num": 99,
-      "timestamp": "2025-10-16T18:17:27.401823",
+      "timestamp": "2025-11-21T10:11:58.257106",
       "model_config": {
-        "model_name": "gemini-2.5-flash",
+        "model_name": "google/gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
       "prompt_config": {
         "template_path": "prompt_template_v3_comprehensive.txt",
         "version": "v3_comprehensive",
-        "template_hash": "sha256:c7fcf6723557925bbe3eba855bab4295017786411a7651f7ea0fbcdad7107427"
+        "template_hash": "sha256:3c1e48dafdb19f84bad9c64a3c12ac6fdaeda1776706ecc163d75167c4a5ecc2"
       },
       "system_thresholds": {
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 200
+        "max_iterations": 100
       },
       "environment_state": {
         "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
@@ -6803,6 +6803,6 @@
   ],
   "metadata": {
     "total_configs": 200,
-    "last_updated": "2025-11-03T07:14:22.459878"
+    "last_updated": "2025-11-21T10:11:58.264427"
   }
 }
