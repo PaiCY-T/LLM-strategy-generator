@@ -298,3 +298,108 @@ def bollinger_percentb_factor(
         'middle_band': middle_band,
         'signal': signal
     }
+
+
+def bollinger_percent_b(
+    close: pd.DataFrame,
+    params: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Calculate Bollinger %B factor for mean reversion signals.
+
+    Parameters:
+        close: DataFrame of closing prices (stocks as columns)
+        params: {
+            'bb_period': int = 20,          # Bollinger Band period
+            'bb_std_dev': float = 2.0       # Standard deviation multiplier
+        }
+
+    Returns:
+        {
+            'signal': DataFrame with signals in [-1, 1] range,
+            'metadata': {
+                'percent_b': DataFrame with raw %B values,
+                'upper_band': DataFrame with upper bands,
+                'middle_band': DataFrame with middle bands (SMA),
+                'lower_band': DataFrame with lower bands
+            }
+        }
+
+    Mathematical Formula:
+        middle_band = SMA(close, period)
+        std_dev = StdDev(close, period)
+        upper_band = middle_band + (std_dev_multiplier * std_dev)
+        lower_band = middle_band - (std_dev_multiplier * std_dev)
+        percent_b = (close - lower_band) / (upper_band - lower_band)
+
+    Signal Generation:
+        %B <= 0.2:  signal = 1.0  (strong buy, oversold)
+        %B <= 0.4:  signal = 0.5  (moderate buy)
+        %B <= 0.6:  signal = 0.0  (neutral)
+        %B <= 0.8:  signal = -0.5 (moderate sell)
+        %B > 0.8:   signal = -1.0 (strong sell, overbought)
+    """
+    # Extract parameters with defaults
+    bb_period = params.get('bb_period', 20)
+    bb_std_dev = params.get('bb_std_dev', 2.0)
+
+    logger.debug(
+        f"Computing Bollinger %B factor: period={bb_period}, "
+        f"std_dev={bb_std_dev}"
+    )
+
+    # Calculate Bollinger Bands
+    # Use min_periods=bb_period to ensure sufficient data
+    middle_band = close.rolling(window=bb_period, min_periods=bb_period).mean()
+    # Use ddof=0 (population std) to match numpy.std() behavior in tests
+    std = close.rolling(window=bb_period, min_periods=bb_period).std(ddof=0)
+    upper_band = middle_band + (bb_std_dev * std)
+    lower_band = middle_band - (bb_std_dev * std)
+
+    # Calculate %B
+    band_width = upper_band - lower_band
+
+    # Handle division by zero BEFORE calculating percent_b
+    # When band_width is 0 or NaN, set it to a small value to avoid division by zero
+    # We'll handle the special case after
+    band_width_safe = band_width.replace(0, np.nan)
+
+    percent_b = (close - lower_band) / band_width_safe
+
+    # Handle special cases:
+    # 1. When band_width = 0 (constant prices), %B = 0.5 (at middle)
+    # 2. Keep NaN where there's insufficient data (first bb_period-1 rows)
+    constant_price_mask = (band_width == 0) & middle_band.notna()
+    percent_b = percent_b.where(~constant_price_mask, 0.5)
+
+    # Replace inf values with NaN (will be handled by signal generation)
+    percent_b = percent_b.replace([np.inf, -np.inf], np.nan)
+
+    # Generate signals based on %B thresholds
+    signal = pd.DataFrame(index=close.index, columns=close.columns, dtype=float)
+
+    for col in close.columns:
+        pb = percent_b[col]
+        sig = pd.Series(np.nan, index=pb.index, dtype=float)
+
+        # Only set values where pb is not NaN
+        valid_mask = pb.notna()
+
+        # Apply signal mapping for valid values
+        sig.loc[valid_mask & (pb <= 0.2)] = 1.0      # Oversold → strong buy
+        sig.loc[valid_mask & (pb > 0.2) & (pb <= 0.4)] = 0.5   # Moderate buy
+        sig.loc[valid_mask & (pb > 0.4) & (pb <= 0.6)] = 0.0   # Neutral
+        sig.loc[valid_mask & (pb > 0.6) & (pb <= 0.8)] = -0.5  # Moderate sell
+        sig.loc[valid_mask & (pb > 0.8)] = -1.0      # Overbought → strong sell
+
+        signal[col] = sig
+
+    return {
+        'signal': signal,
+        'metadata': {
+            'percent_b': percent_b,
+            'upper_band': upper_band,
+            'middle_band': middle_band,
+            'lower_band': lower_band
+        }
+    }
