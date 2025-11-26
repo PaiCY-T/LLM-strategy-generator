@@ -65,7 +65,7 @@ class TPEOptimizer:
         Degradation: 23.5%
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize TPE optimizer with Optuna backend.
 
         No hyperparameters needed - TPE configuration is handled internally.
@@ -250,6 +250,9 @@ class TPEOptimizer:
         """
         # Run optimization on in-sample data
         best_params = self.optimize(objective_fn, n_trials, param_space)
+
+        # Assert study exists for type checker
+        assert self.study is not None, "Study should exist after optimize()"
         is_value = self.study.best_value
 
         # Validate on out-of-sample data
