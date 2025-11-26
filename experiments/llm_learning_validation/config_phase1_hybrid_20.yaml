@@ -41,3 +41,9 @@ llm:
     retry_delay: 2
 
   mode: structured
+
+  # Template Mode Configuration (for Factor Graph diversity)
+  # Set template_mode: true to enable Template Library for Factor Graph generation
+  # When enabled, template_name must be specified (e.g., "Momentum", "MeanReversion")
+  template_mode: false  # Factor Graph uses random strategy generation by default
+  template_name: null   # Required when template_mode=true

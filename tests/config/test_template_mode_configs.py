@@ -87,7 +87,8 @@ class TestTemplateModeConfigs:
             # Check if template_mode exists (could be nested or at root level)
             has_template_mode = (
                 'template_mode' in config or  # Root level
-                ('llm' in config and 'template_mode' in config.get('llm', {}))  # Nested in llm
+                ('llm' in config and 'template_mode' in config.get('llm', {})) or  # Nested in llm
+                ('experimental' in config and 'template_mode' in config.get('experimental', {}))  # Nested in experimental
             )
 
             if not has_template_mode:
@@ -116,17 +117,19 @@ class TestTemplateModeConfigs:
         for config_name in existing_configs:
             config = load_config(config_name)
 
-            # Get template_mode value (check both root and nested)
+            # Get template_mode value (check root, llm, and experimental sections)
             template_mode = (
                 config.get('template_mode', False) or
-                config.get('llm', {}).get('template_mode', False)
+                config.get('llm', {}).get('template_mode', False) or
+                config.get('experimental', {}).get('template_mode', False)
             )
 
             # If template_mode is enabled, validate template_name
             if template_mode:
                 template_name = (
                     config.get('template_name') or
-                    config.get('llm', {}).get('template_name')
+                    config.get('llm', {}).get('template_name') or
+                    config.get('experimental', {}).get('template_name')
                 )
 
                 # Validate template_name is not None, null, or empty
