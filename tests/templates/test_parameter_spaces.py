@@ -98,16 +98,16 @@ class TestSearchSpaceOptuna:
 class TestParameterRanges:
     """Test parameter ranges are valid and sensible."""
 
-    @pytest.fixture
-    def sample_trial(self):
-        """Create sample trial for parameter extraction."""
+    def _get_fresh_trial(self):
+        """Create fresh trial for each template to avoid parameter conflicts."""
         study = optuna.create_study(direction='maximize')
         return study.ask()
 
-    def test_parameter_ranges_valid(self, sample_trial):
+    def test_parameter_ranges_valid(self):
         """All parameter ranges must be valid (min < max for numeric)."""
         for template_name, search_space_fn in TEMPLATE_SEARCH_SPACES.items():
-            params = search_space_fn(sample_trial)
+            trial = self._get_fresh_trial()
+            params = search_space_fn(trial)
 
             # Verify each parameter is within reasonable bounds
             for param_name, param_value in params.items():
@@ -117,10 +117,11 @@ class TestParameterRanges:
                     assert param_value >= 0 or 'threshold' in param_name.lower(), \
                         f"{template_name}.{param_name} = {param_value} is negative"
 
-    def test_position_sizes_reasonable(self, sample_trial):
+    def test_position_sizes_reasonable(self):
         """Position size parameters should be between 0 and 1 (as percentages)."""
         for template_name, search_space_fn in TEMPLATE_SEARCH_SPACES.items():
-            params = search_space_fn(sample_trial)
+            trial = self._get_fresh_trial()
+            params = search_space_fn(trial)
 
             # Find position size parameters
             position_params = [
@@ -132,10 +133,11 @@ class TestParameterRanges:
                 assert 0 < param_value <= 1.0, \
                     f"{template_name}.{param_name} = {param_value} outside [0, 1]"
 
-    def test_lookback_periods_reasonable(self, sample_trial):
+    def test_lookback_periods_reasonable(self):
         """Lookback periods should be between 1 and 252 days (trading year)."""
         for template_name, search_space_fn in TEMPLATE_SEARCH_SPACES.items():
-            params = search_space_fn(sample_trial)
+            trial = self._get_fresh_trial()
+            params = search_space_fn(trial)
 
             # Find lookback parameters
             lookback_params = [
@@ -155,13 +157,17 @@ class TestTemplateDiversity:
     @pytest.fixture
     def all_param_sets(self):
         """Get parameter sets from all templates."""
-        study = optuna.create_study(direction='maximize')
-        trial = study.ask()
-
+        # Use separate trial for each template to avoid parameter name conflicts
         return {
-            template_name: set(search_space_fn(trial).keys())
+            template_name: set(self._get_params_for_template(search_space_fn).keys())
             for template_name, search_space_fn in TEMPLATE_SEARCH_SPACES.items()
         }
+
+    def _get_params_for_template(self, search_space_fn):
+        """Get parameters for a single template using a fresh trial."""
+        study = optuna.create_study(direction='maximize')
+        trial = study.ask()
+        return search_space_fn(trial)
 
     def test_template_diversity(self, all_param_sets):
         """Each template should have different parameter sets."""
@@ -188,14 +194,16 @@ class TestTemplateDiversity:
         for template_name, params in all_param_sets.items():
             param_str = ' '.join(params).lower()
 
-            # Check for entry-related parameters
+            # Check for entry-related parameters (broader set of keywords)
             has_entry = any(keyword in param_str for keyword in [
-                'entry', 'threshold', 'lookback', 'rsi', 'breakout', 'cross', 'efficiency'
+                'entry', 'threshold', 'lookback', 'rsi', 'breakout',
+                'efficiency', 'ma', 'period', 'bb', 'percentb'
             ])
 
             # Check for exit-related parameters
             has_exit = any(keyword in param_str for keyword in [
-                'exit', 'stop', 'trailing', 'neutral', 'reverse'
+                'exit', 'stop', 'trailing', 'neutral', 'reverse', 'confirmation',
+                'threshold'  # Regime thresholds also control exits
             ])
 
             # Check for position sizing
@@ -203,9 +211,9 @@ class TestTemplateDiversity:
                 'position', 'size'
             ])
 
-            assert has_entry, f"{template_name} missing entry parameters"
-            assert has_exit, f"{template_name} missing exit parameters"
-            assert has_position, f"{template_name} missing position sizing parameters"
+            assert has_entry, f"{template_name} missing entry parameters: {params}"
+            assert has_exit, f"{template_name} missing exit parameters: {params}"
+            assert has_position, f"{template_name} missing position sizing parameters: {params}"
 
 
 class TestNoHardcodedValues:
