@@ -17,60 +17,8 @@ import numpy as np
 from typing import Dict, Any, List, Callable
 from datetime import datetime, timedelta
 
-
-# Expected interface (implementation doesn't exist yet - TDD RED phase)
-class TTPTFramework:
-    """Time-Travel Perturbation Testing framework for look-ahead bias detection."""
-
-    def __init__(
-        self,
-        shift_days: List[int] = None,
-        tolerance: float = 0.05,
-        min_correlation: float = 0.95
-    ):
-        """
-        Initialize TTPT framework.
-
-        Args:
-            shift_days: List of shift amounts (e.g., [1, 5, 10])
-            tolerance: Maximum acceptable performance change (e.g., 0.05 = 5%)
-            min_correlation: Minimum signal correlation threshold
-        """
-        pass
-
-    def generate_shifted_data(
-        self,
-        data: Dict[str, pd.DataFrame],
-        shift_days: int
-    ) -> Dict[str, pd.DataFrame]:
-        """Generate time-shifted version of market data."""
-        pass
-
-    def validate_strategy(
-        self,
-        strategy_fn: Callable,
-        original_data: Dict[str, pd.DataFrame],
-        params: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """
-        Validate strategy for look-ahead bias.
-
-        Returns:
-            {
-                'passed': bool,
-                'violations': List[Dict],
-                'metrics': Dict,
-                'report': str
-            }
-        """
-        pass
-
-    def generate_report(
-        self,
-        validation_result: Dict[str, Any]
-    ) -> str:
-        """Generate human-readable TTPT report."""
-        pass
+# Import actual implementation (GREEN phase)
+from src.validation.ttpt_framework import TTPTFramework
 
 
 class TestTTPTShiftGeneration:
@@ -264,8 +212,9 @@ class TestTTPTValidation:
         def unstable_strategy(data_dict, params):
             close = data_dict['close']
             # Uses absolute dates which break under shift
-            signal = (close.index.day > 15).astype(float).values.reshape(-1, 1)
-            return pd.DataFrame(signal, index=close.index, columns=close.columns)
+            signal = (close.index.day > 15).astype(float)
+            # Return DataFrame not numpy array
+            return pd.DataFrame(signal, columns=close.columns)
 
         result = framework.validate_strategy(
             strategy_fn=unstable_strategy,
@@ -326,17 +275,22 @@ class TestTTPTReporting:
 
     def test_report_includes_violation_details(self):
         """Failed report should detail specific violations."""
+        from src.validation.ttpt_framework import TTPTViolation
+
         framework = TTPTFramework()
 
         validation_result = {
             'passed': False,
             'violations': [
-                {
-                    'shift_days': 5,
-                    'type': 'performance_degradation',
-                    'metric': 'sharpe_ratio',
-                    'change': -0.15
-                }
+                TTPTViolation(
+                    shift_days=5,
+                    violation_type='performance_degradation',
+                    metric_name='sharpe_ratio',
+                    original_value=0.75,
+                    shifted_value=0.60,
+                    change=-0.15,
+                    severity='moderate'
+                )
             ],
             'metrics': {
                 'signal_correlation': 0.75,
