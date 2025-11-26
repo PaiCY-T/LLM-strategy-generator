@@ -510,6 +510,107 @@ class TPEOptimizer:
 
         return self._search_stats
 
+    def optimize_with_runtime_ttpt(
+        self,
+        objective_fn: Callable,
+        strategy_fn: Callable,
+        data: Dict[str, Any],
+        n_trials: int,
+        param_space: Dict[str, Any],
+        checkpoint_interval: int = 10,
+        ttpt_config: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        Optimize with runtime TTPT monitoring.
+
+        Integrates Time-Travel Perturbation Testing into optimization loop,
+        validating strategies at checkpoints for look-ahead bias.
+
+        Args:
+            objective_fn: Objective function to maximize (takes params dict)
+            strategy_fn: Strategy function for TTPT validation (takes data_dict, params)
+            data: Market data for TTPT validation
+            n_trials: Number of optimization trials
+            param_space: Parameter search space
+            checkpoint_interval: Validate every N trials
+            ttpt_config: Configuration for TTPT framework
+
+        Returns:
+            {
+                'best_params': Dict,
+                'best_value': float,
+                'ttpt_summary': Dict  # Violation summary
+            }
+
+        Example:
+            >>> def objective(params):
+            ...     return backtest_sharpe(params)
+            >>> def strategy(data_dict, params):
+            ...     return generate_signals(data_dict, params)
+            >>> result = optimizer.optimize_with_runtime_ttpt(
+            ...     objective_fn=objective,
+            ...     strategy_fn=strategy,
+            ...     data={'close': df},
+            ...     n_trials=50,
+            ...     param_space={'lookback': (10, 50)},
+            ...     checkpoint_interval=10
+            ... )
+        """
+        from src.validation.runtime_ttpt_monitor import RuntimeTTPTMonitor
+
+        # Initialize TTPT monitor
+        monitor = RuntimeTTPTMonitor(
+            ttpt_config=ttpt_config,
+            checkpoint_interval=checkpoint_interval,
+            alert_on_violation=True
+        )
+
+        # Wrapper to add TTPT validation
+        trial_counter = [0]  # Mutable counter for closure
+
+        def objective_with_ttpt(params):
+            trial_counter[0] += 1
+            current_trial = trial_counter[0]
+
+            # Run objective function
+            value = objective_fn(params)
+
+            # Validate at checkpoints
+            validation_result = monitor.validate_checkpoint(
+                trial_number=current_trial,
+                strategy_fn=strategy_fn,
+                data=data,
+                params=params
+            )
+
+            # Log validation result
+            if not validation_result.get('skipped'):
+                if validation_result['passed']:
+                    logger.info(f"Trial {current_trial}: TTPT validation PASSED")
+                else:
+                    logger.warning(
+                        f"Trial {current_trial}: TTPT validation FAILED - "
+                        f"{len(validation_result.get('violations', []))} violations"
+                    )
+
+            return value
+
+        # Run optimization (let optimize() handle param_space)
+        self.optimize(
+            objective_fn=objective_with_ttpt,
+            n_trials=n_trials,
+            param_space=param_space
+        )
+
+        # Get TTPT summary
+        ttpt_summary = monitor.get_violation_summary()
+
+        return {
+            'best_params': self.study.best_params,
+            'best_value': self.study.best_value,
+            'ttpt_summary': ttpt_summary
+        }
+
 
 # Backward compatibility alias
 ASHAOptimizer = TPEOptimizer
