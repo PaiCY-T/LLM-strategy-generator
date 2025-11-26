@@ -367,7 +367,7 @@ class PopulationManagerV2(PopulationManager):
 
         report = self.get_evolution_report()
 
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
 
     def get_tier_statistics(self) -> Dict[str, Any]:
@@ -479,5 +479,5 @@ class PopulationManagerV2(PopulationManager):
             }
         }
 
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             json.dump(summary, f, indent=2)

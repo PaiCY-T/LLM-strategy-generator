@@ -87,7 +87,7 @@ class ValidationReportGenerator:
         # Write to file if path provided
         if output_path:
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
-            with open(output_path, 'w') as f:
+            with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(report)
 
         return report
@@ -714,13 +714,13 @@ python scripts/run_50gen_three_tier_validation.py --config config/50gen_three_ti
 
         # Generate tier distribution chart
         tier_dist_path = os.path.join(output_dir, "tier_distribution.txt")
-        with open(tier_dist_path, 'w') as f:
+        with open(tier_dist_path, 'w', encoding='utf-8') as f:
             f.write(self._generate_tier_usage_chart(metrics))
 
         # Generate performance progression chart
         progression = metrics.get_performance_progression()
         perf_chart_path = os.path.join(output_dir, "performance_progression.txt")
-        with open(perf_chart_path, 'w') as f:
+        with open(perf_chart_path, 'w', encoding='utf-8') as f:
             f.write(self._generate_performance_chart(progression))
 
         print(f"Visualizations saved to {output_dir}/")

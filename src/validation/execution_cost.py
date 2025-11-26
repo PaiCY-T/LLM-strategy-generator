@@ -93,6 +93,9 @@ class ExecutionCostModel:
 
         Returns:
             DataFrame of slippage in basis points (Dates x Symbols)
+
+        See Also:
+            calculate_single_slippage: Scalar version for single trade calculation
         """
         # Handle empty DataFrames
         if trade_size.empty or adv.empty or returns.empty:
@@ -132,6 +135,60 @@ class ExecutionCostModel:
         slippage = slippage.clip(lower=0)
 
         return slippage
+
+    def calculate_single_slippage(
+        self,
+        trade_size: float,
+        adv: float,
+        volatility: float
+    ) -> float:
+        """Calculate slippage for a single trade (scalar version).
+
+        Convenience method for single trade slippage calculation without
+        needing to create DataFrames.
+
+        Formula:
+            Slippage (bps) = Base_Cost + α × sqrt(Trade_Size/ADV) × Volatility
+
+        Args:
+            trade_size: Trade size in TWD
+            adv: Average daily volume in TWD
+            volatility: Daily return volatility (annualized)
+
+        Returns:
+            Slippage in basis points
+
+        Example:
+            >>> model = ExecutionCostModel()
+            >>> slippage = model.calculate_single_slippage(
+            ...     trade_size=1_000_000,
+            ...     adv=50_000_000,
+            ...     volatility=0.02
+            ... )
+            >>> print(f"Slippage: {slippage:.2f} bps")
+        """
+        # Validate inputs
+        if adv <= 0:
+            logger.warning(f"Invalid ADV: {adv}, returning base cost only")
+            return self.base_cost_bps
+
+        if trade_size <= 0:
+            return 0.0
+
+        # Calculate participation rate
+        participation = trade_size / adv
+
+        # Square root of participation
+        sqrt_participation = np.sqrt(participation)
+
+        # Market impact component
+        # Use absolute volatility value, convert to bps
+        impact_bps = self.impact_coeff * sqrt_participation * abs(volatility) * 100
+
+        # Total slippage
+        slippage = self.base_cost_bps + impact_bps
+
+        return max(0.0, slippage)
 
     def calculate_liquidity_penalty(
         self,

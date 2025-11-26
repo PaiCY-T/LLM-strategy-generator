@@ -1070,3 +1070,29 @@ class MetricsExtractor:
                 continue
 
         return None
+
+
+# JSON Encoder for StrategyMetrics serialization
+import json as _json
+
+class StrategyMetricsEncoder(_json.JSONEncoder):
+    """Custom JSON encoder that handles StrategyMetrics dataclass.
+
+    This encoder automatically converts StrategyMetrics instances to dictionaries
+    during JSON serialization, preventing "Object of type StrategyMetrics is not
+    JSON serializable" errors.
+
+    Usage:
+        >>> import json
+        >>> from src.backtest.metrics import StrategyMetrics, StrategyMetricsEncoder
+        >>> metrics = StrategyMetrics(sharpe_ratio=1.5, total_return=0.25)
+        >>> json.dumps(metrics, cls=StrategyMetricsEncoder)
+        '{"sharpe_ratio": 1.5, "total_return": 0.25, ...}'
+
+        >>> # Or use default parameter for convenience  
+        >>> json.dumps({'metrics': metrics}, default=lambda o: o.to_dict() if isinstance(o, StrategyMetrics) else str(o))
+    """
+    def default(self, obj):
+        if isinstance(obj, StrategyMetrics):
+            return obj.to_dict()
+        return super().default(obj)

@@ -41,6 +41,7 @@ except ImportError:
     STATS_AVAILABLE = False
 from src.learning.learning_config import LearningConfig
 from src.learning.learning_loop import LearningLoop
+from src.learning.unified_loop import UnifiedLoop
 # Reporting modules - optional for basic run
 try:
     from src.reporting.html_generator import HTMLReportGenerator
@@ -245,7 +246,16 @@ class ExperimentOrchestrator:
 
         # Execute learning loop
         learning_config = LearningConfig.from_yaml(temp_config_path)
-        learning_loop = LearningLoop(learning_config)
+
+        # Use UnifiedLoop if template_mode is enabled, otherwise use LearningLoop
+        template_mode = getattr(learning_config, 'template_mode', False)
+        if template_mode:
+            logger.info(f"Using UnifiedLoop (template_mode=True, template={learning_config.template_name})")
+            learning_loop = UnifiedLoop.from_config(temp_config_path)
+        else:
+            logger.info("Using LearningLoop (template_mode=False, backward compatibility)")
+            learning_loop = LearningLoop(learning_config)
+
         learning_loop.run()
 
         # Load iteration history

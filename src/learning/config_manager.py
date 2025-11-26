@@ -118,7 +118,7 @@ class ConfigManager:
 
             # Load YAML configuration
             try:
-                with open(resolved_path, 'r') as f:
+                with open(resolved_path, 'r', encoding='utf-8') as f:
                     self._config = yaml.safe_load(f)
             except yaml.YAMLError as e:
                 raise yaml.YAMLError(

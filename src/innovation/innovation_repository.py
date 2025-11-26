@@ -51,7 +51,7 @@ class InnovationRepository:
         if not self.path.exists():
             return
 
-        with open(self.path, 'r') as f:
+        with open(self.path, 'r', encoding='utf-8') as f:
             for line_num, line in enumerate(f, start=1):
                 if line.strip():
                     try:
@@ -105,7 +105,7 @@ class InnovationRepository:
         }
 
         # Append to JSONL file
-        with open(self.path, 'a') as f:
+        with open(self.path, 'a', encoding='utf-8') as f:
             f.write(json.dumps(record) + '\n')
 
         # Update in-memory index
@@ -240,7 +240,7 @@ class InnovationRepository:
             del self.index[innovation_id]
 
         # Rewrite JSONL file (only kept innovations)
-        with open(self.path, 'w') as f:
+        with open(self.path, 'w', encoding='utf-8') as f:
             for record in self.index.values():
                 f.write(json.dumps(record) + '\n')
 

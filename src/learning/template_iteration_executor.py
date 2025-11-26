@@ -308,10 +308,9 @@ class TemplateIterationExecutor:
         champion_updated = False
         try:
             if classification_level == "LEVEL_3" and metrics:
-                was_updated = self.champion_tracker.update_if_better(
+                was_updated = self.champion_tracker.update_champion(
                     iteration_num=iteration_num,
-                    strategy_code=strategy_code,
-                    params=params,
+                    code=strategy_code,
                     metrics=metrics,
                     generation_method="template",
                     strategy_id=None,

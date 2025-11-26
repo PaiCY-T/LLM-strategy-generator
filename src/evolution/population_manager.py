@@ -164,7 +164,7 @@ class PopulationManager:
             config_path = "config/learning_system.yaml"
 
         try:
-            with open(config_path, 'r') as f:
+            with open(config_path, 'r', encoding='utf-8') as f:
                 config = yaml.safe_load(f)
 
             exit_config = config.get('exit_mutation', {})
@@ -844,7 +844,7 @@ class PopulationManager:
 
         Path(filepath).parent.mkdir(parents=True, exist_ok=True)
 
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(checkpoint, f, indent=2)
 
         logger.info(f"Checkpoint saved to {filepath}")
@@ -860,7 +860,7 @@ class PopulationManager:
             FileNotFoundError: If checkpoint file not found
             ValueError: If checkpoint format invalid
         """
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             checkpoint = json.load(f)
 
         self.current_generation = checkpoint['generation']

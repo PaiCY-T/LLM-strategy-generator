@@ -241,7 +241,7 @@ class FailureTracker:
 
         try:
             # Write patterns data to temp file
-            with os.fdopen(temp_fd, 'w') as f:
+            with os.fdopen(temp_fd, 'w', encoding='utf-8') as f:
                 json.dump(patterns_data, f, indent=2)
 
             # Atomic rename - POSIX guarantees atomicity
@@ -265,7 +265,7 @@ class FailureTracker:
             return []
 
         try:
-            with open(FAILURE_PATTERNS_FILE, 'r') as f:
+            with open(FAILURE_PATTERNS_FILE, 'r', encoding='utf-8') as f:
                 patterns_data = json.load(f)
 
             # Convert dictionaries back to FailurePattern objects

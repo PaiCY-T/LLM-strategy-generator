@@ -7,7 +7,630 @@
     "runs": [
       {
         "run_id": "fg_only_run1",
-        "error": "'StrategyMetrics' object has no attribute 'get'"
+        "iterations": [
+          {
+            "iteration_num": 0,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_0",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 9.149661779403687,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:30:45.435727",
+            "champion_updated": false,
+            "feedback_used": "First iteration - no previous history. Generate a basic momentum strategy.",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 1,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_1",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 9.642015933990479,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:30:55.151575",
+            "champion_updated": false,
+            "feedback_used": "Iteration 1: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 2,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_2",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 9.90213680267334,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:31:05.114348",
+            "champion_updated": false,
+            "feedback_used": "Iteration 2: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 3,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_3",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.35412883758545,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:31:15.528943",
+            "champion_updated": false,
+            "feedback_used": "Iteration 3: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 4,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_4",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.209107875823975,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:31:25.800926",
+            "champion_updated": false,
+            "feedback_used": "Iteration 4: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 5,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_5",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 9.897818803787231,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:31:35.779260",
+            "champion_updated": false,
+            "feedback_used": "Iteration 5: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 6,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_6",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.42265009880066,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:31:46.259225",
+            "champion_updated": false,
+            "feedback_used": "Iteration 6: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 7,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_7",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.041821241378784,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:31:56.385840",
+            "champion_updated": false,
+            "feedback_used": "Iteration 7: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 8,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_8",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 9.765527248382568,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:32:06.224467",
+            "champion_updated": false,
+            "feedback_used": "Iteration 8: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 9,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_9",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 13.721134662628174,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:32:20.014632",
+            "champion_updated": false,
+            "feedback_used": "Iteration 9: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 10,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_10",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.824755907058716,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:32:30.953094",
+            "champion_updated": false,
+            "feedback_used": "Iteration 10: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 11,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_11",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 18.345056772232056,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:32:49.393517",
+            "champion_updated": false,
+            "feedback_used": "Iteration 11: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 12,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_12",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 14.164554357528687,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:33:03.652949",
+            "champion_updated": false,
+            "feedback_used": "Iteration 12: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 13,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_13",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.750797510147095,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:33:14.465863",
+            "champion_updated": false,
+            "feedback_used": "Iteration 13: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 14,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_14",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.616677284240723,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:33:25.162397",
+            "champion_updated": false,
+            "feedback_used": "Iteration 14: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 15,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_15",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.249191522598267,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:33:35.512208",
+            "champion_updated": false,
+            "feedback_used": "Iteration 15: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 16,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_16",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.551160097122192,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:33:46.123161",
+            "champion_updated": false,
+            "feedback_used": "Iteration 16: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 17,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_17",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 10.457631349563599,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:33:56.672783",
+            "champion_updated": false,
+            "feedback_used": "Iteration 17: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 18,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_18",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 11.201181173324585,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:34:07.941373",
+            "champion_updated": false,
+            "feedback_used": "Iteration 18: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          },
+          {
+            "iteration_num": 19,
+            "generation_method": "factor_graph",
+            "strategy_code": null,
+            "strategy_id": "template_19",
+            "strategy_generation": 0,
+            "execution_result": {
+              "success": true,
+              "error_type": null,
+              "error_message": null,
+              "execution_time": 9.914901971817017,
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "report": null,
+              "stack_trace": null
+            },
+            "metrics": {
+              "sharpe_ratio": 0.30116893698536307,
+              "total_return": 0.41634872158815317,
+              "max_drawdown": -0.32238065647715797,
+              "win_rate": null,
+              "execution_success": true
+            },
+            "classification_level": "LEVEL_3",
+            "timestamp": "2025-11-26T13:34:17.957250",
+            "champion_updated": false,
+            "feedback_used": "Iteration 19: EXECUTION ERROR\n\nError: Unknown error\n\nCommon causes:\n- Data access errors (check data.get() calls)\n- Type errors (verify operations)\n- Division by zero\n- Missing dependencies\n\nDebugging:\n- Review error message carefully\n- Check data availability\n- Verify all operations\n\nNo recent successful iterations. Review fundamentals.\n",
+            "template_name": null,
+            "json_mode": false
+          }
+        ],
+        "history_file": "experiments/llm_learning_validation/results/pilot_fg_only_20/fg_only_run1_history.jsonl",
+        "champion_file": "experiments/llm_learning_validation/results/pilot_fg_only_20/fg_only_run1_champion.json"
       }
     ]
   }

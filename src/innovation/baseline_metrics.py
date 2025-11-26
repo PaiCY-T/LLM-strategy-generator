@@ -94,7 +94,7 @@ class BaselineMetrics:
             raise RuntimeError("Baseline is already locked. Cannot recompute.")
 
         # Load iteration history
-        with open(iteration_history_path, 'r') as f:
+        with open(iteration_history_path, 'r', encoding='utf-8') as f:
             history = json.load(f)
 
         # Extract metrics from all iterations
@@ -201,7 +201,7 @@ class BaselineMetrics:
 
         # Save lock configuration
         self.config_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(self.config_path, 'w') as f:
+        with open(self.config_path, 'w', encoding='utf-8') as f:
             json.dump(lock_record, f, indent=2)
 
         print(f"✅ Baseline metrics LOCKED")
@@ -299,7 +299,7 @@ class BaselineMetrics:
 
     def _load_baseline(self) -> dict:
         """Load baseline configuration from disk."""
-        with open(self.config_path, 'r') as f:
+        with open(self.config_path, 'r', encoding='utf-8') as f:
             config = json.load(f)
 
         self.baseline_hash = config['baseline_hash']

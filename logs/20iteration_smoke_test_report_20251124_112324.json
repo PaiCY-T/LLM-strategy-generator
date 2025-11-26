@@ -1,0 +1,14 @@
+{
+  "test_name": "20-Iteration Smoke Test",
+  "mode": "template",
+  "use_docker": false,
+  "total_iterations": 20,
+  "successful_iterations": 0,
+  "failed_iterations": 20,
+  "success_rate": 0.0,
+  "duration_seconds": 3.360973596572876,
+  "duration_minutes": 0.056016226609547935,
+  "test_passed": true,
+  "timestamp": "2025-11-24T11:23:27.828375",
+  "log_file": "/mnt/c/Users/jnpi/documents/finlab/LLM-strategy-generator/logs/20iteration_smoke_test_20251124_112324.log"
+}

@@ -629,7 +629,7 @@ class BaselineComparator:
             return None
 
         try:
-            with open(cache_file, 'r') as f:
+            with open(cache_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
 
             # Reconstruct BaselineMetrics
@@ -667,7 +667,7 @@ class BaselineComparator:
         cache_file = self.CACHE_DIR / f"{cache_key}.json"
 
         try:
-            with open(cache_file, 'w') as f:
+            with open(cache_file, 'w', encoding='utf-8') as f:
                 json.dump(metrics.to_dict(), f, indent=2)
 
             logger.debug(f"Saved {metrics.baseline_name} to cache: {cache_file}")

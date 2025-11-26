@@ -1,0 +1,44 @@
+{
+  "test_completed": true,
+  "total_iterations": 4,
+  "sharpes": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "durations": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "champion_updates": [
+    false,
+    false,
+    false,
+    false
+  ],
+  "statistical_report": {
+    "error": "Insufficient data: need at least 20 iterations, got 4"
+  },
+  "final_checkpoint": "",
+  "success_rate": 0.0,
+  "best_sharpe": 0.0,
+  "avg_sharpe": 0.0,
+  "total_duration_seconds": 2035.5678515434265,
+  "template_mode": true,
+  "use_json_mode": true,
+  "test_metadata": {
+    "test_type": "stability_200iter",
+    "template": "Momentum",
+    "model": "gemini-2.5-flash",
+    "docker_enabled": false,
+    "checkpoint_interval": 50,
+    "resumed": false,
+    "resume_checkpoint": null,
+    "duration_seconds": 2035.5821120738983,
+    "duration_hours": 0.5654394755760829,
+    "timestamp": "20251124_122338"
+  }
+}

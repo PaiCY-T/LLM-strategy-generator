@@ -189,7 +189,7 @@ class ExitMutationLogger:
 
         try:
             # Append to JSONL file
-            with open(self.log_file, 'a') as f:
+            with open(self.log_file, 'a', encoding='utf-8') as f:
                 for entry in self._buffer:
                     json.dump(entry.to_dict(), f)
                     f.write('\n')
@@ -228,7 +228,7 @@ class ExitMutationLogger:
         try:
             # Read all entries
             mutations = []
-            with open(self.log_file, 'r') as f:
+            with open(self.log_file, 'r', encoding='utf-8') as f:
                 for line in f:
                     mutations.append(json.loads(line))
 

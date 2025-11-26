@@ -45,7 +45,7 @@ cond_all = cond1 & cond2 & cond3 & cond4 & cond5 & cond6 & cond7
 cond_all = cond_all * 去年同月增減
 position = cond_all[cond_all > 0].is_largest(num_stocks)
 
-report = backtest.sim(position, resample="W", fee_ratio=1.425/1000/3, stop_loss=stop_loss_param, take_profit=take_profit_param, position_limit=position_limit_param, name="高殖利率烏龜_Optimized_Momentum", upload=True)
+report = backtest.sim(position, resample="M", fee_ratio=1.425/1000/3, stop_loss=stop_loss_param, take_profit=take_profit_param, position_limit=position_limit_param, name="高殖利率烏龜_Optimized_Momentum", upload=True)
 report.display()
 print(f"年化報酬率: {report.metrics.annual_return():.2f}")
 print(f"夏普比率: {report.metrics.sharpe_ratio():.2f}")

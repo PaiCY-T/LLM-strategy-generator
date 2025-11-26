@@ -822,7 +822,7 @@ class UnifiedMutationOperator:
             ]
         }
 
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             json.dump(analysis, f, indent=2)
 
     def reset_statistics(self) -> None:

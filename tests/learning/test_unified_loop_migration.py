@@ -183,6 +183,6 @@ class TestUnifiedLoopMigration:
         # WHEN/THEN: Should raise error due to missing template_name
         from src.learning.unified_config import ConfigurationError
 
-        with pytest.raises(ConfigurationError, match="template_name.*required.*template_mode"):
+        with pytest.raises(ConfigurationError, match="template_mode.*requires.*template_name"):
             with patch('src.learning.unified_loop.LearningLoop'):
                 UnifiedLoop(**invalid_config)

@@ -460,7 +460,7 @@ class ThreeTierMetricsTracker:
             "mutation_history": self.mutation_history
         }
 
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
 
     def get_summary_statistics(self) -> Dict[str, Any]:

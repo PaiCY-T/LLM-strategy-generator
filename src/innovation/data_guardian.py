@@ -126,7 +126,7 @@ class DataGuardian:
 
         # Save lock configuration
         self.config_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(self.config_path, 'w') as f:
+        with open(self.config_path, 'w', encoding='utf-8') as f:
             json.dump(lock_record, f, indent=2)
 
         print(f"✅ Hold-out set LOCKED")
@@ -276,13 +276,13 @@ This access attempt has been logged.
         unlock_timestamp = datetime.now().isoformat()
 
         # Update lock configuration
-        with open(self.config_path, 'r') as f:
+        with open(self.config_path, 'r', encoding='utf-8') as f:
             lock_config = json.load(f)
 
         lock_config['access_allowed'] = True
         lock_config['unlock_timestamp'] = unlock_timestamp
 
-        with open(self.config_path, 'w') as f:
+        with open(self.config_path, 'w', encoding='utf-8') as f:
             json.dump(lock_config, f, indent=2)
 
         # Update instance variable AFTER saving
@@ -324,7 +324,7 @@ This access attempt has been logged.
 
     def _load_lock(self) -> dict:
         """Load lock configuration from disk."""
-        with open(self.config_path, 'r') as f:
+        with open(self.config_path, 'r', encoding='utf-8') as f:
             config = json.load(f)
 
         self.holdout_hash = config['holdout_hash']
@@ -340,13 +340,13 @@ This access attempt has been logged.
             raise ValueError("Lock configuration not found. Call lock_holdout() first.")
 
         # Load current config without overwriting instance variables
-        with open(self.config_path, 'r') as f:
+        with open(self.config_path, 'r', encoding='utf-8') as f:
             lock_config = json.load(f)
 
         # Update only the access log
         lock_config['access_log'] = self.access_log
 
-        with open(self.config_path, 'w') as f:
+        with open(self.config_path, 'w', encoding='utf-8') as f:
             json.dump(lock_config, f, indent=2)
 
 

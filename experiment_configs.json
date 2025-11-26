@@ -2,9 +2,9 @@
   "configs": [
     {
       "iteration_num": 0,
-      "timestamp": "2025-11-21T05:13:01.993820",
+      "timestamp": "2025-11-26T03:44:53.000654",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -17,10 +17,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 1
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -36,9 +36,9 @@
     },
     {
       "iteration_num": 1,
-      "timestamp": "2025-11-21T05:20:03.406637",
+      "timestamp": "2025-11-26T03:42:55.852349",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -51,10 +51,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 1
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -70,9 +70,9 @@
     },
     {
       "iteration_num": 2,
-      "timestamp": "2025-11-21T05:20:28.948769",
+      "timestamp": "2025-11-26T03:41:25.239408",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -85,10 +85,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -104,9 +104,9 @@
     },
     {
       "iteration_num": 3,
-      "timestamp": "2025-11-21T05:23:16.342511",
+      "timestamp": "2025-11-26T03:42:58.060318",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -119,10 +119,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 1
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -138,9 +138,9 @@
     },
     {
       "iteration_num": 4,
-      "timestamp": "2025-11-21T05:30:06.008326",
+      "timestamp": "2025-11-26T03:41:25.800983",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -153,10 +153,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -172,9 +172,9 @@
     },
     {
       "iteration_num": 5,
-      "timestamp": "2025-11-21T05:31:09.408777",
+      "timestamp": "2025-11-26T03:41:25.920023",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -187,10 +187,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -206,9 +206,9 @@
     },
     {
       "iteration_num": 6,
-      "timestamp": "2025-11-21T05:34:55.777739",
+      "timestamp": "2025-11-26T03:41:26.022746",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -221,10 +221,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -240,9 +240,9 @@
     },
     {
       "iteration_num": 7,
-      "timestamp": "2025-11-21T05:35:38.215482",
+      "timestamp": "2025-11-26T03:41:26.147060",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -255,10 +255,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -274,9 +274,9 @@
     },
     {
       "iteration_num": 8,
-      "timestamp": "2025-11-21T05:41:46.061714",
+      "timestamp": "2025-11-26T03:41:36.432069",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -289,10 +289,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -308,9 +308,9 @@
     },
     {
       "iteration_num": 9,
-      "timestamp": "2025-11-21T05:44:37.706794",
+      "timestamp": "2025-11-26T03:41:36.571249",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -323,10 +323,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -342,9 +342,9 @@
     },
     {
       "iteration_num": 10,
-      "timestamp": "2025-11-21T05:46:13.349619",
+      "timestamp": "2025-11-26T03:41:36.682932",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -357,10 +357,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -376,9 +376,9 @@
     },
     {
       "iteration_num": 11,
-      "timestamp": "2025-11-21T05:49:13.215617",
+      "timestamp": "2025-11-26T03:41:36.797707",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -391,10 +391,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -410,9 +410,9 @@
     },
     {
       "iteration_num": 12,
-      "timestamp": "2025-11-21T05:53:15.731030",
+      "timestamp": "2025-11-26T03:41:36.915076",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -425,10 +425,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -444,9 +444,9 @@
     },
     {
       "iteration_num": 13,
-      "timestamp": "2025-11-21T05:54:47.883141",
+      "timestamp": "2025-11-26T03:41:37.016805",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -459,10 +459,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -478,9 +478,9 @@
     },
     {
       "iteration_num": 14,
-      "timestamp": "2025-11-21T05:57:33.299933",
+      "timestamp": "2025-11-26T03:41:37.117088",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -493,10 +493,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -512,9 +512,9 @@
     },
     {
       "iteration_num": 15,
-      "timestamp": "2025-11-21T06:03:11.881476",
+      "timestamp": "2025-11-26T03:41:37.233224",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -527,10 +527,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -546,9 +546,9 @@
     },
     {
       "iteration_num": 16,
-      "timestamp": "2025-11-21T06:08:43.777355",
+      "timestamp": "2025-11-26T03:42:08.338499",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -561,10 +561,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -580,9 +580,9 @@
     },
     {
       "iteration_num": 17,
-      "timestamp": "2025-11-21T06:10:18.765065",
+      "timestamp": "2025-11-26T03:42:08.432273",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -595,10 +595,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -614,9 +614,9 @@
     },
     {
       "iteration_num": 18,
-      "timestamp": "2025-11-21T06:14:07.194554",
+      "timestamp": "2025-11-26T03:42:40.619272",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -629,10 +629,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -648,9 +648,9 @@
     },
     {
       "iteration_num": 19,
-      "timestamp": "2025-11-21T06:15:26.078973",
+      "timestamp": "2025-11-26T03:42:40.740143",
       "model_config": {
-        "model_name": "google/gemini-2.5-flash",
+        "model_name": "gemini-2.5-flash",
         "temperature": 1.0,
         "max_tokens": 8000
       },
@@ -663,10 +663,10 @@
         "anti_churn_threshold": 0.05,
         "probation_period": 2,
         "novelty_threshold": 0.3,
-        "max_iterations": 100
+        "max_iterations": 20
       },
       "environment_state": {
-        "python_version": "3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0]",
+        "python_version": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
         "packages": {
           "finlab": "1.5.3",
           "pandas": "2.3.2",
@@ -6803,6 +6803,6 @@
   ],
   "metadata": {
     "total_configs": 200,
-    "last_updated": "2025-11-21T10:11:58.264427"
+    "last_updated": "2025-11-26T03:44:53.011524"
   }
 }

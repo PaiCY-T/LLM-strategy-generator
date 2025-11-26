@@ -38,6 +38,10 @@ class LearningConfig:
         innovation_rate: LLM vs Factor Graph ratio (0-100)
         llm_retry_count: LLM retries before Factor Graph fallback
 
+        === Template Mode ===
+        template_mode: Enable Template Mode (uses UnifiedLoop)
+        template_name: Template name (required if template_mode=True)
+
         === Backtest Configuration ===
         timeout_seconds: Backtest timeout in seconds
         start_date: Backtest start date (YYYY-MM-DD)
@@ -74,6 +78,10 @@ class LearningConfig:
     innovation_mode: bool = True
     innovation_rate: int = 100  # 100 = always LLM, 0 = always Factor Graph
     llm_retry_count: int = 3
+
+    # === Template Mode ===
+    template_mode: bool = False
+    template_name: Optional[str] = None
 
     # === Backtest Configuration ===
     timeout_seconds: int = 420
@@ -168,6 +176,10 @@ class LearningConfig:
         valid_levels = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
         if self.log_level not in valid_levels:
             raise ValueError(f"log_level must be one of {valid_levels}, got '{self.log_level}'")
+
+        # 11. Template mode validation
+        if self.template_mode and not self.template_name:
+            raise ValueError("template_name is required when template_mode=True")
 
         # 11. Retry count
         if self.llm_retry_count < 1:

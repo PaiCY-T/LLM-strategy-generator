@@ -449,7 +449,7 @@ class ChampionTracker:
         # Fallback: Legacy champion_strategy.json (migration support)
         if os.path.exists(CHAMPION_FILE):
             try:
-                with open(CHAMPION_FILE, 'r') as f:
+                with open(CHAMPION_FILE, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 champion = ChampionStrategy.from_dict(data)
 

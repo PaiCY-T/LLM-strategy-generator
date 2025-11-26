@@ -106,7 +106,7 @@ class UnifiedLoop:
         model: str = "gemini-2.5-flash",
         max_iterations: int = 10,
         template_mode: bool = False,
-        template_name: str = "Momentum",
+        template_name: Optional[str] = None,
         use_json_mode: bool = False,
         enable_learning: bool = True,
         history_file: str = "artifacts/data/iterations.jsonl",
@@ -420,6 +420,65 @@ class UnifiedLoop:
         finally:
             # Always shutdown monitoring, even if execution failed
             self._shutdown_monitoring()
+
+    @classmethod
+    def from_config(cls, config_path: str) -> "UnifiedLoop":
+        """Create UnifiedLoop from YAML configuration file.
+
+        Factory method for creating UnifiedLoop from LearningConfig YAML file.
+        Supports both template_mode and standard learning mode configurations.
+
+        Args:
+            config_path: Path to YAML configuration file
+
+        Returns:
+            UnifiedLoop: Configured UnifiedLoop instance
+
+        Raises:
+            FileNotFoundError: If config file doesn't exist
+            ConfigurationError: If configuration is invalid
+
+        Example:
+            >>> loop = UnifiedLoop.from_config("config/learning_system.yaml")
+            >>> result = loop.run()
+            >>> print(f"Iterations: {result.get('iterations_completed')}")
+        """
+        from pathlib import Path
+        import yaml
+
+        config_file = Path(config_path)
+        if not config_file.exists():
+            raise FileNotFoundError(f"Config file not found: {config_path}")
+
+        # Load YAML config
+        with open(config_file, 'r') as f:
+            config_data = yaml.safe_load(f)
+
+        # Extract parameters for UnifiedLoop initialization
+        # Map common parameters
+        kwargs = {
+            'model': config_data.get('llm_model', 'gemini-2.5-flash'),
+            'max_iterations': config_data.get('max_iterations', 10),
+            'template_mode': config_data.get('template_mode', False),
+            'template_name': config_data.get('template_name'),
+            'use_json_mode': config_data.get('use_json_mode', False),
+            'enable_learning': config_data.get('enable_learning', True),
+            'history_file': config_data.get('history_file', 'artifacts/data/iterations.jsonl'),
+            'champion_file': config_data.get('champion_file', 'artifacts/data/champion.json'),
+            'config_file': str(config_file),
+            'timeout_seconds': config_data.get('timeout_seconds', 420),
+        }
+
+        # Add any additional kwargs from config
+        for key, value in config_data.items():
+            if key not in kwargs:
+                kwargs[key] = value
+
+        logger.info(f"Creating UnifiedLoop from config: {config_path}")
+        logger.debug(f"Config parameters: template_mode={kwargs.get('template_mode')}, "
+                    f"template_name={kwargs.get('template_name')}")
+
+        return cls(**kwargs)
 
     @property
     def champion(self):

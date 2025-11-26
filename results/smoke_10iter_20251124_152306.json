@@ -1,0 +1,50 @@
+{
+  "test_completed": true,
+  "total_iterations": 10,
+  "sharpes": [
+    1.0973215276753947,
+    0.08132545624051675,
+    0.08026781949449109,
+    0.08132545624051675,
+    0.08132545624051675,
+    0.08132545624051675,
+    0.08132545624051675,
+    0.08132545624051675,
+    0.08132545624051675,
+    0.08132545624051675
+  ],
+  "durations": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "champion_updates": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "statistical_report": {
+    "error": "Insufficient data: need at least 20 iterations, got 10"
+  },
+  "final_checkpoint": "",
+  "success_rate": 100.0,
+  "best_sharpe": 1.0973215276753947,
+  "avg_sharpe": 0.182819299709402,
+  "total_duration_seconds": 145.42341351509094,
+  "template_mode": true,
+  "use_json_mode": true
+}

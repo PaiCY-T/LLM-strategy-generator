@@ -108,7 +108,13 @@ def _calculate_rsi(close: pd.DataFrame, period: int) -> pd.DataFrame:
     try:
         # Try to use TA-Lib if available (faster, more accurate)
         import talib
-        return close.apply(lambda x: talib.RSI(x.values, timeperiod=period))
+
+        # Process each column separately to avoid pandas apply issues
+        rsi_dict = {}
+        for col in close.columns:
+            rsi_dict[col] = talib.RSI(close[col].values, timeperiod=period)
+
+        return pd.DataFrame(rsi_dict, index=close.index)
     except ImportError:
         logger.debug("TA-Lib not available, using pandas implementation")
         return _calculate_rsi_pandas(close, period)
