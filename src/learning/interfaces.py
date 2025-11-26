@@ -45,6 +45,194 @@ from typing import Protocol, runtime_checkable, Optional, List, Dict, Any, TYPE_
 if TYPE_CHECKING:
     from src.learning.iteration_history import IterationRecord
     from src.learning.champion_tracker import ChampionStrategy
+    from src.backtest.metrics import StrategyMetrics
+
+
+@runtime_checkable
+class IStrategy(Protocol):
+    """Unified strategy interface for Template, LLM, and Factor Graph modes.
+
+    **TDD Phase: GREEN - Spec A Task 4.1**
+
+    This Protocol defines the DOMAIN contract for strategy objects. It does
+    NOT include persistence methods (save/load) as those belong to the
+    Repository layer (HallOfFameRepository).
+
+    Design Decision (Architecture Analysis):
+        - Adding save/load here would violate Single Responsibility Principle
+        - Would create Active Record anti-pattern (domain + persistence mixed)
+        - Would reduce testability (domain models require I/O)
+        - Would reduce flexibility (cannot swap persistence layer)
+
+    Implementation Requirements:
+        - All three strategy modes must implement these properties/methods
+        - Runtime validation via isinstance(obj, IStrategy)
+        - No inheritance required (structural subtyping)
+
+    Supported Strategy Types:
+        - Template Mode: Template-based strategies (MomentumTemplate, etc.)
+        - LLM Mode: LLM-generated strategies
+        - Factor Graph Mode: Factor Graph DAG strategies (src.evolution.types.Strategy)
+
+    Example Usage:
+        >>> from src.learning.interfaces import IStrategy
+        >>> from src.evolution.types import Strategy
+        >>>
+        >>> # Factor Graph Strategy implements IStrategy via duck typing
+        >>> strategy = Strategy(id='test-001', generation=5, ...)
+        >>> assert isinstance(strategy, IStrategy)  # Runtime check
+        >>>
+        >>> # Type hint usage
+        >>> def compare_strategies(s1: IStrategy, s2: IStrategy) -> bool:
+        ...     return s1.dominates(s2)
+
+    Architecture Reference:
+        See .spec-workflow/specs/unified-strategy-interface/design.md
+        Section: IStrategy Protocol (NEW)
+    """
+
+    @property
+    def id(self) -> str:
+        """Strategy unique identifier.
+
+        Behavioral Contract:
+        - MUST return non-empty string
+        - MUST be stable (same value across calls)
+        - MUST be unique within the system
+
+        Post-conditions:
+        - len(return_value) > 0
+        - return_value is immutable for lifetime of strategy
+
+        Returns:
+            str: Unique strategy identifier
+
+        Example:
+            - Template Mode: "template_iter_42"
+            - LLM Mode: "llm_iter_42"
+            - Factor Graph: "a1b2c3d4-e5f6-7890-..."
+        """
+        ...
+
+    @property
+    def generation(self) -> int:
+        """Strategy generation number.
+
+        Behavioral Contract:
+        - MUST return non-negative integer
+        - MUST be immutable after creation
+        - Generation 0 = initial/seed strategy
+
+        Post-conditions:
+        - return_value >= 0
+        - return_value is stable (doesn't change)
+
+        Returns:
+            int: Generation number (0 = first generation)
+
+        Example:
+            - Template Mode: iteration_num
+            - LLM Mode: iteration_num
+            - Factor Graph: strategy.generation
+        """
+        ...
+
+    @property
+    def metrics(self) -> Optional[Any]:
+        """Strategy performance metrics.
+
+        Behavioral Contract:
+        - Returns None if strategy not yet evaluated
+        - Returns metrics object if evaluated
+        - If not None, MUST include sharpe_ratio attribute or key
+
+        Post-conditions:
+        - If None: strategy has not been backtested
+        - If not None: metrics.sharpe_ratio or metrics['sharpe_ratio'] exists
+
+        Returns:
+            Optional[Any]: StrategyMetrics, MultiObjectiveMetrics, or None
+
+        Note:
+            The exact type varies by strategy mode:
+            - Template/LLM: StrategyMetrics from src.backtest.metrics
+            - Factor Graph: MultiObjectiveMetrics from src.evolution.types
+        """
+        ...
+
+    def dominates(self, other: 'IStrategy') -> bool:
+        """Compare this strategy against another using Pareto dominance.
+
+        Behavioral Contract:
+        - MUST compare via metrics (typically sharpe_ratio as primary)
+        - MUST handle None metrics gracefully (return False)
+        - MUST be consistent: if A.dominates(B) == False and B.dominates(A) == False,
+          then A and B have equivalent or incomparable performance
+
+        Pre-conditions:
+        - other MUST implement IStrategy protocol
+
+        Post-conditions:
+        - Returns True only if this strategy is strictly better
+        - Returns False if metrics are None for either strategy
+
+        Args:
+            other: Another strategy to compare against
+
+        Returns:
+            bool: True if this strategy dominates other, False otherwise
+
+        Example:
+            >>> if strategy_a.dominates(strategy_b):
+            ...     print("Strategy A is strictly better than B")
+        """
+        ...
+
+    def get_parameters(self) -> Dict[str, Any]:
+        """Get strategy parameters.
+
+        Behavioral Contract:
+        - MUST return dictionary (may be empty)
+        - MUST be JSON-serializable
+        - Template mode: template parameters (n_stocks, lookback, etc.)
+        - LLM mode: empty dict (parameters embedded in code)
+        - Factor Graph mode: factor configuration
+
+        Post-conditions:
+        - isinstance(return_value, dict) == True
+        - All values are JSON-serializable
+
+        Returns:
+            Dict[str, Any]: Strategy parameters dictionary
+
+        Example:
+            >>> params = strategy.get_parameters()
+            >>> print(params)  # {'n_stocks': 20, 'lookback': 60}
+        """
+        ...
+
+    def get_metrics(self) -> Dict[str, float]:
+        """Get strategy performance metrics as dictionary.
+
+        Behavioral Contract:
+        - MUST return dictionary with numeric values
+        - MUST include 'sharpe_ratio' key if strategy evaluated
+        - MUST return empty dict if strategy not evaluated
+
+        Post-conditions:
+        - isinstance(return_value, dict) == True
+        - If strategy evaluated: 'sharpe_ratio' in return_value
+        - All values are float or convertible to float
+
+        Returns:
+            Dict[str, float]: Performance metrics dictionary
+
+        Example:
+            >>> metrics = strategy.get_metrics()
+            >>> print(metrics)
+            {'sharpe_ratio': 2.5, 'max_drawdown': -0.15, ...}
+        """
+        ...
 
 
 @runtime_checkable

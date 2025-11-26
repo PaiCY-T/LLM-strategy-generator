@@ -374,6 +374,70 @@ class Strategy:
             return False
         return self.metrics.dominates(other.metrics)
 
+    def get_parameters(self) -> Dict[str, Any]:
+        """
+        Get strategy parameters.
+
+        Part of IStrategy Protocol implementation (Spec A Task 4.1).
+        Returns the strategy's parameter dictionary for serialization
+        and comparison purposes.
+
+        Returns:
+            Dict[str, Any]: Strategy parameters dictionary (may be empty)
+
+        Example:
+            >>> strategy = Strategy(parameters={'n_stocks': 20, 'lookback': 60})
+            >>> strategy.get_parameters()
+            {'n_stocks': 20, 'lookback': 60}
+
+        Notes:
+            - Returns self.parameters directly (no copy)
+            - All values should be JSON-serializable
+            - For Factor Graph: contains factor configuration
+        """
+        return self.parameters
+
+    def get_metrics(self) -> Dict[str, float]:
+        """
+        Get strategy performance metrics as dictionary.
+
+        Part of IStrategy Protocol implementation (Spec A Task 4.1).
+        Returns the strategy's performance metrics in a standardized
+        dictionary format for comparison and serialization.
+
+        Returns:
+            Dict[str, float]: Performance metrics dictionary
+                - Returns empty dict if metrics is None
+                - Returns full metrics dict if evaluated
+
+        Example:
+            >>> strategy = Strategy(
+            ...     metrics=MultiObjectiveMetrics(
+            ...         sharpe_ratio=2.5, calmar_ratio=1.8,
+            ...         max_drawdown=-0.15, total_return=0.45,
+            ...         win_rate=0.62, annual_return=0.28, success=True
+            ...     )
+            ... )
+            >>> strategy.get_metrics()
+            {'sharpe_ratio': 2.5, 'calmar_ratio': 1.8, 'max_drawdown': -0.15, ...}
+
+        Notes:
+            - Includes 'sharpe_ratio' key if strategy evaluated
+            - Compatible with IStrategy Protocol contract
+            - Used for champion comparison and logging
+        """
+        if self.metrics is None:
+            return {}
+        return {
+            'sharpe_ratio': self.metrics.sharpe_ratio,
+            'calmar_ratio': self.metrics.calmar_ratio,
+            'max_drawdown': self.metrics.max_drawdown,
+            'total_return': self.metrics.total_return,
+            'win_rate': self.metrics.win_rate,
+            'annual_return': self.metrics.annual_return,
+            'success': float(self.metrics.success)  # Convert bool to float for consistency
+        }
+
     def __repr__(self) -> str:
         """
         String representation for debugging.
