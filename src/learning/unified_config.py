@@ -154,7 +154,7 @@ class UnifiedConfig:
     template_name: str = "Momentum"
 
     # === JSON Parameter Output Parameters ===
-    use_json_mode: bool = False
+    use_json_mode: bool = True  # Phase 3: Promoted to default (4x success rate vs full code)
 
     # === Hybrid Mode Parameters ===
     innovation_rate: float = 100.0  # 0.0-100.0, LLM probability %
