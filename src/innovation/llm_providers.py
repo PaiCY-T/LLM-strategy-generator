@@ -159,7 +159,7 @@ class LLMProviderInterface(ABC):
 
             except requests.exceptions.Timeout:
                 last_exception = f"Request timeout after {self.timeout}s"
-                print(f"⚠️  {self._get_provider_name()} API timeout (attempt {attempt + 1}/{max_retries})")
+                print(f"[WARN]  {self._get_provider_name()} API timeout (attempt {attempt + 1}/{max_retries})")
                 if attempt < max_retries - 1:
                     self._exponential_backoff(attempt)
 
@@ -169,27 +169,27 @@ class LLMProviderInterface(ABC):
                 # Retry on rate limits (429) or server errors (5xx)
                 if status_code in [429, 500, 502, 503, 504]:
                     last_exception = f"HTTP {status_code}: {str(e)}"
-                    print(f"⚠️  {self._get_provider_name()} API error {status_code} (attempt {attempt + 1}/{max_retries})")
+                    print(f"[WARN]  {self._get_provider_name()} API error {status_code} (attempt {attempt + 1}/{max_retries})")
                     if attempt < max_retries - 1:
                         self._exponential_backoff(attempt)
                 else:
                     # Don't retry on auth errors (401, 403) or bad requests (400)
-                    print(f"❌ {self._get_provider_name()} API error {status_code}: {str(e)}")
+                    print(f"[FAIL] {self._get_provider_name()} API error {status_code}: {str(e)}")
                     return None
 
             except requests.exceptions.RequestException as e:
                 last_exception = str(e)
-                print(f"⚠️  {self._get_provider_name()} network error (attempt {attempt + 1}/{max_retries}): {type(e).__name__}")
+                print(f"[WARN]  {self._get_provider_name()} network error (attempt {attempt + 1}/{max_retries}): {type(e).__name__}")
                 if attempt < max_retries - 1:
                     self._exponential_backoff(attempt)
 
             except Exception as e:
                 # Unexpected errors - don't retry
-                print(f"❌ {self._get_provider_name()} unexpected error: {type(e).__name__}: {str(e)}")
+                print(f"[FAIL] {self._get_provider_name()} unexpected error: {type(e).__name__}: {str(e)}")
                 return None
 
         # All retries exhausted
-        print(f"❌ {self._get_provider_name()} failed after {max_retries} attempts: {last_exception}")
+        print(f"[FAIL] {self._get_provider_name()} failed after {max_retries} attempts: {last_exception}")
         return None
 
     def _exponential_backoff(self, attempt: int):
@@ -503,11 +503,11 @@ if __name__ == "__main__":
     print("-" * 80)
     try:
         provider = create_provider('openrouter')
-        print(f"✅ Created {provider._get_provider_name()} provider")
+        print(f"[PASS] Created {provider._get_provider_name()} provider")
         print(f"   Model: {provider.model}")
         print(f"   Timeout: {provider.timeout}s")
     except ValueError as e:
-        print(f"⚠️  {e}")
+        print(f"[WARN]  {e}")
 
     # Example 2: Estimate cost
     print("\nExample 2: Estimate API cost")
@@ -515,9 +515,9 @@ if __name__ == "__main__":
     try:
         provider = create_provider('gemini')
         cost = provider.estimate_cost(prompt_tokens=1000, completion_tokens=500)
-        print(f"✅ Estimated cost for 1000 input + 500 output tokens: ${cost:.4f}")
+        print(f"[PASS] Estimated cost for 1000 input + 500 output tokens: ${cost:.4f}")
     except ValueError as e:
-        print(f"⚠️  {e}")
+        print(f"[WARN]  {e}")
 
     # Example 3: Make API call (only if API key is set)
     print("\nExample 3: Test API call (requires API key)")
@@ -536,17 +536,17 @@ if __name__ == "__main__":
             )
 
             if response:
-                print(f"✅ {provider._get_provider_name()} API call successful")
+                print(f"[PASS] {provider._get_provider_name()} API call successful")
                 print(f"   Response: {response.content[:100]}...")
                 print(f"   Tokens: {response.prompt_tokens} input, {response.completion_tokens} output")
                 cost = provider.estimate_cost(response.prompt_tokens, response.completion_tokens)
                 print(f"   Estimated cost: ${cost:.6f}")
                 break
             else:
-                print(f"❌ {provider._get_provider_name()} API call failed")
+                print(f"[FAIL] {provider._get_provider_name()} API call failed")
 
         except ValueError as e:
-            print(f"⚠️  {provider_name}: {e}")
+            print(f"[WARN]  {provider_name}: {e}")
 
     print("\n" + "=" * 80)
     print("EXAMPLE COMPLETE")

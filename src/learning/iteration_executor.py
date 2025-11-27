@@ -130,7 +130,7 @@ class IterationExecutor:
             try:
                 from src.learning.config_models import GenerationConfig
                 self.validated_config = GenerationConfig(**config)
-                logger.info("✓ Configuration validated with Pydantic")
+                logger.info("[OK] Configuration validated with Pydantic")
             except ImportError:
                 logger.warning("Pydantic models not available, skipping validation")
             except Exception as e:
@@ -152,7 +152,7 @@ class IterationExecutor:
                 # Note: factor_graph_generator is created on-demand via _generate_with_factor_graph
                 # For now, we create the factory but initialize strategy later in execute_iteration
                 self._strategy_factory = factory
-                logger.info("✓ Strategy Pattern initialized (Phase 3)")
+                logger.info("[OK] Strategy Pattern initialized (Phase 3)")
             except Exception as e:
                 logger.warning(f"Strategy Pattern initialization failed: {e}, falling back to Phase 1/2")
                 self._strategy_factory = None
@@ -163,7 +163,7 @@ class IterationExecutor:
             try:
                 from src.learning.audit_trail import AuditLogger
                 self.audit_logger = AuditLogger(log_dir="logs/generation_audit")
-                logger.info("✓ Audit Trail initialized (Phase 4)")
+                logger.info("[OK] Audit Trail initialized (Phase 4)")
             except Exception as e:
                 logger.warning(f"Audit Trail initialization failed: {e}")
                 self.audit_logger = None
@@ -206,7 +206,7 @@ class IterationExecutor:
             try:
                 # Use default cache path (tests/fixtures/finlab_fields.json)
                 self._field_manifest = DataFieldManifest()
-                logger.info("✓ Layer 1 field validation enabled - DataFieldManifest initialized")
+                logger.info("[OK] Layer 1 field validation enabled - DataFieldManifest initialized")
             except Exception as e:
                 logger.warning(f"Layer 1 initialization failed: {e}, disabling Layer 1")
                 self._enable_layer1 = False
@@ -313,7 +313,7 @@ class IterationExecutor:
             self.data = data
             self.sim = sim
             self._finlab_initialized = True
-            logger.info("✓ Finlab data and sim initialized")
+            logger.info("[OK] Finlab data and sim initialized")
             return True
 
         except ImportError as e:
@@ -762,7 +762,7 @@ class IterationExecutor:
 
 {champion_code}
 """.strip()
-                logger.info("✓ Layer 1 field suggestions injected into LLM prompt")
+                logger.info("[OK] Layer 1 field suggestions injected into LLM prompt")
             else:
                 champion_code_with_suggestions = champion_code
 
@@ -1134,6 +1134,7 @@ class IterationExecutor:
                 sharpe_ratio=execution_result.sharpe_ratio,
                 total_return=execution_result.total_return,
                 max_drawdown=execution_result.max_drawdown,
+                calmar_ratio=execution_result.calmar_ratio,
                 execution_success=True
             )
 

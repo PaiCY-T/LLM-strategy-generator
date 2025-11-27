@@ -457,9 +457,9 @@ factor:
     result = validator.validate(example_yaml)
 
     if result.success:
-        print("✅ Validation PASSED")
+        print("[PASS] Validation PASSED")
         if result.warnings:
-            print(f"⚠️  Warnings: {len(result.warnings)}")
+            print(f"[WARN]  Warnings: {len(result.warnings)}")
             for warning in result.warnings:
                 print(f"  - {warning}")
 
@@ -468,4 +468,4 @@ factor:
         print("\nGenerated Python Code:")
         print(python_code)
     else:
-        print(f"❌ Validation FAILED: {result.error}")
+        print(f"[FAIL] Validation FAILED: {result.error}")

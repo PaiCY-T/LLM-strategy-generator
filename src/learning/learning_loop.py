@@ -83,16 +83,16 @@ class LearningLoop:
                 "LearningLoop.__init__ - IterationHistory"
             )
 
-            logger.info(f"✓ IterationHistory: {config.history_file}")
-            logger.debug("✓ IIterationHistory Protocol validation passed")
+            logger.info(f"[OK] IterationHistory: {config.history_file}")
+            logger.debug("[OK] IIterationHistory Protocol validation passed")
 
             # 2. Hall of Fame Repository (no dependencies)
             self.hall_of_fame = HallOfFameRepository(base_path="hall_of_fame", test_mode=False)
-            logger.info("✓ HallOfFameRepository initialized")
+            logger.info("[OK] HallOfFameRepository initialized")
 
             # 3. Anti-Churn Manager (no dependencies)
             self.anti_churn = AntiChurnManager(config_path=config.config_file)
-            logger.info("✓ AntiChurnManager initialized")
+            logger.info("[OK] AntiChurnManager initialized")
 
             # 4. Champion Tracker (depends on history, hall_of_fame, anti_churn)
             # Runtime Protocol validation (Phase 5B.2 - Enhanced with validate_protocol_compliance)
@@ -108,22 +108,22 @@ class LearningLoop:
                 "LearningLoop.__init__ - ChampionTracker"
             )
 
-            logger.info(f"✓ ChampionTracker: {config.champion_file} (IChampionTracker validated)")
+            logger.info(f"[OK] ChampionTracker: {config.champion_file} (IChampionTracker validated)")
 
             # 5. LLM Client (no dependencies)
             self.llm_client = LLMClient(config_path=config.config_file)
-            logger.info(f"✓ LLMClient: enabled={self.llm_client.is_enabled()}")
+            logger.info(f"[OK] LLMClient: enabled={self.llm_client.is_enabled()}")
 
             # 6. Feedback Generator (depends on history, champion)
             self.feedback_generator = FeedbackGenerator(
                 history=self.history,
                 champion_tracker=self.champion_tracker
             )
-            logger.info("✓ FeedbackGenerator initialized")
+            logger.info("[OK] FeedbackGenerator initialized")
 
             # 7. Backtest Executor (no dependencies)
             self.backtest_executor = BacktestExecutor(timeout=config.timeout_seconds)
-            logger.info(f"✓ BacktestExecutor: timeout={config.timeout_seconds}s")
+            logger.info(f"[OK] BacktestExecutor: timeout={config.timeout_seconds}s")
 
             # 8. Initialize finlab data and sim if LLM is enabled
             data, sim = None, None
@@ -133,7 +133,7 @@ class LearningLoop:
                     from finlab.backtest import sim as finlab_sim
                     data = finlab_data
                     sim = finlab_sim
-                    logger.info("✓ Finlab data and sim initialized")
+                    logger.info("[OK] Finlab data and sim initialized")
                 except ImportError as e:
                     logger.warning(f"Failed to import finlab: {e}")
                     logger.warning("LLM generation will not be available")
@@ -149,7 +149,7 @@ class LearningLoop:
                 data=data,
                 sim=sim,
             )
-            logger.info("✓ IterationExecutor initialized")
+            logger.info("[OK] IterationExecutor initialized")
 
             logger.info("=" * 60)
             logger.info("All components initialized successfully")
@@ -182,7 +182,7 @@ class LearningLoop:
         # Main loop
         for iteration_num in range(start_iteration, self.config.max_iterations):
             if self.interrupted:
-                logger.info(f"\n⚠️  Interrupted at iteration {iteration_num}")
+                logger.info(f"\n[WARN]  Interrupted at iteration {iteration_num}")
                 break
 
             record = None
@@ -195,13 +195,13 @@ class LearningLoop:
                 record = self.iteration_executor.execute_iteration(iteration_num)
 
             except KeyboardInterrupt:
-                logger.info("\n⚠️  KeyboardInterrupt received during iteration execution...")
+                logger.info("\n[WARN]  KeyboardInterrupt received during iteration execution...")
                 self.interrupted = True
                 # Note: record will be None, so save will be skipped
                 # This is intentional - partially executed iteration not saved
 
             except Exception as e:
-                logger.error(f"❌ Iteration {iteration_num} failed: {e}", exc_info=True)
+                logger.error(f"[FAIL] Iteration {iteration_num} failed: {e}", exc_info=True)
 
                 if not self.config.continue_on_error:
                     logger.error("Stopping due to error (continue_on_error=False)")
@@ -264,14 +264,14 @@ class LearningLoop:
         def sigint_handler(signum, frame):
             if not self.interrupted:
                 logger.info("\n" + "=" * 60)
-                logger.info("⚠️  INTERRUPT SIGNAL RECEIVED (CTRL+C)")
+                logger.info("[WARN]  INTERRUPT SIGNAL RECEIVED (CTRL+C)")
                 logger.info("=" * 60)
                 logger.info("Finishing current iteration before exit...")
                 logger.info("(Press CTRL+C again to force quit)")
                 logger.info("=" * 60)
                 self.interrupted = True
             else:
-                logger.warning("\n⚠️  FORCE QUIT")
+                logger.warning("\n[WARN]  FORCE QUIT")
                 sys.exit(1)
 
         signal.signal(signal.SIGINT, sigint_handler)
@@ -302,7 +302,7 @@ class LearningLoop:
             # Check if already complete
             if next_iteration >= self.config.max_iterations:
                 logger.warning(
-                    f"⚠️  All {self.config.max_iterations} iterations already completed"
+                    f"[WARN]  All {self.config.max_iterations} iterations already completed"
                 )
                 logger.warning("Increase max_iterations in config or start fresh")
                 return self.config.max_iterations  # Loop will exit immediately
@@ -353,7 +353,7 @@ class LearningLoop:
 
         # Show progress
         logger.info("\n" + "-" * 60)
-        logger.info(f"📊 ITERATION {iteration_num + 1}/{self.config.max_iterations} COMPLETE")
+        logger.info(f"[DATA] ITERATION {iteration_num + 1}/{self.config.max_iterations} COMPLETE")
         logger.info("-" * 60)
         logger.info(f"Method:         {record.generation_method}")
         logger.info(f"Classification: {record.classification_level}")
@@ -412,5 +412,5 @@ class LearningLoop:
             logger.info(f"🏆 No champion yet (no LEVEL_3 strategies)")
 
         logger.info("=" * 60)
-        logger.info("✅ Learning Loop Complete")
+        logger.info("[PASS] Learning Loop Complete")
         logger.info("=" * 60)
