@@ -33,12 +33,12 @@ def verify_config(config):
     """驗證 JSON mode 配置正確"""
     assert config.template_mode is True, "template_mode must be True for JSON mode"
     assert config.use_json_mode is True, "use_json_mode must be True"
-    assert config.generation_mode == 'json', f"generation_mode must be 'json', got '{config.generation_mode}'"
+    assert config.innovation_rate == 100.0, "innovation_rate must be 100.0 for pure LLM mode"
     logger.info("✅ JSON Mode configuration verified")
     logger.info(f"  - template_mode: {config.template_mode}")
     logger.info(f"  - template_name: {config.template_name}")
     logger.info(f"  - use_json_mode: {config.use_json_mode}")
-    logger.info(f"  - generation_mode: {config.generation_mode}")
+    logger.info(f"  - innovation_rate: {config.innovation_rate}% (Pure LLM)")
 
 def main():
     """Run 20-iteration JSON mode test."""
@@ -79,7 +79,6 @@ def main():
 
         # Enable JSON Mode (首次真正測試)
         use_json_mode=True,
-        generation_mode='json',
 
         # Other configuration
         history_file="experiments/llm_learning_validation/results/json_mode_test/history.jsonl",
@@ -91,7 +90,7 @@ def main():
         log_to_console=True,
         log_dir="logs",
         llm_temperature=0.7,
-        mutation_rate=0.2
+        innovation_rate=100.0  # Pure LLM mode
     )
 
     # Verify JSON mode configuration
