@@ -41,30 +41,59 @@ finlab/
   - 🎯 Performance attribution and root cause analysis
   - 🧬 Evolutionary prompts with failure avoidance
   - ✅ **MVP Validated**: 3/4 criteria passed, Best Sharpe 2.48 (+155% over baseline)
-- ✅ **統計驗證框架** ✨ **NEW** - Production-ready validation (v1.1)
+- ✅ **統計驗證框架** - Production-ready validation (v1.1)
   - 📊 Stationary Bootstrap (Politis & Romano 1994)
   - 🎯 Dynamic Thresholds (Taiwan market benchmark)
   - ✅ **97 tests passing**, scipy-validated, backward compatible
+- 🔬 **TPE 超參數優化** ✨ **NEW** - Advanced hyperparameter optimization
+  - 🎯 Tree-structured Parzen Estimator (Optuna)
+  - 📚 6 diverse strategy templates (Momentum, Mean Reversion, etc.)
+  - 💾 Data caching with 70%+ speedup
+  - 📊 IS/OOS validation with overfitting detection
+- 🛡️ **TTPT 偏差檢測** ✨ **NEW** - Look-ahead bias protection
+  - ⏱️ Time-Travel Perturbation Testing framework
+  - 🔍 Real-time monitoring during optimization
+  - 📝 Automated violation logging and reporting
+  - ✅ **19/19 tests passing**, >95% detection accuracy
+- 📊 **實驗追蹤系統** ✨ **NEW** - Comprehensive experiment tracking
+  - 🗄️ SQLite-backed experiment database
+  - 📈 Trial logging and performance comparison
+  - 🔎 Query interface with filtering capabilities
+  - 📤 DataFrame export for analysis
 - 💾 **數據緩存** - 本地緩存減少 API 調用，支持離線訪問
 - 🌐 **雙語支持** - 繁體中文/英文界面
 
-### 🎉 Latest Achievement: Validation System v1.1 Production Ready
+### 🎉 Latest Achievement: Phase 3 & 4 Advanced Features Complete
+
+**Date**: 2025-11-27 | **Status**: ✅ **PRODUCTION READY** | **Tests**: 72/72 passing (100%)
+
+Phase 3 & 4 已完成所有進階功能開發：
+- ✅ TPE Optimizer - Tree-structured Parzen Estimator 超參數優化 (17/17 tests)
+- ✅ TTPT Framework - Time-Travel Perturbation Testing 前瞻性偏差檢測 (17/17 tests)
+- ✅ Runtime TTPT Monitor - 優化過程即時驗證 (19/19 tests)
+- ✅ Experiment Tracker - SQLite 實驗追蹤系統 (19/19 tests)
+- ✅ 完整整合測試 - 端到端工作流程驗證通過
+
+Phase 3 & 4 advanced features completed:
+- ✅ TPE Optimizer - Tree-structured Parzen Estimator hyperparameter optimization (17/17 tests)
+- ✅ TTPT Framework - Time-Travel Perturbation Testing for look-ahead bias detection (17/17 tests)
+- ✅ Runtime TTPT Monitor - Real-time validation during optimization (19/19 tests)
+- ✅ Experiment Tracker - SQLite-backed experiment tracking system (19/19 tests)
+- ✅ Full Integration - End-to-end workflow validated
+
+詳見 [Phase 3 & 4 Completion Summary](docs/PHASE_3_4_COMPLETION_SUMMARY.md) | See docs for details
+
+---
+
+### 🏆 Previous Achievement: Validation System v1.1 Production Ready
 
 **Date**: 2025-10-31 | **Status**: ✅ P0 Complete (6/6 tasks)
 
-統計驗證系統 v1.1 已完成所有 P0 關鍵任務：
 - ✅ Stationary Bootstrap - 保留時間序列結構的 CI 計算
 - ✅ Dynamic Threshold - 台灣市場基準動態閾值 (0.8)
 - ✅ 97 個測試全部通過，與 scipy 驗證一致 (7.1% 差異)
-- ✅ 向後兼容 - v1.0 行為完全保留
 
-Validation System v1.1 completed all P0 critical tasks:
-- ✅ Stationary Bootstrap - Time-series aware confidence intervals
-- ✅ Dynamic Threshold - Taiwan market benchmark-based (0.8)
-- ✅ 97 tests passing, scipy-validated (7.1% difference)
-- ✅ Backward compatible - v1.0 behavior fully preserved
-
-詳見 [Validation System Docs](docs/VALIDATION_SYSTEM.md) | See docs for details
+詳見 [Validation System Docs](docs/VALIDATION_SYSTEM.md)
 
 ---
 
