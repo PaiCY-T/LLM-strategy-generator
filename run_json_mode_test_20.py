@@ -10,8 +10,16 @@ Bug #3 Fix Validation:
 
 import logging
 import sys
+import os
 from pathlib import Path
 from datetime import datetime
+
+# Fix Unicode encoding for Windows cp950
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 
 # Setup logging
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -22,7 +30,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler(log_file),
+        logging.FileHandler(log_file, encoding='utf-8'),
         logging.StreamHandler(sys.stdout)
     ]
 )
@@ -71,7 +79,7 @@ def main():
     # Create configuration for JSON mode test
     config = UnifiedConfig(
         max_iterations=20,
-        llm_model="google/gemini-2.5-flash",
+        llm_model="google/gemini-2.5-flash",  # OpenRouter paid model
 
         # Enable Template Mode (Phase 1 已驗證)
         template_mode=True,
