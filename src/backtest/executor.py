@@ -45,6 +45,7 @@ class ExecutionResult:
         sharpe_ratio: Sharpe ratio from backtest (if successful)
         total_return: Total return percentage (if successful)
         max_drawdown: Maximum drawdown (if successful)
+        calmar_ratio: Calmar ratio (annual return / abs(max drawdown)) (if successful)
         report: Finlab backtest report object (if successful) - not serialized across processes
         stack_trace: Full stack trace if error occurred
     """
@@ -56,6 +57,7 @@ class ExecutionResult:
     sharpe_ratio: Optional[float] = None
     total_return: Optional[float] = None
     max_drawdown: Optional[float] = None
+    calmar_ratio: Optional[float] = None
     report: Optional[Any] = field(default=None, repr=False)  # Not serialized across processes
     stack_trace: Optional[str] = None
 
@@ -103,8 +105,8 @@ class BacktestExecutor:
     def execute(
         self,
         strategy_code: str,
-        data: Any,
-        sim: Any,
+        data: Any = None,  # Deprecated: imported inside subprocess to avoid pickle errors
+        sim: Any = None,   # Deprecated: imported inside subprocess to avoid pickle errors
         timeout: Optional[int] = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
@@ -117,10 +119,13 @@ class BacktestExecutor:
         globals containing only finlab context. All exceptions are caught and
         returned in ExecutionResult with full stack traces.
 
+        IMPORTANT (2025-11-27): data and sim parameters are now deprecated and ignored.
+        They are imported locally inside the subprocess to avoid multiprocessing pickle errors.
+
         Args:
             strategy_code: Python code to execute (must call sim() and return report)
-            data: finlab.data object for strategy to use
-            sim: finlab.backtest.sim function for backtesting
+            data: [DEPRECATED] Ignored - imported inside subprocess
+            sim: [DEPRECATED] Ignored - imported inside subprocess
             timeout: Execution timeout in seconds (overrides default)
             start_date: Backtest start date (YYYY-MM-DD, default: 2018-01-01)
             end_date: Backtest end date (YYYY-MM-DD, default: 2024-12-31)
@@ -162,9 +167,10 @@ class BacktestExecutor:
         result_queue = mp.Queue()  # type: mp.Queue
 
         # Create process that will execute strategy in isolation
+        # Note: NOT passing data/sim to avoid pickle errors (imported inside subprocess)
         process = mp.Process(
             target=self._execute_in_process,
-            args=(strategy_code, data, sim, result_queue, start_date, end_date, fee_ratio, tax_ratio),
+            args=(strategy_code, result_queue, start_date, end_date, fee_ratio, tax_ratio),
         )
 
         start_time = time.time()
@@ -235,8 +241,6 @@ class BacktestExecutor:
     @staticmethod
     def _execute_in_process(
         strategy_code: str,
-        data: Any,
-        sim: Any,
         result_queue: Any,  # mp.Queue - using Any to avoid import issues
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
@@ -249,10 +253,13 @@ class BacktestExecutor:
         globals containing only finlab context, executes the strategy code,
         and passes results back via Queue.
 
+        Multiprocessing Fix (2025-11-27):
+            - Import finlab.data AND finlab.backtest inside subprocess to avoid pickle serialization
+            - Python modules and some function objects cannot be pickled correctly
+            - Local import is safe because finlab manages its own singleton state
+
         Args:
             strategy_code: Python code to execute
-            data: finlab.data object
-            sim: finlab.backtest.sim function
             result_queue: Queue for passing ExecutionResult back to parent (mp.Queue)
             start_date: Optional backtest start date (YYYY-MM-DD format)
             end_date: Optional backtest end date (YYYY-MM-DD format)
@@ -269,6 +276,11 @@ class BacktestExecutor:
         start_time = time.time()
 
         try:
+            # Import finlab modules inside subprocess to avoid multiprocessing pickle issues
+            # Module objects and some functions cannot be pickled correctly
+            from finlab import data, backtest
+            sim = backtest.sim
+
             # Set up restricted execution globals
             # Only provide finlab context + standard libraries
             execution_globals = {
@@ -304,6 +316,7 @@ class BacktestExecutor:
                 sharpe_ratio = float("nan")
                 total_return = float("nan")
                 max_drawdown = float("nan")
+                calmar_ratio = float("nan")
 
                 try:
                     if hasattr(report, 'get_stats'):
@@ -313,6 +326,11 @@ class BacktestExecutor:
                             sharpe_ratio = stats.get('daily_sharpe', float("nan"))
                             total_return = stats.get('total_return', float("nan"))
                             max_drawdown = stats.get('max_drawdown', float("nan"))
+
+                            # Calculate Calmar Ratio (total_return / abs(max_drawdown))
+                            if (not pd.isna(total_return) and not pd.isna(max_drawdown)
+                                and max_drawdown != 0):
+                                calmar_ratio = total_return / abs(max_drawdown)
                 except Exception:
                     # If get_stats() fails, metrics remain as NaN
                     pass
@@ -326,6 +344,7 @@ class BacktestExecutor:
                     sharpe_ratio=sharpe_ratio,
                     total_return=total_return,
                     max_drawdown=max_drawdown,
+                    calmar_ratio=calmar_ratio,
                 )
 
         except SyntaxError as e:

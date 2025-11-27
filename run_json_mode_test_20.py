@@ -37,17 +37,6 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-def verify_config(config):
-    """驗證 JSON mode 配置正確"""
-    assert config.template_mode is True, "template_mode must be True for JSON mode"
-    assert config.use_json_mode is True, "use_json_mode must be True"
-    assert config.innovation_rate == 100.0, "innovation_rate must be 100.0 for pure LLM mode"
-    logger.info("✅ JSON Mode configuration verified")
-    logger.info(f"  - template_mode: {config.template_mode}")
-    logger.info(f"  - template_name: {config.template_name}")
-    logger.info(f"  - use_json_mode: {config.use_json_mode}")
-    logger.info(f"  - innovation_rate: {config.innovation_rate}% (Pure LLM)")
-
 def main():
     """Run 20-iteration JSON mode test."""
 
@@ -72,26 +61,38 @@ def main():
     logger.info("=" * 80)
     logger.info("")
 
-    # Import LearningLoop
-    from src.learning.learning_loop import LearningLoop
-    from src.learning.unified_config import UnifiedConfig
+    # Import UnifiedLoop (supports Template Mode + JSON Mode)
+    from src.learning.unified_loop import UnifiedLoop
 
-    # Create configuration for JSON mode test
-    config = UnifiedConfig(
+    logger.info("Initializing UnifiedLoop with JSON mode...")
+
+    # Create results directory
+    Path("experiments/llm_learning_validation/results/json_mode_test").mkdir(parents=True, exist_ok=True)
+
+    # Create and run unified loop (no config conversion needed!)
+    loop = UnifiedLoop(
+        model="google/gemini-2.5-flash",  # OpenRouter paid model
         max_iterations=20,
-        llm_model="google/gemini-2.5-flash",  # OpenRouter paid model
 
-        # Enable Template Mode (Phase 1 已驗證)
+        # Enable Template Mode (Phase 1 validated)
         template_mode=True,
         template_name='Momentum',
 
-        # Enable JSON Mode (首次真正測試)
+        # Enable JSON Mode (first real test)
         use_json_mode=True,
 
-        # Other configuration
+        # Pure LLM mode
+        enable_learning=True,
+
+        # File paths
         history_file="experiments/llm_learning_validation/results/json_mode_test/history.jsonl",
         champion_file="experiments/llm_learning_validation/results/json_mode_test/champion.json",
+        config_file="config/learning_system.yaml",
+
+        # Backtest settings
         timeout_seconds=420,
+
+        # Other settings
         continue_on_error=True,
         log_level="INFO",
         log_to_file=True,
@@ -101,21 +102,13 @@ def main():
         innovation_rate=100.0  # Pure LLM mode
     )
 
-    # Verify JSON mode configuration
-    verify_config(config)
+    # Verify configuration
     logger.info("")
-
-    logger.info("Converting to LearningConfig for compatibility...")
-    learning_config = config.to_learning_config()
-    logger.info("")
-
-    logger.info("Initializing LearningLoop with JSON mode...")
-
-    # Create results directory
-    Path("experiments/llm_learning_validation/results/json_mode_test").mkdir(parents=True, exist_ok=True)
-
-    # Create and run learning loop
-    loop = LearningLoop(config=learning_config)
+    logger.info("JSON Mode Configuration:")
+    logger.info(f"  - template_mode: {loop.template_mode}")
+    logger.info(f"  - template_name: {loop.config.template_name}")
+    logger.info(f"  - use_json_mode: {loop.use_json_mode}")
+    logger.info(f"  - innovation_rate: {loop.config.innovation_rate}% (Pure LLM)")
 
     logger.info("Starting learning loop...")
     logger.info("")

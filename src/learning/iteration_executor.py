@@ -1042,11 +1042,11 @@ class IterationExecutor:
         try:
             if generation_method == "llm" and strategy_code:
                 # Execute code string using BacktestExecutor.execute()
-                # Note: BacktestExecutor requires data and sim to be passed in
+                # Note: data and sim are imported inside subprocess to avoid pickle errors
                 result = self.backtest_executor.execute(
                     strategy_code=strategy_code,
-                    data=self.data,
-                    sim=self.sim,
+                    data=self.data,  # Not used (imported in subprocess)
+                    sim=self.sim,    # Not used (imported in subprocess)
                     timeout=self.config.get("timeout_seconds", 420),
                     start_date=self.config.get("start_date"),
                     end_date=self.config.get("end_date"),
