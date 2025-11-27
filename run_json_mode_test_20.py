@@ -66,10 +66,10 @@ def main():
 
     # Import LearningLoop
     from src.learning.learning_loop import LearningLoop
-    from src.learning.learning_config import LearningConfig
+    from src.learning.unified_config import UnifiedConfig
 
     # Create configuration for JSON mode test
-    config = LearningConfig(
+    config = UnifiedConfig(
         max_iterations=20,
         llm_model="google/gemini-2.5-flash",
 
@@ -98,13 +98,17 @@ def main():
     verify_config(config)
     logger.info("")
 
+    logger.info("Converting to LearningConfig for compatibility...")
+    learning_config = config.to_learning_config()
+    logger.info("")
+
     logger.info("Initializing LearningLoop with JSON mode...")
 
     # Create results directory
     Path("experiments/llm_learning_validation/results/json_mode_test").mkdir(parents=True, exist_ok=True)
 
     # Create and run learning loop
-    loop = LearningLoop(config=config)
+    loop = LearningLoop(config=learning_config)
 
     logger.info("Starting learning loop...")
     logger.info("")
