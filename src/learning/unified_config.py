@@ -150,7 +150,7 @@ class UnifiedConfig:
     llm_max_tokens: int = 4000
 
     # === Template Mode Parameters ===
-    template_mode: bool = False
+    template_mode: bool = True  # Phase 2 validated: 320x speedup, 20/20 tests passing
     template_name: str = "Momentum"
 
     # === JSON Parameter Output Parameters ===
