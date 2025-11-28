@@ -564,10 +564,10 @@ class ChampionTracker:
         strategy_generation = kwargs.get('strategy_generation', None)
         from src.constants import METRIC_SHARPE
 
-        # Validate generation_method
-        if generation_method not in ["llm", "factor_graph"]:
+        # Validate generation_method (Phase 3: Added 'template' support)
+        if generation_method not in ["llm", "factor_graph", "template"]:
             raise ValueError(
-                f"generation_method must be 'llm' or 'factor_graph', "
+                f"generation_method must be 'llm', 'factor_graph', or 'template', "
                 f"got '{generation_method}'"
             )
 
@@ -832,10 +832,10 @@ class ChampionTracker:
         """
         from src.constants import METRIC_SHARPE
 
-        # Validate generation_method
-        if generation_method not in ["llm", "factor_graph"]:
+        # Validate generation_method (Phase 3: Added 'template' support)
+        if generation_method not in ["llm", "factor_graph", "template"]:
             raise ValueError(
-                f"generation_method must be 'llm' or 'factor_graph', "
+                f"generation_method must be 'llm', 'factor_graph', or 'template', "
                 f"got '{generation_method}'"
             )
 

@@ -47,8 +47,8 @@ def test_innovation_rate_range_validation_invalid():
 
 
 def test_use_json_mode_requires_pure_template():
-    """Test use_json_mode=True requires innovation_rate=100 (pure template mode)"""
-    # Allowed: pure template mode
+    """Test use_json_mode=True supports all innovation_rate values (Phase 3 fix)"""
+    # Pure LLM mode (innovation_rate=100)
     config_pure = UnifiedConfig(
         use_json_mode=True,
         template_mode=True,
@@ -57,13 +57,24 @@ def test_use_json_mode_requires_pure_template():
     assert config_pure.use_json_mode is True
     assert config_pure.innovation_rate == 100.0
 
-    # Forbidden: hybrid mode with JSON mode
-    with pytest.raises(ConfigurationError, match="use_json_mode=True requires innovation_rate=100"):
-        UnifiedConfig(
-            use_json_mode=True,
-            template_mode=True,
-            innovation_rate=50.0
-        )
+    # Phase 3 fix: JSON mode now supports hybrid mode via MixedStrategy
+    # Hybrid mode (innovation_rate=50) should work with JSON mode
+    config_hybrid = UnifiedConfig(
+        use_json_mode=True,
+        template_mode=True,
+        innovation_rate=50.0
+    )
+    assert config_hybrid.use_json_mode is True
+    assert config_hybrid.innovation_rate == 50.0
+
+    # Pure Factor Graph mode (innovation_rate=0) should also work
+    config_fg = UnifiedConfig(
+        use_json_mode=True,
+        template_mode=True,
+        innovation_rate=0.0
+    )
+    assert config_fg.use_json_mode is True
+    assert config_fg.innovation_rate == 0.0
 
 
 def test_to_dict_includes_innovation_rate():

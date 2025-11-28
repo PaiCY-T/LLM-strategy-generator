@@ -193,6 +193,19 @@ class UnifiedConfig:
 
     def __post_init__(self) -> None:
         """Validate configuration after initialization."""
+        # Issue deprecation warning if full code mode is used
+        if not self.use_json_mode:
+            import warnings
+            warnings.warn(
+                "Full code generation mode (use_json_mode=False) is deprecated "
+                "and will be removed in Version 2.0.0 (target: March 2026). "
+                "Please migrate to JSON mode (use_json_mode=True) for better "
+                "performance and stability. See docs/DEPRECATED_FEATURES.md "
+                "for migration guidance.",
+                DeprecationWarning,
+                stacklevel=2
+            )
+
         self.validate()
 
     def validate(self) -> None:
@@ -245,11 +258,11 @@ class UnifiedConfig:
                 "use_json_mode=True requires template_mode=True"
             )
 
-        if self.use_json_mode and self.innovation_rate < 100.0:
-            raise ConfigurationError(
-                f"use_json_mode=True requires innovation_rate=100 (pure template mode). "
-                f"Got innovation_rate={self.innovation_rate}"
-            )
+        # NOTE: Removed innovation_rate < 100 restriction (Phase 3 bug fix)
+        # JSON mode now supports hybrid mode via MixedStrategy in generation_strategies.py
+        # - innovation_rate=100: Pure LLM mode (JSON-based)
+        # - innovation_rate<100: Hybrid mode (MixedStrategy uses JSON LLM + Factor Graph)
+        # - innovation_rate=0: Pure Factor Graph mode
 
     def _validate_file_paths(self) -> None:
         """Validate required file paths.
